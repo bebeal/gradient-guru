@@ -1,27 +1,54 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900');
+
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('../assets/fonts/BerkeleyMono/BerkeleyMono-Regular.woff2') format('woff2'),
+      url('../assets/fonts/BerkeleyMono/BerkeleyMono-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('../assets/fonts/BerkeleyMono/BerkeleyMono-Bold.woff2') format('woff2'),
+      url('../assets/fonts/BerkeleyMono/BerkeleyMono-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('../assets/fonts/BerkeleyMono/BerkeleyMono-Italic.woff2') format('woff2'),
+      url('../assets/fonts/BerkeleyMono/BerkeleyMono-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('../assets/fonts/BerkeleyMono/BerkeleyMono-BoldItalic.woff2') format('woff2'),
+      url('../assets/fonts/BerkeleyMono/BerkeleyMono-BoldItalic.woff') format('woff');
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* tailwindcss */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* https://tailwindcss.com/docs/preflight */
+@layer base {
+  * {
+    @apply box-border;
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  a {
+    @apply text-[#1976d2] no-underline	hover:underline;
+  }
+
+  a:visited svg {
+    @apply text-[#8E24AA];
+  }
 }

@@ -1,27 +1,29 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
+    "strict": true,                                   // Enable all strict type-checking options.
+    "strictNullChecks": true,                         // When strictNullChecks is false, null and undefined are effectively ignored by the language.
+    "noEmit": true,                                   // Do not emit compiler output files like JavaScript source code, source-maps or declarations.
+    "esModuleInterop": true,                          // Import CommonJS modules in compliance with es6 modules spec.
+    "isolatedModules": true,                          // Tells TypeScript to warn you if you write certain code that can’t be correctly interpreted by a single-file transpilation process.
+    "emitDecoratorMetadata": true,                    // Enables experimental support for emitting type metadata for decorators which works with the module reflect-metadata.
+		"experimentalDecorators": true,                   // Enables experimental support for decorators, which is a version of decorators that predates the TC39 standardization process.
+    "target": "esnext",                               // Changes which JS features are downleveled and which are left intact, also changes the default value of lib. esnext value refers to the highest version your version of TypeScript supports.
+    "lib": ["dom", "dom.iterable", "esnext"],         // Specifies a set of built-in API declaration groups that should be included in the compilation.
+    "jsx": "preserve",                                // Controls how JSX constructs are emitted in JavaScript files. This only affects output of JS files that started in .tsx files.
+    "allowJs": true,                                  // Allow JavaScript files to be imported inside your project, instead of just .ts and .tsx files.
+    "skipLibCheck": true,                             // Skip type checking of declaration files.
+    "incremental": true,                              // Tells TypeScript to save information about the project graph from the last compilation to files stored on disk. This creates a series of .tsbuildinfo files in the same folder as your compilation output.
+    "plugins": [                                      // List of language service plugins to run inside the editor.
+      { "name": "next" }
     ],
-    "paths": {
+    "baseUrl": ".",                                   // Sets a base directory from which to resolve bare specifier module names.
+    "module": "esnext",                               // Sets the module system for the program.
+    "moduleResolution": "bundler",                    // Specify the module resolution strategy
+    "resolveJsonModule": true,                        // Allows importing modules with a .json extension, which is a common practice in node projects. This includes generating a type for the import based on the static JSON shape.
+    "paths": {                                        // paths lets you declare how TypeScript should resolve an import in your require/imports.
       "@/*": ["./*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "packages"]
 }
