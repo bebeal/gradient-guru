@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('../assets/fonts/BerkeleyMono/BerkeleyMono-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('../assets/fonts/BerkeleyMono/BerkeleyMono-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('../assets/fonts/BerkeleyMono/BerkeleyMono-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('../assets/fonts/BerkeleyMono/BerkeleyMono-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Berkeley Mono Variable';
+  src: url('../assets/fonts/BerkeleyMono/BerkeleyMonoVariable-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Berkeley Mono Variable';
+  src: url('../assets/fonts/BerkeleyMono/BerkeleyMonoVariable-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}

@@ -5,8 +5,11 @@ import { ThemeProvider } from "next-themes";
 import { Theme, ThemePanel } from "@radix-ui/themes";
 import { QueryClient, QueryClientProvider } from "react-query";
 import * as Toast from "@radix-ui/react-toast";
+import { DirectionProvider } from '@radix-ui/react-direction';
 import { ThemePanelContext } from "@/hooks";
 import '@/app/globals.css';
+import '@/app/BerkeleyMono.css';
+import '@/app/Monaspace.css';
 import '@radix-ui/themes/styles.css';
 
 const queryClient = new QueryClient();
@@ -27,12 +30,14 @@ const Providers = ({ children }: any) => {
         scaling="100%"
       >
         <ThemePanelContext.Provider value={{ themePanelEnabled, setThemePanelEnabled }}>
-          <QueryClientProvider client={queryClient}>
-            <Toast.Provider>
-              {children}
-              {themePanelEnabled && <ThemePanel />}
-            </Toast.Provider>
-          </QueryClientProvider>
+          <DirectionProvider dir="rtl">
+            <QueryClientProvider client={queryClient}>
+              <Toast.Provider>
+                {children}
+                {themePanelEnabled && <ThemePanel />}
+              </Toast.Provider>
+            </QueryClientProvider>
+          </DirectionProvider>
         </ThemePanelContext.Provider>
       </Theme>
     </ThemeProvider>

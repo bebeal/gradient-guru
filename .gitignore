@@ -6,6 +6,7 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+/assets/icons
 
 # testing
 /coverage
@@ -22,6 +23,7 @@
 *.pem
 
 # debug
+.swc
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
