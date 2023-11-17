@@ -10,7 +10,7 @@ const FontsPage = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center w-full h-screen overflow-auto bg-gray-300">
+    <div className="flex flex-col items-center w-full h-full overflow-auto bg-gray-300">
       <h1 className="text-2xl font-bold justify-self-start">Fonts</h1>
       <div className="flex flex-wrap justify-center w-full gap-10 h-full p-2">
         {tailwindFonts.map((font) => (

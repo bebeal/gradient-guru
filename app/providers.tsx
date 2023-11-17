@@ -8,8 +8,8 @@ import * as Toast from "@radix-ui/react-toast";
 import { DirectionProvider } from '@radix-ui/react-direction';
 import { ThemePanelContext } from "@/hooks";
 import '@/app/globals.css';
-import '@/app/BerkeleyMono.css';
-import '@/app/Monaspace.css';
+import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
+import '@/assets/fonts/Monaspace/Monaspace.css';
 import '@radix-ui/themes/styles.css';
 
 const queryClient = new QueryClient();
