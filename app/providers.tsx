@@ -31,18 +31,18 @@ const Providers = ({ children }: any) => {
         scaling="100%"
       >
         <StyledComponentsRegistry>
-        <ThemePanelContext.Provider value={{ themePanelEnabled, setThemePanelEnabled }}>
-          <DirectionProvider dir="rtl">
-            <QueryClientProvider client={queryClient}>
-              <Toast.Provider>
-                <div className="flex flex-col h-screen w-full overflow-hidden">
-                {children}
-                </div>
-                {themePanelEnabled && <ThemePanel />}
-              </Toast.Provider>
-            </QueryClientProvider>
-          </DirectionProvider>
-        </ThemePanelContext.Provider>
+          <ThemePanelContext.Provider value={{ themePanelEnabled, setThemePanelEnabled }}>
+            <DirectionProvider dir="rtl">
+              <QueryClientProvider client={queryClient}>
+                <Toast.Provider>
+                  <div className="flex flex-col h-screen w-full overflow-hidden">
+                    {children}
+                  </div>
+                  {themePanelEnabled && <ThemePanel />}
+                </Toast.Provider>
+              </QueryClientProvider>
+            </DirectionProvider>
+          </ThemePanelContext.Provider>
         </StyledComponentsRegistry>
       </Theme>
     </ThemeProvider>
