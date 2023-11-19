@@ -33,8 +33,7 @@ export const isRadius = (radius: string): radius is Radius => {
 export const VariantClasses = (variant: CustomVariant = "gradient") => {
   return {
     'gradient': cn(
-      `relative px-0 py-0 border-0 outline-0 bg-transparent`,
-      `transition-shadow duration-150 focus:shadow-[0_0_0_1px_#FFFFFF]`,
+      `outline-0 bg-transparent focus:shadow-[0_0_0_1px_#FFFFFF]`,
     ),
     'glow': cn(
 
@@ -106,7 +105,7 @@ export const GradientDiv = (props: GradientDivProps) => {
                 mask:`${getEncodedSVGUrl(child)} 0 0 / 100% 100% no-repeat`
               }}
               className={cn(`w-auto h-auto justify-center items-center flex`, 
-                            pseudoAfterGradient, `after:w-[80%] after:h-[80%] after:brightness-125`)}
+                            pseudoAfterGradient, `after:w-4/5 after:h-4/5 after:brightness-125`)}
             >{child}</div>
           );
         } else {

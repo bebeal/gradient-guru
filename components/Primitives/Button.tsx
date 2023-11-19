@@ -47,8 +47,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
         ref={ref}
         type={type}
         className={cn(
-          `flex w-auto h-auto box-border select-none align-top cursor-pointer overflow-hidden relative`,
-          `m-0 text-base leading-none`,
+          `flex w-auto h-auto select-none align-top cursor-pointer overflow-hidden relative text-base leading-none`,
           RadiusClasses(radius),
           VariantClasses(variant),
           className
@@ -58,22 +57,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
         onMouseLeave={() => setIsHovered(false)}
       >
         {isGradientVariant && (
-          <>
-          <div className={cn( `font-bold w-full h-full bg-primary text-transparent py-[8px] px-[10px] m-[1px]`, RadiusClasses(radius))}>
+          <div className={cn( `font-bold w-full h-full bg-primary text-transparent py-2 px-2.5 m-px`, RadiusClasses(radius))}>
             {/* For sizing the div properly since the gradient is an absolutely positioned div and this parent div needs to size as if its child is relative */}
             <div className={cn(`invisible flex w-auto h-auto gap-1 justify-center items-center font-bold`)}>{children}</div>
-            {/* This is 2 absolutely positioned divs with a linear-gradient backgrounds. 
-                One is used with a large blur affect to make the backglow.
-                The other is used to apply gradients to the child components
-            */}
+            {/* This is 1 out of 2 absolutely positioned divs with a linear-gradient backgrounds and is used to apply gradients to the child components */}
             <GradientDiv backglow={false} isHovered={isHovered} colors={colors} radius={radius}>{children}</GradientDiv>
           </div>
-          </>
         )}
       </button>
       {/* Border Gradient, backglow to true which will apply large blur to the gradients tranistioning which are in sync with the gradients inside of the buttons */}
       {isGradientVariant && (
-        <div className={cn("absolute inset-x-0 inset-y-0 z-[-1] grid grid-cols-[1fr]")}>
+        <div className={cn("absolute inset-0 z-[-1] grid grid-cols-1")}>
           <GradientDiv backglow={true} isHovered={true} colors={colors} radius={radius} />
         </div>
       )}
