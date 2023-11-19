@@ -1,5 +1,6 @@
 'use client'
 
+import styled from "styled-components";
 import { getEncodedSVGUrl, isSVG } from "./svg";
 import { cn } from "./utils";
 
@@ -52,6 +53,32 @@ export const RadiusClasses = (radius: Radius = "medium") => {
   }[radius];
 };
 
+export const DynamicGradients = ($colors: string[], $direction: string) => {
+  return `
+    background-image: linear-gradient(${$direction}, ${$colors.join(',')});
+    background-size: ${$colors.length * 100}%;
+    animation: gradient-transition ${$colors.length * 2}s ease infinite;
+  `;
+};
+
+export const DynamicGradientBackground = styled.div<{$colors: string[], $direction: string, $onDiv: boolean, $onPsuedoAfter: boolean}>`
+  @keyframes gradient-transition {
+    0% { background-position: 0% 50% },
+    50% { background-position: 100% 50% },
+    100% { background-position: 0% 50% },
+  }
+  ${props => props.$onDiv && DynamicGradients(props.$colors, props.$direction)}
+  ${props => props.$onPsuedoAfter && `
+    &::after {
+      ${DynamicGradients(props.$colors, props.$direction)}
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      content: "";
+      z-index: -1;
+    }
+  `}
+`;
 export interface GradientDivProps {
   colors?: string[];
   radius?: Radius;
@@ -67,23 +94,21 @@ export const GradientDiv = (props: GradientDivProps) => {
     radius='medium',
     backglow=true,
     isHovered=false,
-    direction='to_left',
+    direction='to left',
     className="",
     children,
     ...rest 
   } = props;
-  const gradientTransitionsList = [`animate-gradient-transition`, `[background-image:linear-gradient(${direction},${colors.join(',')})]`, `[background-size:${colors.length * 100}%]`];
-  const gradientTransitions = gradientTransitionsList.join(' ');
-  const pseudoAfterGradientTransitionsList = gradientTransitionsList.map((transition: string) => `after:${transition}`);
-  const pseudoAfterGradientTransitions = pseudoAfterGradientTransitionsList.join(' ');
-  const pseudoAfterGradient = cn(`after:absolute after:w-full after:h-full after:content-[""] after:transform after:z-[-1]`, pseudoAfterGradientTransitions);
 
   // This is an absolutely positioned div with a linear-gradient background and a pseudo after element with the same linear-gradient background.
   return (
-    <div 
+    <DynamicGradientBackground
+      $onDiv={true}
+      $onPsuedoAfter={backglow}
+      $colors={colors}
+      $direction={direction}
       className={cn(`w-full h-full flex gap-1 justify-center items-center absolute left-0 top-0 brightness-125 pointer-events-none`,
-                    gradientTransitions,
-                    backglow && cn(pseudoAfterGradient, `after:left-0 after:top-0 after:blur-xl after:opacity-60 after:brightness-100`),
+                    backglow && cn(`after:left-0 after:top-0 after:blur-xl after:opacity-60 after:brightness-100`),
                     // when hovered: invert the colors everywhere instead of showing gradient through the svg/text show as background:
                     // 1. Change the svg and text children to primary (black/white) color
                     // 2. Drop the background clip so that the gradient shows as the background now of the outer div
@@ -98,15 +123,19 @@ export const GradientDiv = (props: GradientDivProps) => {
         if (isSVG(child)) {
           // To get the linaer gradient background to show through a transparent svg element, encode the svg as a data url and use it as a mask
           return (
-            <div 
+            <DynamicGradientBackground
+              $onDiv={false}
+              $onPsuedoAfter={true}
+              $colors={colors}
+              $direction={direction}
               key={`svg-child-${index}`} 
               style={{ 
                 WebkitMask: `${getEncodedSVGUrl(child)} 0 0 / 100% 100% no-repeat`,
                 mask:`${getEncodedSVGUrl(child)} 0 0 / 100% 100% no-repeat`
               }}
               className={cn(`w-auto h-auto justify-center items-center flex`, 
-                            pseudoAfterGradient, `after:w-4/5 after:h-4/5 after:brightness-125`)}
-            >{child}</div>
+                            `after:w-4/5 after:h-4/5 after:brightness-125`)}
+            >{child}</DynamicGradientBackground>
           );
         } else {
           // To get the linear gradient background to show through the text elements background-clip the text
@@ -118,6 +147,6 @@ export const GradientDiv = (props: GradientDivProps) => {
           );
         }
       })}
-    </div>
+    </DynamicGradientBackground>
   )
 };
