@@ -1,3 +1,5 @@
+'use client'
+
 import Accessibility from '@/assets/icons/Carbon/Accessibility.svg';
 import AccessibilityAlt from '@/assets/icons/Carbon/AccessibilityAlt.svg';
 import AccessibilityColor from '@/assets/icons/Carbon/AccessibilityColor.svg';

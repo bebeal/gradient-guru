@@ -34,6 +34,7 @@ def generate_iconset_file(new_svgs: list, directory: str, url: str = "", clean: 
         os.remove(outfile_path)
     new_svgs = sorted(list(set(new_svgs)))
     with open(outfile_path, 'w') as outfile:
+        outfile.write("\'use client\'\n\n")
         # import each svg
         for new_name in new_svgs:
             outfile.write(f"import {new_name} from '@/{directory.replace('../', '')}/{new_name}.svg';\n")
@@ -107,72 +108,72 @@ def download_svgs(url, directory, max_depth, clean, position):
 
 def download_iconsets(max_depth, clean):
     iconsets = {
-        "Academicons": {
-            "url": "https://github.com/jpswalsh/academicons/tree/master/svg"
-        },
+        # "Academicons": {
+        #     "url": "https://github.com/jpswalsh/academicons/tree/master/svg"
+        # },
         "Carbon": {
             "url": "https://github.com/carbon-design-system/carbon/tree/v10/packages/icons/src/svg/32" 
         },
-        "Dev": {
-            "url": "https://github.com/devicons/devicon/tree/master/icons"
-        },
-        "EntypoPlus": {
-            "url": '''https://github.com/chancancode/entypo-plus/tree/master/source/Entypo%2B'''
-        },
-        "EntypoSocial": {
-            "url": '''https://github.com/chancancode/entypo-plus/tree/master/source/Entypo%2B%20Social%20Extension'''
-        },
-        "Flag": {
-            "url": "https://github.com/lipis/flag-icons/tree/main/flags/4x3"
-        },
-        "FontAudio": {
-            "url": "https://github.com/fefanto/fontaudio/tree/master/svgs"
-        },
-        "FontAwesomeRegular": {
-            "url": "https://github.com/FortAwesome/Font-Awesome/tree/6.x/svgs/regular" 
-        },
-        "FontGIS": {
-            "url": "https://github.com/Viglino/font-gis/tree/main/svg"
-        },
-        "Game": {
-            "url": "https://github.com/game-icons/icons"
-        },
-        "Geoglyphs": {
-            "url": "https://github.com/cugos/geoglyphs/tree/main/src"
-        },
-        "HeroiconsSolid": {
-            "url": "https://github.com/tailwindlabs/heroicons/tree/master/src/24/solid"
-        },
-        "Lucide": {
-            "url": "https://github.com/lucide-icons/lucide/tree/main/icons"
-        },
-        "Logos": {
-            "url": "https://github.com/gilbarbara/logos/tree/main/logos"
-        },
-        "Map": {
-            "url": "https://github.com/scottdejonge/map-icons/tree/master/src/icons"
-        },
-        "Medical": {
-            "url": "https://github.com/samcome/webfont-medical-icons/tree/master/packages/svg"
-        },
-        "MuiLine": {
-            "url": "https://github.com/cyberalien/line-md/tree/master/svg"
-        },
-        "Radix": {
-            "url": "https://github.com/radix-ui/icons/tree/master/packages/radix-icons/icons" 
-        },
-        "Skill": {
-            "url": "https://github.com/tandpfun/skill-icons/tree/main/icons"
-        },
-        "Spinner": {
-            "url": "https://github.com/n3r4zzurr0/svg-spinners/tree/main/svg-smil"
-        },
-        "Tldraw": {
-            "url": "https://github.com/tldraw/tldraw/tree/main/assets/icons/icon" 
-        },
-        "VSCode": {
-            "url": "https://github.com/vscode-icons/vscode-icons/tree/master/icons"
-        },
+        # "Dev": {
+        #     "url": "https://github.com/devicons/devicon/tree/master/icons"
+        # },
+        # "EntypoPlus": {
+        #     "url": '''https://github.com/chancancode/entypo-plus/tree/master/source/Entypo%2B'''
+        # },
+        # "EntypoSocial": {
+        #     "url": '''https://github.com/chancancode/entypo-plus/tree/master/source/Entypo%2B%20Social%20Extension'''
+        # },
+        # "Flag": {
+        #     "url": "https://github.com/lipis/flag-icons/tree/main/flags/4x3"
+        # },
+        # "FontAudio": {
+        #     "url": "https://github.com/fefanto/fontaudio/tree/master/svgs"
+        # },
+        # "FontAwesomeRegular": {
+        #     "url": "https://github.com/FortAwesome/Font-Awesome/tree/6.x/svgs/regular" 
+        # },
+        # "FontGIS": {
+        #     "url": "https://github.com/Viglino/font-gis/tree/main/svg"
+        # },
+        # "Game": {
+        #     "url": "https://github.com/game-icons/icons"
+        # },
+        # "Geoglyphs": {
+        #     "url": "https://github.com/cugos/geoglyphs/tree/main/src"
+        # },
+        # "HeroiconsSolid": {
+        #     "url": "https://github.com/tailwindlabs/heroicons/tree/master/src/24/solid"
+        # },
+        # "Lucide": {
+        #     "url": "https://github.com/lucide-icons/lucide/tree/main/icons"
+        # },
+        # "Logos": {
+        #     "url": "https://github.com/gilbarbara/logos/tree/main/logos"
+        # },
+        # "Map": {
+        #     "url": "https://github.com/scottdejonge/map-icons/tree/master/src/icons"
+        # },
+        # "Medical": {
+        #     "url": "https://github.com/samcome/webfont-medical-icons/tree/master/packages/svg"
+        # },
+        # "MuiLine": {
+        #     "url": "https://github.com/cyberalien/line-md/tree/master/svg"
+        # },
+        # "Radix": {
+        #     "url": "https://github.com/radix-ui/icons/tree/master/packages/radix-icons/icons" 
+        # },
+        # "Skill": {
+        #     "url": "https://github.com/tandpfun/skill-icons/tree/main/icons"
+        # },
+        # "Spinner": {
+        #     "url": "https://github.com/n3r4zzurr0/svg-spinners/tree/main/svg-smil"
+        # },
+        # "Tldraw": {
+        #     "url": "https://github.com/tldraw/tldraw/tree/main/assets/icons/icon" 
+        # },
+        # "VSCode": {
+        #     "url": "https://github.com/vscode-icons/vscode-icons/tree/master/icons"
+        # },
     }
     
     # Overall progress bar

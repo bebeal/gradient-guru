@@ -8,7 +8,7 @@
 /* https://tailwindcss.com/docs/preflight */
 @layer base {
   * {
-    @apply box-border;
+    @apply box-border font-mono;
   }
 
   a {
@@ -18,4 +18,50 @@
   a:visited svg {
     @apply text-[#8E24AA];
   }
+}
+
+@keyframes ripple-click-effect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-click-effect 600ms ease-in-out;
+  background-color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}
+
+/* Reference from tailwind context via `text-primary`, `bg-secondary` */
+:root {
+  --text-primary: 0 0 0;
+  --text-secondary: 85 85 85;
+  --text-tertiary: 136 136 136;
+
+  --background-primary: 255 255 255;
+  --background-secondary: 242 242 242;
+  --background-tertiary: 230 230 230;
+
+  --border-primary: 0 0 0;
+  --border-secondary: 220 220 220;
+  --border-tertiary: 200 200 200;
+}
+
+.dark {
+  --text-primary: 249 249 249;
+  --text-secondary: 187 187 187;
+  --text-tertiary: 136 136 136;
+
+  --background-primary: 54 61 68;
+  --background-secondary: 44 49 54;
+  --background-tertiary: 73 85 95;
+
+  --border-primary: 73 85 95;
+  --border-secondary: 85 95 105;
+  --border-tertiary: 120 130 140;
 }

@@ -1,11 +1,21 @@
-import type { Metadata, Viewport } from 'next';
+import type { Metadata } from 'next';
 import Providers from '@/app/providers';
 
-export const viewport: Viewport = {
-  height: 'device-height',
-  width: 'device-width',
-  initialScale: 1,
-  viewportFit: 'cover',
+// uncomment in nextjs 14:
+// export const viewport: Viewport = {
+//   height: 'device-height',
+//   width: 'device-width',
+//   initialScale: 1,
+//   viewportFit: 'cover',
+//   themeColor: [
+//     { media: '(prefers-color-scheme: light)', color: 'white' },
+//     { media: '(prefers-color-scheme: dark)', color: 'black' }
+//   ],
+// };
+
+// remove this in nextjs 14:
+export const viewport: any = {
+  viewport: 'width=device-width, height=device-height, initial-scale=1, viewport-fit=cover',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: 'white' },
     { media: '(prefers-color-scheme: dark)', color: 'black' }
@@ -20,6 +30,7 @@ export const metadata: Metadata = {
     shortcut: './favicon-16x16.png',
     apple: './apple-touch-icon.png'
   },
+  ...viewport,
 };
 
 const RootLayout = ({

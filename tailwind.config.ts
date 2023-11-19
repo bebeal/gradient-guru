@@ -1,9 +1,23 @@
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
-import radixThemePlugin from "radix-ui-themes-with-tailwind";
+import radixThemePlugin from 'radix-ui-themes-with-tailwind';
 
 const config: Config = {
-  darkMode: ["class"],
+  // TODO: fix this fucking joke
+  safelist: [
+    ...[...Array(10).keys()].flatMap(i => [`top-[${i*100}%]`, `top-[${i*-100}%]`, `left-[${i*100}%]`, `left-[${i*-100}%]`, `bottom-[${i*100}%]`, `bottom-[${i*-100}%]`, `right-[${i*100}%]`, `right-[${i*-100}%]`, `translate-x-[${i*100}%]`, `translate-x-[${i*-100}%]`, `translate-y-[${i*100}%]`, `translate-y-[${i*-100}%]`, `duration-${i * 100}`]),
+    ...[...Array(100).keys()].flatMap(i => [`space-x-[${i}px]`, `space-x-[${i}px]`, `space-y-[${i}px]`, `space-y-[${i}px]`, `height-[${i}px]`, `height-[${i*10}px]`, `height-[${i*100}px]`, `top-[${i}%]`, `top-[${-i}%]`, `left-[${i}%]`, `left-[${-i}%]`, `bottom-[${i}%]`, `bottom-[${-i}%]`, `right-[${i}%]`, `right-[${-i}%]`, `translate-x-[${i}%]`, `translate-x-[${-i}%]`, `translate-y-[${i}%]`, `translate-y-[${-i}%]`]),
+    ...Object.keys(colors).flatMap((color) => Array.from({ length: 9 }, (_, i) => [ `from-${color}-${(i + 1) * 100}`, `via-${color}-${(i + 1) * 100}`, `to-${color}-${(i + 1) * 100}` ]) ).flat(),
+    `[background-size:300%] [background-size:400%] [background-size:500%] [background-size:600%] after:animate-gradient-transition`,
+    `after:[background-size:100%] after:[background-size:125%] after:[background-size:200%] after:[background-size:300%] after:[background-size:400%] after:[background-size:500%] after:[background-size:600%]`,
+    `after:[background-image:linear-gradient(to_right,#FF1834,#FFC900,#00E0D9,#0074E0,#7F00DE,#FF007E)]`,
+    `[background-image:linear-gradient(to_right,#FF1834,#FFC900,#00E0D9,#0074E0,#7F00DE,#FF007E)]`,
+    `after:[background-image:linear-gradient(to_left,#FF1834,#FFC900,#00E0D9,#0074E0,#7F00DE,#FF007E)]`,
+    `[background-image:linear-gradient(to_left,#FF1834,#FFC900,#00E0D9,#0074E0,#7F00DE,#FF007E)]`, `background:radial-gradient(circle_closest-side_at_center,white,transparent)`,
+    `[&>svg]:fill-[url(#svg-gradient-FF1834,FFC900,00E0D9,0074E0,7F00DE,FF007E)] [&>svg]:fill-[currentColor]`,
+    `[mask:url(#)_center/contain]`
+  ],
+  darkMode: ['class'],
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -94,13 +108,58 @@ const config: Config = {
           DEFAULT: colors.rose['500'],
         },
       },
+      textColor: {
+        primary: 'rgb(var(--text-primary)  / <alpha-value>)',
+        secondary: 'rgb(var(--text-secondary) / <alpha-value>)',
+        tertiary: 'rgb(var(--text-tertiary) / <alpha-value>)',
+      },
+      backgroundColor: {
+        primary: 'rgb(var(--background-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--background-secondary) / <alpha-value>)',
+        tertiary: 'rgb(var(--background-tertiary) / <alpha-value>)',
+      },
+      fill: {
+        primary: 'rgb(var(--background-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--background-secondary) / <alpha-value>)',
+        tertiary: 'rgb(var(--background-tertiary) / <alpha-value>)',
+      },
+      borderColor: {
+        primary: 'rgb(var(--border-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--border-secondary) / <alpha-value>)',
+        tertiary: 'rgb(var(--border-tertiary) / <alpha-value>)',
+      },
+      stroke: {
+        primary: 'rgb(var(--border-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--border-secondary) / <alpha-value>)',
+        tertiary: 'rgb(var(--border-tertiary) / <alpha-value>)',
+      },
+      outlineColor: {
+        primary: 'rgb(var(--border-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--border-secondary) / <alpha-value>)',
+        tertiary: 'rgb(var(--border-tertiary) / <alpha-value>)',
+      },
+      ringColor: {
+        primary: 'rgb(var(--border-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--border-secondary) / <alpha-value>)',
+        tertiary: 'rgb(var(--border-tertiary) / <alpha-value>)',
+      },
       fontFamily: {
-        mono: ["Berkeley Mono", "monospace"],
-        argon: ["Argon", "Berkeley Mono", "monospace"],
-        krypton: ["Krypton", "Berkeley Mono", "monospace"],
-        neon: ["Neon", "Berkeley Mono", "monospace"],
-        radon: ["Radon", "Berkeley Mono", "monospace"],
-        xenon: ["Xenon", "Berkeley Mono", "monospace"],
+        mono: ['Berkeley Mono', 'monospace'],
+        argon: ['Argon', 'Berkeley Mono', 'monospace'],
+        krypton: ['Krypton', 'Berkeley Mono', 'monospace'],
+        neon: ['Neon', 'Berkeley Mono', 'monospace'],
+        radon: ['Radon', 'Berkeley Mono', 'monospace'],
+        xenon: ['Xenon', 'Berkeley Mono', 'monospace'],
+      },
+      keyframes: {
+        'gradient-transition': {
+          '0%': { 'background-position': '0% 50%' },
+          '50%': { 'background-position': '100% 50%' },
+          '100%': { 'background-position': '0% 50%' },
+        }
+      },
+      animation: {
+        'gradient-transition': 'gradient-transition 15s ease infinite',
       },
     },
   },

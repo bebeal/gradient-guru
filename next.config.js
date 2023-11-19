@@ -1,11 +1,17 @@
 const os = require('os');
 /** @type {import('next').NextConfig} */
 module.exports = {
-  webpack(config) {
+  compiler: {
+    styledComponents: true
+  },
+  webpack: (config) => {
+    config.infrastructureLogging = {
+        level: "error",
+    };
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
-      use: [{ loader: '@svgr/webpack', options: { dimensions: true, icon: true } }],
+      use: [{ loader: '@svgr/webpack', options: { dimensions: true, icon: true } }]
     })
     return config
   },
@@ -82,7 +88,7 @@ module.exports = {
   output: !!process.env.NEXT_PRIVATE_STANDALONE ? 'standalone' : undefined,
   modularizeImports: undefined,
   experimental: {
-    webpackBuildWorker: true,
+    // enable in nextjs 14: webpackBuildWorker: true,
     serverMinification: true,
     serverSourceMaps: false,
     caseSensitiveRoutes: false,
