@@ -2,6 +2,7 @@
 
 import { Tldraw } from '@tldraw/tldraw';
 import '@tldraw/tldraw/tldraw.css';
+import './Flow.css';
 
 export interface FlowProps {
 };
