@@ -59,6 +59,7 @@ export const Form = forwardRef<any, FormProps>((props, ref) => {
 
   // uncomment to test re-rendering, should only re-render ~once per change caused by interacting with form (twice if the initial interatction triggers an update to error messgae, description, placeholder, etc)
   // console.log(`form watching - `, form.watch());
+
   return (
     <FormProvider {...rest} {...form}>
       <FormPrimitive.Root ref={ref} className={cn(`w-full h-full flex flex-col gap-1 p-5 overflow-auto rounded`, className)} onSubmit={form.handleSubmit(onSubmit, onError)}>
@@ -72,9 +73,3 @@ export const Form = forwardRef<any, FormProps>((props, ref) => {
   )
 });
 Form.displayName = 'Form';
-
-// for zod
-// import { zodResolver } from '@hookform/resolvers/zod';
-// import { ZodObject, ZodTypeAny, z } from "zod";
-// type FormSchema = z.infer<typeof schema>;
-// resolver: zodResolver(schema),

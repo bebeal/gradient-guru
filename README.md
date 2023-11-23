@@ -33,6 +33,8 @@ idk
   * [react-form-hook Docs](https://react-hook-form.com/get-started)
 * [zod](https://github.com/colinhacks/zod)
   * [zod Docs](https://zod.dev/)
+* [yup](https://github.com/jquense/yup)
+  * [yup Docs](https://github.com/jquense/yup)
 
 ---
 

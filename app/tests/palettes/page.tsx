@@ -13,13 +13,13 @@ const theme: any = fullConfig?.theme;
 const fixColor = (color: string) => color.replace('<alpha-value>', '1');
 const themeColors: any = theme?.colors;
 
-export interface SamplesProps {
+interface SamplesProps {
   bgColorName: string;
   bgColor: string;
   textColors: string[];
 }
 
-export const Samples: React.FC<SamplesProps> = ({ bgColorName, bgColor, textColors }: any) => {
+const Samples: React.FC<SamplesProps> = ({ bgColorName, bgColor, textColors }: any) => {
   return (
     <div className="flex flex-col w-full h-auto gap-1" style={{backgroundColor: bgColor}}>
       {Object.keys(textColors).map((textColorKey: any) => {
@@ -34,12 +34,12 @@ export const Samples: React.FC<SamplesProps> = ({ bgColorName, bgColor, textColo
   );
 };
 
-export interface PaletteProps {
+interface PaletteProps {
   colors: Record<string, string> | string;
   colorName: string;
 }
 
-export const Palette: React.FC<PaletteProps> = ({ colors, colorName }) => {
+const Palette: React.FC<PaletteProps> = ({ colors, colorName }) => {
   const Swatch = ({colorValue, colorName }: any) => {
     return colorValue ? (
       <div key={colorName} className="w-40 h-20 flex flex-col justify-center items-center border border-gray-300">

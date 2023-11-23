@@ -1,7 +1,7 @@
 'use client'
 
-import React, { createContext, useContext } from "react";
-import { FieldErrors, FieldPath, FieldValues, UseFormReturn, useController, useFormContext } from "react-hook-form";
+import React from "react";
+import { FieldErrors, FieldValues } from "react-hook-form";
 import { reach, MixedSchema } from 'yup';
 
 export const getReadableValidationErrorMessage = <T extends FieldValues>(errors: FieldErrors<T>) => {
@@ -60,31 +60,3 @@ export const getEnumOptions = (schemaField: any): string[] => {
   }
   return [];
 };
-
-// for zod
-// import { ZodEnum, ZodNullable, ZodObject, ZodOptional, ZodSchema, ZodTypeAny, z } from "zod";
-// export const getDefaultValues = (schema: ZodObject<any>, defaultValuesFromProps: any) => {
-//   const zodDefaults = Object.fromEntries(Object.entries(schema.shape).map(([key, value]) => {
-//       try {
-//         const defaultValue = (value as ZodTypeAny).parse(undefined);
-//         if (defaultValue !== undefined) {
-//           return [key, defaultValue];
-//         }
-//       } catch {}
-//       return [key, undefined];
-//     }).filter(([key, value]) => value !== undefined)
-//   );
-//   const filteredDefaults = Object.fromEntries(Object.entries(defaultValuesFromProps).filter(([key, value]) => value !== undefined));
-//   // If the two share keys, the properties of defaultValuesFromProps overrides the property of schema. The returned schema also inherits the "unknownKeys" policy (strip/strict/passthrough) and the catchall schema of B.
-//   return {...zodDefaults, ...filteredDefaults};
-// };
-
-// export const getEnumOptions = (schemaField: ZodTypeAny): string[] => {
-//   if (schemaField instanceof ZodEnum) {
-//     return schemaField.options;
-//   }
-//   if (schemaField instanceof ZodOptional || schemaField instanceof ZodNullable) {
-//     return getEnumOptions(schemaField.unwrap());
-//   }
-//   return [];
-// };

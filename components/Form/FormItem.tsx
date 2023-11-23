@@ -11,8 +11,6 @@ export type FormFieldType = typeof formFieldTypes[number];
 const FormFieldRender = memo(({ type, placeholder, disabled, schema, controller, className, ...rest }: any) => {
   switch (type) {
     case 'select':
-      // for zod
-      // const options = schema && getEnumOptions(schema) || [];
       const options = Array.from(schema?._whitelist) || [];
       return <Select placeholder={placeholder} items={options} {...controller?.field} disabled={disabled} className={className} {...rest} />
     case 'checkbox':

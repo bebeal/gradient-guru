@@ -63,22 +63,3 @@ const FormTestPage = () => {
   )
 };
 export default FormTestPage;
-
-
-// for zod
-// import z from 'zod';
-// const experimental = z.boolean().default(true).describe(JSON.stringify({ type: 'checkbox' }));
-// export const schema = z.object({
-//   model: z.string().min(1, { message: "Model is required" }).describe(JSON.stringify({ type: 'input' })),
-//   age: z.coerce.number().max(50).optional().describe(JSON.stringify({ type: 'input' })),
-//   apiId: z
-//     .string()
-//     .min(1, { message: "The API ID is required" })
-//     .regex(/^[0-9a-z-]+$/, { message: "The API ID must be lowercase alphanumeric with dashes" })
-//     .describe(JSON.stringify({ type: 'input' })),
-//   experimental,
-//   conditional: z.boolean().default(false).describe(JSON.stringify({ type: 'checkbox' })),
-//   animal: z.enum(['cat', 'dog', 'bird']).describe(JSON.stringify({ type: 'select' })),
-//   authors: z.array(z.string()).optional().describe(JSON.stringify({ type: 'input', placeholder: 'Add authors' })),
-//   Personal_ID: z.string().max(2).default('').describe(JSON.stringify({ type: 'input', placeholder: 'ID', description: 'Your user ID', label: 'User ID' })),
-// });

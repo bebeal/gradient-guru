@@ -28,7 +28,6 @@ export const useFormField = () => {
   const formContext = useFormContext();
   const fieldState = formContext?.getFieldState(name, formContext?.formState);
   const meta = schema?.spec?.meta || {};
-  // console.log('useFormField', schema, meta);
   const type = meta?.type as FormFieldType || 'input';
   const placeholder = meta?.placeholder || '';
   const label = labelRenderer || meta?.label || name;
@@ -59,12 +58,3 @@ export const useFormField = () => {
     ...fieldState,
   };
 };
-
-// for zod
-// import { ZodSchema } from 'zod';
-// hack to transfer meta data through zod schema: JSONify it and put it in the description
-// const meta = JSON.parse(schema?.description || '{}');
-// const type = meta?.type as FormFieldType || 'input';
-// const placeholder = meta?.placeholder || '';
-// const label = labelRenderer || meta?.label || name;
-// const description = meta?.description || '';
