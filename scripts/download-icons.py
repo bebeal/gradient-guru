@@ -46,6 +46,20 @@ def generate_iconset_file(new_svgs: list, directory: str, url: str = "", clean: 
         # comment with source url
         outfile.write(f"// {icon_set_name} - https://github.com/{str(url)} - {len(new_svgs)} Icons\n")
 
+def filter_content_for_transparent_rectangles(content: str) -> str:
+    content = content = content.decode('utf-8')
+    # Define the pattern to find IDs with 'Transparent_Rectangle'
+    pattern = r'id="([^"]*Transparent_Rectangle[^"]*)"'
+    found_ids = re.findall(pattern, content)
+
+    for id in found_ids:
+        # Define a new pattern to match the <rect> tag with the found ID, including potential newline characters
+        rect_pattern = rf'(\n|\r\n)?<rect id="{re.escape(id)}[^"]*"[^/>]*/>(\n|\r\n)?'
+        content = re.sub(rect_pattern, '', content)
+
+    content = content.encode('utf-8')
+    return content
+
 # Function to handle tqdm progress bar
 def handle_progress_bar(svgs: list, directory: str, source_url: str="", from_git: bool = False, repo_path: str = "", position = 1) -> None:
     # Remove dupes and sort
@@ -56,6 +70,8 @@ def handle_progress_bar(svgs: list, directory: str, source_url: str="", from_git
         for svg in svgs:
             svg_url = f"{source_url}{svg}" if not from_git else os.path.join(repo_path, svg)
             content = requests.get(svg_url).content if not from_git else open(svg_url, 'rb').read()
+            content = filter_content_for_transparent_rectangles(content)
+
             if b'<svg' in content:
                 new_name = to_camel_case(svg if not from_git else os.path.basename(svg))
                 # Avoid names that now become duplicate due to camel case conversion

@@ -6,6 +6,9 @@ export const isDevEnv: boolean = process.env.NODE_ENV === 'development';
 // Window check
 export const isWindow: boolean = typeof window !== 'undefined';
 
+// Apple
+export const isAppleDevice = (): boolean => navigator && /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
+
 // iOS check
 export const isIOS = (): boolean => navigator && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -28,7 +31,8 @@ export const isIE = (): boolean => navigator && /msie|trident/i.test(navigator.u
 export const isMobile = (): boolean => navigator && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 // Touch device check
-export const isTouchDevice = (): boolean => isWindow && 'ontouchstart' in window;
+export const isTouchDevice = (): boolean => isWindow && 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
 
 
 

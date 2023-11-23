@@ -22,7 +22,9 @@
     "moduleResolution": "bundler",                          // Specify the module resolution strategy
     "resolveJsonModule": true,                              // Allows importing modules with a .json extension, which is a common practice in node projects. This includes generating a type for the import based on the static JSON shape.
     "paths": {                                              // paths lets you declare how TypeScript should resolve an import in your require/imports.
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@tldraw/*": ["packages/tldraw/packages/*"],
+      "react": ["./node_modules/@types/react"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.config.js"],

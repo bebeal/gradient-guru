@@ -3,21 +3,25 @@
 import styled from "styled-components";
 import { getEncodedSVGUrl, isSVG } from "./svg";
 import { cn } from "./utils";
+import React from "react";
 
 // Default variants from radix ui
-const defaultVariants = ['classic', 'solid', 'soft', 'surface', 'outline', 'ghost'] as const;
+export const defaultVariants = ['classic', 'solid', 'soft', 'surface', 'outline', 'ghost'] as const;
 export type DefaultVariant = typeof defaultVariants[number];
 
 // Custom variants
-const customVariants = ['gradient', 'glow'] as const;
+export const customVariants = ['gradient', 'glow'] as const;
 export type CustomVariant = typeof customVariants[number];
 
 // Merged variants
 export type Variant = CustomVariant | DefaultVariant;
 
 // Reference tailwindcss border-radius
-const radius = ['none', 'small', 'base', 'medium', 'large', 'full'] as const;
+export const radius = ['none', 'small', 'base', 'medium', 'large', 'full'] as const;
 export type Radius = typeof radius[number];
+
+export const orientation = ['horizontal', 'vertical'] as const;
+export type Orientation = typeof orientation[number];
 
 export const isDefaultVariant = (variant: string): variant is DefaultVariant => {
   return defaultVariants.includes(variant as DefaultVariant);
@@ -29,6 +33,10 @@ export const isCustomVariant = (variant: string): variant is CustomVariant => {
 
 export const isRadius = (radius: string): radius is Radius => {
   return radius.includes(radius as Radius);
+};
+
+export const isOrientation = (orientation: string): orientation is Orientation => {
+  return orientation.includes(orientation as Orientation);
 };
 
 export const VariantClasses = (variant: CustomVariant = "gradient") => {
@@ -51,6 +59,13 @@ export const RadiusClasses = (radius: Radius = "medium") => {
     'large': cn(`rounded-lg`),
     'full': cn(`rounded-full`),
   }[radius];
+};
+
+export const OrientationClasses = (orientation: Orientation = "horizontal") => {
+  return {
+    'horizontal': cn(`flex-row w-full`),
+    'vertical': cn(`flex-col h-full`),
+  }[orientation];
 };
 
 export const DynamicGradients = ($colors: string[], $direction: string) => {
@@ -88,6 +103,7 @@ export interface GradientDivProps {
   className?: string;
   children?: any;
 };
+
 export const GradientDiv = (props: GradientDivProps) => {
   const { 
     colors=['#FF1834', '#FFC900', '#00E0D9', '#0074E0', '#7F00DE', '#FF007E'],
@@ -118,7 +134,7 @@ export const GradientDiv = (props: GradientDivProps) => {
                   )}
       {...rest}
     >
-      {children?.map((child: any, index: number) => {
+      {React.Children.map(children, (child, index) => {
         // The children are parsed into 2 groups to seperate the svg elements from the text elements.
         if (isSVG(child)) {
           // To get the linaer gradient background to show through a transparent svg element, encode the svg as a data url and use it as a mask

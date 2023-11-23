@@ -1,0 +1,172 @@
+'use client'
+
+import React, { useCallback, useEffect } from 'react'
+import { TLUiEventHandler, TldrawUiProps } from '@tldraw/tldraw';
+import { TLShape, setUserPreferences, useEditor, useValue } from '@tldraw/editor'
+import { TldrawUiContextProvider } from '@tldraw/tldraw/src/lib/ui/TldrawUiContextProvider';
+import { BackToContent } from '@tldraw/tldraw/src/lib/ui/components/BackToContent'
+import { DebugPanel } from '@tldraw/tldraw/src/lib/ui/components/DebugPanel'
+import { Dialogs } from '@tldraw/tldraw/src/lib/ui/components/Dialogs'
+import { FollowingIndicator } from '@tldraw/tldraw/src/lib/ui/components/FollowingIndicator'
+import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu'
+import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone'
+import { NavigationZone } from '@tldraw/tldraw/src/lib/ui/components/NavigationZone/NavigationZone'
+import { ExitPenMode } from '@tldraw/tldraw/src/lib/ui/components/PenModeToggle'
+import { StopFollowing } from '@tldraw/tldraw/src/lib/ui/components/StopFollowing'
+import { StylePanel } from '@tldraw/tldraw/src/lib/ui/components/StylePanel/StylePanel'
+import { ToastViewport, Toasts } from '@tldraw/tldraw/src/lib/ui/components/Toasts'
+import { Toolbar } from '@tldraw/tldraw/src/lib/ui/components/Toolbar/Toolbar'
+import { Button } from '@tldraw/tldraw/src/lib/ui/components/primitives/Button'
+import { useActions } from '@tldraw/tldraw/src/lib/ui/hooks/useActions'
+import { useBreakpoint } from '@tldraw/tldraw/src/lib/ui/hooks/useBreakpoint'
+import { useNativeClipboardEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useClipboardEvents'
+import { useEditorEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useEditorEvents'
+import { useKeyboardShortcuts } from '@tldraw/tldraw/src/lib/ui/hooks/useKeyboardShortcuts'
+import { useTranslation } from '@tldraw/tldraw/src/lib/ui/hooks/useTranslation/useTranslation'
+import { ToastProvider } from '@radix-ui/react-toast'
+import { cn } from '@/utils';
+import { FlowTabs } from '@/components';
+import { FlowStateContext, FlowStateProvider, useFlowState } from '@/hooks';
+
+export type FlowUiProps = TldrawUiProps & {
+  initialShapes?: TLShape[];
+};
+
+export const FlowUi = (props: FlowUiProps) => {
+  const {
+    children,
+    hideUi=false,
+    initialShapes,
+    ...rest
+  } = props;
+	return (
+		<TldrawUiContextProvider {...rest}>
+      <FlowStateProvider>
+        <FlowUiInner
+          initialShapes={initialShapes}
+          hideUi={hideUi}
+        >
+          {children}
+        </FlowUiInner>
+      </FlowStateProvider>
+		</TldrawUiContextProvider>
+	)
+};
+
+const FlowUiInner = (props: FlowUiProps) => {
+  const {
+    children,
+    hideUi,
+    initialShapes,
+    ...rest
+  } = props;
+  const { onUiEvent: recordUiEvent } = useFlowState();
+
+  const onUiEvent: TLUiEventHandler = useCallback((name: any, data: any) => {
+    recordUiEvent?.(name, data);
+    rest?.onUiEvent?.(name, data);
+  }, [recordUiEvent, rest]);
+
+	// The hideUi prop should prevent the UI from mounting.
+	// If we ever need want the UI to mount and preserve state, then
+	// we should change this behavior and hide the UI via CSS instead.
+	return (
+		<>
+			{children}
+			{hideUi ? null : <FlowUiContent initialShapes={initialShapes} onUiEvent={onUiEvent} {...rest} />}
+		</>
+	)
+};
+
+const FlowUiContent = (props: FlowUiProps) => {
+  const {
+    initialShapes,
+    ...rest
+  } = props;
+  const [mounted, setMounted] = React.useState(false);
+	const editor = useEditor();
+	const msg = useTranslation();
+	const breakpoint = useBreakpoint();
+	const isReadonlyMode = useValue('isReadonlyMode', () => editor.getInstanceState().isReadonly, [editor]);
+	const isFocusMode = useValue('focus', () => editor.getInstanceState().isFocusMode, [editor]);
+	const isDebugMode = useValue('debug', () => editor.getInstanceState().isDebugMode, [editor]);
+
+	useKeyboardShortcuts();
+	useNativeClipboardEvents();
+	useEditorEvents();
+
+	const { 'toggle-focus-mode': toggleFocus } = useActions();
+
+  useEffect(() => {
+    if (!editor) return;
+
+    if (!mounted) {
+      setUserPreferences({ id: editor?.user?.id, isDarkMode: true });
+      editor.updateInstanceState({ isReadonly: false, isGridMode: true });
+
+      if (initialShapes && initialShapes?.length > 0) {
+        editor.createShapes(initialShapes);
+      }
+      editor.zoomToFit();
+      setMounted(true);
+    }
+  }, [editor, initialShapes, mounted]);
+
+	return (
+		<ToastProvider>
+      <FlowTabs />
+			<div
+				className={cn('tlui-layout', {
+					'tlui-layout__mobile': breakpoint < 5,
+				})}
+				data-breakpoint={breakpoint}
+			>
+				{isFocusMode ? (
+					<div className={cn("tlui-layout__top")}>
+						<Button
+							type="icon"
+							className={cn("tlui-focus-button")}
+							title={`${msg('focus-mode.toggle-focus-mode')}`}
+							icon="dot"
+							onClick={() => toggleFocus.onSelect('menu')}
+						/>
+					</div>
+				) : (
+					<>
+						<div className={cn("tlui-layout__top")}>
+							<div className={cn("tlui-layout__top__left")}>
+								<MenuZone />
+								<div className={cn("tlui-helper-buttons")}>
+									<ExitPenMode />
+									<BackToContent />
+									<StopFollowing />
+								</div>
+							</div>
+							<div className={cn("tlui-layout__top__center")}></div>
+							<div className={cn("tlui-layout__top__right")}>
+								{breakpoint >= 5 && !isReadonlyMode && (
+									<div className={cn("tlui-style-panel__wrapper")}>
+										<StylePanel />
+									</div>
+								)}
+							</div>
+						</div>
+						<div className={cn("tlui-layout__bottom")}>
+							<div className={cn("tlui-layout__bottom__main")}>
+								<NavigationZone />
+								<Toolbar />
+								{breakpoint >= 4 && <HelpMenu />}
+							</div>
+							{isDebugMode && <DebugPanel renderDebugMenuItems={null} />}
+						</div>
+					</>
+				)}
+				<Toasts />
+				<Dialogs />
+				<ToastViewport />
+				<FollowingIndicator />
+			</div>
+		</ToastProvider>
+	)
+};
+

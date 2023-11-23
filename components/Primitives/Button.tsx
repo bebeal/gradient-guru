@@ -1,14 +1,14 @@
 'use client'
 
 import { Button as ThemedButton } from "@radix-ui/themes";
-import { Variant, noop, cn, GradientDiv, GradientSvg, isDefaultVariant, Radius, RadiusClasses, VariantClasses, getEncodedSVGUrl, isSVG } from "@/utils";
+import { Variant, noop, cn, GradientDiv, GradientSvg, isDefaultVariant, Radius, RadiusClasses, VariantClasses, getEncodedSVGUrl, isSVG, isCustomVariant } from "@/utils";
 import { useRippleEffect } from '@/hooks'
 import { forwardRef, useEffect, useRef, useState } from "react";
 
 export interface ButtonProps {
   children?: any;
   className?: string;
-  onClick?: () => {};
+  onClick?: (event: any) => void;
   variant?: Variant;
   colors?: string[];
   radius?: Radius;
@@ -35,19 +35,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
   const [isHovered, setIsHovered] = useState(false);
 
   const onClick = (event: any) => {
-    ripple && createRippleEffect(event);
+    ripple && isCustomVariant(variant) && createRippleEffect(event);
     onClickCallback?.(event);
   }
 
   return isDefaultVariant(variant) ? (
-    <ThemedButton ref={ref} className={cn(RadiusClasses(radius), className)} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
+    <ThemedButton ref={ref} className={cn(RadiusClasses(radius))} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
   ) : (
     <div className="relative">
       <button
         ref={ref}
         type={type}
         className={cn(
-          `flex w-auto h-auto select-none align-top cursor-pointer overflow-hidden relative text-base leading-none`,
+          `relative w-auto h-auto flex overflow-hidden select-none align-top cursor-pointer text-base leading-none z-[2]`,
           RadiusClasses(radius),
           VariantClasses(variant),
           className
@@ -57,9 +57,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
         onMouseLeave={() => setIsHovered(false)}
       >
         {isGradientVariant && (
-          <div className={cn( `font-bold w-full h-full bg-primary text-transparent py-2 px-2.5 m-px`, RadiusClasses(radius))}>
+          <div className={cn( `w-full h-full bg-primary text-transparent font-bold py-2 px-2.5 m-px`, RadiusClasses(radius))}>
             {/* For sizing the div properly since the gradient is an absolutely positioned div and this parent div needs to size as if its child is relative */}
-            <div className={cn(`invisible flex w-auto h-auto gap-1 justify-center items-center font-bold`)}>{children}</div>
+            <div className={cn(`invisible w-auto h-auto flex gap-1 justify-center items-center`)}>{children}</div>
             {/* This is 1 out of 2 absolutely positioned divs with a linear-gradient backgrounds and is used to apply gradients to the child components */}
             <GradientDiv backglow={false} isHovered={isHovered} colors={colors} radius={radius}>{children}</GradientDiv>
           </div>
@@ -67,7 +67,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
       </button>
       {/* Border Gradient, backglow to true which will apply large blur to the gradients tranistioning which are in sync with the gradients inside of the buttons */}
       {isGradientVariant && (
-        <div className={cn("absolute inset-0 z-[-1] grid grid-cols-1")}>
+        <div className={cn("absolute grid grid-cols-1 inset-0 z-[1]")}>
           <GradientDiv backglow={true} isHovered={true} colors={colors} radius={radius} />
         </div>
       )}

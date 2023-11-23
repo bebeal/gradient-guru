@@ -2,12 +2,12 @@
 
 import { createContext, useContext } from 'react';
 
-export interface ThemePanelContextProps {
+export interface ThemePanelContextValue {
   themePanelEnabled: boolean;
   setThemePanelEnabled: (show: boolean) => void;
 }
 
-export const ThemePanelContext = createContext<ThemePanelContextProps>({
+export const ThemePanelContext = createContext<ThemePanelContextValue>({
   themePanelEnabled: false,
   setThemePanelEnabled: () => {},
 });

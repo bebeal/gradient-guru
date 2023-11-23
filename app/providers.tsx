@@ -8,10 +8,11 @@ import * as Toast from "@radix-ui/react-toast";
 import { DirectionProvider } from '@radix-ui/react-direction';
 import { ThemePanelContext } from "@/hooks";
 import StyledComponentsRegistry from "./registry";
-import '@/app/globals.css';
+
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
 import '@/assets/fonts/Monaspace/Monaspace.css';
 import '@radix-ui/themes/styles.css';
+import '@/app/globals.css';
 
 const queryClient = new QueryClient();
 
@@ -23,7 +24,7 @@ const Providers = ({ children }: any) => {
       <Theme
         asChild={false}
         hasBackground={true}
-        appearance="inherit"
+        appearance="dark"
         accentColor="indigo"
         grayColor="auto"
         panelBackground="translucent"
@@ -32,7 +33,7 @@ const Providers = ({ children }: any) => {
       >
         <StyledComponentsRegistry>
           <ThemePanelContext.Provider value={{ themePanelEnabled, setThemePanelEnabled }}>
-            <DirectionProvider dir="rtl">
+            <DirectionProvider dir="ltr">
               <QueryClientProvider client={queryClient}>
                 <Toast.Provider>
                   <div className="flex flex-col h-screen w-full overflow-hidden">

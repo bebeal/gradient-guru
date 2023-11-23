@@ -24,5 +24,4 @@
     }
   ],
   "ignorePatterns": ["node_modules", "packages"]
-
 }

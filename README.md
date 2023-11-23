@@ -24,11 +24,24 @@ idk
     * [tailwindcss-animate](https://github.com/jamiebuilds/tailwindcss-animate): For creating animations
     * [@tailwindcss/typography](https://github.com/tailwindlabs/tailwindcss-typography): Sets typographic defaults for HTML elements
     * [tailwindcss-radix](https://github.com/ecklf/tailwindcss-radix): Utilities and variants for styling radix state
+* [Styled Components](https://github.com/styled-components): CSS-in-JS library
+  * [Styled Components Docs](https://styled-components.com/docs)
+
+---
+
+* [react-form-hook](https://github.com/react-hook-form/react-hook-form)
+  * [react-form-hook Docs](https://react-hook-form.com/get-started)
+* [zod](https://github.com/colinhacks/zod)
+  * [zod Docs](https://zod.dev/)
 
 ---
 
 * [react-query](https://github.com/TanStack/query)
   * [react-query Docs](https://tanstack.com/query/v3/docs/react/overview)
+
+---
+
+* [Tldraw](https://github.com/tldraw/tldraw)
 
 ---
 
@@ -74,7 +87,6 @@ idk
 * [Tldraw](https://github.com/tldraw/tldraw)
 * [VSCode](https://github.com/vscode-icons/vscode-icons)
 
-
 ### Structure
 
 * `app/`
@@ -90,29 +102,35 @@ idk
 ### Pages
 
 * `https://gradient-guru.com`
+  * [`/fonts`](https://gradient-guru.com/fonts)
   * [`/icon-sets`](https://gradient-guru.com/icon-sets)
-    * [`/icon-sets/Academicons`](https://gradient-guru.com/icon-sets/Academicons)
-    * [`/icon-sets/Carbon`](https://gradient-guru.com/icon-sets/Carbon)
-    * [`/icon-sets/Custom`](https://gradient-guru.com/icon-sets/Custom)
-    * [`/icon-sets/Dev`](https://gradient-guru.com/icon-sets/Dev)
-    * [`/icon-sets/EntypoPlus`](https://gradient-guru.com/icon-sets/EntypoPlus)
-    * [`/icon-sets/EntypoSocial`](https://gradient-guru.com/icon-sets/EntypoSocial)
-    * [`/icon-sets/Flag`](https://gradient-guru.com/icon-sets/Flag)
-    * [`/icon-sets/FontAudio`](https://gradient-guru.com/icon-sets/FontAudio)
-    * [`/icon-sets/FontAwesome`](https://gradient-guru.com/icon-sets/FontAwesome)
-    * [`/icon-sets/FontGIS`](https://gradient-guru.com/icon-sets/FontGIS)
-    * [`/icon-sets/Game`](https://gradient-guru.com/icon-sets/Game)
-    * [`/icon-sets/Geoglyphs`](https://gradient-guru.com/icon-sets/Geoglyphs)
-    * [`/icon-sets/Heroicons`](https://gradient-guru.com/icon-sets/Heroicons)
-    * [`/icon-sets/Logos`](https://gradient-guru.com/icon-sets/Logos)
-    * [`/icon-sets/Lucide`](https://gradient-guru.com/icon-sets/Lucide)
-    * [`/icon-sets/Map`](https://gradient-guru.com/icon-sets/Map)
-    * [`/icon-sets/Medical`](https://gradient-guru.com/icon-sets/Medical)
-    * [`/icon-sets/MUI`](https://gradient-guru.com/icon-sets/MUI)
-    * [`/icon-sets/Radix`](https://gradient-guru.com/icon-sets/Radix)
-    * [`/icon-sets/Skill`](https://gradient-guru.com/icon-sets/Skill)
-    * [`/icon-sets/Spinner`](https://gradient-guru.com/icon-sets/Spinner)
-    * [`/icon-sets/Tldraw`](https://gradient-guru.com/icon-sets/Tldraw)
-    * [`/icon-sets/VSCode`](https://gradient-guru.com/icon-sets/VSCode)
   * [`/primitives`](https://gradient-guru.com/primitives)
+  * [`/tests`](https://gradient-guru.com/tests)
+  * [`/flow`](https://gradient-guru.com/flow)
 
+## Build
+
+* Install dependencies and start development server
+
+```bash
+npm install
+npm run dev
+```
+
+* Clean node_modules and .next directories
+
+```bash
+npm run clean
+```
+
+* Generate iconset assets and ts files
+
+```bash
+npm run generate-iconsets
+```
+
+* Build for deployment
+
+```bash
+npm run build
+```

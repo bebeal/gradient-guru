@@ -7,9 +7,20 @@ const createJestConfig = nextJest({ dir: './' })
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
+    
     "@/(.*)": "<rootDir>/$1"
   },
+  testPathIgnorePatterns: [
+    "<rootDir>/packages/",
+  ],
 }
  
 // createJestConfig is exported in this way to ensure that next/jest can load the Next.js configuration, which is async
-module.exports = createJestConfig(customJestConfig)
+async function jestConfig() {
+  const nextJestConfig = await createJestConfig(customJestConfig)()
+  // /node_modules/ is the first pattern
+  nextJestConfig.transformIgnorePatterns[0] = '/node_modules/(?!nanoid)/'
+  return nextJestConfig
+}
+
+module.exports = jestConfig

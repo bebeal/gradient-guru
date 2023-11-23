@@ -24,27 +24,52 @@
 :root {
   --text-primary: 0 0 0;
   --text-secondary: 85 85 85;
-  --text-tertiary: 136 136 136;
 
   --background-primary: 255 255 255;
   --background-secondary: 242 242 242;
-  --background-tertiary: 230 230 230;
 
   --border-primary: 0 0 0;
   --border-secondary: 220 220 220;
-  --border-tertiary: 200 200 200;
+
+  --accent-50: 127 197 255;
+  --accent-100: 101 185 255;
+  --accent-200: 76 174 254;
+  --accent-300: 50 162 255;
+  --accent-400: 25 151 255;
+  --accent-500: 0 140 255;
+  --accent-600: 0 125 229;
+  --accent-700: 0 111 204;
+  --accent-800: 0 97 178;
+  --accent-900: 0 83 153;
+  --accent-950: 0 69 127;
+
+  --muted: 85 85 85;
+  --error: 255 69 58;
 }
 
 .dark {
   --text-primary: 249 249 249;
   --text-secondary: 187 187 187;
-  --text-tertiary: 136 136 136;
 
   --background-primary: 54 61 68;
   --background-secondary: 44 49 54;
-  --background-tertiary: 73 85 95;
 
   --border-primary: 73 85 95;
   --border-secondary: 85 95 105;
-  --border-tertiary: 120 130 140;
+
+  --accent-50: 127 197 255;
+  --accent-100: 101 185 255;
+  --accent-200: 76 174 254;
+  --accent-300: 50 162 255;
+  --accent-400: 25 151 255;
+  --accent-500: 0 140 255;
+  --accent-600: 0 125 229;
+  --accent-700: 0 111 204;
+  --accent-800: 0 97 178;
+  --accent-900: 0 83 153;
+  --accent-950: 0 69 127;
+
+  --muted: 85 85 85;
+  --error: 255 69 58;
 }
+
