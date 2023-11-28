@@ -21,7 +21,8 @@ export const FlowNodesTab = (props: FlowNodesTabProps) => {
     editor.updateShape(newNodeProperties);
   }, [editor]);
   
-  const items = () => {
+  const items = useCallback(() => {
+    if (!editor) return [];
     const selectedNodes = editor.getSelectedShapes();
     return editor?.getCurrentPageShapesSorted().map((node: any, index: number) => {
       // filter out unnecessary fields
@@ -46,7 +47,7 @@ export const FlowNodesTab = (props: FlowNodesTabProps) => {
         selected,
       }
     });
-  };
+  }, [editor, editor.getCurrentPageShapesSorted(), onNodeChange]);
 
   return (
     <FlowTab title="Nodes">

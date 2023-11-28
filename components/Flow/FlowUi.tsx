@@ -133,7 +133,7 @@ const FlowUiContent = (props: FlowUiProps) => {
         }
         editor.zoomToFit();
         setMounted(true);
-      }, 50);
+      }, 0);
     }
   }, [editor, initialShapes, mounted]);
 

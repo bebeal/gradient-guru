@@ -1,7 +1,8 @@
 'use client'
 
 import { IconSetCache, SidePanel, FlowEventsTab, FlowNodesTab, FlowQueryBuilderTab, FlowStateTab } from "@/components";
-import { useMemo } from "react";
+import { AccordionItemProps } from "@radix-ui/react-accordion";
+import { useCallback, useMemo } from "react";
 
 export interface FlowTabsProps {
   className?: string;
@@ -36,7 +37,7 @@ export const FlowTabs = (props: FlowTabsProps) => {
   }, []);
 
   const QueryBuilderTab = useMemo(() => {
-    return     {
+    return {
       icon: <IconSetCache.Carbon.IbmWatsonStudio height={'100%'} width={'100%'} stroke={'transparent'} />,
       name: 'Query Builder',
       content: <FlowQueryBuilderTab />
