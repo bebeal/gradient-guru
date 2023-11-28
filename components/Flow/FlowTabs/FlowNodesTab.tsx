@@ -47,7 +47,7 @@ export const FlowNodesTab = (props: FlowNodesTabProps) => {
         selected,
       }
     });
-  }, [editor, editor.getCurrentPageShapesSorted(), onNodeChange]);
+  }, [editor, onNodeChange]);
 
   return (
     <FlowTab title="Nodes">
