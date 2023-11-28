@@ -25,17 +25,18 @@ export const FormFieldContext = createContext<FormFieldContextValue>({} as FormF
 // ***********************
 export const useFormField = () => {
   const { name, schema, controller, label: labelRenderer, id } = useContext(FormFieldContext);
-  const formContext = useFormContext();
-  const fieldState = formContext?.getFieldState(name, formContext?.formState);
+  const form = useFormContext();
+  const fieldState = form?.getFieldState(name, form?.formState);
   const meta = schema?.spec?.meta || {};
   const type = meta?.type as FormFieldType || 'input';
   const placeholder = meta?.placeholder || '';
-  const label = labelRenderer || meta?.label || name;
+  const label = labelRenderer || meta?.label || schema?.spec?.label || name;
+  const readonly = meta?.readonly || false;
   const description = meta?.description || '';
   let disabled = meta?.disabled || false;
   // if disabled is a function then call it and pass form context
   if (typeof disabled === 'function') {
-    disabled = disabled(formContext);
+    disabled = disabled(form);
   }
 
   if (!name || !schema) {
@@ -51,10 +52,12 @@ export const useFormField = () => {
     placeholder,
     label,
     description,
+    readonly,
     disabled,
     name,
     schema,
     controller,
+    form,
     ...fieldState,
   };
 };

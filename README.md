@@ -2,53 +2,36 @@
 
 idk
 
-## Dependencies
+## Libraries
 
 ---
 
 * [React](https://github.com/facebook/react): JavaScript library for building user interfaces
   * [React Docs](https://react.dev/)
+* [TypeScript](https://github.com/microsoft/TypeScript)
+  * [TypeScript Docs](https://www.typescriptlang.org/docs/)
 * [Next.js](https://github.com/vercel/next.js/): React framework and tooling
   * [Next.js Docs](https://nextjs.org/docs)
   * [next-themes](https://github.com/pacocoursey/next-themes): An abstraction for themes in Next.js
-
----
-
 * [Radix-UI](https://github.com/radix-ui): Open-source UI component library for building high-quality, modular, themable, accessible components
   * [Radix Primitives](radix-ui.com/docs/primitives): Low-level UI component library
   * [Radix Themes](radix-ui.com/themes/docs): Add integration with radix-ui primitives to make them themable
 * [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss): Utility-first CSS framework
   * [Tailwind CSS Docs](https://tailwindcss.com)
   * Plugins:
-    * [radix-ui-themes-with-tailwind](https://github.com/needim/radix-ui-themes-with-tailwind): Integrates radix-ui themes with tailwindcss
     * [tailwindcss-animate](https://github.com/jamiebuilds/tailwindcss-animate): For creating animations
     * [@tailwindcss/typography](https://github.com/tailwindlabs/tailwindcss-typography): Sets typographic defaults for HTML elements
     * [tailwindcss-radix](https://github.com/ecklf/tailwindcss-radix): Utilities and variants for styling radix state
 * [Styled Components](https://github.com/styled-components): CSS-in-JS library
   * [Styled Components Docs](https://styled-components.com/docs)
-
----
-
+* [Tldraw](https://github.com/tldraw/tldraw)
+  * [Tldraw Docs](https://tldraw.dev/docs)
 * [react-form-hook](https://github.com/react-hook-form/react-hook-form)
   * [react-form-hook Docs](https://react-hook-form.com/get-started)
-* [zod](https://github.com/colinhacks/zod)
-  * [zod Docs](https://zod.dev/)
 * [yup](https://github.com/jquense/yup)
   * [yup Docs](https://github.com/jquense/yup)
-
----
-
 * [react-query](https://github.com/TanStack/query)
   * [react-query Docs](https://tanstack.com/query/v3/docs/react/overview)
-
----
-
-* [Tldraw](https://github.com/tldraw/tldraw)
-
----
-
-* [TypeScript](https://github.com/microsoft/TypeScript)
-  * [TypeScript Docs](https://www.typescriptlang.org/docs/)
 
 ---
 
@@ -63,6 +46,8 @@ idk
     * [Neon](https://github.com/githubnext/monaspace/blob/main/fonts/variable/MonaspaceNeonVarVF%5Bwght%2Cwdth%2Cslnt%5D.ttf)
     * [Radon](https://github.com/githubnext/monaspace/blob/main/fonts/variable/MonaspaceRadonVarVF%5Bwght%2Cwdth%2Cslnt%5D.ttf)
     * [Xenon](https://github.com/githubnext/monaspace/blob/main/fonts/variable/MonaspaceXenonVarVF%5Bwght%2Cwdth%2Cslnt%5D.ttf)
+
+---
 
 ### IconSets
 
@@ -96,23 +81,30 @@ idk
   * `fonts/`
   * `icons/`
 * `components/`
-* `constants/`
 * `hooks/`
-* `utils/`
+* `packages/`
+  * `tldraw/`
+* `public/`
 * `scripts/`
+* `utils/`
 
 ### Pages
 
 * `https://gradient-guru.com`
-  * [`/fonts`](https://gradient-guru.com/fonts)
-  * [`/icon-sets`](https://gradient-guru.com/icon-sets)
-  * [`/primitives`](https://gradient-guru.com/primitives)
   * [`/tests`](https://gradient-guru.com/tests)
+    * [`/fonts`](https://gradient-guru.com/tests/fonts)
+    * [`/form`](https://gradient-guru.com/tests/form)
+    * [`/icon-sets`](https://gradient-guru.com/tests/icon-sets)
+    * [`/form`](https://gradient-guru.com/tests/palettes)
+    * [`/primitives`](https://gradient-guru.com/tests/primitives)
+    * [`/side-panel`](https://gradient-guru.com/tests/side-panel)
   * [`/flow`](https://gradient-guru.com/flow)
 
 ## Build
 
-* Install dependencies and start development server
+* To run the development server
+
+server on `localhost:3000`
 
 ```bash
 npm install

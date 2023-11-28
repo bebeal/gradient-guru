@@ -1,7 +1,8 @@
 'use client'
 
-import { CarbonIconSet} from './IconSets';
 // import { AcademiconsIconSet, CarbonIconSet, CustomIconSet, DevIconSet, EntypoPlusIconSet, EntypoSocialIconSet, FlagIconSet, FontAudioIconSet, FontAwesomeRegularIconSet, FontGISIconSet, GameIconSet, GeoglyphsIconSet, HeroiconsSolidIconSet, LogosIconSet, LucideIconSet, MapIconSet, MedicalIconSet, MuiLineIconSet, RadixIconSet, SkillIconSet, SpinnerIconSet, TldrawIconSet, VSCodeIconSet } from './IconSets';
+import { memo } from 'react';
+import { CarbonIconSet, CustomIconSet } from './IconSets';
 import { Icon } from './Icon';
 import { MapCache } from "@/utils";
 
@@ -13,32 +14,12 @@ export interface IconSetMap {
   [iconSetName: string]: IconSet;
 }
 
-const IconSets: IconSetMap = {
-  // 'Academicons': {Icons: AcademiconsIconSet},
+export const IconSets: IconSetMap = {
   'Carbon': {Icons: CarbonIconSet},
-  // 'Custom': {Icons: CustomIconSet},
-  // 'Dev': {Icons: DevIconSet},
-  // 'EntypoPlus': {Icons: EntypoPlusIconSet},
-  // 'EntypoSocial': {Icons: EntypoSocialIconSet},
-  // 'Flag': {Icons: FlagIconSet},
-  // 'FontAudio': {Icons: FontAudioIconSet, overrideDefaultProps: { viewBox: '0 0 256 256' }},
-  // 'FontAwesomeRegular': {Icons: FontAwesomeRegularIconSet},
-  // 'FontGIS': {Icons: FontGISIconSet, overrideDefaultProps: { viewBox: '0 0 100 100' }},
-  // 'Game': {Icons: GameIconSet},
-  // 'Geoglyphs': {Icons: GeoglyphsIconSet},
-  // 'HeroiconsSolid': {Icons: HeroiconsSolidIconSet},
-  // 'Logos': {Icons: LogosIconSet},
-  // 'Lucide': {Icons: LucideIconSet, overrideDefaultProps: {fill: 'none', stroke: 'currentColor'}},
-  // 'Map': {Icons: MapIconSet },
-  // 'Medical': {Icons: MedicalIconSet},
-  // 'MuiLine': {Icons: MuiLineIconSet},
-  // 'Radix': {Icons: RadixIconSet},
-  // 'Skill': {Icons: SkillIconSet},
-  // 'Spinner': {Icons: SpinnerIconSet},
-  // 'Tldraw': {Icons: TldrawIconSet},
-  // 'VSCode': {Icons: VSCodeIconSet},
+  'Custom': {Icons: CustomIconSet},
 };
-export const IconSetNames = Object.keys(IconSets);
+export const IconSetNames: string[] = Object.keys(IconSets) || [];
+export type SetNames = keyof typeof IconSets;
 
 // Will map entire sets and individual icons to their respective render functions;
 // IconSetCache['Carbon']['Upload'] = (props, ref) => Icon or IconSetCache['Carbon']['Download'] = (props, ref) => Icon

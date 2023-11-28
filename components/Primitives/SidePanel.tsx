@@ -2,7 +2,7 @@
 
 import React, { ForwardedRef, MutableRefObject, RefObject, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
-import { cn } from '@/utils';
+import { Radius, RadiusClasses, cn } from '@/utils';
 import { useRippleEffect } from '@/hooks';
 
 export interface SidePanelTabProps {
@@ -19,6 +19,8 @@ export interface SidePanelProps {
   bounds?: [number, number];
   overlay?: boolean;
   ripple?: boolean;
+  radius?: Radius;
+  className?: string;
 };
 
 export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<HTMLElement>) => {
@@ -26,10 +28,13 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
     tabs,
     resizeable=true,
     defatultTabIndex=undefined,
-    defaultWidth=300,
-    bounds=[200, 500],
+    defaultWidth=350,
+    bounds=[200, 600],
     overlay=true,
-    ripple=true
+    ripple=false,
+    radius='medium',
+    className='',
+    ...rest
   } = props;
   // activeTabIndex = undefined means no tab is active
   const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(defatultTabIndex);
@@ -107,11 +112,13 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
       className={cn(
         `relative flex w-auto h-full`,
         `text-primary shadow-2 shadow-2xl`,
-        `transition-all z-[500]`
+        `transition-all z-[500]`,
+        className
       )}
       data-orientation="vertical"
       orientation="vertical"
       activationMode="automatic"
+      {...rest}
     >
       <Tabs.List
         className={cn(
@@ -121,7 +128,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
         aria-label="ColumnPanel"
       >
         {tabs.map((tab, index) => {
-          const tabValue = `${tab}-${index}`;
+          const tabValue = `${tab?.name}-${index}`;
           const tabIsActive = activeTabIndex === index;
           return (
             <Tabs.Trigger
@@ -129,7 +136,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
                 "relative w-10 h-10 p-2 -mr-0.5 flex justify-center items-center overflow-hidden cursor-pointer [&>*]:pointer-events-none",
                 "font-bold text-secondary border border-transparent bg-transparent",
                 'hover:bg-secondary/50 hover:text-accent',
-                "rounded-lg rounded-r-none",
+                RadiusClasses(radius), "rounded-r-none",
                 index === 0 && 'border-r-transparent rounded-tr-none',
                 tabIsActive && `border border-accent border-r-transparent bg-secondary text-accent hover:border-r-[rgb(var(--background-secondary))]`,
               )}
@@ -153,7 +160,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
         }}
       >
         {tabs.map((tab, index) => {
-          const tabValue = `${tab}-${index}`;
+          const tabValue = `${tab?.name}-${index}`;
           const tabIsActive = activeTabIndex === index;
           return (
             <Tabs.Content
@@ -163,14 +170,15 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
               data-state={"active"}
               data-orientation={"horizontal"}
               className={cn(
-                `w-full h-full overflow-auto bg-secondary outline-none border`,
-                "rounded-lg",
+                `w-full h-full overflow-auto bg-secondary outline-none border will-change-transform`,
+                RadiusClasses(radius),
                 index === 0 && tabIsActive && 'rounded-tl-none',
                 index === tabs.length - 1 && tabIsActive && 'rounded-bl-none',
                 'border-accent',
                 `transition-all duration-600 ease-in-out`,
                 `top-0 left-0 absolute`,
                 `transform`,
+                !tabIsActive && `hidden`
               )}
               style={{
                 transform: `translateY(${((activeTabIndex||0) - index) * -100}%)`

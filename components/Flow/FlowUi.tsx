@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useCallback, useEffect } from 'react'
-import { TLUiEventHandler, TldrawUiProps } from '@tldraw/tldraw';
+import React, { useCallback, useEffect, useMemo } from 'react'
+import { TLUiEventHandler, TLUiEventSource, TLUiOverrides, TldrawUiProps, toolbarItem, useUiEvents } from '@tldraw/tldraw';
 import { TLShape, setUserPreferences, useEditor, useValue } from '@tldraw/editor'
 import { TldrawUiContextProvider } from '@tldraw/tldraw/src/lib/ui/TldrawUiContextProvider';
 import { BackToContent } from '@tldraw/tldraw/src/lib/ui/components/BackToContent'
@@ -37,18 +37,46 @@ export const FlowUi = (props: FlowUiProps) => {
     children,
     hideUi=false,
     initialShapes,
+    onUiEvent: onUiEventCallback,
     ...rest
   } = props;
+  const { onUiEvent: recordUiEvent } = useFlowState();
+
+  const onUiEvent = useCallback<TLUiEventHandler>((name, data) => {
+    recordUiEvent?.(name, data);
+    onUiEventCallback?.(name, data);
+  }, [onUiEventCallback, recordUiEvent]);
+
+  const uiOverrides: TLUiOverrides = useMemo(() => ({
+    tools(editor, tools) {
+      // Create a tool item in the ui's context.
+      tools.icon = {
+        id: 'icon',
+        label: 'tool.icon' as any,
+        readonlyOk: false,
+        icon: 'color',
+        kbd: 'c',
+        onSelect: (source: TLUiEventSource) => {
+          editor.setCurrentTool('icon')
+          // trackEvent('select-tool', { source, id: 'icon' })
+        },
+      }
+      return tools
+    },
+    toolbar(_app, toolbar, { tools }) {
+      toolbar.push(toolbarItem(tools.icon))
+      return toolbar
+    },
+  }), []);
+
 	return (
-		<TldrawUiContextProvider {...rest}>
-      <FlowStateProvider>
+		<TldrawUiContextProvider overrides={uiOverrides} onUiEvent={onUiEvent} {...rest}>
         <FlowUiInner
           initialShapes={initialShapes}
           hideUi={hideUi}
         >
           {children}
         </FlowUiInner>
-      </FlowStateProvider>
 		</TldrawUiContextProvider>
 	)
 };
@@ -60,20 +88,13 @@ const FlowUiInner = (props: FlowUiProps) => {
     initialShapes,
     ...rest
   } = props;
-  const { onUiEvent: recordUiEvent } = useFlowState();
-
-  const onUiEvent: TLUiEventHandler = useCallback((name: any, data: any) => {
-    recordUiEvent?.(name, data);
-    rest?.onUiEvent?.(name, data);
-  }, [recordUiEvent, rest]);
-
 	// The hideUi prop should prevent the UI from mounting.
 	// If we ever need want the UI to mount and preserve state, then
 	// we should change this behavior and hide the UI via CSS instead.
 	return (
 		<>
 			{children}
-			{hideUi ? null : <FlowUiContent initialShapes={initialShapes} onUiEvent={onUiEvent} {...rest} />}
+			{hideUi ? null : <FlowUiContent initialShapes={initialShapes} {...rest} />}
 		</>
 	)
 };
@@ -108,13 +129,15 @@ const FlowUiContent = (props: FlowUiProps) => {
         editor.createShapes(initialShapes);
       }
       editor.zoomToFit();
+
+      editor.setCurrentTool('select');
       setMounted(true);
     }
   }, [editor, initialShapes, mounted]);
 
 	return (
 		<ToastProvider>
-      <FlowTabs />
+      <FlowTabs className="tl-tabs" />
 			<div
 				className={cn('tlui-layout', {
 					'tlui-layout__mobile': breakpoint < 5,

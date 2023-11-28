@@ -1,3 +1,4 @@
+'use client'
 
 export const formatDate = (input: string | number): string => {
   const date = new Date(input)

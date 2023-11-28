@@ -26,7 +26,7 @@ export const FormControl = React.forwardRef<HTMLDivElement, FormControlProps>((p
           : `${formDescriptionId} ${formMessageId}`
       }
       aria-invalid={!!error}
-      className={cn(`flex text-sm justify-end w-auto`, className)}
+      className={cn(`flex`, className)}
       {...rest}
     >{children}</Slot>
   )

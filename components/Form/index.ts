@@ -1,3 +1,4 @@
+export * from './FakeForm';
 export * from './Form';
 export * from './FormControl';
 export * from './FormField';

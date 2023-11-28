@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { getEncodedSVGUrl, isSVG } from "./svg";
 import { cn } from "./utils";
 import React from "react";
+import { IconSetCache } from "@/components";
 
 // Default variants from radix ui
 export const defaultVariants = ['classic', 'solid', 'soft', 'surface', 'outline', 'ghost'] as const;
@@ -164,5 +165,59 @@ export const GradientDiv = (props: GradientDivProps) => {
         }
       })}
     </DynamicGradientBackground>
+  )
+};
+
+export interface LoadingProps {
+  spinner?: boolean;
+  dots?: boolean;
+  text?: string;
+  children?: any;
+};
+export const Loading = (props: LoadingProps) => {
+  const {
+    spinner=true,
+    dots=false,
+    children,
+    text='Loading',
+  } = props;
+  const content = children ? children : text;
+  
+  return (
+    <div className="w-auto h-auto flex items-center justify-center text-xl text-muted gap-1">
+      {spinner && <IconSetCache.Custom.Loader className={cn('flex items-center justify-center h-6 w-6 text-base gap-1')} />}
+      {content} {dots && <IconSetCache.Custom.DotsLoader className={"h-6 w-6 self-end"} />}
+    </div>
+  )
+};
+
+export type ErrorMessage = { message?: string, stack?: string };
+export interface ErroringProps {
+  children?: any;
+  error?: ErrorMessage | string; 
+}
+export const Erroring = (props: ErroringProps) => {
+  const {
+    children,
+    error = { message: 'Something went wrong', stack: 'Error: Something went wrong' },
+  } = props;
+  const content = children ? children : (<>Error:  <div className={cn(`text-lg`)}>{typeof error === 'string' ? error : error?.message}</div></>);
+
+  return (
+    <div className="w-full h-full flex items-center justify-center text-xl text-error gap-2"><IconSetCache.Carbon.StatusPartialFail className={"flex items-center justify-center h-6 w-6 text-base"} />{content}</div>
+  );
+};
+
+export interface UnderConstructionProps {
+  className?: string;
+};
+export const UnderConstruction = (props: UnderConstructionProps) => {
+  const {
+    className=''
+  } = props;
+  return (
+    <div className={cn("absolute w-full h-full flex justify-center items-center z-[10] rounded-lg pointer-events-none overflow-visible [transform:scale(0.9)]", className)}>
+      <div className="top-0 left-1/2 -translate-x-1/2 bg-primary text-primary opacity-80 text-md px-1 py-1 rounded-lg border-2 border-solid border-primary animate-banner-pulse w-full z-[10] text-center">🚧 Under Construction 🚧</div>
+    </div>
   )
 };

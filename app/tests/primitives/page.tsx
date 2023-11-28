@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Separator } from "@radix-ui/themes";
-import { Button, Checkbox, IconSetCache, Input, Select } from "@/components";
+import { Button, CarbonIconSetNames, Checkbox, IconSetCache, Input, Select } from "@/components";
 import { DefaultVariant, defaultVariants } from "@/utils";
 
 const PrimitiveDemo = ({ primitiveName, primitiveComponent }: any) => {
@@ -41,6 +41,12 @@ const PrimitiveVariantsDemo = ({ primitiveName, Primitive, primitiveVariants=[],
 
 };
 
+const iconItems = CarbonIconSetNames.map((item: any) => {
+  if (typeof item === 'string') {
+    return { value: item, children: item };
+  }
+  return item;
+});
 const PrimitivesPage = () => {
   const [checked, setChecked] = useState<boolean | 'indeterminate'>(false);
   const [inputValue, setInputValue] = useState('');
@@ -75,6 +81,21 @@ const PrimitivesPage = () => {
   const select = <Select value={selectValue} items={items} onValueChange={setSelectValue} />;
   const selectWithIcons = <Select value={selectValue} items={moreItems} onValueChange={setSelectValue} />;
 
+  const [icon, setIcon] = useState('Accessibility');
+
+  const iconSelect = useMemo(() => <Select value={icon} items={iconItems} onValueChange={(value: any) => {
+    setIcon(value);
+  }} /> , [icon]);
+
+  const normalIconSelect = useMemo(() => <select value={icon} onChange={(e: any) => {
+    setIcon(e.target.value);
+  }}>
+    {CarbonIconSetNames.map((icon: any, index: number) => {
+      return (
+        <option key={index} value={icon}>{icon}</option>
+      )
+    })}
+  </select>, [icon]);
 
   return (
     <div className="w-full h-full overflow-auto bg-gray-600">
@@ -87,6 +108,8 @@ const PrimitivesPage = () => {
         <PrimitiveVariantsDemo primitiveName="Checkbox" Primitive={Checkbox} primitiveVariants={['classic', 'surface', 'soft']} {...checkboxPrimitiveProps} />
         <PrimitiveDemo primitiveName="Select" primitiveComponent={select} />
         <PrimitiveDemo primitiveName="Select with icons" primitiveComponent={selectWithIcons} />
+        <PrimitiveDemo primitiveName="Input" primitiveComponent={iconSelect} />
+        <PrimitiveDemo primitiveName="Normal Input" primitiveComponent={normalIconSelect} />
       </div>
     </div>
   )

@@ -33,7 +33,7 @@ export const Tooltip = (props: TooltipProps) => {
             "radix-side-right:animate-slide-left-fade",
             "radix-side-bottom:animate-slide-up-fade",
             "radix-side-left:animate-slide-right-fade",
-            "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95"
+            "z-50 overflow-hidden rounded-md border bg-secondary px-3 py-1.5 text-sm text-secondary shadow-md animate-in fade-in-0 zoom-in-95"
           )}
         >
           <TooltipPrimitive.Arrow className="fill-current text-primary" />

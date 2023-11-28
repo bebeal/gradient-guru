@@ -1,11 +1,11 @@
 'use client'
 
-import React, { ForwardedRef, forwardRef, useEffect, useState } from "react";
+import React, { ForwardedRef, forwardRef } from "react";
 import { PropsWithoutRefOrColor, Checkbox as ThemedCheckbox} from "@radix-ui/themes";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { DefaultVariant, Radius, cn, noop } from "@/utils";
+import { Radius, RadiusClasses, cn, noop } from "@/utils";
 
-export interface CheckboxProps extends Omit<PropsWithoutRefOrColor<typeof CheckboxPrimitive.Root>, 'children'> {
+export interface CheckboxProps extends Omit<PropsWithoutRefOrColor<typeof ThemedCheckbox>, 'children'> {
   radius?: Radius;
   onChange?: (event: React.ChangeEvent<HTMLButtonElement>) => void;
   onCheckedChange?: (checked: CheckboxPrimitive.CheckedState) => void;
@@ -13,10 +13,13 @@ export interface CheckboxProps extends Omit<PropsWithoutRefOrColor<typeof Checkb
 
 export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>) => {
   const {
-    radius='medium',
+    radius='small',
     onChange: onChangeCallback=noop,
     onCheckedChange:onCheckedChangeCallback=noop,
     disabled=false,
+    size='1',
+    variant='surface',
+    className='',
     ...rest
    } = props;
    // radix doesn't expose the actual event so we have to create a synthetic one for it to work with react-hook-form
@@ -38,7 +41,7 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
    };
 
   return (
-    <ThemedCheckbox ref={ref} onCheckedChange={onCheckedChange} disabled={disabled} {...rest} />
+    <ThemedCheckbox ref={ref} onCheckedChange={onCheckedChange} disabled={disabled} className={cn(RadiusClasses(radius), className)} variant={variant} size={size} {...rest} />
   );
 });
 Checkbox.displayName = "Checkbox";

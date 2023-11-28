@@ -1,14 +1,19 @@
 'use client'
 
 import { 
-  TldrawProps
+  TLUiEventSource,
+  TLUiOverrides,
+  TldrawProps,
+  toolbarItem
 } from '@tldraw/tldraw';
 import {
 	Canvas,
 	Editor,
 	ErrorScreen,
 	LoadingScreen,
+	TLAnyShapeUtilConstructor,
 	TLOnMountHandler,
+	TLStateNodeConstructor,
 	TldrawEditor,
 	TldrawEditorProps,
 	assert,
@@ -32,13 +37,15 @@ import { defaultTools } from '@tldraw/tldraw/src/lib/defaultTools'
 import { ContextMenu } from '@tldraw/tldraw/src/lib/ui/components/ContextMenu'
 import { usePreloadAssets } from '@tldraw/tldraw/src/lib/ui/hooks/usePreloadAssets'
 import { useDefaultEditorAssetsWithOverrides } from '@tldraw/tldraw/src/lib/utils/static-assets/assetUrls'
-import { FlowUi, FlowUiProps } from '@/components';
-import { cn } from '@/utils';
+import { FlowUi, FlowUiProps, IconSetCache } from '@/components';
+import { Erroring, Loading, cn } from '@/utils';
+
+import { FlowStateProvider } from '@/hooks';
+import { IconNodeUtil } from './FlowNodes';
+import { IconNodeTool } from './FlowTools';
+
 import '@tldraw/tldraw/tldraw.css';
 import './Flow.css';
-
-const customShapeUtils: any = [];
-const customTools: any = [];
 
 export type FlowProps = TldrawProps & FlowUiProps & {
 }
@@ -47,8 +54,8 @@ export const Flow = (props: FlowProps) => {
 	const {
     // Custom props
     initialShapes=[],
-    shapeUtils=customShapeUtils,
-    tools=customTools,
+    shapeUtils=[],
+    tools=[],
     // Default props
 		children,
 		maxImageDimension,
@@ -57,7 +64,10 @@ export const Flow = (props: FlowProps) => {
 		acceptedVideoMimeTypes,
 		onMount,
 		...rest
-	} = props
+	} = props;
+
+  const customShapeUtils: TLAnyShapeUtilConstructor[] = useMemo(() => [IconNodeUtil], []);
+  const customTools: TLStateNodeConstructor[] = useMemo(() => [IconNodeTool], []);
 
 	const withDefaults: TldrawEditorProps = {
 		initialState: 'select',
@@ -75,35 +85,37 @@ export const Flow = (props: FlowProps) => {
 			[rest.components]
 		),
 		shapeUtils: useMemo(
-			() => [...defaultShapeUtils, ...(shapeUtils ?? [])],
-			[shapeUtils]
+			() => [...defaultShapeUtils, ...customShapeUtils, ...(shapeUtils ?? [])],
+			[customShapeUtils, shapeUtils]
 		),
 		tools: useMemo(
-			() => [...defaultTools, ...defaultShapeTools, ...(tools ?? [])],
-			[tools]
+			() => [...defaultTools, ...customTools, ...defaultShapeTools, ...(tools ?? [])],
+			[customTools, tools]
 		),
 	};
 
 	const assets = useDefaultEditorAssetsWithOverrides(rest.assetUrls);
 	const { done: preloadingComplete, error: preloadingError } = usePreloadAssets(assets);
 
-	if (preloadingError) { return <ErrorScreen>Could not load assets. Please refresh the page.</ErrorScreen>; }
-	if (!preloadingComplete) { return <LoadingScreen>Loading assets...</LoadingScreen>; }
+	if (preloadingError) { return <ErrorScreen><Erroring>Could not load assets. Please refresh the page.</Erroring></ErrorScreen>; }
+	if (!preloadingComplete) { return <LoadingScreen><div className="flex w-full h-auto justify-center items-center"><Loading dots={true} spinner={false}>Loading assets</Loading></div></LoadingScreen> }
 	return (
 		<TldrawEditor {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)}>
-			<FlowUi initialShapes={initialShapes} {...withDefaults}>
-				<ContextMenu>
-					<Canvas />
-				</ContextMenu>
-				<InsideOfEditorContext
-					maxImageDimension={maxImageDimension}
-					maxAssetSize={maxAssetSize}
-					acceptedImageMimeTypes={acceptedImageMimeTypes}
-					acceptedVideoMimeTypes={acceptedVideoMimeTypes}
-					onMount={onMount}
-				/>
-				{children}
-			</FlowUi>
+      <FlowStateProvider>
+        <FlowUi initialShapes={initialShapes} {...withDefaults}>
+            <ContextMenu>
+              <Canvas />
+            </ContextMenu>
+          <InsideOfEditorContext
+            maxImageDimension={maxImageDimension}
+            maxAssetSize={maxAssetSize}
+            acceptedImageMimeTypes={acceptedImageMimeTypes}
+            acceptedVideoMimeTypes={acceptedVideoMimeTypes}
+            onMount={onMount}
+          />
+          {children}
+        </FlowUi>
+      </FlowStateProvider>
 		</TldrawEditor>
 	)
 }

@@ -14,12 +14,12 @@ export const FormLabel = forwardRef<HTMLLabelElement, FormLabelProps>((props, re
   return (
     <Label
       ref={ref}
-      className={cn("font-semibold text-sm text-secondary", className)}
+      className={cn("font-semibold text-primary text-xs", className)}
       htmlFor={formItemId}
       {...rest}
     >
-      <span className={cn(error && "underline decoration-error")}>{children}</span>
-      {error && <span className="text-error align-top text-xs">*</span>}
+      {error && <span className="text-error align-top">*</span>}
+      <span className={cn(error && "underline decoration-error")}>{typeof children === 'string' ? children.split('.').pop() : children}</span>
     </Label>
   )
 })

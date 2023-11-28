@@ -3,10 +3,10 @@ import colors from 'tailwindcss/colors';
 
 const config: Config = {
   safelist: [
-    // ...[...Array(100).keys()].flatMap(i => [`top-[${i}%]`, `top-[${-i}%]`, `top-[${i*100}%]`, `top-[${-i*100}%]`, `left-[${i}%]`, `left-[${-i}%]`, `left-[${i*100}%]`, `left-[${-i*100}%]`, `translate-y-[${i}%]`, `translate-y-[${-i}%]`, `translate-y-[${i*100}%]`, `translate-y-[${-i*100}%]`, `translate-x-[${i}%]`, `translate-x-[${-i}%]`, `translate-x-[${i*100}%]`, `translate-x-[${-i*100}%]`]),
     {
       pattern: /./,
-    }
+    },
+    ...[...Array(20).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`]) 
   ],
   darkMode: ['class'],
   content: [
@@ -151,6 +151,118 @@ const config: Config = {
         radon: ['Radon', 'Berkeley Mono', 'monospace'],
         xenon: ['Xenon', 'Berkeley Mono', 'monospace']
       },
+      boxShadow: {
+        'kbd': 'inset 0 0.05em hsla(0,0%,100%,.372),inset 0 0.25em 0.5em rgba(121,121,250,.031),inset 0 -0.1em rgba(0,0,0,.875),0 0 0 0.075em rgba(222,243,255,.334),0 0.08em 0.17em rgba(0,0,0,.875)',
+      },
+      keyframes: {
+        // Accordion
+        "slide-down-accordion": {
+          "0%": { height: "0" },
+          "100%": { height: "var(--radix-accordion-content-height)" },
+        },
+        "slide-up-accordion": {
+          "0%": { height: "var(--radix-accordion-content-height)" },
+          "100%": { height: "0" },
+        },
+        "slide-out-accordion": {
+          "0%": { width: "0" },
+          "100%": { width: "var(--radix-accordion-content-width)" },
+        },
+        "slide-in-accordion": {
+          "0%": { width: "var(--radix-accordion-content-width)" },
+          "100%": { width: "0" },
+        },
+        // DotsLoader
+        "bigger-bounce": {
+          "0%": {
+            transform: "translateY(-40%)",
+            opacity: "1",
+            animationTimingFunction: "cubic-bezier(0.8, 0, 1, 1)"
+          },
+          "50%": {
+            transform: "translateY(0%)",
+            opacity: "0",
+            animationTimingFunction: "cubic-bezier(0, 0, 0.2, 1)"
+          },
+          "100%": {
+            transform: "translateY(-40%)",
+            opacity: "1",
+            animationTimingFunction: "cubic-bezier(0.8, 0, 1, 1)"
+          },
+        },
+        // Focus Chat
+        "focus-chat": {
+          "0%":   { transform: "translate(0, 0)" },
+          "5%":   { transform: "translate(0, 0)" },
+          "10%":  { transform: "translate(0.15em, 0)" },
+          "20%":  { transform: "translate(0.15em, 0.15em)" },
+          "30%":  { transform: "translate(0.15em, 0.15em)" },
+          "35%":  { transform: "translate(-0.15em, 0.15em)" },
+          "45%":  { transform: "translate(-0.15em, 0)" },
+          "55%":  { transform: "translate(-0.15em, 0)" },
+          "60%":  { transform: "translate(0, 0)" },
+          "70%":  { transform: "translate(0, 0)" },
+          "80%":  { transform: "translate(0, 0)" },
+          "90%":  { transform: "translate(0, 0)" },
+          "100%": { transform: "translate(0, 0)" },
+        },
+        // Under Construction
+        "banner-pulse": {
+          "0%": {
+            transform: "rotate(-25deg) scale(1)"
+          },
+          "50%": {
+            transform: "rotate(-25deg) scale(1.1)"
+          },
+          "100%": {
+            transform: "rotate(-25deg) scale(1)"
+          }
+        },
+        // Copy Button
+        "scale-up": {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.2)" },
+          "100%": { transform: "scale(1)" },
+        },
+        // Tooltip/Hovercard
+        "slide-up-fade": {
+          "0%": { opacity: "0", transform: "translateY(2px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "slide-right-fade": {
+          "0%": { opacity: "0", transform: "translateX(-2px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        "slide-down-fade": {
+          "0%": { opacity: "0", transform: "translateY(-2px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "slide-left-fade": {
+          "0%": { opacity: "0", transform: "translateX(2px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        // Accordion
+        "slide-down-accordion": "slide-down-accordion 0.2s ease-in-out",
+        "slide-up-accordion": "slide-up-accordion 0.2s ease-in-out",
+        "slide-out-accordion": "slide-out-accordion 0.2s ease-in-out",
+        "slide-in-accordion": "slide-in-accordion 0.2s ease-in-out",
+        // DotsLoader
+        "bigger-bounce": "bigger-bounce 1s infinite",
+        // Focus Chat
+        "focus-chat": "focus-chat 3s infinite cubic-bezier(0.8, 0, 1, 1)",
+        // Under Construction
+        "banner-pulse": "banner-pulse 5s infinite linear",
+        // Copy Button
+        "scale-up": "scale-up 0.5s linear",
+        // Tooltip
+        "slide-up-fade": "slide-up-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        "slide-right-fade":
+        "slide-right-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        "slide-down-fade": "slide-down-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        "slide-left-fade": "slide-left-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+      }
     },
   },
   plugins: [

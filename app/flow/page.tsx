@@ -49,9 +49,23 @@ const box_2: any = {
   }
 };
 
+const icon_node: any = {
+  id: createShapeId(`icon-node`),
+  type: 'icon',
+  x: 300,
+  y: 150,
+  props: {
+    w: 32,
+    h: 32,
+    iconSet: 'Carbon',
+    icon: 'Accessibility',
+  }
+};
+
 const initialShapes: TLShape[] = [
   box_1,
   box_2,
+  icon_node,
 ];
 
 const FlowPage = () => {

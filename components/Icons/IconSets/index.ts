@@ -1,6 +1,6 @@
 // export * from './Academicons';
 export * from './Carbon';
-// export * from './Custom';
+export * from './Custom';
 // export * from './Dev';
 // export * from './EntypoPlus';
 // export * from './EntypoSocial';

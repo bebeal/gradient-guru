@@ -1,6 +1,6 @@
 'use client'
 
-import { ForwardedRef, forwardRef, useState } from "react";
+import { ForwardedRef, forwardRef, useCallback, useMemo, useState } from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { IconSetCache } from "@/components";
 import { cn } from "@/utils";
@@ -39,41 +39,35 @@ export const Accordion = forwardRef((props: AccordionProps, ref: ForwardedRef<HT
     items=[], 
     highlightActive=true,
     type="multiple",
-    spaceBetween=0,
+    spaceBetween=1,
     className='',
     triggerClassName='',
-    ripple=true,
+    ripple=false,
   } = props;
   const defaultValues: any = items?.filter((item: any) => item.open).map((item: any, index: number) => `accordion-item-${index}`);
   const [value, setValue] = useState<string | string[]>(type === 'single' ? defaultValues?.[0] : defaultValues);
   const { createRippleEffect } = useRippleEffect();
 
-  const onValueChange = (event: any, newValue: string | string[]) => {
-    ripple && createRippleEffect(event);
+  const onValueChange = useCallback((event: any, newValue: string | string[]) => {
+    ripple && createRippleEffect?.(event);
     if (type === 'single') {
       value === newValue ? setValue('') : setValue(newValue);
     } else {
       value.includes(newValue as any) ? setValue((value as any).filter((v: string) => v !== newValue)) : setValue([...value as any, newValue]);
     }
-  };
+  }, [value, type, ripple, createRippleEffect]);
 
-  return (
-    <AccordionPrimitive.Root
-      ref={ref}
-      type={type} 
-      className={cn(`space-y-0 w-full h-auto`, className)}
-      defaultValue={defaultValues}
-      value={value as any}
-    >
-      {items?.map((item: any, index: number) => {
+  const AccordionItems = useCallback(() => {
+    return (
+      items?.map((item: any, index: number) => {
         return (
           <AccordionPrimitive.Item key={`accordion-item-${index}`} value={`accordion-item-${index}`} 
-          className={cn( 
-            getRoundedClass(index, items.length, spaceBetween),
-            `focus-within:border-accent focus:outline-none w-full border border-secondary`,
-            highlightActive && `hover:border-accent/50 radix-state-open:text-primary radix-state-open:border-accent/75`,
-            item?.selected && `border-accent/75 text-primary`,
-          )}
+            className={cn( 
+              getRoundedClass(index, items.length, spaceBetween),
+              `focus-within:border-accent focus:outline-none w-full border border-secondary`,
+              highlightActive && `hover:border-accent/50 radix-state-open:text-primary radix-state-open:border-accent/75`,
+              item?.selected && `border-accent/75 text-primary`,
+            )}
          >
             <AccordionPrimitive.Header className={cn(
               "w-full h-full radix-state-open:border-b", "radix-state-open:border-b-secondary", 
@@ -100,14 +94,14 @@ export const Accordion = forwardRef((props: AccordionProps, ref: ForwardedRef<HT
                 <IconSetCache.Carbon.ChevronDown
                   className={cn(
                     "ml-2 shrink-0",
-                    "group-radix-state-open:rotate-180",
+                    "group-radix-state-open:rotate-180 will-change-transform",
                     "transition-transform duration-200 ease-in-out",
                   )}
                 />
               </AccordionPrimitive.Trigger>
             </AccordionPrimitive.Header>
             <AccordionPrimitive.Content className={cn(
-              "w-full h-full bg-primary overflow-auto border border-transparent",
+              "will-change-content w-full h-full bg-primary overflow-auto border border-transparent",
               spaceBetween !== 0 && `rounded-b-lg`,
               spaceBetween !== 0 || index === items.length - 1 && `rounded-b-lg`,
               "radix-state-closed:animate-slide-up-accordion radix-state-open:animate-slide-down-accordion transition-all [animation-fill-mode:both]",
@@ -117,7 +111,19 @@ export const Accordion = forwardRef((props: AccordionProps, ref: ForwardedRef<HT
             </AccordionPrimitive.Content>
           </AccordionPrimitive.Item>
         );
-      })}
+      })
+    );
+  }, [items, spaceBetween, highlightActive, triggerClassName, onValueChange]);
+
+  return (
+    <AccordionPrimitive.Root
+      ref={ref}
+      type={type} 
+      className={cn(`space-y-[${spaceBetween}px] w-full h-auto`, className)}
+      defaultValue={defaultValues}
+      value={value as any}
+    >
+      <AccordionItems />
     </AccordionPrimitive.Root>
   );
 });
