@@ -1,44 +1,79 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { Accordion, BulletedList, FakeForm } from '@/components';
-import { FlowStateContextType, useFlowState } from '@/hooks';
+import { Accordion, BulletedList } from '@/components';
+import { FlowStateExtractorProps, defaultFlowStateExtractorProps, useFlowEventsRecorder, useFlowStateExtractor } from '@/hooks';
 import { FlowTab } from './shared';
+import Image from 'next/image';
+import { useCallback } from 'react';
+import { UseQueryOptions, useQuery } from 'react-query';
+import { Erroring, Loading, cn } from '@/utils';
 
-export type FlowStateTabProps = {
+export interface FlowStateTabProps extends FlowStateExtractorProps {
+  imageQueryOptions?: UseQueryOptions;
+  textQueryOptions?: UseQueryOptions;
 };
 export const FlowStateTab = (props: FlowStateTabProps) => {
   const {
+    nodesConfig=defaultFlowStateExtractorProps.nodesConfig!,
+    imageConfig=defaultFlowStateExtractorProps.imageConfig!,
+    textConfig=defaultFlowStateExtractorProps.textConfig!,
+    eventsConfig=defaultFlowStateExtractorProps.eventsConfig!,
+    imageQueryOptions = {
+      cacheTime: 0,
+      refetchInterval: 100,
+    },
+    textQueryOptions = {
+      cacheTime: 0,
+      refetchInterval: 100,
+    },
     ...rest
   } = props;
-  const flowState: FlowStateContextType = useFlowState();
+  const flowStateExtractor = useFlowStateExtractor({
+    nodesConfig,
+    imageConfig,
+    textConfig,
+    eventsConfig,
+  });
+  
+  const { data: flowImage, isLoading: flowImageLoading, isError: flowImageError } = useQuery<any>({
+    queryKey: ['flowImage'], 
+    queryFn: flowStateExtractor.fetchImage,
+    enabled: imageConfig.enabled,
+    ...imageQueryOptions,
+  });
+  const { data: flowText, isLoading: flowTextLoading, isError: flowTextError } = useQuery<any>({
+    queryKey: ['flowText'], 
+    queryFn: flowStateExtractor.fetchText,
+    enabled: textConfig.enabled,
+    ...textQueryOptions,
+  });
+
+  const FlowImage = useCallback(() => {
+    if (flowImageError) return <Erroring>{flowImageError || 'No Nodes for Image'}</Erroring>;
+    if (!flowImage) return <div className="text-primary/80 px-2 py-4">No Image</div>;
+    return (
+      <div className={cn(`will-change-contents flex flex-col w-full h-full justify-center items-center flex-shrink-0 min-w-[${imageConfig.width}px] min-h-[${imageConfig.height}px]`)}>
+        {flowImageLoading ? <Loading /> : (<img src={flowImage} alt="Flow Image" width={imageConfig.width} height={imageConfig.height} className={cn(`object-contain min-w-[${imageConfig.width}px] min-h-[${imageConfig.height}px] p-4`)} />)}
+      </div>
+    );
+  }, [flowImageLoading, flowImageError, flowImage, imageConfig]);
+
+  const FlowText = useCallback(() => {
+    if (flowTextLoading) return <Loading />;
+    if (flowTextError) return <Erroring>{flowTextError}</Erroring>;
+    if (!flowText) return <div className="text-primary/80 px-2 py-4 justify-center items-center">No Text</div>;
+    return <BulletedList items={flowText.split('\n')} />;
+  }, [flowTextLoading, flowTextError, flowText]);
 
   return (
-    <FlowTab title="State">
-      <Accordion
-        className="text-xs text-primary font-bold"
-        spaceBetween={16}
-        triggerClassName="px-2 py-1 text-xs text-primary font-bold"
-        items={[
-          {
-            name: 'Canvas State',
-            content: <FakeForm object={flowState.canvasEvent} />,
-            selected: false,
-            open: true,
-          },
-          {
-            name: 'UI State',
-            content: flowState?.uiEvents.length > 0 ? <FakeForm object={flowState.uiEvents[0]} /> : <div className="text-primary/80 px-2 py-4">No UI State</div>,
-            selected: false,
-            open: true,
-          },
-          {
-            name: 'Events History',
-            content: flowState?.storeEvents.length > 0 ? <BulletedList items={flowState?.storeEvents} /> : <div className="text-primary/80 px-2 py-4">No Events</div>,
-            selected: false,
-            open: true,
-          },
-        ]} 
-      />
+    <FlowTab title="State" {...rest}>
+      <div className="flex flex-col gap-1 w-full h-auto overflow-auto justify-center items-center transition-all duration-100">
+        <div className="flex text-primary/80 text-xs font-bold underline justify-center text-center items-center">Image:</div>
+        <FlowImage />
+        <div className="flex text-primary/80 text-xs font-bold underline justify-center text-center items-center">Text:</div>
+        <FlowText />
+      </div>
     </FlowTab>
   )
 };

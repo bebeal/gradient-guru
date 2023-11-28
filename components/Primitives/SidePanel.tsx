@@ -31,7 +31,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
     defaultWidth=350,
     bounds=[200, 600],
     overlay=true,
-    ripple=false,
+    ripple=true,
     radius='medium',
     className='',
     ...rest

@@ -4,7 +4,6 @@ import { useCallback, useMemo } from "react";
 import * as yup from "yup";
 import { useEditor } from "@tldraw/editor";
 import { Accordion, Form, FlowTab, FlowShapeUtil, inferSchemaField, filterNode, IconSetCache } from "@/components";
-import { noop } from "@/utils";
 
 export interface FlowNodesTabProps {};
 
@@ -22,7 +21,7 @@ export const FlowNodesTab = (props: FlowNodesTabProps) => {
     editor.updateShape(newNodeProperties);
   }, [editor]);
   
-  const items = () => { 
+  const items = () => {
     const selectedNodes = editor.getSelectedShapes();
     return editor?.getCurrentPageShapesSorted().map((node: any, index: number) => {
       // filter out unnecessary fields

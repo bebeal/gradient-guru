@@ -6,7 +6,7 @@ const config: Config = {
     {
       pattern: /./,
     },
-    ...[...Array(20).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`]) 
+    ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`]),
   ],
   darkMode: ['class'],
   content: [

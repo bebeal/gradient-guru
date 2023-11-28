@@ -42,7 +42,7 @@ export const Accordion = forwardRef((props: AccordionProps, ref: ForwardedRef<HT
     spaceBetween=1,
     className='',
     triggerClassName='',
-    ripple=false,
+    ripple=true,
   } = props;
   const defaultValues: any = items?.filter((item: any) => item.open).map((item: any, index: number) => `accordion-item-${index}`);
   const [value, setValue] = useState<string | string[]>(type === 'single' ? defaultValues?.[0] : defaultValues);

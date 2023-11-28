@@ -20,7 +20,7 @@ import {
 	setUserPreferences,
 	useEditor,
 } from '@tldraw/editor'
-import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 'react'
+import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { TldrawHandles } from '@tldraw/tldraw/src/lib/canvas/TldrawHandles';
 import { TldrawHoveredShapeIndicator } from '@tldraw/tldraw/src/lib/canvas/TldrawHoveredShapeIndicator'
 import { TldrawScribble } from '@tldraw/tldraw/src/lib/canvas/TldrawScribble'
@@ -40,7 +40,7 @@ import { useDefaultEditorAssetsWithOverrides } from '@tldraw/tldraw/src/lib/util
 import { FlowUi, FlowUiProps, IconSetCache } from '@/components';
 import { Erroring, Loading, cn } from '@/utils';
 
-import { FlowStateProvider } from '@/hooks';
+import { FlowEventsRecorderProvider } from '@/hooks';
 import { IconNodeUtil } from './FlowNodes';
 import { IconNodeTool } from './FlowTools';
 
@@ -65,7 +65,6 @@ export const Flow = (props: FlowProps) => {
 		onMount,
 		...rest
 	} = props;
-
   const customShapeUtils: TLAnyShapeUtilConstructor[] = useMemo(() => [IconNodeUtil], []);
   const customTools: TLStateNodeConstructor[] = useMemo(() => [IconNodeTool], []);
 
@@ -100,8 +99,8 @@ export const Flow = (props: FlowProps) => {
 	if (preloadingError) { return <ErrorScreen><Erroring>Could not load assets. Please refresh the page.</Erroring></ErrorScreen>; }
 	if (!preloadingComplete) { return <LoadingScreen><div className="flex w-full h-auto justify-center items-center"><Loading dots={true} spinner={false}>Loading assets</Loading></div></LoadingScreen> }
 	return (
-		<TldrawEditor {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)}>
-      <FlowStateProvider>
+		<TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)}>
+      <FlowEventsRecorderProvider>
         <FlowUi initialShapes={initialShapes} {...withDefaults}>
             <ContextMenu>
               <Canvas />
@@ -115,7 +114,7 @@ export const Flow = (props: FlowProps) => {
           />
           {children}
         </FlowUi>
-      </FlowStateProvider>
+      </FlowEventsRecorderProvider>
 		</TldrawEditor>
 	)
 }

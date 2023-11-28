@@ -32,8 +32,8 @@ const box_2: any = {
   x: 200,
   y: 200,
   props: {
-    w: 100,
-    h: 100,
+    w: 110,
+    h: 110,
     geo: 'rectangle',
     color: 'black',
     labelColor: 'black',
@@ -41,11 +41,11 @@ const box_2: any = {
     dash: 'draw',
     size: 'm',
     font: 'draw',
-    text: '',
+    text: 'the guru',
     align: 'middle',
     verticalAlign: 'middle',
     growY: 0,
-    url: '',
+    url: 'https://www.gradient-guru.org',
   }
 };
 

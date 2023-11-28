@@ -1,6 +1,6 @@
 'use client'
 
-import { IconSetCache, SidePanel, FlowStateTab, FlowNodesTab, FlowQueryBuilderTab } from "@/components";
+import { IconSetCache, SidePanel, FlowEventsTab, FlowNodesTab, FlowQueryBuilderTab, FlowStateTab } from "@/components";
 import { useMemo } from "react";
 
 export interface FlowTabsProps {
@@ -11,11 +11,11 @@ export const FlowTabs = (props: FlowTabsProps) => {
     className='',
   } = props;
 
-  const StateTab = useMemo(() => {
+  const EventsTab = useMemo(() => {
     return     {
-      icon: <IconSetCache.Carbon.DataBase height={'100%'} width={'100%'} stroke={'transparent'} />,
-      name: 'State',
-      content: <FlowStateTab />
+      icon: <IconSetCache.Carbon.Network3 height={'100%'} width={'100%'} stroke={'transparent'} />,
+      name: 'Events',
+      content: <FlowEventsTab />
     };
   }, []);
 
@@ -27,17 +27,26 @@ export const FlowTabs = (props: FlowTabsProps) => {
     };
   }, []);
 
+  const StateTab = useMemo(() => {
+    return {
+      icon: <IconSetCache.Carbon.VisualRecognition height={'100%'} width={'100%'} stroke={'transparent'} />,
+      name: 'State',
+      content: <FlowStateTab />
+    }
+  }, []);
+
   const QueryBuilderTab = useMemo(() => {
     return     {
-      icon: <IconSetCache.Carbon.ModelBuilder height={'100%'} width={'100%'} stroke={'transparent'} />,
+      icon: <IconSetCache.Carbon.IbmWatsonStudio height={'100%'} width={'100%'} stroke={'transparent'} />,
       name: 'Query Builder',
       content: <FlowQueryBuilderTab />
     };
   }, []);
 
   const tabs = [
-    StateTab,
+    EventsTab,
     NodesTab,
+    StateTab,
     QueryBuilderTab,
   ];
 

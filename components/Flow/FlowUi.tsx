@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { TLUiEventHandler, TLUiEventSource, TLUiOverrides, TldrawUiProps, toolbarItem, useUiEvents } from '@tldraw/tldraw';
 import { TLShape, setUserPreferences, useEditor, useValue } from '@tldraw/editor'
 import { TldrawUiContextProvider } from '@tldraw/tldraw/src/lib/ui/TldrawUiContextProvider';
@@ -26,7 +26,7 @@ import { useTranslation } from '@tldraw/tldraw/src/lib/ui/hooks/useTranslation/u
 import { ToastProvider } from '@radix-ui/react-toast'
 import { cn } from '@/utils';
 import { FlowTabs } from '@/components';
-import { FlowStateContext, FlowStateProvider, useFlowState } from '@/hooks';
+import { FlowEventsRecorderProvider, useFlowEventsRecorder } from '@/hooks';
 
 export type FlowUiProps = TldrawUiProps & {
   initialShapes?: TLShape[];
@@ -40,7 +40,7 @@ export const FlowUi = (props: FlowUiProps) => {
     onUiEvent: onUiEventCallback,
     ...rest
   } = props;
-  const { onUiEvent: recordUiEvent } = useFlowState();
+  const { onUiEvent: recordUiEvent } = useFlowEventsRecorder();
 
   const onUiEvent = useCallback<TLUiEventHandler>((name, data) => {
     recordUiEvent?.(name, data);
@@ -74,6 +74,7 @@ export const FlowUi = (props: FlowUiProps) => {
         <FlowUiInner
           initialShapes={initialShapes}
           hideUi={hideUi}
+          {...rest}
         >
           {children}
         </FlowUiInner>
@@ -104,7 +105,7 @@ const FlowUiContent = (props: FlowUiProps) => {
     initialShapes,
     ...rest
   } = props;
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
 	const editor = useEditor();
 	const msg = useTranslation();
 	const breakpoint = useBreakpoint();
@@ -122,16 +123,17 @@ const FlowUiContent = (props: FlowUiProps) => {
     if (!editor) return;
 
     if (!mounted) {
-      setUserPreferences({ id: editor?.user?.id, isDarkMode: true });
+      setUserPreferences({ id: editor?.user?.getId(), isDarkMode: true });
       editor.updateInstanceState({ isReadonly: false, isGridMode: true });
-
-      if (initialShapes && initialShapes?.length > 0) {
-        editor.createShapes(initialShapes);
-      }
-      editor.zoomToFit();
-
       editor.setCurrentTool('select');
-      setMounted(true);
+
+      setTimeout(() => {
+        if (initialShapes && initialShapes?.length > 0) {
+          editor.createShapes(initialShapes);
+        }
+        editor.zoomToFit();
+        setMounted(true);
+      }, 50);
     }
   }, [editor, initialShapes, mounted]);
 
