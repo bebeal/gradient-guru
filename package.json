@@ -15,8 +15,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "npm install && npm run build:tldraw && next build",
-    "build:tldraw": "if [ -d node_modules ]; then mv -vn node_modules node_modules_bak; fi && if [ -d postcss.config.js ]; then mv -vn postcss.config.js postcss.config.js.bak; fi && cd packages/tldraw && yarn && yarn build && cd ../.. && if [ -d postcss.config.js.bak ]; then mv -vn postcss.config.js.bak postcss.config.js; fi && if [ -d node_modules_bak ]; then mv -vn node_modules_bak node_modules; fi",
+    "build": "npm run build:tldraw && next build",
+    "build:tldraw": "cd packages/tldraw && yarn && yarn build && cd ../..",
     "dev": "next dev",
     "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf .next",
     "generate-iconsets": "cd ./scripts && ./download-iconsets.sh",
