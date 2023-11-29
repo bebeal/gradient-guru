@@ -101,7 +101,7 @@ export const Accordion = forwardRef((props: AccordionProps, ref: ForwardedRef<HT
               </AccordionPrimitive.Trigger>
             </AccordionPrimitive.Header>
             <AccordionPrimitive.Content className={cn(
-              "will-change-content w-full h-full bg-primary overflow-auto border border-transparent",
+              "will-change-contents w-full h-full bg-primary overflow-auto border border-transparent",
               spaceBetween !== 0 && `rounded-b-lg`,
               spaceBetween !== 0 || index === items.length - 1 && `rounded-b-lg`,
               "radix-state-closed:animate-slide-up-accordion radix-state-open:animate-slide-down-accordion transition-all [animation-fill-mode:both]",

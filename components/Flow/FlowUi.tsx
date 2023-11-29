@@ -1,29 +1,22 @@
 'use client'
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { TLUiEventHandler, TLUiEventSource, TLUiOverrides, TldrawUiProps, toolbarItem, useUiEvents } from '@tldraw/tldraw';
+import { Button, TLUiEventHandler, TLUiEventSource, TLUiOverrides, TldrawUiContextProvider, TldrawUiProps, toolbarItem, useActions, useBreakpoint, useKeyboardShortcuts, useNativeClipboardEvents, useTranslation, useUiEvents } from '@tldraw/tldraw';
 import { TLShape, setUserPreferences, useEditor, useValue } from '@tldraw/editor'
-import { TldrawUiContextProvider } from '@tldraw/tldraw/src/lib/ui/TldrawUiContextProvider';
-import { BackToContent } from '@tldraw/tldraw/src/lib/ui/components/BackToContent'
-import { DebugPanel } from '@tldraw/tldraw/src/lib/ui/components/DebugPanel'
-import { Dialogs } from '@tldraw/tldraw/src/lib/ui/components/Dialogs'
-import { FollowingIndicator } from '@tldraw/tldraw/src/lib/ui/components/FollowingIndicator'
-import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu'
-import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone'
-import { NavigationZone } from '@tldraw/tldraw/src/lib/ui/components/NavigationZone/NavigationZone'
-import { ExitPenMode } from '@tldraw/tldraw/src/lib/ui/components/PenModeToggle'
-import { StopFollowing } from '@tldraw/tldraw/src/lib/ui/components/StopFollowing'
-import { StylePanel } from '@tldraw/tldraw/src/lib/ui/components/StylePanel/StylePanel'
-import { ToastViewport, Toasts } from '@tldraw/tldraw/src/lib/ui/components/Toasts'
-import { Toolbar } from '@tldraw/tldraw/src/lib/ui/components/Toolbar/Toolbar'
-import { Button } from '@tldraw/tldraw/src/lib/ui/components/primitives/Button'
-import { useActions } from '@tldraw/tldraw/src/lib/ui/hooks/useActions'
-import { useBreakpoint } from '@tldraw/tldraw/src/lib/ui/hooks/useBreakpoint'
-import { useNativeClipboardEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useClipboardEvents'
-import { useEditorEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useEditorEvents'
-import { useKeyboardShortcuts } from '@tldraw/tldraw/src/lib/ui/hooks/useKeyboardShortcuts'
-import { useTranslation } from '@tldraw/tldraw/src/lib/ui/hooks/useTranslation/useTranslation'
-import { ToastProvider } from '@radix-ui/react-toast'
+import { useEditorEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useEditorEvents';
+import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
+import { NavigationZone } from '@tldraw/tldraw/src/lib/ui/components/NavigationZone/NavigationZone';
+import { Toolbar } from '@tldraw/tldraw/src/lib/ui/components/Toolbar/Toolbar';
+import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu';
+import { Dialogs } from '@tldraw/tldraw/src/lib/ui/components/Dialogs';
+import { Toasts } from '@tldraw/tldraw/src/lib/ui/components/Toasts';
+import { FollowingIndicator } from '@tldraw/tldraw/src/lib/ui/components/FollowingIndicator';
+import { BackToContent } from '@tldraw/tldraw/src/lib/ui/components/BackToContent';
+import { StopFollowing } from '@tldraw/tldraw/src/lib/ui/components/StopFollowing';
+import { StylePanel } from '@tldraw/tldraw/src/lib/ui/components/StylePanel/StylePanel';
+import { DebugPanel } from '@tldraw/tldraw/src/lib/ui/components/DebugPanel';
+import { ExitPenMode } from '@tldraw/tldraw/src/lib/ui/components/PenModeToggle';
+import { ToastProvider, ToastViewport } from '@radix-ui/react-toast'
 import { cn } from '@/utils';
 import { FlowTabs } from '@/components';
 import { FlowEventsRecorderProvider, useFlowEventsRecorder } from '@/hooks';

@@ -19,6 +19,7 @@ export interface SidePanelProps {
   bounds?: [number, number];
   overlay?: boolean;
   ripple?: boolean;
+  animate?: boolean;
   radius?: Radius;
   className?: string;
 };
@@ -32,6 +33,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
     bounds=[200, 600],
     overlay=true,
     ripple=true,
+    animate=true,
     radius='medium',
     className='',
     ...rest
@@ -45,7 +47,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
   const { createRippleEffect } = useRippleEffect();
 
   const changeTab = useCallback((e: any, tabValue: string, index: number) => {
-    ripple && createRippleEffect(e);
+    ripple && createRippleEffect?.(e);
     setActiveTabIndex(activeTabIndex === index ? undefined : index);
   }, [activeTabIndex, createRippleEffect, ripple]);
 
@@ -178,7 +180,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
                 `transition-all duration-600 ease-in-out`,
                 `top-0 left-0 absolute`,
                 `transform`,
-                !tabIsActive && `hidden`
+                !animate && !tabIsActive && `hidden`
               )}
               style={{
                 transform: `translateY(${((activeTabIndex||0) - index) * -100}%)`

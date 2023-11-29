@@ -1,9 +1,18 @@
 'use client'
 
 import { 
+  ContextMenu,
   TLUiEventSource,
   TLUiOverrides,
+  TldrawHandles,
+  TldrawHoveredShapeIndicator,
   TldrawProps,
+  TldrawScribble,
+  TldrawSelectionBackground,
+  TldrawSelectionForeground,
+  defaultShapeTools,
+  defaultShapeUtils,
+  defaultTools,
   toolbarItem
 } from '@tldraw/tldraw';
 import {
@@ -20,23 +29,11 @@ import {
 	setUserPreferences,
 	useEditor,
 } from '@tldraw/editor'
+import { registerDefaultSideEffects } from '@tldraw/tldraw/src/lib/defaultSideEffects';
+import { usePreloadAssets } from '@tldraw/tldraw/src/lib/ui/hooks/usePreloadAssets';
+import { TLExternalContentProps, registerDefaultExternalContentHandlers } from '@tldraw/tldraw/src/lib/defaultExternalContentHandlers';
+import { useDefaultEditorAssetsWithOverrides } from '@tldraw/tldraw/src/lib/utils/static-assets/assetUrls';
 import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { TldrawHandles } from '@tldraw/tldraw/src/lib/canvas/TldrawHandles';
-import { TldrawHoveredShapeIndicator } from '@tldraw/tldraw/src/lib/canvas/TldrawHoveredShapeIndicator'
-import { TldrawScribble } from '@tldraw/tldraw/src/lib/canvas/TldrawScribble'
-import { TldrawSelectionBackground } from '@tldraw/tldraw/src/lib/canvas/TldrawSelectionBackground'
-import { TldrawSelectionForeground } from '@tldraw/tldraw/src/lib/canvas/TldrawSelectionForeground'
-import {
-	TLExternalContentProps,
-	registerDefaultExternalContentHandlers,
-} from '@tldraw/tldraw/src/lib/defaultExternalContentHandlers'
-import { defaultShapeTools } from '@tldraw/tldraw/src/lib/defaultShapeTools'
-import { defaultShapeUtils } from '@tldraw/tldraw/src/lib/defaultShapeUtils'
-import { registerDefaultSideEffects } from '@tldraw/tldraw/src/lib/defaultSideEffects'
-import { defaultTools } from '@tldraw/tldraw/src/lib/defaultTools'
-import { ContextMenu } from '@tldraw/tldraw/src/lib/ui/components/ContextMenu'
-import { usePreloadAssets } from '@tldraw/tldraw/src/lib/ui/hooks/usePreloadAssets'
-import { useDefaultEditorAssetsWithOverrides } from '@tldraw/tldraw/src/lib/utils/static-assets/assetUrls'
 import { FlowUi, FlowUiProps, IconSetCache } from '@/components';
 import { Erroring, Loading, cn } from '@/utils';
 
