@@ -74,6 +74,7 @@
     "react-hook-form": "^7.48.2",
     "react-query": "^3.39.3",
     "react-virtuoso": "^4.6.2",
+    "sharp": "^0.32.6",
     "styled-components": "^6.1.1",
     "svgo": "^3.0.3",
     "tailwind-merge": "^2.0.0",
