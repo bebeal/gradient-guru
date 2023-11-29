@@ -15,7 +15,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "npm run build:tldraw && next build",
+    "build": "next build",
     "build:tldraw": "cd packages/tldraw && yarn && yarn build && cd ../..",
     "dev": "next dev",
     "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf .next",
