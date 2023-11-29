@@ -1,6 +1,9 @@
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
 
+const min = -10
+const max = 10;
+const step = 0.1;
 const config: Config = {
   safelist: [
     {

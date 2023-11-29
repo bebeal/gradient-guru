@@ -8,5 +8,6 @@ export * from './Label';
 export * from './Select';
 export * from './Seperator';
 export * from './SidePanel';
+export * from './Switch';
 export * from './Slider';
 export * from './Tooltip';
