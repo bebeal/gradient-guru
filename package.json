@@ -13,7 +13,6 @@
     "url": "https://github.com/bebeal/gradient-guru/issues"
   },
   "version": "0.0.0",
-  "packageManager": "yarn@3.5.0",
   "private": true,
   "scripts": {
     "build": "yarn build:tldraw && next build",
