@@ -1,17 +1,12 @@
+// ref: https://github.com/saadeghi/daisyui/blob/35dbea89ca5b82dd0c3ba4bb69d5f39a7b7c4d54/src/components/styled/toggle.css#L2
+
 import * as TogglePrimitive from '@radix-ui/react-toggle';
 import { forwardRef, useState, useEffect } from 'react';
-
-interface ExtendedCSSProperties extends React.CSSProperties {
-  '--handleoffset'?: string;
-  '--animation-input'?: string;
-  '--togglehandleborder'?: string;
-  '--tglbg'?: string;
-}
 
 export interface SwitchProps extends TogglePrimitive.ToggleProps {
   handleOffset?: string;
   baseColor?: string;
-  animationInput?: string;
+  animationTime?: string;
   pressed?: boolean | undefined;
   className?: string;
 }
@@ -23,9 +18,8 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
     disabled = false,
     onPressedChange,
     handleOffset = '1.5rem',
-    animationInput = '0.2s',
+    animationTime = '0.2s',
     className,
-    baseColor = 'currentColor',
   } = props;
 
   const [internalPressed, setInternalPressed] = useState<boolean | undefined>(defaultPressed);
@@ -43,23 +37,21 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
     onPressedChange && onPressedChange(newPressed);
   };
 
-  const commonStyle: ExtendedCSSProperties = {
-    '--animation-input': animationInput,
-    '--handleoffset': handleOffset,
-    '--togglehandleborder': '0 0',
-    '--tglbg': baseColor,
-    transition: 'background, box-shadow var(--animation-input, 0.2s) ease-out',
-    boxShadow: isPressed === undefined 
-                ? 'calc(var(--handleoffset) / 2) 0 0 2px var(--tglbg) inset, calc(var(--handleoffset) / -2) 0 0 2px var(--tglbg) inset, 0 0 0 2px var(--tglbg) inset' 
-                : isPressed ? 'var(--handleoffset) 0 0 2px var(--tglbg) inset, 0 0 0 2px var(--tglbg) inset' 
-                            : `calc(var(--handleoffset) * -1) 0 0 2px var(--tglbg) inset, 0 0 0 2px var(--tglbg) inset`,
+  const baseColor = isPressed === undefined ? 'rgba(80, 80, 80, 0.7)' : isPressed ? 'rgba(0, 140, 255, 1)' : 'rgba(80, 80, 80, 0.7)';
+  const thumbColor = isPressed === undefined ? 'rgb(255, 255, 255)' : isPressed ? 'rgb(255, 255, 255)' : 'rgb(255, 255, 255)';
+  const style: any = {
+    transition: `background, box-shadow ${animationTime} ease-out`,
+    boxShadow: isPressed === undefined
+                ? `calc(${handleOffset} / 2) 0 0 2px ${baseColor} inset, calc(${handleOffset} / -2) 0 0 2px ${baseColor} inset, 0 0 0 2px ${baseColor} inset`
+                : isPressed ? `${handleOffset} 0 0 2px ${baseColor} inset, 0 0 0 2px ${baseColor} inset`
+                            : `calc(${handleOffset} * -1) 0 0 2px ${baseColor} inset, 0 0 0 2px ${baseColor} inset`,
     appearance: 'none',
-    border: '1px solid',
+    border: `solid 1px ${thumbColor}`,
     borderRadius: '1.9rem',
     height: '1.5rem',
     width: '3rem',
-    opacity: disabled ? 0.3 : 1,
     cursor: disabled ? 'not-allowed' : 'pointer',
+    backgroundColor: thumbColor,
   };
 
   return (
@@ -68,7 +60,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
       pressed={isPressed}
       onPressedChange={handleToggle}
       className={className}
-      style={commonStyle}
+      style={style}
       disabled={disabled}
     />
   );
