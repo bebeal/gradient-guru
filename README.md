@@ -107,24 +107,24 @@ idk
 server on `localhost:3000`
 
 ```bash
-npm install
-npm run dev
+yarn
+yarn dev
 ```
 
 * Clean node_modules and .next directories
 
 ```bash
-npm run clean
+yarn clean
 ```
 
 * Generate iconset assets and ts files
 
 ```bash
-npm run generate-iconsets
+yarn generate-iconsets
 ```
 
 * Build for deployment
 
 ```bash
-npm run build
+yarn build
 ```

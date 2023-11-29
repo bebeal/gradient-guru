@@ -13,12 +13,13 @@
     "url": "https://github.com/bebeal/gradient-guru/issues"
   },
   "version": "0.0.0",
+  "packageManager": "yarn@3.5.0",
   "private": true,
   "scripts": {
-    "build": "npm run build:tldraw && next build",
+    "build": "yarn build:tldraw && next build",
     "build:tldraw": "cd packages/tldraw && yarn && yarn build && cd ../..",
     "dev": "next dev",
-    "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf .next",
+    "clean": "rm -rf node_modules && rm -rf .next && yarn upgrade",
     "generate-iconsets": "cd ./scripts && ./download-iconsets.sh",
     "start": "next start",
     "lint": "next lint",
