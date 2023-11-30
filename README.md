@@ -51,28 +51,8 @@ idk
 
 ### IconSets
 
-* [Academicons](https://github.com/jpswalsh/academicons )
 * [Carbon](https://github.com/carbon-design-system/carbon)
-* [Dev](https://github.com/devicons/devicon)
-* [EntypoPlus](https://github.com/chancancode/entypo-plus)
-* [EntypoSocial](https://github.com/chancancode/entypo-plus/tree/master/source/Entypo%2B%20Social%20Extension)
-* [Flag](https://github.com/lipis/flag-icons)
-* [Font Audio](https://github.com/fefanto/fontaudio)
-* [FontAwesome - Regular](https://github.com/FortAwesome/Font-Awesome)
-* [FontGIS](https://github.com/Viglino/font-gis)
-* [Game](https://github.com/game-icons/icons)
-* [Geoglyphs](https://github.com/cugos/geoglyphs)
-* [Heroicons - Solid](https://github.com/tailwindlabs/heroicons)
-* [Logos](https://github.com/gilbarbara/logos)
-* [Lucide](https://github.com/lucide-icons/lucide)
-* [Map](https://github.com/scottdejonge/map-icons)
-* [Medical](https://github.com/samcome/webfont-medical-icons)
-* [MUI - Line](https://github.com/cyberalien/line-md)
-* [Radix](https://github.com/radix-ui/icons)
-* [Skill](https://github.com/tandpfun/skill-icons)
-* [Spinner](https://github.com/n3r4zzurr0/svg-spinners)
 * [Tldraw](https://github.com/tldraw/tldraw)
-* [VSCode](https://github.com/vscode-icons/vscode-icons)
 
 ### Structure
 
@@ -95,9 +75,14 @@ idk
     * [`/fonts`](https://gradient-guru.com/tests/fonts)
     * [`/form`](https://gradient-guru.com/tests/form)
     * [`/icon-sets`](https://gradient-guru.com/tests/icon-sets)
+    * [`/palettes`](https://gradient-guru.com/tests/palettes)
     * [`/form`](https://gradient-guru.com/tests/palettes)
+    * [`/tldraw`](https://gradient-guru.com/tests/tldraw)
     * [`/primitives`](https://gradient-guru.com/tests/primitives)
-    * [`/side-panel`](https://gradient-guru.com/tests/side-panel)
+      * [`/accordion`](https://gradient-guru.com/tests/primitives/accordion)
+      * [`/switch`](https://gradient-guru.com/tests/primitives/switch)
+      * [`/side-panel`](https://gradient-guru.com/tests/primitives/side-panel)
+      * [`/radix-themed-components`](https://gradient-guru.com/tests/primitives/radix-themed-components)
   * [`/flow`](https://gradient-guru.com/flow)
 
 ## Build
