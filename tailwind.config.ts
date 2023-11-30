@@ -155,24 +155,6 @@ const config: Config = {
         'kbd': 'inset 0 0.05em hsla(0,0%,100%,.372),inset 0 0.25em 0.5em rgba(121,121,250,.031),inset 0 -0.1em rgba(0,0,0,.875),0 0 0 0.075em rgba(222,243,255,.334),0 0.08em 0.17em rgba(0,0,0,.875)',
       },
       keyframes: {
-        // Accordion
-        'slide-down-accordion': {
-          '0%': { height: '0' },
-          '100%': { height: 'var(--radix-accordion-content-height)' },
-        },
-        'slide-up-accordion': {
-          '0%': { height: 'var(--radix-accordion-content-height)' },
-          '100%': { height: '0' },
-        },
-        'slide-out-accordion': {
-          '0%': { width: '0' },
-          '100%': { width: 'var(--radix-accordion-content-width)' },
-        },
-        'slide-in-accordion': {
-          '0%': { width: 'var(--radix-accordion-content-width)' },
-          '100%': { width: '0' },
-        },
-        // DotsLoader
         "bigger-bounce": {
           '0%': {
             transform: "translateY(-40%)",
@@ -190,7 +172,6 @@ const config: Config = {
             animationTimingFunction: "cubic-bezier(0.8, 0, 1, 1)"
           },
         },
-        // Focus Chat
         "focus-chat": {
           '0%':   { transform: "translate(0, 0)" },
           "5%":   { transform: "translate(0, 0)" },
@@ -206,7 +187,6 @@ const config: Config = {
           "90%":  { transform: "translate(0, 0)" },
           '100%': { transform: "translate(0, 0)" },
         },
-        // Under Construction
         "banner-pulse": {
           '0%': {
             transform: 'rotate(-25deg) scale(1)'
@@ -218,13 +198,11 @@ const config: Config = {
             transform: 'rotate(-25deg) scale(1)'
           }
         },
-        // Copy Button
         "scale-up": {
           '0%': { transform: "scale(1)" },
           "50%": { transform: "scale(1.2)" },
           '100%': { transform: "scale(1)" },
         },
-        // Tooltip/Hovercard
         "slide-up-fade": {
           '0%': { opacity: "0", transform: "translateY(2px)" },
           '100%': { opacity: "1", transform: "translateY(0)" },
@@ -241,34 +219,43 @@ const config: Config = {
           '0%': { opacity: "0", transform: "translateX(2px)" },
           '100%': { opacity: "1", transform: "translateX(0)" },
         },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        'slide-out-accordion': {
+          'from': { width: '0' },
+          'to': { width: 'var(--radix-accordion-content-width)' }
+        },
+        'slide-in-accordion': {
+          'from': { width: 'var(--radix-accordion-content-width)' },
+          'to': { width: '0' }
+        }
       },
       animation: {
-        // Accordion
-        "slide-down-accordion": "slide-down-accordion 0.2s ease-in-out",
-        "slide-up-accordion": "slide-up-accordion 0.2s ease-in-out",
-        "slide-out-accordion": "slide-out-accordion 0.2s ease-in-out",
-        "slide-in-accordion": "slide-in-accordion 0.2s ease-in-out",
-        // DotsLoader
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
         "bigger-bounce": "bigger-bounce 1s infinite",
-        // Focus Chat
         "focus-chat": "focus-chat 3s infinite cubic-bezier(0.8, 0, 1, 1)",
-        // Under Construction
         "banner-pulse": "banner-pulse 5s infinite linear",
-        // Copy Button
         "scale-up": "scale-up 0.5s linear",
-        // Tooltip
         "slide-up-fade": "slide-up-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-        "slide-right-fade":
-        "slide-right-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        "slide-right-fade": "slide-right-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         "slide-down-fade": "slide-down-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         "slide-left-fade": "slide-left-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        "slide-out-accordion": "slide-out-accordion 0.2s ease-in-out",
+        "slide-in-accordion": "slide-in-accordion 0.2s ease-in-out",
       }
     },
   },
   plugins: [
-    require('tailwindcss-animate'),
     require('@tailwindcss/typography'),
-    require('tailwindcss-radix')
+    require('tailwindcss-radix'),
+    require('tailwindcss-animate')
   ],
 }
 export default config

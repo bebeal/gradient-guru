@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Separator } from "@radix-ui/themes";
-import { Button, CarbonIconSetNames, Checkbox, IconSetCache, Input, Select } from "@/components";
+import { Button, CarbonIconNames, Checkbox, IconSetCache, Input, Select } from "@/components";
 import { DefaultVariant, defaultVariants } from "@/utils";
 
 const PrimitiveDemo = ({ primitiveName, primitiveComponent }: any) => {
@@ -41,7 +41,7 @@ const PrimitiveVariantsDemo = ({ primitiveName, Primitive, primitiveVariants=[],
 
 };
 
-const iconItems = CarbonIconSetNames.map((item: any) => {
+const iconItems = CarbonIconNames.map((item: any) => {
   if (typeof item === 'string') {
     return { value: item, children: item };
   }
@@ -90,7 +90,7 @@ const PrimitivesPage = () => {
   const normalIconSelect = useMemo(() => <select value={icon} onChange={(e: any) => {
     setIcon(e.target.value);
   }}>
-    {CarbonIconSetNames.map((icon: any, index: number) => {
+    {CarbonIconNames.map((icon: any, index: number) => {
       return (
         <option key={index} value={icon}>{icon}</option>
       )

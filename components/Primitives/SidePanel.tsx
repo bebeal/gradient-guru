@@ -180,7 +180,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
                 `transition-all duration-600 ease-in-out`,
                 `top-0 left-0 absolute`,
                 `transform`,
-                !animate && !tabIsActive && `hidden`
+                // !animate && !tabIsActive && `hidden`
               )}
               style={{
                 transform: `translateY(${((activeTabIndex||0) - index) * -100}%)`

@@ -57,26 +57,21 @@ export const Accordion = forwardRef((props: AccordionProps, ref: ForwardedRef<HT
     }
   }, [value, type, ripple, createRippleEffect]);
 
-  const isOpen  = useCallback((item: any) => {
-    if (type === 'single') return value === item?.value;
-    return value?.includes(item?.value);
-  }, [value, type]);
-
   const AccordionItems = useCallback(() => {
     return (
       items?.map((item: any, index: number) => {
         return (
-          <AccordionPrimitive.Item key={`accordion-item-${index}`} value={`accordion-item-${index}`} 
-            className={cn( 
+          <AccordionPrimitive.Item key={`accordion-item-${index}`} value={`accordion-item-${index}`}
+            className={cn(
               getRoundedClass(index, items.length, spaceBetween),
-              `focus-within:border-accent focus:outline-none w-full border border-secondary`,
-              highlightActive && `hover:border-accent/50 radix-state-open:text-primary radix-state-open:border-accent/75`,
+              `focus-within:border-accent focus:outline-none w-full border border-secondary transition-all`,
+              highlightActive && `hover:border-accent/50 data-[state=open]:text-primary data-[state=open]:border-accent/75`,
               item?.selected && `border-accent/75 text-primary`,
             )}
          >
             <AccordionPrimitive.Header className={cn(
-              "w-full h-full radix-state-open:border-b", "radix-state-open:border-b-secondary", 
-              highlightActive && "radix-state-open:border-b-accent/75",
+              "w-full h-full data-[state=open]:border-b", "data-[state=open]:border-b-secondary", 
+              highlightActive && "data-[state=open]:border-b-accent/75",
               item.content === null && "rounded-lg",
             )}>
               <AccordionPrimitive.Trigger
@@ -85,11 +80,11 @@ export const Accordion = forwardRef((props: AccordionProps, ref: ForwardedRef<HT
                   "group", 
                   item.content === null && "rounded-lg",
                   highlightActive ? "text-secondary" : "text-primary",
-                  spaceBetween !== 0 && "radix-state-open:rounded-t-lg radix-state-closed:rounded-lg",
+                  spaceBetween !== 0 && "data-[state=open]:rounded-t-lg data-[state=closed]:rounded-lg",
                   spaceBetween === 0 && index === 0 && "rounded-t-lg",
-                  spaceBetween === 0 && index === items.length - 1 && "rounded-b-lg radix-state-open:rounded-b-none",
+                  spaceBetween === 0 && index === items.length - 1 && "rounded-b-lg data-[state=open]:rounded-b-none",
                   "relative overflow-hidden inline-flex w-full items-center justify-between px-4 py-2 text-left bg-primary",
-                  "hover:bg-secondary/80 hover:text-primary radix-state-open:text-primary",
+                  "hover:bg-secondary/80 hover:text-primary data-[state=open]:text-primary",
                   triggerClassName,
                 )}
               >
@@ -99,17 +94,19 @@ export const Accordion = forwardRef((props: AccordionProps, ref: ForwardedRef<HT
                 <IconSetCache.Carbon.ChevronDown
                   className={cn(
                     "ml-2 shrink-0",
-                    "group-radix-state-open:rotate-180",
-                    "transition-transform duration-200 ease-in-out",
+                    "group-data-[state=open]:rotate-180",
+                    "transition-all duration-200 ease-in-out",
                   )}
                 />
               </AccordionPrimitive.Trigger>
             </AccordionPrimitive.Header>
-            <AccordionPrimitive.Content className={cn(
-              "w-full h-full bg-primary overflow-auto border border-transparent",
+            <AccordionPrimitive.Content
+            className={cn(
+              "w-full h-full bg-primary overflow-hidden border border-transparent",
+              'radix-state-open:animate-accordion-down radix-state-closed:animate-accordion-up',
               spaceBetween !== 0 && `rounded-b-lg`,
               spaceBetween !== 0 || index === items.length - 1 && `rounded-b-lg`,
-              "radix-state-closed:animate-slide-up-accordion radix-state-open:animate-slide-down-accordion transition-all [animation-fill-mode:both]",
+              "transition-all",
             )}
             >
               {item.content}
