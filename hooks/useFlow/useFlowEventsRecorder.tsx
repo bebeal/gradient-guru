@@ -9,10 +9,10 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
 
 export type FlowEventsRecorderContextType = {
   canvasEvent: TLEventInfo;
-  storeEvents: RecordsDiff<TLRecord>[];
+  historyRecords: RecordsDiff<TLRecord>[];
   uiEvents: UiEvent[];
   onUiEvent: TLUiEventHandler;
-  getStoreEvents: () => string[];
+  getHistoryRecords: () => string[];
   setCanvasEvent: (newCanvasEvent: TLEventInfo) => void;
   setUiEvents: (newUiEvents: any[]) => void;
 };
@@ -27,11 +27,11 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
     ...rest
   } = props;
   const editor = useEditor();
-  // 3 raw data streams coming from tldraw: canvasEvents, uiEvents, storeEvents
+  // 3 raw data streams coming from tldraw: canvasEvents, uiEvents, historyRecords
   const [canvasEvent, setCanvasEvent] = useState<TLEventInfo>({} as TLEventInfo);
-  // lower fidelity but more interprettable version of storeEvents
+  // lower fidelity but more interprettable version of historyRecords
   // breaks down into 3 types of events: added, updated, removed
-  const storeEvents = useRef<RecordsDiff<TLRecord>[]>([]);
+  const historyRecords = useRef<RecordsDiff<TLRecord>[]>([]);
   const [uiEvents, setUiEvents] = useState<UiEvent[]>([]);
   
   const onCanvasEvent = useCallback((newCanvasEvent: any) => {    
@@ -45,9 +45,9 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
     setUiEvents((uiEvents: any) => [{name, ...data}, ...uiEvents]);
   }, []);
 
-  const getStoreEvents = useCallback(() => {
+  const getHistoryRecords = useCallback(() => {
     const events: string[] = [];
-    storeEvents.current.forEach((diff: any) => {
+    historyRecords.current.forEach((diff: any) => {
       const { added, updated, removed } = diff;
       for (const record of Object.values(added) as any) {
         if (record.typeName === 'shape') {
@@ -66,13 +66,13 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
       }
     });
     return events;
-  }, [storeEvents]);
+  }, [historyRecords]);
 
 
   // lower fidelity event logging for store events
   const onStoreEvent = useCallback((event: TLStoreEventInfo) => {
     if (event.source === 'user') {
-      storeEvents.current.push(event.changes);
+      historyRecords.current.push(event.changes);
     }
   }, []);
 
@@ -90,11 +90,11 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
 
   const context: FlowEventsRecorderContextType = {
     canvasEvent,
-    storeEvents: storeEvents.current,
+    historyRecords: historyRecords.current,
     uiEvents,
     onUiEvent,
     setUiEvents,
-    getStoreEvents,
+    getHistoryRecords,
     setCanvasEvent,
   };
 

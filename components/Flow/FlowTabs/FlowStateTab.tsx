@@ -2,22 +2,18 @@
 'use client'
 
 import { Accordion, BulletedList } from '@/components';
-import { FlowStateExtractorProps, defaultFlowStateExtractorProps, useFlowEventsRecorder, useFlowStateExtractor } from '@/hooks';
+import { useFlowEventsRecorder, useFlowExtractor } from '@/hooks';
 import { FlowTab } from './shared';
 import { useCallback } from 'react';
 import { UseQueryOptions, useQuery } from 'react-query';
 import { Erroring, Loading, cn } from '@/utils';
 
-export interface FlowStateTabProps extends FlowStateExtractorProps {
+export interface FlowStateTabProps {
   imageQueryOptions?: UseQueryOptions;
   textQueryOptions?: UseQueryOptions;
 };
 export const FlowStateTab = (props: FlowStateTabProps) => {
   const {
-    nodesConfig=defaultFlowStateExtractorProps.nodesConfig!,
-    imageConfig=defaultFlowStateExtractorProps.imageConfig!,
-    textConfig=defaultFlowStateExtractorProps.textConfig!,
-    eventsConfig=defaultFlowStateExtractorProps.eventsConfig!,
     imageQueryOptions = {
       cacheTime: 0,
       refetchInterval: 100,
@@ -28,23 +24,18 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
     },
     ...rest
   } = props;
-  const flowStateExtractor = useFlowStateExtractor({
-    nodesConfig,
-    imageConfig,
-    textConfig,
-    eventsConfig,
-  });
+  const flowExtractor = useFlowExtractor();
   
   const { data: flowImage, isLoading: flowImageLoading, isError: flowImageError } = useQuery<any>({
     queryKey: ['flowImage'], 
-    queryFn: flowStateExtractor.fetchImage,
-    enabled: imageConfig.enabled,
+    queryFn: flowExtractor.fetchImage,
+    enabled: flowExtractor.imageConfig.enabled,
     ...imageQueryOptions,
   });
   const { data: flowText, isLoading: flowTextLoading, isError: flowTextError } = useQuery<any>({
     queryKey: ['flowText'], 
-    queryFn: flowStateExtractor.fetchText,
-    enabled: textConfig.enabled,
+    queryFn: flowExtractor.fetchText,
+    enabled: flowExtractor.textConfig.enabled,
     ...textQueryOptions,
   });
 
@@ -52,11 +43,11 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
     if (flowImageError) return <Erroring>{flowImageError || 'No Nodes for Image'}</Erroring>;
     if (!flowImage) return <div className="text-primary/80 px-2 py-4">No Image</div>;
     return (
-      <div className={cn(`will-change-contents flex flex-col w-full h-full justify-center items-center flex-shrink-0 w-[${imageConfig.width}px] h-[${imageConfig.height}px]`)}>
-        {flowImageLoading ? <Loading /> : (<img src={flowImage} alt="Flow Image" width={imageConfig.width} height={imageConfig.height} className={cn(`object-contain w-[${imageConfig.width}px] h-[${imageConfig.height}px] p-4`)} />)}
+      <div className={cn(`will-change-contents flex flex-col w-full h-full justify-center items-center flex-shrink-0 w-[${flowExtractor.imageConfig.width}px] h-[${flowExtractor.imageConfig.height}px]`)}>
+        {flowImageLoading ? <Loading /> : (<img src={flowImage} alt="Flow Image" width={flowExtractor.imageConfig.width} height={flowExtractor.imageConfig.height} className={cn(`object-contain w-[${flowExtractor.imageConfig.width}px] h-[${flowExtractor.imageConfig.height}px] p-4`)} />)}
       </div>
     );
-  }, [flowImageLoading, flowImageError, flowImage, imageConfig]);
+  }, [flowImageError, flowImage, flowExtractor.imageConfig.width, flowExtractor.imageConfig.height, flowImageLoading]);
 
   const FlowText = useCallback(() => {
     if (flowTextLoading) return <Loading />;
@@ -69,7 +60,8 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
     <FlowTab title="State" {...rest}>
       <div className="flex flex-col gap-1 w-full h-auto overflow-auto justify-center items-center transition-all will-change-contents duration-500 ease-in-out">
         <div className="flex text-primary/80 text-xs font-bold underline justify-center text-center items-center">Image:</div>
-        <FlowImage />
+        {/* <FlowImage /> */}
+        <div className="w-[100px] h-[100px] flex justify-center items-center bg-black">blank image</div>
         <div className="flex text-primary/80 text-xs font-bold underline justify-center text-center items-center">Text:</div>
         <FlowText />
       </div>

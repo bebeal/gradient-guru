@@ -6,14 +6,16 @@ import { DefaultLabelColorStyle } from "@tldraw/tlschema/src/styles/TLColorStyle
 import { FONT_FAMILIES } from "@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants";
 import { filterObject } from '@/utils';
 
-export abstract class FlowShapeUtil<Shape extends TLUnknownShape = TLUnknownShape> extends ShapeUtil<Shape> {
+// each node can define its own schema
+export abstract class FlowNodeUtil<Shape extends TLUnknownShape = TLUnknownShape> extends ShapeUtil<Shape> {
   abstract getSchema(node: Shape): any;
 };
 
 export const KeysToMakeReadOnly: string[] = ['type'] as const;
 export const KeysToIgnore: string[] = ['index', 'typeName'] as const;
 
-export const SpecialKeysToSchema: any = {
+// global schema mappings for all nodes to use
+export const GlobalSchemaMappings: any = {
   'font':  yup.string().oneOf(Object.keys(FONT_FAMILIES)).label('Font').meta({ type: 'select', disabled: false }),
   'size': yup.string().oneOf(DefaultSizeStyle.values).label('Size').meta({ type: 'select', disabled: false }),
   'fill': yup.string().oneOf(DefaultFillStyle.values).label('Fill').meta({ type: 'select', disabled: false }),
@@ -25,12 +27,16 @@ export const SpecialKeysToSchema: any = {
   'geo': yup.string().oneOf(GeoShapeGeoStyle.values).label('Geo').meta({ type: 'select', disabled: false }),
   'id': yup.string().label('ID').meta({ type: 'readonly', disabled: true }),
   'parentId': yup.string().label('Parent-ID').meta({ type: 'readonly', disabled: true }),
+  'opacity': yup.number().min(0.0).max(1.0).label('Opacity').meta({ type: 'input', disabled: false }),
 };
 
-//
+// infer schema field from key and value
+// 1. if key is in GlobalSchemaMappings, use that
+// 2. if key is in KeysToMakeReadOnly, make it readonly
+// 3. Infer schema field from type of value
 export const inferSchemaField = (key: any, value: any) => {
-  if (Object.keys(SpecialKeysToSchema).includes(key)) {
-    return SpecialKeysToSchema[key];
+  if (Object.keys(GlobalSchemaMappings).includes(key)) {
+    return GlobalSchemaMappings[key];
   }
   if (KeysToMakeReadOnly.includes(key)) {
     return yup.string().meta({ disabled: true, type: 'readonly' });
@@ -57,8 +63,3 @@ export const inferSchemaField = (key: any, value: any) => {
       return yup.string().meta({ type: 'readonly', disabled: false });
   }
 };
-
-// filter out KeysToIgnore from the node
-export const filterNode = (node: any) => {
-  return filterObject(node, KeysToIgnore);
-}

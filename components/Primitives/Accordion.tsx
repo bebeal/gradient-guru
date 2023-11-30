@@ -10,7 +10,7 @@ export type AccordionPrimitiveProps = Omit<AccordionPrimitive.AccordionSinglePro
 
 export interface AccordionItemProps {
   icon?: any;
-  name?: string;
+  name?: any;
   content: JSX.Element | null;
   selected?: boolean;
   key?: string;
@@ -57,6 +57,11 @@ export const Accordion = forwardRef((props: AccordionProps, ref: ForwardedRef<HT
     }
   }, [value, type, ripple, createRippleEffect]);
 
+  const isOpen  = useCallback((item: any) => {
+    if (type === 'single') return value === item?.value;
+    return value?.includes(item?.value);
+  }, [value, type]);
+
   const AccordionItems = useCallback(() => {
     return (
       items?.map((item: any, index: number) => {
@@ -94,19 +99,19 @@ export const Accordion = forwardRef((props: AccordionProps, ref: ForwardedRef<HT
                 <IconSetCache.Carbon.ChevronDown
                   className={cn(
                     "ml-2 shrink-0",
-                    "group-radix-state-open:rotate-180 will-change-transform",
+                    "group-radix-state-open:rotate-180",
                     "transition-transform duration-200 ease-in-out",
                   )}
                 />
               </AccordionPrimitive.Trigger>
             </AccordionPrimitive.Header>
             <AccordionPrimitive.Content className={cn(
-              "will-change-contents w-full h-full bg-primary overflow-auto border border-transparent",
+              "w-full h-full bg-primary overflow-auto border border-transparent",
               spaceBetween !== 0 && `rounded-b-lg`,
               spaceBetween !== 0 || index === items.length - 1 && `rounded-b-lg`,
               "radix-state-closed:animate-slide-up-accordion radix-state-open:animate-slide-down-accordion transition-all [animation-fill-mode:both]",
-              item.content === null && "hidden",
-            )}>
+            )}
+            >
               {item.content}
             </AccordionPrimitive.Content>
           </AccordionPrimitive.Item>

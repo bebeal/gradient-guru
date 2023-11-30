@@ -107,24 +107,25 @@ idk
 server on `localhost:3000`
 
 ```bash
-yarn
-yarn dev
+npm install
+npm run dev
 ```
 
 * Clean node_modules and .next directories
 
 ```bash
-yarn clean
+npm run clean
 ```
 
 * Generate iconset assets and ts files
 
 ```bash
-yarn generate-iconsets
+npm run generate-iconsets
 ```
 
 * Build for deployment
+  * Under the hood this will build tldraw embed in packages/tldraw
 
 ```bash
-yarn build
+npm run build
 ```

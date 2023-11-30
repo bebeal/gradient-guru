@@ -3,7 +3,8 @@
 import { useCallback, useMemo } from "react";
 import * as yup from "yup";
 import { useEditor } from "@tldraw/editor";
-import { Accordion, Form, FlowTab, FlowShapeUtil, inferSchemaField, filterNode, IconSetCache } from "@/components";
+import { Accordion, Form, FlowTab, FlowNodeUtil, inferSchemaField, IconSetCache, KeysToIgnore } from "@/components";
+import { filterObject } from "@/utils";
 
 export interface FlowNodesTabProps {};
 
@@ -26,12 +27,12 @@ export const FlowNodesTab = (props: FlowNodesTabProps) => {
     const selectedNodes = editor.getSelectedShapes();
     return editor?.getCurrentPageShapesSorted().map((node: any, index: number) => {
       // filter out unnecessary fields
-      const filteredNode = filterNode(node);
+      const filteredNode = filterObject(node, KeysToIgnore);
       // check if node is selected
       const selected = selectedNodes.includes(node);
 
       // infer schema fields for node
-      const schemaFields: { [key: string]: any } = editor.getShapeUtil(filteredNode.type) instanceof FlowShapeUtil ? (editor.getShapeUtil(filteredNode.type) as FlowShapeUtil).getSchema(node) : {};
+      const schemaFields: { [key: string]: any } = editor.getShapeUtil(filteredNode.type) instanceof FlowNodeUtil ? (editor.getShapeUtil(filteredNode.type) as FlowNodeUtil).getSchema(node) : {};
       Object.keys(node).forEach(key => {
         if (schemaFields[key]) return;
         const value = node[key];
@@ -39,7 +40,7 @@ export const FlowNodesTab = (props: FlowNodesTabProps) => {
           schemaFields[key] = inferSchemaField(key, value);
         }
       });
-      const nodeSchema = yup.object().shape(filterNode(schemaFields));
+      const nodeSchema = yup.object().shape(filterObject(schemaFields, KeysToIgnore));
 
       return {
         name: `${index + 1}:  ${(node.id).replace('shape:', '')} - ${node.type}`,

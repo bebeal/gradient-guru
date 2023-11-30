@@ -6,9 +6,6 @@ const max = 10;
 const step = 0.1;
 const config: Config = {
   safelist: [
-    {
-      pattern: /./,
-    },
     ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`]),
   ],
   darkMode: ['class'],
@@ -159,25 +156,25 @@ const config: Config = {
       },
       keyframes: {
         // Accordion
-        "slide-down-accordion": {
-          "0%": { height: "0" },
-          "100%": { height: "var(--radix-accordion-content-height)" },
+        'slide-down-accordion': {
+          '0%': { height: '0' },
+          '100%': { height: 'var(--radix-accordion-content-height)' },
         },
-        "slide-up-accordion": {
-          "0%": { height: "var(--radix-accordion-content-height)" },
-          "100%": { height: "0" },
+        'slide-up-accordion': {
+          '0%': { height: 'var(--radix-accordion-content-height)' },
+          '100%': { height: '0' },
         },
-        "slide-out-accordion": {
-          "0%": { width: "0" },
-          "100%": { width: "var(--radix-accordion-content-width)" },
+        'slide-out-accordion': {
+          '0%': { width: '0' },
+          '100%': { width: 'var(--radix-accordion-content-width)' },
         },
-        "slide-in-accordion": {
-          "0%": { width: "var(--radix-accordion-content-width)" },
-          "100%": { width: "0" },
+        'slide-in-accordion': {
+          '0%': { width: 'var(--radix-accordion-content-width)' },
+          '100%': { width: '0' },
         },
         // DotsLoader
         "bigger-bounce": {
-          "0%": {
+          '0%': {
             transform: "translateY(-40%)",
             opacity: "1",
             animationTimingFunction: "cubic-bezier(0.8, 0, 1, 1)"
@@ -187,7 +184,7 @@ const config: Config = {
             opacity: "0",
             animationTimingFunction: "cubic-bezier(0, 0, 0.2, 1)"
           },
-          "100%": {
+          '100%': {
             transform: "translateY(-40%)",
             opacity: "1",
             animationTimingFunction: "cubic-bezier(0.8, 0, 1, 1)"
@@ -195,7 +192,7 @@ const config: Config = {
         },
         // Focus Chat
         "focus-chat": {
-          "0%":   { transform: "translate(0, 0)" },
+          '0%':   { transform: "translate(0, 0)" },
           "5%":   { transform: "translate(0, 0)" },
           "10%":  { transform: "translate(0.15em, 0)" },
           "20%":  { transform: "translate(0.15em, 0.15em)" },
@@ -207,42 +204,42 @@ const config: Config = {
           "70%":  { transform: "translate(0, 0)" },
           "80%":  { transform: "translate(0, 0)" },
           "90%":  { transform: "translate(0, 0)" },
-          "100%": { transform: "translate(0, 0)" },
+          '100%': { transform: "translate(0, 0)" },
         },
         // Under Construction
         "banner-pulse": {
-          "0%": {
-            transform: "rotate(-25deg) scale(1)"
+          '0%': {
+            transform: 'rotate(-25deg) scale(1)'
           },
-          "50%": {
-            transform: "rotate(-25deg) scale(1.1)"
+          '50%': {
+            transform: 'rotate(-25deg) scale(1.1)'
           },
-          "100%": {
-            transform: "rotate(-25deg) scale(1)"
+          '100%': {
+            transform: 'rotate(-25deg) scale(1)'
           }
         },
         // Copy Button
         "scale-up": {
-          "0%": { transform: "scale(1)" },
+          '0%': { transform: "scale(1)" },
           "50%": { transform: "scale(1.2)" },
-          "100%": { transform: "scale(1)" },
+          '100%': { transform: "scale(1)" },
         },
         // Tooltip/Hovercard
         "slide-up-fade": {
-          "0%": { opacity: "0", transform: "translateY(2px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
+          '0%': { opacity: "0", transform: "translateY(2px)" },
+          '100%': { opacity: "1", transform: "translateY(0)" },
         },
         "slide-right-fade": {
-          "0%": { opacity: "0", transform: "translateX(-2px)" },
-          "100%": { opacity: "1", transform: "translateX(0)" },
+          '0%': { opacity: "0", transform: "translateX(-2px)" },
+          '100%': { opacity: "1", transform: "translateX(0)" },
         },
         "slide-down-fade": {
-          "0%": { opacity: "0", transform: "translateY(-2px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
+          '0%': { opacity: "0", transform: "translateY(-2px)" },
+          '100%': { opacity: "1", transform: "translateY(0)" },
         },
         "slide-left-fade": {
-          "0%": { opacity: "0", transform: "translateX(2px)" },
-          "100%": { opacity: "1", transform: "translateX(0)" },
+          '0%': { opacity: "0", transform: "translateX(2px)" },
+          '100%': { opacity: "1", transform: "translateX(0)" },
         },
       },
       animation: {

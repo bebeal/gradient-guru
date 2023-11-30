@@ -119,8 +119,8 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>((props, for
         }}
         position={position}
         className={cn(
-          "relative max-h-96 min-w-[6rem] flex w-full overflow-hidden z-50 border border-secondary bg-secondary text-secondary shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 will-change-contents",
-          position === "popper" && "max-h-[var(--radix-select-content-available-height)] max-w-[var(--radix-select-content-available-width)] data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+          "relative min-h-[50px] min-w-[6rem] w-auto flex overflow-hidden z-50 border border-secondary bg-secondary text-secondary shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 will-change-contents",
+          position === "popper" && "max-h-[var(--radix-select-content-available-height)] max-h-56 max-w-[var(--radix-select-content-available-width)] data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
           RadiusClasses(radius),
           className
         )}
@@ -185,16 +185,16 @@ const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>((props, ref) => {
       ref={ref}
       value={value}
       className={cn(
-        "overflow-hidden relative flex w-full h-auto justify-center items-center text-center flex-grow cursor-default select-none py-1 px-1 text-xs outline-none focus:bg-accent focus:text-primary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[state=checked]:text-primary",
+        "overflow-hidden relative flex w-auto h-auto justify-center items-center text-center flex-grow cursor-default select-none py-1 px-1 text-xs outline-none focus:bg-accent focus:text-primary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[state=checked]:text-primary",
         RadiusClasses(radius),
         className
       )}
       {...rest}
     >
-      <SelectPrimitive.ItemText>
+      <SelectPrimitive.ItemText className="justify-self-center">
         {children}
       </SelectPrimitive.ItemText>
-      <SelectPrimitive.ItemIndicator asChild className="opacity-80 absolute right-1">
+      <SelectPrimitive.ItemIndicator asChild className="opacity-80 justify-self-end">
         <CheckIcon />
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>

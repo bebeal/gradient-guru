@@ -2,6 +2,7 @@
 
 import * as TogglePrimitive from '@radix-ui/react-toggle';
 import { forwardRef, useState, useEffect } from 'react';
+import { Slot } from '@radix-ui/react-slot';
 
 export interface SwitchProps extends TogglePrimitive.ToggleProps {
   handleOffset?: string;
@@ -20,8 +21,8 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
     handleOffset = '1.5rem',
     animationTime = '0.2s',
     className,
+    ...rest
   } = props;
-
   const [internalPressed, setInternalPressed] = useState<boolean | undefined>(defaultPressed);
   const isPressed = externalPressed !== undefined ? externalPressed : internalPressed;
 
@@ -31,10 +32,11 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
     }
   }, [externalPressed]);
 
-  const handleToggle = () => {
+  const handleToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     const newPressed = isPressed === undefined ? true : !isPressed;
     setInternalPressed(newPressed);
-    onPressedChange && onPressedChange(newPressed);
+    onPressedChange && onPressedChange?.(newPressed);
   };
 
   const baseColor = isPressed === undefined ? 'rgba(80, 80, 80, 0.7)' : isPressed ? 'rgba(0, 140, 255, 1)' : 'rgba(80, 80, 80, 0.7)';
@@ -55,13 +57,10 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
   };
 
   return (
-    <TogglePrimitive.Root
-      ref={ref}
-      pressed={isPressed}
-      onPressedChange={handleToggle}
-      className={className}
-      style={style}
-      disabled={disabled}
-    />
+      <TogglePrimitive.Root
+        ref={ref} className={className} style={style} disabled={disabled} {...rest}
+        pressed={isPressed}
+        onClick={handleToggle}
+      />
   );
 });

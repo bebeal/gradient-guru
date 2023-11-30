@@ -1,7 +1,7 @@
 import { FakeForm, Label, Separator } from "@/components";
-import { isEmptyObject } from "@/utils";
+import { cn, isEmptyObject } from "@/utils";
 
-export const TabClasses = `w-full h-full flex flex-col p-2 overflow-auto gap-2`;
+export const TabClasses = `w-full h-full flex flex-col p-2 gap-2`;
 
 export const TabTitle = ({title, children}: {title?: string, children?: any}) => {
   const titleText: string = title || children || '';
@@ -13,14 +13,29 @@ export const TabTitle = ({title, children}: {title?: string, children?: any}) =>
   );
 };
 
-export const FlowTab = ({title, children}: {title?: string, children?: any}) => {
+export const FlowTab = ({title, children, className}: {title?: string, children?: any, className?: string}) => {
   return (
-    <div className={TabClasses}>
+    <div className={cn(TabClasses)}>
       <TabTitle title={title} />
-      <div className="p-2">
+      <div className={cn('p-2 flex flex-col w-auto h-full items-center gap-1', className)}>
         {children}
       </div>
     </div>
+  );
+};
+
+export const Subtitle = ({ children, className }: { children?: any, className?: string }) => {
+  return (
+    <div className="flex flex-col w-full h-auto gap-1 justify-center items-center">
+      <div className={cn("text-lg text-primary font-bold w-auto h-auto flex justify-center items-center gap-1", className)}>{children}</div>
+      <Separator />
+    </div>
+  )
+};
+
+export const UnderlinedTitle = ({ children, className }: { children?: any, className?: string }) => {
+  return (
+    <div className={cn("flex w-auto h-auto text-primary/80 text-xs font-bold underline justify-center text-center items-center gap-2", className)}>{children}</div>
   );
 };
 

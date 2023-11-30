@@ -8,7 +8,7 @@ import {
 } from '@tldraw/tldraw';
 import * as yup from 'yup';
 import { IconSetCache, SetNames } from '@/components';
-import { FlowShapeUtil } from './shared';
+import { FlowNodeUtil } from './shared';
 
 export type IconNode = TLBaseShape<
   'icon',
@@ -20,7 +20,7 @@ export type IconNode = TLBaseShape<
   }
 >;
 
-export class IconNodeUtil extends FlowShapeUtil<IconNode> {
+export class IconNodeUtil extends FlowNodeUtil<IconNode> {
   static override type = 'icon' as const;
   override isAspectRatioLocked = (node: IconNode) => false;
   override canResize = (node: IconNode) => true;
