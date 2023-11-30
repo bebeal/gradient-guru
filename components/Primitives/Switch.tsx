@@ -2,7 +2,6 @@
 
 import * as TogglePrimitive from '@radix-ui/react-toggle';
 import { forwardRef, useState, useEffect } from 'react';
-import { Slot } from '@radix-ui/react-slot';
 
 export interface SwitchProps extends TogglePrimitive.ToggleProps {
   handleOffset?: string;
@@ -58,9 +57,10 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
 
   return (
       <TogglePrimitive.Root
-        ref={ref} className={className} style={style} disabled={disabled} {...rest}
+        ref={ref} className={className} style={style} disabled={disabled}
         pressed={isPressed}
         onClick={handleToggle}
+        {...rest}
       />
   );
 });

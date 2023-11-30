@@ -172,15 +172,14 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
               data-state={"active"}
               data-orientation={"horizontal"}
               className={cn(
-                `w-full h-full overflow-auto bg-secondary outline-none border will-change-transform`,
+                `w-full h-full overflow-auto bg-secondary outline-none border`,
                 RadiusClasses(radius),
                 index === 0 && tabIsActive && 'rounded-tl-none',
                 index === tabs.length - 1 && tabIsActive && 'rounded-bl-none',
                 'border-accent',
-                `transition-all duration-600 ease-in-out`,
+                `transition-all duration-600 ease-in-out transform will-change-transform`,
                 `top-0 left-0 absolute`,
-                `transform`,
-                // !animate && !tabIsActive && `hidden`
+                !animate && !tabIsActive && `hidden`
               )}
               style={{
                 transform: `translateY(${((activeTabIndex||0) - index) * -100}%)`
