@@ -1,9 +1,6 @@
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
 
-const min = -10
-const max = 10;
-const step = 0.1;
 const config: Config = {
   safelist: [
     ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`]),
