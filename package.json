@@ -15,10 +15,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "npm run build:tldraw && next build",
+    "build": "yarn build:tldraw && next build",
     "build:tldraw": "cd packages/tldraw && yarn && yarn build && cd ../..",
     "dev": "next dev",
-    "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf .next",
+    "clean": "rm -rf yarn.lock && rm -rf node_modules && rm -rf .next",
     "generate-iconsets": "cd ./scripts && ./download-iconsets.sh",
     "start": "next start",
     "lint": "next lint",

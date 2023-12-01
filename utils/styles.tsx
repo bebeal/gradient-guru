@@ -6,6 +6,8 @@ import { cn } from "./utils";
 import React from "react";
 import { IconSetCache } from "@/components";
 
+export const DisabledClasses = cn(`disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none`);
+
 // Default variants from radix ui
 export const defaultVariants = ['classic', 'solid', 'soft', 'surface', 'outline', 'ghost'] as const;
 export type DefaultVariant = typeof defaultVariants[number];
@@ -18,7 +20,7 @@ export type CustomVariant = typeof customVariants[number];
 export type Variant = CustomVariant | DefaultVariant;
 
 // Reference tailwindcss border-radius
-export const radius = ['none', 'small', 'base', 'medium', 'large', 'full'] as const;
+export const radius = ['none', 'small', 'base', 'medium', 'large', 'xlarge', 'full'] as const;
 export type Radius = typeof radius[number];
 
 export const orientation = ['horizontal', 'vertical'] as const;
@@ -58,7 +60,20 @@ export const RadiusClasses = (radius: Radius = "medium") => {
     'base': cn(`rounded`),
     'medium': cn(`rounded-md`),
     'large': cn(`rounded-lg`),
+    'xlarge': cn(`rounded-xl`),
     'full': cn(`rounded-full`),
+  }[radius];
+};
+
+export const ConvertRadiusClass = (radius: Radius = "medium") => {
+  return {
+    'none': 'none',
+    'small': 'sm',
+    'base': '',
+    'medium': 'md',
+    'large': 'lg',
+    'xlarge': 'xl',
+    'full': 'full',
   }[radius];
 };
 

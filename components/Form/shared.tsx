@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { FormField } from "@/components";
 import { sortObject } from "@/utils";
 
-export const formFieldTypes = ['input', 'select', 'checkbox', 'array', 'object', 'readonly'] as const;
+export const formFieldTypes = ['input', 'select', 'checkbox', 'switch', 'array', 'object', 'readonly'] as const;
 export type FormFieldType = typeof formFieldTypes[number];
 
 export const mapSchemaToFormFields = (schema: any, form: any, labels: any, prefix: string = '') => {
@@ -14,7 +14,7 @@ export const mapSchemaToFormFields = (schema: any, form: any, labels: any, prefi
     acc[key] = field.spec.meta.type;
     return acc;
   }, {});
-  const order = ['checkbox', 'select', 'readonly', 'input', 'array', 'object'];
+  const order = ['checkbox', 'switch', 'select', 'readonly', 'input', 'array', 'object'];
   const sortedFields = sortObject(schema.fields, types, order);
   return Object.entries(sortedFields).map(([key, fieldSchema]: any) => {
     return (

@@ -8,7 +8,7 @@ import {
 } from '@tldraw/tldraw';
 import * as yup from 'yup';
 import { IconSetCache, SetNames } from '@/components';
-import { FlowNodeUtil } from './shared';
+import { FlowNodeUtil } from './FlowNodeUtil';
 
 export type IconNode = TLBaseShape<
   'icon',

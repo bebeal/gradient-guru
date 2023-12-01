@@ -8,6 +8,7 @@ export interface SwitchProps extends TogglePrimitive.ToggleProps {
   baseColor?: string;
   animationTime?: string;
   pressed?: boolean | undefined;
+  onChange?: (event: React.ChangeEvent<HTMLButtonElement>) => void;
   className?: string;
 }
 
@@ -16,8 +17,9 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
     pressed: externalPressed,
     defaultPressed = undefined,
     disabled = false,
-    onPressedChange,
-    handleOffset = '1.5rem',
+    onPressedChange: onPressedChangeCallback,
+    onChange: onChangeCallback,
+    handleOffset = '1.25rem',
     animationTime = '0.2s',
     className,
     ...rest
@@ -31,11 +33,29 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
     }
   }, [externalPressed]);
 
-  const handleToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
+   // radix doesn't expose the actual event so we have to create a synthetic one for it to work with react-hook-form
+   const onChange = (pressed: boolean) => {
+    // synthetic event
+    const event: any = {
+      target: {
+        value: pressed,
+        name: rest?.name,
+        type: 'button',
+      },
+    };
+    onChangeCallback?.(event);
+   };
+
+   const onPressedChange = () => {
     const newPressed = isPressed === undefined ? true : !isPressed;
     setInternalPressed(newPressed);
-    onPressedChange && onPressedChange?.(newPressed);
+    onPressedChangeCallback && onPressedChangeCallback?.(newPressed);
+    onChange?.(newPressed);
+   }
+
+  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onPressedChange();
   };
 
   const baseColor = isPressed === undefined ? 'rgba(80, 80, 80, 0.7)' : isPressed ? 'rgba(0, 140, 255, 1)' : 'rgba(80, 80, 80, 0.7)';
@@ -49,8 +69,8 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
     appearance: 'none',
     border: `solid 1px ${thumbColor}`,
     borderRadius: '1.9rem',
-    height: '1.5rem',
-    width: '3rem',
+    height: '1.25rem',
+    width: '2.5rem',
     cursor: disabled ? 'not-allowed' : 'pointer',
     backgroundColor: thumbColor,
   };
@@ -59,7 +79,8 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
       <TogglePrimitive.Root
         ref={ref} className={className} style={style} disabled={disabled}
         pressed={isPressed}
-        onClick={handleToggle}
+        onClick={onClick}
+        onPressedChange={onPressedChange}
         {...rest}
       />
   );

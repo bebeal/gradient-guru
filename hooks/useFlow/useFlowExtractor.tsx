@@ -18,7 +18,7 @@ export type ImageExtractorProps = {
 };
 
 export type NodesExtractorProps = {
-  nodesToExclude: string[];
+  nodesToInclude: string[];
 }
 
 export type BaseExtractorProps = {
@@ -38,7 +38,7 @@ export type HistoryRecordsConfig = BaseExtractorProps & FilterBySelectionProps;
 
 // Initialize default configs for each state extractor
 export const defaultBaseConfig: BaseExtractorProps = {
-  enabled: true,
+  enabled: false,
 };
 export const defaultFilterBySelectionConfig: FilterBySelectionProps = {
   filterSelected: false,
@@ -46,7 +46,7 @@ export const defaultFilterBySelectionConfig: FilterBySelectionProps = {
 export const defaultNodesConfig: NodesConfig = {
   ...defaultBaseConfig,
   ...defaultFilterBySelectionConfig,
-  nodesToExclude: [],
+  nodesToInclude: [],
 };
 export const defaultImageConfig: ImageConfig = {
     ...defaultBaseConfig,
@@ -82,14 +82,24 @@ export const FlowConfigContext = createContext({} as {
   canvasEventConfig: CanvasEventConfig; setCanvasEventConfig: (config: CanvasEventConfig) => void;
   uiEventConfig: UiEventConfig; setUiEventConfig: (config: UiEventConfig) => void;
   historyRecordsConfig: HistoryRecordsConfig; setHistoryRecordsConfig: (config: HistoryRecordsConfig) => void;
+
+  toggleNodeState: (nodeId: string) => void;
 });
 export const FlowConfigProvider = ({children}: {children: any}) => {
   const [nodesConfig, setNodesConfig] = useState<NodesConfig>(defaultNodesConfig);
-  const [imageConfig, setImageConfig] = useState<ImageConfig>(defaultImageConfig);
-  const [textConfig, setTextConfig] = useState<TextConfig>(defaultTextConfig);
+  const [imageConfig, setImageConfig] = useState<ImageConfig>({...defaultImageConfig, enabled: true});
+  const [textConfig, setTextConfig] = useState<TextConfig>({...defaultTextConfig, enabled: true});
   const [canvasEventConfig, setCanvasEventConfig] = useState<CanvasEventConfig>(defaultBaseConfig);
   const [uiEventConfig, setUiEventConfig] = useState<UiEventConfig>(defaultBaseConfig);
   const [historyRecordsConfig, setHistoryRecordsConfig] = useState<HistoryRecordsConfig>(defaultHistoryRecordsConfig);
+
+  const toggleNodeState = useCallback((nodeId: string) => {
+    const nodeIsToggled = nodesConfig.nodesToInclude.includes(nodeId);
+    setNodesConfig({
+      ...nodesConfig,
+      nodesToInclude: nodeIsToggled ? nodesConfig.nodesToInclude.filter((id) => id !== nodeId) : [...nodesConfig.nodesToInclude, nodeId]
+    });
+  }, [nodesConfig]);
 
   const value = {
     nodesConfig, setNodesConfig,
@@ -98,6 +108,7 @@ export const FlowConfigProvider = ({children}: {children: any}) => {
     canvasEventConfig, setCanvasEventConfig,
     uiEventConfig, setUiEventConfig,
     historyRecordsConfig, setHistoryRecordsConfig,
+    toggleNodeState,
   };
 
   return (
@@ -115,6 +126,8 @@ export type useFlowExtractorReturn = {
   canvasEventConfig: CanvasEventConfig; setCanvasEventConfig: (config: CanvasEventConfig) => void;
   uiEventConfig: UiEventConfig; setUiEventConfig: (config: UiEventConfig) => void;
   historyRecordsConfig: HistoryRecordsConfig; setHistoryRecordsConfig: (config: HistoryRecordsConfig) => void;
+
+  toggleNodeState: (nodeId: string) => void;
 
   fetchImage: () => Promise<string | null>;
   fetchText: () => Promise<string | null>;
@@ -185,7 +198,7 @@ export const useFlowExtractor = (): useFlowExtractorReturn => {
     return nodes.map((node: any) => {
       const { nodeState } = node.props;
       const filteredNodes = Object.keys(nodeState).reduce((acc: any, key: string) => {
-        if (!nodesConfig.nodesToExclude.includes(key)) {
+        if (nodesConfig.nodesToInclude.includes(key)) {
           acc[key] = nodeState[key];
         }
         return acc;

@@ -1,7 +1,7 @@
 'use client';
 
 import { HTMLAttributes, forwardRef } from "react"
-import { Accordion, Checkbox, FormControl, FormDescription, FormLabel, FormMessage, Input, Select, getEnumOptions, mapSchemaToFormFields } from "@/components";
+import { Accordion, Checkbox, FormControl, FormDescription, FormLabel, FormMessage, Input, Select, Switch, getEnumOptions, mapSchemaToFormFields } from "@/components";
 import { RadiusClasses, cn } from "@/utils";
 import { useFormField } from "@/hooks";
 
@@ -15,6 +15,9 @@ export const FormFieldRender = ({ type, placeholder, disabled, readonly, form, s
     case 'checkbox':
       const checked = controller?.field?.value;
       return (<Checkbox checked={checked} placeholder={placeholder} {...controller?.field} disabled={disabled} className={className} {...rest} />);
+    case 'switch':
+      const pressed = controller?.field?.value;
+      return (<Switch pressed={pressed} placeholder={placeholder} {...controller?.field} disabled={disabled} className={className} {...rest} />);
     case 'select':
       const options = Array.from(schema?._whitelist);
       return (<Select placeholder={placeholder} items={options} disabled={disabled} className={className} {...controller?.field} {...rest} />);
@@ -71,14 +74,14 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   const {type, placeholder, label, description, disabled, readonly, form, schema, controller, error } = useFormField();
 
   return (
-    <div className={cn(`w-auto h-auto grid overflow-auto rounded items-center`, type !== 'object' ? 'grid-cols-[minmax(0,_1fr)_2fr]' : 'grid-cols-[minmax(0,_1fr)]')}>
-      <div className="flex flex-col text-right h-auto w-auto truncate">
+    <div className={cn(`w-full h-auto grid overflow-auto rounded justify-start items-center`, type !== 'object' ? 'grid-cols-[minmax(0,_1fr)_1fr]' : 'grid-cols-[minmax(0,_1fr)]')}>
+      <div className="flex flex-col text-right h-auto truncate w-auto">
         {type !== 'object' && <FormLabel>{label}</FormLabel>}
         <FormDescription>{description}</FormDescription>
       </div>
       <div className="flex-col flex w-full h-auto items-start py-0.5">
         <FormControl>
-          <div className="flex flex-row items-center w-full gap-0.5">
+          <div className="flex flex-row w-full gap-0.5 justify-start items-start">
           {type !== 'object' && ':'}
           <FormFieldRender 
             type={type}

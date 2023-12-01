@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { Accordion, BulletedList } from '@/components';
+import { Accordion, BulletedList, Switch } from '@/components';
 import { useFlowEventsRecorder, useFlowExtractor } from '@/hooks';
-import { FlowTab } from './shared';
+import { FlowTab, UnderlinedTitle } from './shared';
 import { useCallback } from 'react';
 import { UseQueryOptions, useQuery } from 'react-query';
 import { Erroring, Loading, cn } from '@/utils';
@@ -56,15 +56,62 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
     return <BulletedList items={flowText.split('\n')} />;
   }, [flowTextLoading, flowTextError, flowText]);
 
+  const FlowImageAccordion = useCallback(() => {
+    return {
+      name: (
+        <UnderlinedTitle className={cn(`flex w-full relative h-full py-1 pointer-events-auto z-[1000]`)}>
+          <Switch
+            asChild
+            pressed={flowExtractor.imageConfig.enabled}
+            onPressedChange={(pressed: boolean) => flowExtractor.setImageConfig({ ...flowExtractor.imageConfig, enabled: pressed })}
+            className='absolute left-0'
+          ><div/></Switch>
+          Image
+        </UnderlinedTitle>
+      ),
+      content: (
+        <div className={cn(`w-full h-full flex justify-center items-center`)}>
+          <FlowImage />
+        </div>
+      ),
+      open: true,
+    }
+  }, [FlowImage, flowExtractor]);
+
+  const FlowTextAccordion = useCallback(() => {
+    return {
+      name: (
+        <UnderlinedTitle className={cn(`flex w-full relative h-full py-1 pointer-events-auto z-[1000]`)}>
+          <Switch
+            asChild
+            pressed={flowExtractor.textConfig.enabled}
+            onPressedChange={(pressed: boolean) => flowExtractor.setTextConfig({ ...flowExtractor.textConfig, enabled: pressed })}
+            className='absolute left-0'
+          ><div/></Switch>
+          Text
+        </UnderlinedTitle>
+      ),
+      content: (
+        <div className={cn(`w-full h-full flex justify-center items-center`)}>
+          <FlowText />
+        </div>
+      ),
+      open: true,
+    }
+  }, [FlowText, flowExtractor]);
+
   return (
     <FlowTab title="State" {...rest}>
-      <div className="flex flex-col gap-1 w-full h-auto overflow-auto justify-center items-center transition-all will-change-contents duration-500 ease-in-out">
-        <div className="flex text-primary/80 text-xs font-bold underline justify-center text-center items-center">Image:</div>
-        {/* <FlowImage /> */}
-        <div className="w-[100px] h-[100px] flex justify-center items-center bg-black">blank image</div>
-        <div className="flex text-primary/80 text-xs font-bold underline justify-center text-center items-center">Text:</div>
-        <FlowText />
-      </div>
+      <Accordion 
+        spaceBetween={16}
+        className="text-xs w-full"
+        radius={'xlarge'}
+        triggerClassName='w-full flex justify-center items-center'
+        items={[
+          FlowImageAccordion(),
+          FlowTextAccordion(),
+        ]}
+      />
     </FlowTab>
   )
 };

@@ -55,10 +55,10 @@ const icon_node: any = {
   x: 300,
   y: 150,
   props: {
-    w: 32,
-    h: 32,
+    w: 24,
+    h: 24,
     iconSet: 'Carbon',
-    icon: 'Accessibility',
+    icon: 'MachineLearningModel',
   }
 };
 

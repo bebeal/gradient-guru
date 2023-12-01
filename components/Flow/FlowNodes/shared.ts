@@ -6,11 +6,6 @@ import { DefaultLabelColorStyle } from "@tldraw/tlschema/src/styles/TLColorStyle
 import { FONT_FAMILIES } from "@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants";
 import { filterObject } from '@/utils';
 
-// each node can define its own schema
-export abstract class FlowNodeUtil<Shape extends TLUnknownShape = TLUnknownShape> extends ShapeUtil<Shape> {
-  abstract getSchema(node: Shape): any;
-};
-
 export const KeysToMakeReadOnly: string[] = ['type'] as const;
 export const KeysToIgnore: string[] = ['index', 'typeName'] as const;
 

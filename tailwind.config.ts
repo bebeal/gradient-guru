@@ -4,6 +4,8 @@ import colors from 'tailwindcss/colors';
 const config: Config = {
   safelist: [
     ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`]),
+    `radix-state-open:rounded-t-lg radix-state-closed:rounded-lg rounded-b-lg rounded-t-lg`,
+    `radix-state-open:rounded-t-xl radix-state-closed:rounded-xl rounded-b-xl rounded-t-xl`,
   ],
   darkMode: ['class'],
   content: [
@@ -152,6 +154,22 @@ const config: Config = {
         'kbd': 'inset 0 0.05em hsla(0,0%,100%,.372),inset 0 0.25em 0.5em rgba(121,121,250,.031),inset 0 -0.1em rgba(0,0,0,.875),0 0 0 0.075em rgba(222,243,255,.334),0 0.08em 0.17em rgba(0,0,0,.875)',
       },
       keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        'accordion-out': {
+          'from': { width: '0' },
+          'to': { width: 'var(--radix-accordion-content-width)' }
+        },
+        'accordion-in': {
+          'from': { width: 'var(--radix-accordion-content-width)' },
+          'to': { width: '0' }
+        },
         "bigger-bounce": {
           '0%': {
             transform: "translateY(-40%)",
@@ -201,37 +219,25 @@ const config: Config = {
           '100%': { transform: "scale(1)" },
         },
         "slide-up-fade": {
-          '0%': { opacity: "0", transform: "translateY(2px)" },
+          '0%': { opacity: "0", transform: "translateY(100%)" },
+          '50%': { opacity: "0.5", transform: "translateY(-10%)" },
           '100%': { opacity: "1", transform: "translateY(0)" },
         },
         "slide-right-fade": {
-          '0%': { opacity: "0", transform: "translateX(-2px)" },
+          '0%': { opacity: "0", transform: "translateX(-100%)" },
+          '50%': { opacity: "0.5", transform: "translateX(10%)" },
           '100%': { opacity: "1", transform: "translateX(0)" },
         },
         "slide-down-fade": {
-          '0%': { opacity: "0", transform: "translateY(-2px)" },
+          '0%': { opacity: "0", transform: "translateY(-100%)" },
+          '50%': { opacity: "0.5", transform: "translateY(10%)" },
           '100%': { opacity: "1", transform: "translateY(0)" },
         },
         "slide-left-fade": {
-          '0%': { opacity: "0", transform: "translateX(2px)" },
+          '0%': { opacity: "0", transform: "translateX(100%)" },
+          '50%': { opacity: "0.5", transform: "translateX(-10%)" },
           '100%': { opacity: "1", transform: "translateX(0)" },
         },
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-        'accordion-out': {
-          'from': { width: '0' },
-          'to': { width: 'var(--radix-accordion-content-width)' }
-        },
-        'accordion-in': {
-          'from': { width: 'var(--radix-accordion-content-width)' },
-          'to': { width: '0' }
-        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out both",

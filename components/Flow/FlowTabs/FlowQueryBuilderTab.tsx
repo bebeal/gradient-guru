@@ -13,37 +13,42 @@ export const FlowQueryBuilderTab = (props: FlowQueryBuilderTabProps) => {
   } = props;
   const flowExtractor = useFlowExtractor();
 
-  // const onToggleConfig = (pressed: boolean, config: any, setConfig: any) => {
-  //   setConfig({...config, enabled: pressed})
-  // };
+  const onToggleConfig = (pressed: boolean, config: any, setConfig: any) => {
+    setConfig({...config, enabled: pressed})
+  };
 
-  // const QueryBuilderBox = (config: any, setConfig: any, title: string, schema?: any) => {
-  //   const {enabled, ...configNoEnabled} = config;
-  //   return (
-  //     <Accordion
-  //       triggerClassName={cn(`flex w-full h-auto text-center justify-center items-center`)}
-  //       items={[
-  //          {
-  //           name: (
-  //             <UnderlinedTitle className="flex w-full justify-center h-auto text-center items-center">
-  //                 {/* <Switch pressed={enabled} onPressedChange={(pressed: boolean) => onToggleConfig(pressed, config, setConfig)} className={cn(``)} /> */}
-  //               {title}
-  //             </UnderlinedTitle>
-  //           ),
-  //           content: (
-  //             <div className="w-[100px] h-[100px] flex justify-center items-center">
-  //               Test Content
-  //             </div>
-  //           )
-  //          }
-  //       ]}
-  //     />
-  //   );
-  // };
+  const QueryBuilderBox = (config: any, setConfig: any, title: string) => {
+    return (
+      <Accordion
+        radius={'xlarge'}
+        triggerClassName='w-full flex justify-center items-center'
+        items={[
+           {
+            name: (
+              <UnderlinedTitle className={cn(`flex w-full relative h-full py-1 pointer-events-auto z-[1000]`)}>
+                <Switch asChild pressed={config.enabled} onPressedChange={(pressed: boolean) => onToggleConfig(pressed, config, setConfig)} className='absolute left-0'><div/></Switch>
+                {title}
+              </UnderlinedTitle>
+            ),
+            content: (
+              <div className={cn(`w-full h-full flex`)}>
+                <FakeForm object={config} />
+              </div>
+            ),
+            open: config.enabled, 
+           }
+        ]}
+      />
+    );
+  };
 
   return (
     <FlowTab title="Query Builder" className='h-full'>
-        {/* {QueryBuilderBox(flowExtractor.canvasEventConfig, flowExtractor.setCanvasEventConfig, 'Canvas Event')} */}
+        {/* <div className="flex flex-col gap-4 w-full h-auto justify-center items-center">
+          {QueryBuilderBox(flowExtractor.canvasEventConfig, flowExtractor.setCanvasEventConfig, 'Canvas Event')}
+          {QueryBuilderBox(flowExtractor.uiEventConfig, flowExtractor.setUiEventConfig, 'UI Event')}
+          {QueryBuilderBox(flowExtractor.historyRecordsConfig, flowExtractor.setHistoryRecordsConfig, 'History Records')}
+        </div> */}
         <div className="flex-1 h-full w-full" />
         <Button variant='gradient' onClick={() => console.log('query builder')}>Build Query</Button>
     </FlowTab>

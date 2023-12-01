@@ -43,6 +43,8 @@ def generate_iconset_file(new_svgs: list, directory: str, url: str = "", clean: 
         icons_str = ', '.join(new_svgs)
         # export map of icon names to svg components
         outfile.write(f"export const {icon_set_name}IconSet: IconSet = {{\n  {icons_str}\n}};\n")
+        outfile.write(f"export const {icon_set_name}IconNames = Object.keys({icon_set_name}IconSet);\n")
+        outfile.write(f"export type {icon_set_name}Icon = keyof typeof {icon_set_name}IconSet;\n")
         # comment with source url
         outfile.write(f"// {icon_set_name} - https://github.com/{str(url)} - {len(new_svgs)} Icons\n")
 
