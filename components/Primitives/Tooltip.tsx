@@ -8,7 +8,7 @@ export interface TooltipProps extends TooltipPrimitive.TooltipProps {
   content?: any;
   sideOffset?: number;
   className?: string;
-};
+}
 
 export const Tooltip = (props: TooltipProps) => {
   const {

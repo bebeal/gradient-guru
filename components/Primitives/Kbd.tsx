@@ -1,6 +1,6 @@
 'use client'
 
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef } from 'react';
 import { nanoid } from 'nanoid';
 import { KeyMap, Loading, cn } from '@/utils';
 import { useMounted } from '@/hooks';
@@ -9,7 +9,7 @@ export interface KbdProps {
   children?: any;
   className?: string;
   plusSign?: boolean;
-};
+}
 
 export const Kbd = forwardRef((props: KbdProps, ref?: any) => {
   const {

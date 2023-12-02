@@ -1,10 +1,8 @@
 
 import * as yup from 'yup';
-import { ShapeUtil, TLUnknownShape } from "@tldraw/editor";
-import { DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, GeoShapeGeoStyle, useEditor } from "@tldraw/editor";
+import { DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, GeoShapeGeoStyle } from "@tldraw/editor";
 import { DefaultLabelColorStyle } from "@tldraw/tlschema/src/styles/TLColorStyle";
 import { FONT_FAMILIES } from "@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants";
-import { filterObject } from '@/utils';
 
 export const KeysToMakeReadOnly: string[] = ['type'] as const;
 export const KeysToIgnore: string[] = ['index', 'typeName'] as const;

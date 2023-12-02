@@ -1,6 +1,6 @@
 'use client'
 
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import { cn } from '@/utils';
 
@@ -9,7 +9,7 @@ export interface SliderProps extends SliderPrimitive.SliderProps {
   showValue?: 'value' | 'percent' | 'none' | false;
   thumbSize?: number;
   className?: string;
-};
+}
 
 export const Slider = forwardRef((props: SliderProps, externalRef?: any) => {
   const {

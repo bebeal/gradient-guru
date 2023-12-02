@@ -1,9 +1,9 @@
 'use client'
 
 import { Button as ThemedButton } from "@radix-ui/themes";
-import { Variant, noop, cn, GradientDiv, GradientSvg, isDefaultVariant, Radius, RadiusClasses, VariantClasses, getEncodedSVGUrl, isSVG, isCustomVariant } from "@/utils";
+import { Variant, noop, cn, GradientDiv, isDefaultVariant, Radius, RadiusClasses, VariantClasses, isCustomVariant } from "@/utils";
 import { useRippleEffect } from '@/hooks'
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 
 export interface ButtonProps {
   children?: any;
@@ -14,7 +14,7 @@ export interface ButtonProps {
   radius?: Radius;
   ripple?: boolean;
   type?: any;
-};
+}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externalRef) => {
   const internalRef = useRef<HTMLButtonElement>(null);

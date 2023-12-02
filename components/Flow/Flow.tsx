@@ -2,8 +2,6 @@
 
 import { 
   ContextMenu,
-  TLUiEventSource,
-  TLUiOverrides,
   TldrawHandles,
   TldrawHoveredShapeIndicator,
   TldrawProps,
@@ -12,8 +10,7 @@ import {
   TldrawSelectionForeground,
   defaultShapeTools,
   defaultShapeUtils,
-  defaultTools,
-  toolbarItem
+  defaultTools
 } from '@tldraw/tldraw';
 import {
 	Canvas,
@@ -26,15 +23,14 @@ import {
 	TldrawEditor,
 	TldrawEditorProps,
 	assert,
-	setUserPreferences,
 	useEditor,
 } from '@tldraw/editor'
 import { registerDefaultSideEffects } from '@tldraw/tldraw/src/lib/defaultSideEffects';
 import { usePreloadAssets } from '@tldraw/tldraw/src/lib/ui/hooks/usePreloadAssets';
 import { TLExternalContentProps, registerDefaultExternalContentHandlers } from '@tldraw/tldraw/src/lib/defaultExternalContentHandlers';
 import { useDefaultEditorAssetsWithOverrides } from '@tldraw/tldraw/src/lib/utils/static-assets/assetUrls';
-import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { FlowUi, FlowUiProps, IconSetCache } from '@/components';
+import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 'react'
+import { FlowUi, FlowUiProps } from '@/components';
 import { Erroring, Loading, cn } from '@/utils';
 
 import { FlowEventsRecorderProvider } from '@/hooks';

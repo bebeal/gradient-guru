@@ -1,9 +1,8 @@
-
-import { getExportedImageBlob } from "@/utils";
-import { Editor, TLEventInfo, TLRecord, TLShape, TLShapeId, UiEvent, useEditor } from "@tldraw/tldraw";
-import { createContext, useCallback, useContext, useState } from "react";
-import { useFlowEventsRecorder } from ".";
-import { RecordsDiff } from "@tldraw/store";
+import { createContext, useCallback, useContext, useState } from 'react';
+import { RecordsDiff } from '@tldraw/store';
+import { TLEventInfo, TLRecord, TLShape, TLShapeId, UiEvent, useEditor } from '@tldraw/tldraw';
+import { getExportedImageBlob } from '@/utils';
+import { useFlowEventsRecorder } from '.';
 
 export const defaultNodePropertiesToExtract = ['x', 'y', 'rotation', 'id', 'type', 'props'] as const;
 
@@ -19,7 +18,7 @@ export type ImageExtractorProps = {
 
 export type NodesExtractorProps = {
   nodesToInclude: string[];
-}
+};
 
 export type BaseExtractorProps = {
   enabled: boolean; // if true will extract this state when extractAll is called
@@ -49,15 +48,15 @@ export const defaultNodesConfig: NodesConfig = {
   nodesToInclude: [],
 };
 export const defaultImageConfig: ImageConfig = {
-    ...defaultBaseConfig,
-    ...defaultFilterBySelectionConfig,
-    width: 320,
-    height: 240,
-    type: 'png',
-    quality: 1,
-    scale: 1,
-    imageSmoothingEnabled: true,
-    imageSmoothingQuality: 'high',
+  ...defaultBaseConfig,
+  ...defaultFilterBySelectionConfig,
+  width: 320,
+  height: 240,
+  type: 'png',
+  quality: 1,
+  scale: 1,
+  imageSmoothingEnabled: true,
+  imageSmoothingQuality: 'high',
 };
 export const defaultTextConfig: TextConfig = {
   ...defaultBaseConfig,
@@ -75,57 +74,78 @@ export const defaultHistoryRecordsConfig: HistoryRecordsConfig = {
 };
 
 // Each of these configs will be accessible to the rest of the app via a provider
-export const FlowConfigContext = createContext({} as {
-  nodesConfig: NodesConfig; setNodesConfig: (config: NodesConfig) => void;
-  imageConfig: ImageConfig; setImageConfig: (config: ImageConfig) => void;
-  textConfig: TextConfig; setTextConfig: (config: TextConfig) => void;
-  canvasEventConfig: CanvasEventConfig; setCanvasEventConfig: (config: CanvasEventConfig) => void;
-  uiEventConfig: UiEventConfig; setUiEventConfig: (config: UiEventConfig) => void;
-  historyRecordsConfig: HistoryRecordsConfig; setHistoryRecordsConfig: (config: HistoryRecordsConfig) => void;
+export const FlowConfigContext = createContext(
+  {} as {
+    nodesConfig: NodesConfig;
+    setNodesConfig: (config: NodesConfig) => void;
+    imageConfig: ImageConfig;
+    setImageConfig: (config: ImageConfig) => void;
+    textConfig: TextConfig;
+    setTextConfig: (config: TextConfig) => void;
+    canvasEventConfig: CanvasEventConfig;
+    setCanvasEventConfig: (config: CanvasEventConfig) => void;
+    uiEventConfig: UiEventConfig;
+    setUiEventConfig: (config: UiEventConfig) => void;
+    historyRecordsConfig: HistoryRecordsConfig;
+    setHistoryRecordsConfig: (config: HistoryRecordsConfig) => void;
 
-  toggleNodeState: (nodeId: string) => void;
-});
-export const FlowConfigProvider = ({children}: {children: any}) => {
+    toggleNodeState: (nodeId: string) => void;
+  }
+);
+export const FlowConfigProvider = ({ children }: { children: any }) => {
   const [nodesConfig, setNodesConfig] = useState<NodesConfig>(defaultNodesConfig);
-  const [imageConfig, setImageConfig] = useState<ImageConfig>({...defaultImageConfig, enabled: true});
-  const [textConfig, setTextConfig] = useState<TextConfig>({...defaultTextConfig, enabled: true});
+  const [imageConfig, setImageConfig] = useState<ImageConfig>({ ...defaultImageConfig, enabled: true });
+  const [textConfig, setTextConfig] = useState<TextConfig>({ ...defaultTextConfig, enabled: true });
   const [canvasEventConfig, setCanvasEventConfig] = useState<CanvasEventConfig>(defaultBaseConfig);
   const [uiEventConfig, setUiEventConfig] = useState<UiEventConfig>(defaultBaseConfig);
   const [historyRecordsConfig, setHistoryRecordsConfig] = useState<HistoryRecordsConfig>(defaultHistoryRecordsConfig);
 
-  const toggleNodeState = useCallback((nodeId: string) => {
-    const nodeIsToggled = nodesConfig.nodesToInclude.includes(nodeId);
-    setNodesConfig({
-      ...nodesConfig,
-      nodesToInclude: nodeIsToggled ? nodesConfig.nodesToInclude.filter((id) => id !== nodeId) : [...nodesConfig.nodesToInclude, nodeId]
-    });
-  }, [nodesConfig]);
+  const toggleNodeState = useCallback(
+    (nodeId: string) => {
+      const nodeIsToggled = nodesConfig.nodesToInclude.includes(nodeId);
+      setNodesConfig({
+        ...nodesConfig,
+        nodesToInclude: nodeIsToggled
+          ? nodesConfig.nodesToInclude.filter((id) => id !== nodeId)
+          : [...nodesConfig.nodesToInclude, nodeId],
+      });
+    },
+    [nodesConfig]
+  );
 
   const value = {
-    nodesConfig, setNodesConfig,
-    imageConfig, setImageConfig,
-    textConfig, setTextConfig,
-    canvasEventConfig, setCanvasEventConfig,
-    uiEventConfig, setUiEventConfig,
-    historyRecordsConfig, setHistoryRecordsConfig,
+    nodesConfig,
+    setNodesConfig,
+    imageConfig,
+    setImageConfig,
+    textConfig,
+    setTextConfig,
+    canvasEventConfig,
+    setCanvasEventConfig,
+    uiEventConfig,
+    setUiEventConfig,
+    historyRecordsConfig,
+    setHistoryRecordsConfig,
     toggleNodeState,
   };
 
-  return (
-    <FlowConfigContext.Provider value={value}>
-      {children}
-    </FlowConfigContext.Provider>
-  );
+  return <FlowConfigContext.Provider value={value}>{children}</FlowConfigContext.Provider>;
 };
 
 // Type definition for useFlowExtractor
 export type useFlowExtractorReturn = {
-  nodesConfig: NodesConfig; setNodesConfig: (config: NodesConfig) => void;
-  imageConfig: ImageConfig; setImageConfig: (config: ImageConfig) => void;
-  textConfig: TextConfig; setTextConfig: (config: TextConfig) => void;
-  canvasEventConfig: CanvasEventConfig; setCanvasEventConfig: (config: CanvasEventConfig) => void;
-  uiEventConfig: UiEventConfig; setUiEventConfig: (config: UiEventConfig) => void;
-  historyRecordsConfig: HistoryRecordsConfig; setHistoryRecordsConfig: (config: HistoryRecordsConfig) => void;
+  nodesConfig: NodesConfig;
+  setNodesConfig: (config: NodesConfig) => void;
+  imageConfig: ImageConfig;
+  setImageConfig: (config: ImageConfig) => void;
+  textConfig: TextConfig;
+  setTextConfig: (config: TextConfig) => void;
+  canvasEventConfig: CanvasEventConfig;
+  setCanvasEventConfig: (config: CanvasEventConfig) => void;
+  uiEventConfig: UiEventConfig;
+  setUiEventConfig: (config: UiEventConfig) => void;
+  historyRecordsConfig: HistoryRecordsConfig;
+  setHistoryRecordsConfig: (config: HistoryRecordsConfig) => void;
 
   toggleNodeState: (nodeId: string) => void;
 
@@ -155,12 +175,18 @@ export type useFlowExtractorReturn = {
 export const useFlowExtractor = (): useFlowExtractorReturn => {
   const configs = useContext(FlowConfigContext);
   const {
-    nodesConfig, setNodesConfig,
-    imageConfig, setImageConfig,
-    textConfig, setTextConfig,
-    canvasEventConfig, setCanvasEventConfig,
-    uiEventConfig, setUiEventConfig,
-    historyRecordsConfig, setHistoryRecordsConfig,
+    nodesConfig,
+    setNodesConfig,
+    imageConfig,
+    setImageConfig,
+    textConfig,
+    setTextConfig,
+    canvasEventConfig,
+    setCanvasEventConfig,
+    uiEventConfig,
+    setUiEventConfig,
+    historyRecordsConfig,
+    setHistoryRecordsConfig,
   } = configs;
 
   if (!configs) {
@@ -169,14 +195,20 @@ export const useFlowExtractor = (): useFlowExtractorReturn => {
 
   const editor = useEditor();
   const { canvasEvent, uiEvents, historyRecords } = useFlowEventsRecorder();
-  
-  const getNodeIds = useCallback((filterSelected: boolean = false): TLShapeId[] => {
-    return filterSelected ? editor.getSelectedShapeIds() : Array.from(editor.getCurrentPageShapeIds());
-  }, [editor]);
 
-  const getNodes = useCallback((filterSelected: boolean = false): TLShape[] => {
-    return filterSelected ? editor.getSelectedShapes() : editor.getCurrentPageShapesSorted()
-  }, [editor]);
+  const getNodeIds = useCallback(
+    (filterSelected: boolean = false): TLShapeId[] => {
+      return filterSelected ? editor.getSelectedShapeIds() : Array.from(editor.getCurrentPageShapeIds());
+    },
+    [editor]
+  );
+
+  const getNodes = useCallback(
+    (filterSelected: boolean = false): TLShape[] => {
+      return filterSelected ? editor.getSelectedShapes() : editor.getCurrentPageShapesSorted();
+    },
+    [editor]
+  );
 
   const fetchImage = async () => {
     if (imageConfig?.enabled) {
@@ -204,7 +236,7 @@ export const useFlowExtractor = (): useFlowExtractorReturn => {
         return acc;
       }, {});
       return filteredNodes;
-    })
+    });
   }, [getNodes, nodesConfig]);
 
   // Image extractor
@@ -216,26 +248,21 @@ export const useFlowExtractor = (): useFlowExtractorReturn => {
   // Text extractor
   const extractText = useCallback(async (): Promise<string> => {
     const nodeIds = getNodeIds(textConfig.filterSelected);
-    const nodeDescendantIds = editor.getShapeAndDescendantIds(nodeIds)
-  
+    const nodeDescendantIds = editor.getShapeAndDescendantIds(nodeIds);
+
     const texts = Array.from(nodeDescendantIds)
       .map((id) => {
-        const shape = editor.getShape(id)
-        if (!shape) return null
-        if (
-          shape.type === 'text' ||
-          shape.type === 'geo' ||
-          shape.type === 'arrow' ||
-          shape.type === 'note'
-        ) {
+        const shape = editor.getShape(id);
+        if (!shape) return null;
+        if (shape.type === 'text' || shape.type === 'geo' || shape.type === 'arrow' || shape.type === 'note') {
           // @ts-expect-error
-          return shape.props.text
+          return shape.props.text;
         }
-        return null
+        return null;
       })
-      .filter((v) => v !== null && v !== '')
-  
-    return texts.join('\n')
+      .filter((v) => v !== null && v !== '');
+
+    return texts.join('\n');
   }, [editor, getNodeIds, textConfig.filterSelected]);
 
   // Canvas event extractor
@@ -270,8 +297,21 @@ export const useFlowExtractor = (): useFlowExtractorReturn => {
       canvasEvent,
       uiEvent,
       historyRecords,
-    }
-  }, [nodesConfig, imageConfig, textConfig, canvasEventConfig, uiEventConfig, historyRecordsConfig, extractNodes, extractImage, extractText, extractCanvasEvent, extractUiEvent, extractHistoryRecords]);
+    };
+  }, [
+    nodesConfig,
+    imageConfig,
+    textConfig,
+    canvasEventConfig,
+    uiEventConfig,
+    historyRecordsConfig,
+    extractNodes,
+    extractImage,
+    extractText,
+    extractCanvasEvent,
+    extractUiEvent,
+    extractHistoryRecords,
+  ]);
 
   return {
     ...configs,
@@ -283,7 +323,6 @@ export const useFlowExtractor = (): useFlowExtractorReturn => {
     extractCanvasEvent,
     extractUiEvent,
     extractHistoryRecords,
-    extractAll
+    extractAll,
   };
 };
-

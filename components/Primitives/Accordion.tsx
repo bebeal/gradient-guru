@@ -4,7 +4,7 @@ import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { IconSetCache } from "@/components";
 import { ConvertRadiusClass, Radius, RadiusClasses, cn } from "@/utils";
 import { useRippleEffect } from "@/hooks";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export type AccordionPrimitiveProps = Omit<AccordionPrimitive.AccordionSingleProps, 'type'> & Omit<AccordionPrimitive.AccordionMultipleProps, 'type'>;
 
@@ -15,7 +15,7 @@ export interface AccordionItemProps {
   selected?: boolean;
   key?: string;
   open?: boolean;
-};
+}
 
 export interface AccordionProps extends AccordionPrimitiveProps {
   type?: 'single' | 'multiple';
@@ -26,7 +26,7 @@ export interface AccordionProps extends AccordionPrimitiveProps {
   className?: string;
   triggerClassName?: string;
   ripple?: boolean;
-};
+}
 
 const getRoundedClass = (index: number, total: number, spaceBetween: number, radius: Radius = 'medium') => {
   if (spaceBetween !== 0) return `rounded-${ConvertRadiusClass(radius)}`;

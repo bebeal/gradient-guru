@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CarbonIconNames, Form, IconSetCache, Separator } from "@/components";
 import * as yup from "yup"
 import { cn } from "@/utils";

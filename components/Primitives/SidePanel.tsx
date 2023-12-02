@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ForwardedRef, MutableRefObject, RefObject, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, { ForwardedRef, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import { Radius, RadiusClasses, cn } from '@/utils';
 import { useRippleEffect } from '@/hooks';
@@ -22,7 +22,7 @@ export interface SidePanelProps {
   animate?: boolean;
   radius?: Radius;
   className?: string;
-};
+}
 
 export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<HTMLElement>) => {
   const { 

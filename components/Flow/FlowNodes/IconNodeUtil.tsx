@@ -70,5 +70,5 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
         'icon': yup.string().oneOf(Object.keys(IconSetCache?.[node.props.iconSet])).label('Icon').meta({ type: 'select', disabled: false }),
       }).meta({ type: 'object', disabled: false }),
     };
-  };
+  }
 }

@@ -7,7 +7,7 @@ export enum BotStatusEnum {
   Idle = 'Idle',
   Thinking = 'Thinking',
   Working = 'Working',
-};
+}
 
 export type FlowCursorComponent = ComponentType<{
 	className?: string

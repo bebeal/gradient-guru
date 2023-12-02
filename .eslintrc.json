@@ -1,21 +1,23 @@
 {
   "$schema": "https://json.schemastore.org/eslintrc",
   "root": true,
+  "plugins": ["unused-imports"],
   "extends": [
     "next/core-web-vitals",
-    "prettier"
+    "prettier",
+    "eslint:recommended",
+		"plugin:@typescript-eslint/recommended"
   ],
-  
   "rules": {
+    "no-case-declarations": "off",
+    "@next/next/no-img-element": "off",
     "react/display-name": "off",
-    "tailwindcss/no-custom-classname": "off",
-    "tailwindcss/classname-order": "off"
-  },
-  "settings": {
-    "tailwindcss": {
-      "callees": ["cn", "cva"],
-      "config": "tailwind.config.js"
-    }
+    "@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+		"unused-imports/no-unused-imports": "error",
+		"unused-imports/no-unused-vars": "off"
   },
   "overrides": [
     {

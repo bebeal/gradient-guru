@@ -1,8 +1,7 @@
 'use client'
 
 import '@tldraw/tldraw/tldraw.css'
-import { RecordsDiff, TLRecord, Tldraw, useEditor } from '@tldraw/tldraw'
-import { useEffect, useRef } from 'react'
+import { Tldraw } from '@tldraw/tldraw'
 import { FlowTimelineScrubber } from '@/components';
 
 const TldrawPage = () => {

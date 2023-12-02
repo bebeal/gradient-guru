@@ -11,7 +11,7 @@ export interface HoverCardProps extends HoverCardPrimitive.HoverCardProps {
   link?: boolean;
   clickToDismiss?: boolean;
   portal?: boolean;
-};
+}
 
 export const HoverCard = (props: HoverCardProps) => {
   const { 
@@ -58,7 +58,7 @@ export const HoverCard = (props: HoverCardProps) => {
     // console.log(`difference: ${difference}, length of selected: ${window.getSelection()?.toString()?.length}, event?.detail: ${event?.detail}`);
     if (clickToDismiss && difference < 145 && difference > 0 && window.getSelection()?.toString()?.length === 0) {
       setOpen(false);
-    };
+    }
   }, [clickToDismiss]);
 
   const handleMouseDown = useCallback(() => {

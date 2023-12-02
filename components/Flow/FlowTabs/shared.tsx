@@ -5,11 +5,11 @@ import { cn, isEmptyObject } from "@/utils";
 
 export const TabClasses = `w-full h-full flex flex-col p-2 gap-2`;
 
-export const TabTitle = ({title, children}: {title?: string, children?: any}) => {
+export const TabTitle = ({title, children, className}: {title?: string, children?: any, className?: string}) => {
   const titleText: string = title || children || '';
   return (
-    <div className="flex flex-col w-full gap-1 justify-center items-center">
-      <div className="text-lg text-primary font-bold">{titleText}</div>
+    <div className={cn("flex flex-col w-full gap-1 justify-center items-center", className)}>
+      <div className="text-lg text-primary font-bold w-auto h-auto flex justify-center items-center gap-1">{titleText}</div>
       <Separator />
     </div>
   );
@@ -24,15 +24,6 @@ export const FlowTab = ({title, children, className}: {title?: string, children?
       </div>
     </div>
   );
-};
-
-export const Subtitle = ({ children, className }: { children?: any, className?: string }) => {
-  return (
-    <div className="flex flex-col w-full h-auto gap-1 justify-center items-center">
-      <div className={cn("text-lg text-primary font-bold w-auto h-auto flex justify-center items-center gap-1", className)}>{children}</div>
-      <Separator />
-    </div>
-  )
 };
 
 export const UnderlinedTitle = ({ children, className }: { children?: any, className?: string }) => {

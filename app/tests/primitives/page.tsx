@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Separator } from "@radix-ui/themes";
 import { Button, CarbonIconNames, Checkbox, IconSetCache, Input, Select } from "@/components";
-import { DefaultVariant, defaultVariants } from "@/utils";
+import { defaultVariants } from "@/utils";
 
 const PrimitiveDemo = ({ primitiveName, primitiveComponent }: any) => {
   return (

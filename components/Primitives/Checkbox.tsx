@@ -1,13 +1,12 @@
 'use client'
 
 import React, { ForwardedRef, forwardRef, useEffect, useState } from "react";
-import { PropsWithoutRefOrColor, Checkbox as ThemedCheckbox} from "@radix-ui/themes";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { DisabledClasses, Radius, RadiusClasses, cn, noop } from "@/utils";
+import { DisabledClasses, Radius, RadiusClasses, cn } from "@/utils";
 import { IconSetCache } from "..";
 
 export interface CheckboxProps extends CheckboxPrimitive.CheckboxProps {
-  checked?: boolean | undefined;
+  checked?: boolean | undefined | 'indeterminate';
   defaultChecked?: boolean | undefined | 'indeterminate';
   radius?: Radius;
   children?: any;

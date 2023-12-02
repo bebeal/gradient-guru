@@ -14,7 +14,7 @@ export interface SpinnerProps extends React.ComponentProps<'svg'> {
   strokeWidth?: number;
   strokeLinecap?: 'butt' | 'round' | 'square';
   id?: string;
-};
+}
 
 export const Spinner = ({ active=true, r=40, strokeWidth=10, color="accent", backgroundColor="muted", percentage=33, strokeLinecap='round', className, id=`spinner-${color}`, ...props }: SpinnerProps) => {
   const circumference = 2 * Math.PI * r;

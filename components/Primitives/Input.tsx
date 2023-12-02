@@ -1,13 +1,13 @@
 'use client'
 
-import React, { ChangeEvent, ForwardedRef, InputHTMLAttributes, forwardRef, useCallback, useEffect } from 'react';
+import React, { InputHTMLAttributes, forwardRef, useCallback } from 'react';
 import { Radius, RadiusClasses, cn, noop } from '@/utils';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   type?: string;
   radius?: Radius;
   extraCharWidth?: number;
-};
+}
 
 export const Input = forwardRef((props: InputProps, ref: any) => {
   const {

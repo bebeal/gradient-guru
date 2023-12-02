@@ -1,22 +1,19 @@
-'use client'
+'use client';
 
-import { IconSetCache, SidePanel, FlowEventsTab, FlowNodesTab, FlowQueryBuilderTab, FlowStateTab } from "@/components";
-import { AccordionItemProps } from "@radix-ui/react-accordion";
-import { useCallback, useMemo } from "react";
+import { useMemo } from 'react';
+import { FlowEventsTab, FlowNodesTab, FlowQueryBuilderTab, FlowStateTab, IconSetCache, SidePanel } from '@/components';
 
 export interface FlowTabsProps {
   className?: string;
-};
+}
 export const FlowTabs = (props: FlowTabsProps) => {
-  const {
-    className='',
-  } = props;
+  const { className = '' } = props;
 
   const EventsTab = useMemo(() => {
-    return     {
+    return {
       icon: <IconSetCache.Carbon.Network3 height={'100%'} width={'100%'} stroke={'transparent'} />,
       name: 'Events',
-      content: <FlowEventsTab />
+      content: <FlowEventsTab />,
     };
   }, []);
 
@@ -24,7 +21,7 @@ export const FlowTabs = (props: FlowTabsProps) => {
     return {
       icon: <IconSetCache.Carbon.ChartNetwork height={'100%'} width={'100%'} stroke={'transparent'} />,
       name: 'Nodes',
-      content: <FlowNodesTab />
+      content: <FlowNodesTab />,
     };
   }, []);
 
@@ -32,27 +29,20 @@ export const FlowTabs = (props: FlowTabsProps) => {
     return {
       icon: <IconSetCache.Carbon.VisualRecognition height={'100%'} width={'100%'} stroke={'transparent'} />,
       name: 'State',
-      content: <FlowStateTab />
-    }
+      content: <FlowStateTab />,
+    };
   }, []);
 
   const QueryBuilderTab = useMemo(() => {
     return {
       icon: <IconSetCache.Carbon.IbmWatsonStudio height={'100%'} width={'100%'} stroke={'transparent'} />,
       name: 'Query Builder',
-      content: <FlowQueryBuilderTab />
+      content: <FlowQueryBuilderTab />,
     };
   }, []);
 
-  const tabs = [
-    EventsTab,
-    NodesTab,
-    StateTab,
-    QueryBuilderTab,
-  ];
+  const tabs = [EventsTab, NodesTab, StateTab, QueryBuilderTab];
 
-  return (
-    <SidePanel className={className} tabs={tabs} />
-  )
+  return <SidePanel className={className} tabs={tabs} />;
 };
 FlowTabs.displayName = 'FlowTabs';

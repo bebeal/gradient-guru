@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ForwardedRef, MutableRefObject, PureComponent, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ForwardedRef, forwardRef, useCallback, useMemo } from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { CaretSortIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import { Radius, RadiusClasses, cn, noop } from '@/utils';
@@ -96,7 +96,7 @@ export interface SelectContentProps extends SelectPrimitive.SelectContentProps {
   radius?: Radius;
   selectedIndex?: number;
   virtualize?: boolean;
-};
+}
 const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>((props, forwardedRef: any) => {
   const {
     className='',
@@ -170,7 +170,7 @@ export interface SelectItemProps extends SelectPrimitive.SelectItemProps {
   children: React.ReactNode;
   className?: string;
   radius?: Radius;
-};
+}
 const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>((props, ref) => {
   const {
     value,
@@ -247,7 +247,7 @@ export interface SelectProps extends SelectPrimitive.SelectProps {
   onChange?: (event: React.ChangeEvent<HTMLButtonElement>) => void;
   virtualize?: boolean;
   className?: string;
-};
+}
 export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<HTMLButtonElement>) => {
   const { 
     items:initialItems=[],

@@ -4,9 +4,8 @@ import { cn } from '@/utils';
 import { TLRecord } from '@tldraw/tlschema';
 import { RecordsDiff } from '@tldraw/store';
 import { useEditor } from '@tldraw/editor';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Slider } from '@/components';
-import { useMounted } from '@/hooks';
 
 // TODO: Allow user to be able to restore the current state of the canvas to a previous snapshot of the canvas
 // TODO: Allow user to set a start and end point on the timeline to record a snippet that can then replace the timeline
