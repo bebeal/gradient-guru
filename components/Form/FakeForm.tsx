@@ -1,5 +1,4 @@
-'use client';
-
+'use client'
 import { forwardRef, memo } from 'react';
 import { Accordion, Checkbox, Input } from '@/components';
 import { cn, sortObject } from '@/utils';

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { IconSetCache } from '@/components';
 import { useState } from 'react';

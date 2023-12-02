@@ -1,5 +1,3 @@
-'use client';
-
 import { Accordion, Button, FakeForm, Switch } from '@/components';
 import { useFlowExtractor } from '@/hooks';
 import { cn } from '@/utils';

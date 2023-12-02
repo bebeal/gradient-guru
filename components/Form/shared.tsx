@@ -1,5 +1,3 @@
-'use client'
-
 import React from "react";
 import * as yup from 'yup';
 import { FormField } from "@/components";

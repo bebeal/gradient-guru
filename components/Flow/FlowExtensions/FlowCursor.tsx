@@ -1,3 +1,5 @@
+'use client'
+
 import { ComponentType, useRef } from 'react'
 import { cn } from '@/utils';
 import { useTransform } from "@tldraw/editor";

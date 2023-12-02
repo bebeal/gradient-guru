@@ -1,5 +1,4 @@
 'use client'
-
 import { isAppleDevice } from "@/utils";
 
 export const SPACE = '␣';

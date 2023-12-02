@@ -1,5 +1,4 @@
 'use client'
-
 import { IconSetCache, SidePanel } from "@/components";
 
 const SidePanelTestPage = () => {

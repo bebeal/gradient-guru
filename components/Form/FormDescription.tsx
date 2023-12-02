@@ -1,5 +1,4 @@
-'use client';
-
+'use client'
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { useFormField } from "@/hooks";
 import { cn } from "@/utils";

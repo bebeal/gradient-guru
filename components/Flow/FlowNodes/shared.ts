@@ -1,4 +1,4 @@
-
+'use client'
 import * as yup from 'yup';
 import { DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, GeoShapeGeoStyle } from "@tldraw/editor";
 import { DefaultLabelColorStyle } from "@tldraw/tlschema/src/styles/TLColorStyle";

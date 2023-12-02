@@ -34,7 +34,7 @@ def generate_iconset_file(new_svgs: list, directory: str, url: str = "", clean: 
         os.remove(outfile_path)
     new_svgs = sorted(list(set(new_svgs)))
     with open(outfile_path, 'w') as outfile:
-        outfile.write("\'use client\'\n\n")
+        # outfile.write("\'use client\'\n\n")
         # import each svg
         for new_name in new_svgs:
             outfile.write(f"import {new_name} from '@/{directory.replace('../', '')}/{new_name}.svg';\n")

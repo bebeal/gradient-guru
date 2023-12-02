@@ -1,5 +1,4 @@
-'use client';
-
+'use client'
 import { forwardRef } from "react"
 import { Label, LabelProps } from "@/components";
 import { useFormField } from "@/hooks";

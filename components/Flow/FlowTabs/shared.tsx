@@ -1,5 +1,3 @@
-'use client'
-
 import { FakeForm, Label, Separator } from "@/components";
 import { cn, isEmptyObject } from "@/utils";
 

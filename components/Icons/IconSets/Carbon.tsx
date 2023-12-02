@@ -1,5 +1,4 @@
 'use client'
-
 import Accessibility from '@/assets/icons/Carbon/Accessibility.svg';
 import AccessibilityAlt from '@/assets/icons/Carbon/AccessibilityAlt.svg';
 import AccessibilityColor from '@/assets/icons/Carbon/AccessibilityColor.svg';
@@ -2218,3 +2217,4 @@ export const CarbonIconSet: IconSet = {
 export const CarbonIconNames = Object.keys(CarbonIconSet);
 export type CarbonIcon = keyof typeof CarbonIconSet;
 // Carbon - https://github.com/carbon-design-system/carbon - 2211 Icons
+

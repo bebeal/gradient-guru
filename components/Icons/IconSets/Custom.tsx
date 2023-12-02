@@ -1,8 +1,8 @@
+'use client'
 import { forwardRef } from "react";
 import CenterCircle from '@/assets/icons/Carbon/CenterCircle.svg';
 import DotMark from '@/assets/icons/Carbon/DotMark.svg';
 import StatusPartialFail from '@/assets/icons/Carbon/StatusPartialFail.svg';
-import { IconSet } from "@/components";
 import { cn } from "@/utils";
 
 export interface SpinnerProps extends React.ComponentProps<'svg'> {
@@ -272,7 +272,7 @@ const Check = forwardRef((props?: any, ref?: any) => {
   }
 );
 
-export const CustomIconSet: IconSet = {
+export const CustomIconSet = {
   Loader,
   HorizontalDots,
   VerticalDots,
@@ -296,6 +296,3 @@ export const CustomIconSet: IconSet = {
   Indeterminate,
   Check
 };
-
-export const CustomIconSetNames = Object.keys(CustomIconSet) || [];
-export type CustomIconSetNames = keyof typeof CustomIconSet;

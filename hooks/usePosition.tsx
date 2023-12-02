@@ -1,3 +1,4 @@
+'use client'
 
 import { isTouchDevice } from '@/utils';
 import { useState, useEffect, useCallback, RefObject } from 'react';

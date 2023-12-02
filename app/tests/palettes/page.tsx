@@ -1,5 +1,4 @@
 'use client'
-
 import { cn } from '@/utils';
 import React from 'react';
 import tailwindConfig from 'tailwind.config';

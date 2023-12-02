@@ -1,0 +1,14 @@
+# Ignore artifacts:
+build
+coverage
+
+# third party packages
+packages
+
+# Ignore all HTML files:
+**/*.html
+
+**/.git
+**/.svn
+**/.hg
+**/node_modules

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { cn } from '@/utils';
 import { TLRecord } from '@tldraw/tlschema';

@@ -1,3 +1,4 @@
+'use client'
 import { ShapeUtil, TLUnknownShape } from "@tldraw/tldraw";
 
 // each node can define its own schema

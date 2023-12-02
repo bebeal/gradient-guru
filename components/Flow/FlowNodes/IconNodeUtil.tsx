@@ -1,4 +1,4 @@
-
+'use client'
 import {
   HTMLContainer,
   Rectangle2d,

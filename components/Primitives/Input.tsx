@@ -1,4 +1,3 @@
-'use client'
 
 import React, { InputHTMLAttributes, forwardRef, useCallback } from 'react';
 import { Radius, RadiusClasses, cn, noop } from '@/utils';

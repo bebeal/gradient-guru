@@ -1,4 +1,4 @@
-
+'use client'
 import { forwardRef } from "react";
 import * as FormPrimitive from "@radix-ui/react-form";
 import { cn } from "@/utils";

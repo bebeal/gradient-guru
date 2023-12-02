@@ -1,5 +1,3 @@
-'use client'
-
 import { useCallback } from 'react';
 import { Accordion, BulletedList, FakeForm, FlowTab, Switch, UnderlinedTitle } from '@/components';
 import { FlowEventsRecorderContextType, useFlowEventsRecorder, useFlowExtractor } from '@/hooks';

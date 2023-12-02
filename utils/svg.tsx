@@ -1,5 +1,4 @@
 'use client'
-
 import { ReactElement, isValidElement, useEffect, useRef, useState } from "react";
 import ReactDOMServer from "react-dom/server";
 import styled from "styled-components";
@@ -10,7 +9,7 @@ export const isSVG = (svg: ReactElement): boolean => {
   if (!svg || !svg?.props) return false;
   return (isValidElement(svg) && (svg.type === 'svg' || (typeof svg.type === 'function' && svg.type.name.includes('Svg'))))
       || (svg.type as any)?.displayName?.includes('IconSetCache')
-      || 'viewBox' in svg?.props || 'd' in svg?.props || 'fill' in svg?.props || 'stroke' in svg?.props;
+      || 'viewBox' in svg.props || 'd' in svg.props || 'fill' in svg.props || 'stroke' in svg.props;
 };
 
 // Encode svg given as a react functional component as a data url encoded string
@@ -22,7 +21,7 @@ export const getURISVG = (svg: ReactElement): string => {
 // Encode svg given as a react functional component as a data url encoded string, and add css url markup to it
 export const getEncodedSVGUrl = (svg: ReactElement): string => {
   const element: string = getURISVG(svg);
-  return `url(\"data:image/svg+xml,${element}\")`;
+  return `url("data:image/svg+xml,${element}")`;
 };
 
 // svg version of linear-gradient using id #svg-gradient-<colors> (e.g. #svg-gradient-38C9EA,db258f,FFA93A,6D3DFC)

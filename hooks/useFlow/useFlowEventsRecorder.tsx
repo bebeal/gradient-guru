@@ -1,10 +1,9 @@
+'use client'
 
 import { TLUiEventHandler } from "@tldraw/tldraw";
-import { cn } from '@/utils';
 import { TLRecord } from '@tldraw/tlschema';
 import { RecordsDiff } from '@tldraw/store';
-import { Slider } from '@/components';
-import { Editor, TLEventInfo, TLShape, TLShapeId, TLStoreEventInfo, UiEvent, UiEventType, useEditor } from "@tldraw/editor";
+import { TLEventInfo, TLStoreEventInfo, UiEvent, useEditor } from "@tldraw/editor";
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 
 export type FlowEventsRecorderContextType = {

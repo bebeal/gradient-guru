@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { forwardRef, useEffect, useMemo, useState } from 'react';
 import * as FormPrimitive from '@radix-ui/react-form';

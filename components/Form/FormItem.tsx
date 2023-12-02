@@ -1,5 +1,4 @@
-'use client';
-
+'use client'
 import { HTMLAttributes, forwardRef } from "react"
 import { Accordion, Checkbox, FormControl, FormDescription, FormLabel, FormMessage, Input, Select, Switch, mapSchemaToFormFields } from "@/components";
 import { cn } from "@/utils";

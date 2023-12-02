@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useCallback, useContext, useState } from 'react';
 import { RecordsDiff } from '@tldraw/store';
 import { TLEventInfo, TLRecord, TLShape, TLShapeId, UiEvent, useEditor } from '@tldraw/tldraw';

@@ -1,8 +1,8 @@
 'use client'
 
-import '@tldraw/tldraw/tldraw.css'
 import { Tldraw } from '@tldraw/tldraw'
 import { FlowTimelineScrubber } from '@/components';
+import '@tldraw/tldraw/tldraw.css'
 
 const TldrawPage = () => {
 	return (

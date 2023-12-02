@@ -1,3 +1,4 @@
+'use client'
 import { BaseBoxShapeTool } from "@tldraw/editor";
 
 export class IconNodeTool extends BaseBoxShapeTool {

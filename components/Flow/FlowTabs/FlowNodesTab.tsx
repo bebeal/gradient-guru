@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useCallback } from 'react';
 import { useEditor } from '@tldraw/editor';
@@ -11,7 +11,6 @@ import {
   IconSetCache,
   KeysToIgnore,
   Switch,
-  UnderlinedTitle,
   inferSchemaField,
 } from '@/components';
 import { useFlowExtractor } from '@/hooks';
@@ -59,10 +58,10 @@ export const FlowNodesTab = (props: FlowNodesTabProps) => {
       });
       const nodeSchema = yup.object().shape(filterObject(schemaFields, KeysToIgnore));
 
-      const stringName = `${index + 1}:  ${node.id.replace('shape:', '')} - ${node.type}`;
+      const stringName = `${node.type} - ${node.id.replace('shape:', '')}`;
       return {
         name: (
-          <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-1`)}>
+          <div className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-1 gap-1 justify-center items-center`)}>
             <Switch
               asChild
               pressed={flowExtractor.nodesConfig.nodesToInclude.includes(node.id)}
@@ -71,8 +70,8 @@ export const FlowNodesTab = (props: FlowNodesTabProps) => {
             >
               <div />
             </Switch>
-            {stringName}
-          </UnderlinedTitle>
+            <div className="text-primary/80 text-xs font-bold">{stringName}</div>
+          </div>
         ),
         content: (
           <div className={cn(`flex h-full w-full`)}>

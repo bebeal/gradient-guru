@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const os = require('os');
 /** @type {import('next').NextConfig} */
 module.exports = {
@@ -85,7 +86,7 @@ module.exports = {
   outputFileTracing: true,
   staticPageGenerationTimeout: 60,
   swcMinify: true,
-  output: !!process.env.NEXT_PRIVATE_STANDALONE ? 'standalone' : undefined,
+  output: process.env.NEXT_PRIVATE_STANDALONE ? 'standalone' : undefined,
   modularizeImports: undefined,
   experimental: {
     // enable in nextjs 14: webpackBuildWorker: true,

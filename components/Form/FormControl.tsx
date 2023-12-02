@@ -1,5 +1,4 @@
-'use client';
-
+'use client'
 import React from "react";
 import { Slot } from "@radix-ui/themes";
 import { useFormField } from "@/hooks";
