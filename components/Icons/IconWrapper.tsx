@@ -1,5 +1,6 @@
 'use client'
 
+import { Loading } from '@/utils';
 import { forwardRef, ReactNode, Suspense } from 'react';
 
 
@@ -8,7 +9,7 @@ export const IconWrapper = (Ico: any, displayName: string = '', defaultProps: an
     defaultProps = {width: '1em', height: '100%', fill: 'currentColor', stroke: 'currentColor', ...defaultProps}
     const merged = {...defaultProps, ...props};
     return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <Ico ref={ref} label={displayName} {...merged} />
       </Suspense>
     );

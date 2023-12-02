@@ -6,8 +6,8 @@ export const TabClasses = `w-full h-full flex flex-col p-2 gap-2`;
 export const TabTitle = ({title, children, className}: {title?: string, children?: any, className?: string}) => {
   const titleText: string = title || children || '';
   return (
-    <div className={cn("flex flex-col w-full gap-1 justify-center items-center", className)}>
-      <div className="text-lg text-primary font-bold w-auto h-auto flex justify-center items-center gap-1">{titleText}</div>
+    <div className={cn("flex flex-col w-full gap-1 justify-center items-center text-lg", className)}>
+      <div className="text-primary font-bold w-auto h-auto flex justify-center items-center gap-1">{titleText}</div>
       <Separator />
     </div>
   );

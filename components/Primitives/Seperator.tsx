@@ -22,8 +22,8 @@ export const Separator = forwardRef((props: SeparatorProps, ref: React.Forwarded
           `leading-none min-h-[1px] min-w-[1px] ${color} overflow-hidden`,
           OrientationClasses(orientation),
           {
-            ['horizontal']: 'h-[1px]',
-            ['vertical']: 'w-[1px]',
+            ['horizontal']: 'h-[1px] w-11/12',
+            ['vertical']: 'w-[1px] h-11/12',
           }[orientation],
           className
         )}

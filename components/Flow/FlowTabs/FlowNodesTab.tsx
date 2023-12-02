@@ -11,6 +11,7 @@ import {
   IconSetCache,
   KeysToIgnore,
   Switch,
+  TabTitle,
   inferSchemaField,
 } from '@/components';
 import { useFlowExtractor } from '@/hooks';
@@ -57,11 +58,12 @@ export const FlowNodesTab = (props: FlowNodesTabProps) => {
         }
       });
       const nodeSchema = yup.object().shape(filterObject(schemaFields, KeysToIgnore));
+      
 
       const stringName = `${node.type} - ${node.id.replace('shape:', '')}`;
       return {
         name: (
-          <div className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-1 gap-1 justify-center items-center`)}>
+          <div className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-0.5 gap-1 justify-center items-center`)}>
             <Switch
               asChild
               pressed={flowExtractor.nodesConfig.nodesToInclude.includes(node.id)}
@@ -74,9 +76,12 @@ export const FlowNodesTab = (props: FlowNodesTabProps) => {
           </div>
         ),
         content: (
-          <div className={cn(`flex h-full w-full`)}>
-            <Form object={node} schema={nodeSchema} onSubmit={onNodeChange} />
-          </div>
+        <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
+        <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
+          <TabTitle className={cn(`text-md w-full`)}>Properties</TabTitle>
+          <Form object={node} schema={nodeSchema} onSubmit={onNodeChange} />
+        </div>
+      </div>
         ),
         selected,
       };
@@ -88,7 +93,6 @@ export const FlowNodesTab = (props: FlowNodesTabProps) => {
       <Accordion
         spaceBetween={0}
         className="w-full text-xs"
-        radius={'xlarge'}
         triggerClassName="w-full flex justify-center items-center"
         items={items()}
       />

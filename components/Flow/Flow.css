@@ -36,6 +36,12 @@
   top: 0px !important;
 }
 
+.tlui-toolbar__extras__controls {
+  border: solid 1px rgb(var(--border-primary)) !important;
+  margin-bottom: 0px !important;
+  top: 7px;
+}
+
 .tlui-style-panel__wrapper {
   margin: 0px !important;
   padding: 0px !important;

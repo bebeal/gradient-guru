@@ -84,7 +84,7 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
   // const FlowImageAccordion = useCallback(() => {
   //   return {
   //     name: (
-  //       <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-1`)}>
+  //       <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-0.5`)}>
   //         <Switch
   //           asChild
   //           pressed={flowExtractor.imageConfig.enabled}
@@ -110,7 +110,7 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
   const FlowTextAccordion = useCallback(() => {
     return {
       name: (
-        <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-1`)}>
+        <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-0.5`)}>
           <Switch
             asChild
             pressed={flowExtractor.textConfig.enabled}
@@ -138,7 +138,6 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
       <Accordion
         spaceBetween={16}
         className="w-full text-xs"
-        radius={'xlarge'}
         triggerClassName="w-full flex justify-center items-center"
         items={[FlowTextAccordion()]}
       />

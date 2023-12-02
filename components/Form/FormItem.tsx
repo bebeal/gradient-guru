@@ -43,7 +43,7 @@ export const FormFieldRender = ({ type, placeholder, disabled, readonly, form, s
         </div>
       );
     case 'object':
-      const content = <div className="w-auto h-full grid grid-cols-2 gap-1 p-1 overflow-auto rounded items-center">{mapSchemaToFormFields(schema, form, {}, `${controller?.field?.name}.`)}</div>;
+      const content = <div className="w-auto h-full grid grid-cols-2 col-span-2 gap-1 p-2 overflow-auto rounded items-center">{mapSchemaToFormFields(schema, form, {}, `${controller?.field?.name}.`)}</div>;
       return (
         <Accordion 
           highlightActive={false}
@@ -73,12 +73,12 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   const {type, placeholder, label, description, disabled, readonly, form, schema, controller, error } = useFormField();
 
   return (
-    <div className={cn(`w-full h-auto grid overflow-auto rounded justify-start items-center`, type !== 'object' ? 'grid-cols-[minmax(0,_1fr)_1fr]' : 'grid-cols-[minmax(0,_1fr)]')}>
-      <div className="flex flex-col text-right h-auto truncate w-auto">
+    <div className={cn(`w-full h-auto grid overflow-auto rounded justify-start items-center`, type !== 'object' ? 'grid-cols-[minmax(0,_1fr)_1fr]' : 'grid-cols-[minmax(0,_1fr)] col-span-2')}>
+     {(description || type !== 'object') && (<div className="flex flex-col text-right h-auto truncate w-auto">
         {type !== 'object' && <FormLabel>{label}</FormLabel>}
-        <FormDescription>{description}</FormDescription>
-      </div>
-      <div className="flex-col flex w-full h-auto items-start py-0.5">
+        {description && <FormDescription>{description}</FormDescription>}
+      </div>)}
+      <div className={cn("flex-col flex w-full h-auto items-start py-0.5", type === 'object' && 'col-span-2')}>
         <FormControl>
           <div className="flex flex-row w-full gap-0.5 justify-start items-start">
           {type !== 'object' && ':'}

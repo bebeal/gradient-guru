@@ -60,7 +60,9 @@ export const Form = forwardRef<any, FormProps>((props, ref) => {
         className={cn(`w-auto h-auto px-2 py-4 overflow-auto rounded items-center`, className)}
         onChange={form.handleSubmit(onSubmit, onError)}
       >
-        {mapSchemaToFormFields(schema, form, labels)}
+        <div className="w-auto h-full grid grid-cols-2 gap-1 p-1 overflow-auto rounded items-center">
+          {mapSchemaToFormFields(schema, form, labels)}
+        </div>
       </FormPrimitive.Root>
     </FormProvider>
   );
