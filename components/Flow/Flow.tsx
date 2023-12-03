@@ -58,6 +58,8 @@ export const Flow = (props: FlowProps) => {
 		onMount,
 		...rest
 	} = props;
+  const assets = useDefaultEditorAssetsWithOverrides(rest.assetUrls);
+  const { done: preloadingComplete, error: preloadingError } = usePreloadAssets(assets);
   const customShapeUtils: TLAnyShapeUtilConstructor[] = useMemo(() => [IconNodeUtil], []);
   const customTools: TLStateNodeConstructor[] = useMemo(() => [IconNodeTool], []);
 
@@ -86,18 +88,15 @@ export const Flow = (props: FlowProps) => {
 		),
 	};
 
-	const assets = useDefaultEditorAssetsWithOverrides(rest.assetUrls);
-	const { done: preloadingComplete, error: preloadingError } = usePreloadAssets(assets);
-
 	if (preloadingError) { return <ErrorScreen><Erroring>Could not load assets. Please refresh the page.</Erroring></ErrorScreen>; }
 	if (!preloadingComplete) { return <LoadingScreen><div className="flex w-full h-auto justify-center items-center"><Loading dots={true} spinner={false}>Loading assets</Loading></div></LoadingScreen> }
 	return (
 		<TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)}>
       <FlowEventsRecorderProvider>
         <FlowUi initialShapes={initialShapes} {...withDefaults}>
-            <ContextMenu>
-              <Canvas />
-            </ContextMenu>
+          <ContextMenu>
+            <Canvas />
+          </ContextMenu>
           <InsideOfEditorContext
             maxImageDimension={maxImageDimension}
             maxAssetSize={maxAssetSize}

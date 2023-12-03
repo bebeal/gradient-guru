@@ -1,121 +1,101 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { useCallback } from 'react';
-import { UseQueryOptions, useQuery } from 'react-query';
-import { Accordion, BulletedList, Switch } from '@/components';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Accordion, BulletedList, FakeForm, Switch } from '@/components';
 import { useFlowExtractor } from '@/hooks';
-import { Erroring, Loading, cn } from '@/utils';
-import { FlowTab, UnderlinedTitle } from './shared';
-
-/* eslint-disable @next/next/no-img-element */
+import { cn } from '@/utils';
+import { FlowTab, TabTitle, UnderlinedTitle } from './shared';
+import { useEditor } from '@tldraw/editor';
 
 export interface FlowStateTabProps {
-  imageQueryOptions?: UseQueryOptions;
-  textQueryOptions?: UseQueryOptions;
 }
+
 export const FlowStateTab = (props: FlowStateTabProps) => {
   const {
-    imageQueryOptions = {
-      cacheTime: 0,
-      refetchInterval: 100,
-    },
-    textQueryOptions = {
-      cacheTime: 0,
-      refetchInterval: 100,
-    },
     ...rest
   } = props;
-  const flowExtractor = useFlowExtractor();
-
-  // const {
-  //   data: flowImage,
-  //   isLoading: flowImageLoading,
-  //   isError: flowImageError,
-  // } = useQuery<any>({
-  //   queryKey: ['flowImage'],
-  //   queryFn: flowExtractor.fetchImage,
-  //   enabled: flowExtractor.imageConfig.enabled,
-  //   ...imageQueryOptions,
-  // });
+  const editor = useEditor();
+  const [recordsCount, setRecordsCount] = useState<number>(0);
+  const [flowText, setFlowText] = useState<string | null>(null);
+  const flowImageRef = useRef<HTMLDivElement | null>(null);
   const {
-    data: flowText,
-    isLoading: flowTextLoading,
-    isError: flowTextError,
-  } = useQuery<any>({
-    queryKey: ['flowText'],
-    queryFn: flowExtractor.fetchText,
-    enabled: flowExtractor.textConfig.enabled,
-    ...textQueryOptions,
-  });
+    fetchImage,
+    imageConfig,
+    setImageConfig,
+    fetchText,
+    textConfig,
+    setTextConfig,
+    extractHistoryRecords
+  } = useFlowExtractor();
 
-  // const FlowImage = useCallback(() => {
-  //   if (flowImageError) return <Erroring>{flowImageError || 'No Nodes for Image'}</Erroring>;
-  //   if (!flowImage) return <div className="px-2 py-4 text-primary/80">No Image</div>;
-  //   return (
-  //     <div
-  //       className={cn(
-  //         `flex h-full w-full flex-shrink-0 flex-col items-center justify-center will-change-contents w-[${flowExtractor.imageConfig.width}px] h-[${flowExtractor.imageConfig.height}px]`
-  //       )}
-  //     >
-  //       {flowImageLoading ? (
-  //         <Loading />
-  //       ) : (
-  //         <img
-  //           src={flowImage}
-  //           alt="Flow Image"
-  //           width={flowExtractor.imageConfig.width}
-  //           height={flowExtractor.imageConfig.height}
-  //           className={cn(
-  //             `object-contain w-[${flowExtractor.imageConfig.width}px] h-[${flowExtractor.imageConfig.height}px] p-4`
-  //           )}
-  //         />
-  //       )}
-  //     </div>
-  //   );
-  // }, [flowImageError, flowImage, flowExtractor.imageConfig.width, flowExtractor.imageConfig.height, flowImageLoading]);
+  useEffect(() => {
+    const newRecords = extractHistoryRecords();
+    if (recordsCount != newRecords.length) {
+      fetchImage().then((image: any) => {
+        if (image && flowImageRef.current) {
+          flowImageRef.current.innerHTML = '';
+          flowImageRef.current?.appendChild(image);
+        }
+      });
+      fetchText().then((text: string | null) => {
+        setFlowText(text);
+      });
+      setRecordsCount(newRecords.length);
+    }
+  }, [extractHistoryRecords, fetchImage, fetchText, recordsCount]);
 
-  const FlowText = useCallback(() => {
-    if (flowTextLoading) return <Loading />;
-    if (flowTextError) return <Erroring>{flowTextError}</Erroring>;
-    if (!flowText) return <div className="items-center justify-center px-2 py-4 text-primary/80">No Text</div>;
-    return <BulletedList items={flowText.split('\n')} />;
-  }, [flowTextLoading, flowTextError, flowText]);
-
-  // const FlowImageAccordion = useCallback(() => {
-  //   return {
-  //     name: (
-  //       <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-0.5`)}>
-  //         <Switch
-  //           asChild
-  //           pressed={flowExtractor.imageConfig.enabled}
-  //           onPressedChange={(pressed: boolean) =>
-  //             flowExtractor.setImageConfig({ ...flowExtractor.imageConfig, enabled: pressed })
-  //           }
-  //           className="absolute left-0"
-  //         >
-  //           <div />
-  //         </Switch>
-  //         Image
-  //       </UnderlinedTitle>
-  //     ),
-  //     content: (
-  //       <div className={cn(`flex h-full w-full items-center justify-center`)}>
-  //         <FlowImage />
-  //       </div>
-  //     ),
-  //     open: true,
-  //   };
-  // }, [FlowImage, flowExtractor]);
-
-  const FlowTextAccordion = useCallback(() => {
+  const FlowImageAccordion = useCallback(() => {
+    const { enabled, ...controls } = imageConfig;
     return {
       name: (
         <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-0.5`)}>
           <Switch
             asChild
-            pressed={flowExtractor.textConfig.enabled}
+            pressed={imageConfig.enabled}
             onPressedChange={(pressed: boolean) =>
-              flowExtractor.setTextConfig({ ...flowExtractor.textConfig, enabled: pressed })
+              setImageConfig({ ...imageConfig, enabled: pressed })
+            }
+            className="absolute left-0"
+          >
+            <div />
+          </Switch>
+          Image
+        </UnderlinedTitle>
+      ),
+      content: (
+        <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
+          {Object.keys(controls).length > 0 && (
+            <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
+              <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
+              <FakeForm object={controls} />
+            </div>
+          )}
+          <div className="flex flex-wrap flex-col w-full justify-center items-center">
+            <TabTitle className={cn(`text-md w-full`)}>Image</TabTitle>
+            <div
+              className={cn(
+                `flex h-[200px] w-full overflow-hidden p-1 flex-shrink-0 flex-col items-center justify-center will-change-contents`
+              )}
+            >
+              <div ref={flowImageRef} className={cn(`flex w-full h-full overflow-hidden justify-stetch items-stetch [&>svg]:w-full [&>svg]:h-full border border-primary`)} />
+            </div>
+          </div>
+        </div>
+      ),
+      open: true,
+    };
+  }, [flowImageRef, imageConfig, setImageConfig]);
+
+  const FlowTextAccordion = useCallback(() => {
+    const { enabled, ...controls } = textConfig;
+    return {
+      name: (
+        <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-0.5`)}>
+          <Switch
+            asChild
+            pressed={textConfig.enabled}
+            onPressedChange={(pressed: boolean) =>
+              setTextConfig({ ...textConfig, enabled: pressed })
             }
             className="absolute left-0"
           >
@@ -125,13 +105,25 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
         </UnderlinedTitle>
       ),
       content: (
-        <div className={cn(`flex h-full w-full items-center justify-center`)}>
-          <FlowText />
+        <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
+          {Object.keys(controls).length > 0 && (
+            <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
+              <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
+              <FakeForm object={controls} />
+            </div>
+          )}
+          <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
+            <TabTitle className={cn(`text-md w-full`)}>Text From Nodes</TabTitle>
+            {!flowText ? (
+              <div className="items-center justify-center px-2 py-4 text-primary/80">No Text</div>
+            ) : (<BulletedList items={flowText.split('\n')} />)
+          }
+          </div>
         </div>
       ),
       open: true,
     };
-  }, [FlowText, flowExtractor]);
+  }, [flowText, textConfig, setTextConfig]);
 
   return (
     <FlowTab title="State" {...rest}>
@@ -139,7 +131,7 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
         spaceBetween={16}
         className="w-full text-xs"
         triggerClassName="w-full flex justify-center items-center"
-        items={[FlowTextAccordion()]}
+        items={[FlowTextAccordion(), FlowImageAccordion()]}
       />
     </FlowTab>
   );

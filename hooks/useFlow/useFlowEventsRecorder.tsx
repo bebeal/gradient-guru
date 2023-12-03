@@ -53,9 +53,12 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
           events.push(`user created shape (${(record.id).replace('shape:', '')} - ${record.type})`)
         }
       }
-      for (const record of Object.values(updated) as any) {
-        if (record.typeName === 'shape') {
-          events.push(`user updated shape (${(record.id).replace('shape:', '')} - ${record.type})`)
+      for (const [from, to] of Object.values(updated) as any) {
+        if ( from.typeName === 'shape' && to.typeName === 'shape') {
+          // collpase when pushing this event only if its different from last event in arary
+          if (events.length > 0 && !events[events.length - 1].includes(`user updated shape (${(to.id).replace('shape:', '')})`)) {
+            events.push(`user updated shape (${(to.id).replace('shape:', '')})`);
+          }
         }
       }
       for (const record of Object.values(removed) as any) {

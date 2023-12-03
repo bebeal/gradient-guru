@@ -16,6 +16,7 @@ export type ImageExtractorProps = {
   scale: number;
   imageSmoothingEnabled: boolean;
   imageSmoothingQuality: 'low' | 'medium' | 'high';
+  background: boolean;
 };
 
 export type NodesExtractorProps = {
@@ -59,6 +60,7 @@ export const defaultImageConfig: ImageConfig = {
   scale: 1,
   imageSmoothingEnabled: true,
   imageSmoothingQuality: 'high',
+  background: true,
 };
 export const defaultTextConfig: TextConfig = {
   ...defaultBaseConfig,
@@ -151,7 +153,7 @@ export type useFlowExtractorReturn = {
 
   toggleNodeState: (nodeId: string) => void;
 
-  fetchImage: () => Promise<string | null>;
+  fetchImage: () => Promise<SVGSVGElement | undefined>;
   fetchText: () => Promise<string | null>;
 
   extractNodes: () => TLShape[];
@@ -213,11 +215,8 @@ export const useFlowExtractor = (): useFlowExtractorReturn => {
   );
 
   const fetchImage = async () => {
-    if (imageConfig?.enabled) {
-      const image: Blob | null = await extractImage();
-      return image ? URL.createObjectURL(image) : null;
-    }
-    return null;
+    const nodesInImage: TLShapeId[] = getNodeIds(imageConfig.filterSelected);
+    return await editor.getSvg(nodesInImage, imageConfig);
   };
 
   const fetchText = async () => {
