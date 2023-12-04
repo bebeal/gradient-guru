@@ -288,11 +288,6 @@ const config: Config = {
             transform: "rotate(1440deg)",
           }
         },
-        "neon-light": {
-          "100%": {
-            transform: "translate3d(50%,50%,0)"
-          }
-        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out both",
@@ -315,7 +310,6 @@ const config: Config = {
         "text-glow": "text-glow 1.5s ease-in-out infinite alternate",
         "bigger-text-glow": "bigger-text-glow 1.5s infinite alternate",
         "ramp-up-spin": "ramp-up-spin 2s linear infinite reverse",
-        "neon-light": "neon-light 5s infinite linear"
       }
     },
   },
