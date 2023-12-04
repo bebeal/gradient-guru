@@ -30,9 +30,10 @@ const calcStepMarkOffset = (value: number, min: number, max: number, thumbSize: 
 }
 
 export type SliderProps = Omit<SliderPrimitive.SliderProps, "value" | "onValueChange" | "onChange" | "defaultValue" > & {
-  value: number;
+  value?: number;
   defaultValue?: number;
   onChange?: (value: number) => void;
+  onValueChange?: (value: number) => void;
   marks?: number[];
   showValue?: 'value' | 'percent' | 'none' | false;
   thumbSize?: number;
@@ -45,9 +46,10 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     max = 100,
     step = 1,
     name,
-    value,
-    defaultValue = min + step,
+    defaultValue = (max - min) / 2,
+    value = defaultValue,
     onChange: onChangeCallback,
+    onValueChange: onValueChangeCallback,
     marks=[min, defaultValue, max],
     showValue = 'none',
     thumbSize = 20,
@@ -57,7 +59,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
   const thumbRef = useRef<HTMLDivElement | null>(null);
 
   const onChange = useCallback((newValue: number) => {
-    if (newValue === value) return;
     // synthetic event
     const event = {
       target: {
@@ -67,7 +68,13 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
       },
     };
     onChangeCallback?.(event as any);
-  }, [value, name, onChangeCallback]);
+  }, [name, onChangeCallback]);
+
+  const onValueChange = useCallback((newValue: number[]) => {
+    if (newValue[0] === value) return;
+    onValueChangeCallback?.(newValue[0]);
+    onChange(newValue[0]);
+  }, [onChange, onValueChangeCallback, value]);
 
   return (
     <SliderPrimitive.Root
@@ -81,7 +88,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
       className={cn("relative flex items-center select-none touch-none w-full h-5 mt-[1em] mx-[0.5em]", className)}
       {...rest}
       onChange={noop}
-      onValueChange={(newValue) => onChange(newValue[0])}
+      onValueChange={onValueChange}
     >
       <SliderPrimitive.Track className="relative h-1 w-full flex-grow rounded-full bg-secondary cursor-pointer">
         {marks?.map((markValue, index) => (
@@ -112,7 +119,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
       >
         {(showValue && showValue !== 'none') && (
           <span 
-            className={cn(`absolute text-primary/50 text-xs top-[-100%] -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center`)}
+            className={cn(`absolute text-primary/50 text-xs top-[-.75em] -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center leading-none`)}
             style={{ left: calcStepMarkOffset(value, min, max, thumbSize) }}
           >
             {showValue === 'percent' && `${convertValueToPercentage(value, min, max).toFixed(0)}%`}

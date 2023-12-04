@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Button, TLUiEventHandler, TLUiEventSource, TLUiOverrides, TldrawUiContextProvider, TldrawUiProps, toolbarItem, useActions, useBreakpoint, useKeyboardShortcuts, useNativeClipboardEvents, useTranslation } from '@tldraw/tldraw';
+import React, { useCallback, useEffect, useState } from 'react'
+import { Button, TLUiEventHandler, TldrawUiContextProvider, TldrawUiProps, useActions, useBreakpoint, useKeyboardShortcuts, useNativeClipboardEvents, useTranslation } from '@tldraw/tldraw';
 import { TLShape, setUserPreferences, useEditor, useValue } from '@tldraw/editor'
 import { useEditorEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useEditorEvents';
 import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
@@ -40,30 +40,8 @@ export const FlowUi = (props: FlowUiProps) => {
     onUiEventCallback?.(name, data);
   }, [onUiEventCallback, recordUiEvent]);
 
-  const uiOverrides: TLUiOverrides = useMemo(() => ({
-    tools(editor, tools) {
-      // Create a tool item in the ui's context.
-      tools.icon = {
-        id: 'icon',
-        label: 'tool.icon' as any,
-        readonlyOk: false,
-        icon: 'color',
-        kbd: 'c',
-        onSelect: (source: TLUiEventSource) => {
-          editor.setCurrentTool('icon')
-          // trackEvent('select-tool', { source, id: 'icon' })
-        },
-      }
-      return tools
-    },
-    toolbar(_app, toolbar, { tools }) {
-      toolbar.push(toolbarItem(tools.icon))
-      return toolbar
-    },
-  }), []);
-
 	return (
-		<TldrawUiContextProvider overrides={uiOverrides} onUiEvent={onUiEvent} {...rest}>
+		<TldrawUiContextProvider onUiEvent={onUiEvent} {...rest}>
       <FlowConfigProvider>
         <FlowUiInner
           initialShapes={initialShapes}

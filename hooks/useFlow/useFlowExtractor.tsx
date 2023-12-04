@@ -156,7 +156,7 @@ export type useFlowExtractorReturn = {
 
   toggleNodeState: (nodeId: string) => void;
 
-  fetchImage: () => Promise<string | undefined>;
+  fetchImage: () => Promise<string | null>;
   fetchText: () => Promise<string | null>;
 
   extractNodes: () => TLShape[];
@@ -307,6 +307,7 @@ export const useFlowExtractor = (): useFlowExtractorReturn => {
 
   const fetchImage = useCallback(async () => {
     const nodesInImage: TLShapeId[] = getNodeIds(nodesConfig.filterSelected);
+    if (nodesInImage.length === 0) return null;
     return await getDataUrl(editor, nodesInImage, imageConfig);
   }, [editor, getNodeIds, imageConfig, nodesConfig.filterSelected]);
 

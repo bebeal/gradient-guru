@@ -4,35 +4,34 @@ import { cn } from '@/utils';
 import { TLRecord } from '@tldraw/tlschema';
 import { RecordsDiff } from '@tldraw/store';
 import { useEditor } from '@tldraw/editor';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Slider } from '@/components';
 
 // TODO: Allow user to be able to restore the current state of the canvas to a previous snapshot of the canvas
 // TODO: Allow user to set a start and end point on the timeline to record a snippet that can then replace the timeline
 
 // Stores records of type RecordsDiff<TLRecord> in a cache and allows the user to scrub through the snapshots as a timeline slider
-export interface FlowTimelineScrubberProps {
+export interface TimelineScrubberProps {
   maxCacheSize?: number; // The maximum number of snapshots to store in the cache
   events?: RecordsDiff<TLRecord>[]; // The events to store in the cache
 }
 
-export const FlowTimelineScrubber = (props: FlowTimelineScrubberProps) => {
+export const TimelineScrubber = (props: TimelineScrubberProps) => {
   const { maxCacheSize = 10000, events=[] } = props;
   const scrubberRef = useRef(null);
   // Pointer to keep track of the current position of the timeline slider
-  const pointer = useRef(0);
+  const [pointer, setPointer] = useState(maxCacheSize);
   const editor = useEditor();
 
   // Handler for changes in the slider's value
-  const handleSliderChange = useCallback((e: number[]) => {
-      const previousPosition = pointer.current;
+  const handleSliderChange = useCallback((nextPosition: number) => {
+      const previousPosition = pointer;
       const previousPercentage = previousPosition / maxCacheSize;
-      const nextPosition = e[0];
       const nextPercentage = nextPosition / maxCacheSize;
       const prevIndex = Math.ceil(previousPercentage * events.length);
       const nextIndex = Math.ceil(nextPercentage * events.length);
 
-      pointer.current = nextPosition;
+      setPointer(nextPosition);
 
       // Updating the Canvas State with the diffs either forward or backward depending on the direction of the slider
       editor.store.mergeRemoteChanges(() => {
@@ -81,15 +80,17 @@ export const FlowTimelineScrubber = (props: FlowTimelineScrubberProps) => {
         }
       });
       
-    }, [editor.store, events, maxCacheSize]);
+    }, [editor.store, events, maxCacheSize, pointer]);
 
   return (
-    <div className={cn(`flex w-auto h-auto p-2`)}>
+    <div className={cn(`flex w-full h-full p-2`)}>
       <Slider
         ref={scrubberRef}
         min={0}
         max={maxCacheSize}
-        defaultValue={[maxCacheSize]}
+        value={pointer}
+        defaultValue={maxCacheSize}
+        showValue={'percent'}
         onValueChange={handleSliderChange}
       />
     </div>

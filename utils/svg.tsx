@@ -1,8 +1,9 @@
 'use client'
 import { ReactElement, isValidElement, useEffect, useRef, useState } from "react";
-import ReactDOMServer from "react-dom/server";
 import styled from "styled-components";
 import { cn } from "./utils";
+import ReactDOMServer from 'react-dom/server';
+import React from 'react';
 
 // Check if a react element is an svg in various ways
 export const isSVG = (svg: ReactElement): boolean => {
@@ -13,15 +14,14 @@ export const isSVG = (svg: ReactElement): boolean => {
 };
 
 // Encode svg given as a react functional component as a data url encoded string
-export const getURISVG = (svg: ReactElement): string => {
+export const getURISVG = (svg: any): string => {
   // TODO: fix the renderToStaticMarkup method broken in nextjs14
   return encodeURIComponent(ReactDOMServer.renderToStaticMarkup(svg));
 };
 
 // Encode svg given as a react functional component as a data url encoded string, and add css url markup to it
-export const getEncodedSVGUrl = (svg: ReactElement): string => {
-  const element: string = getURISVG(svg);
-  return `url("data:image/svg+xml,${element}")`;
+export const getEncodedSVGUrl = (svg: any): string => {
+  return `url("data:image/svg+xml,${getURISVG(svg)}")`;
 };
 
 // svg version of linear-gradient using id #svg-gradient-<colors> (e.g. #svg-gradient-38C9EA,db258f,FFA93A,6D3DFC)

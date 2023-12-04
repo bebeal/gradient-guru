@@ -5,10 +5,10 @@ import {
   SvgExportContext,
   TLBaseShape,
   TLOnResizeHandler,
-  getDefaultColorTheme,
+  // getDefaultColorTheme,
   resizeBox,
 } from '@tldraw/tldraw';
-import { getFillDefForExport } from '@tldraw/tldraw/src/lib/shapes/shared/defaultStyleDefs';
+// import { getFillDefForExport } from '@tldraw/tldraw/src/lib/shapes/shared/defaultStyleDefs';
 import * as yup from 'yup';
 import { IconSetCache, SetNames } from '@/components';
 import { FlowNodeUtil } from './FlowNodeUtil';
@@ -68,7 +68,6 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
   override toSvg = (node: IconNode, ctx: SvgExportContext): Promise<SVGElement> | SVGElement => {
     const Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
     const iconComponent = <Icon width={node.props.w} height={node.props.h} xmlns='http://www.w3.org/2000/svg' />;
-    const { children, ...restProps } = iconComponent.props;
     // Render the Icon component to markup string
     const svgString = ReactDOMServer.renderToStaticMarkup(iconComponent);
     // Parse the string to an SVGElement
@@ -76,8 +75,6 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
     const svgDocument = parser.parseFromString(svgString, "image/svg+xml");
     const svgElement = svgDocument.documentElement;
 
-		const theme = getDefaultColorTheme({ isDarkMode: this.editor.user.getIsDarkMode() })
-		ctx.addExportDef(getFillDefForExport('solid', theme))
     const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim();
 
     // check fill property

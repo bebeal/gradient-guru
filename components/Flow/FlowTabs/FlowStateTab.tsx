@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Accordion, BulletedList, Form, Switch } from '@/components';
-import { ImageConfig, useFlowEventsRecorder, useFlowExtractor, useMounted } from '@/hooks';
+import { ImageConfig, useFlowExtractor, useMounted } from '@/hooks';
 import { cn } from '@/utils';
 import { FlowTab, TabTitle, UnderlinedTitle } from './shared';
 import { useEditor } from '@tldraw/editor';
@@ -17,7 +17,6 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
   const [flowText, setFlowText] = useState<string | null>(null);
   const [flowImage, setFlowImage] = useState<string | null>(null);
   const editor = useEditor();
-  const flowEventsRecorder = useFlowEventsRecorder();
   const mounted = useMounted();
 
   const {
@@ -34,13 +33,16 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
   const textSchema = getTextSchema();
 
   const refetchImage = useCallback(() => {
-    fetchImage().then((image: any) => {
-      setFlowImage(image);
+    fetchImage().then((dataUrl: any) => {
+      if (dataUrl === null) return;
+      URL.revokeObjectURL(dataUrl)
+      setFlowImage(dataUrl);
     }); 
   }, [fetchImage]);
 
   const refetchText = useCallback(() => {
     fetchText().then((text: string | null) => {
+      if (text === null) return;
       setFlowText(text);
     });
   }, [fetchText]);
@@ -97,16 +99,22 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
           )}
           <div className="flex flex-wrap flex-col w-full justify-center items-center gap-1">
             {Object.keys(controls).length > 0 && <TabTitle className={cn(`text-md w-full`)}>Image</TabTitle>}
-            <div className={cn(`relative flex h-[200px] w-full overflow-hidden p-2 flex-shrink-0 flex-col items-center justify-center`)}>
+            <div className={cn("relative flex h-[200px] w-full overflow-hidden p-2 flex-shrink-0 flex-col items-center justify-center")}>
               {flowImage 
-                ? (<img
-                    src={flowImage}
-                    className="flex w-full h-full overflow-hidden justify-stretch items-stretch [&>svg]:w-full [&>svg]:h-full will-change-contents transform transition-all duration-100 ease-in-out object-contain"
-                    width="auto"
-                    height="100%"
-                    alt="Flow image"
-                    style={{ transform: `scale(${imageConfig.scale})` }}
-                  />)
+                ? (<div 
+                      className="flex w-full h-full justify-center items-center overflow-hidden"
+                      style={{
+                        transform: `scale(${imageConfig.scale})`
+                      }}
+                    >
+                      <img
+                        src={flowImage}
+                        width="auto"
+                        height="100%"
+                        className="w-auto h-full object-fill"
+                        alt="Flow image"
+                      />
+                    </div>)
                 : (<div className="flex w-full h-full overflow-hidden justify-center items-center">No Image</div>)
               }
             </div>

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Accordion, BulletedList, FakeForm, FlowTab, Form, Switch, TabTitle, UnderlinedTitle } from '@/components';
+import { Accordion, BulletedList, FakeForm, FlowTab, Form, Switch, TabTitle, TimelineScrubber, UnderlinedTitle } from '@/components';
 import { FlowEventsRecorderContextType, useFlowEventsRecorder, useFlowExtractor } from '@/hooks';
 import { cn } from '@/utils';
 
@@ -66,9 +66,11 @@ export const FlowEventsTab = (props: FlowEventsTabProps) => {
               <Form object={controls} schema={flowExtractor.getHistoryRecordsSchema()} onSubmit={(newHistoryRecordsConfig: any) => flowExtractor.setHistoryRecordsConfig({...flowExtractor.historyRecordsConfig, ...newHistoryRecordsConfig})} />
             </div>
           )}
-          <div className="flex p-1 flex-col w-full h-full justify-center items-center overflow-auto max-h-[125px]">
-          {Object.keys(controls).length > 0 && <TabTitle className={cn(`text-md w-full`)}>Records</TabTitle>}
-            {flowEvents?.historyRecords.length > 0 ? <BulletedList items={flowEvents?.getHistoryRecords()} /> : <div className="text-primary/80 px-2 py-4">No Records</div>}
+          <div className="flex p-1 flex-col w-full h-full justify-center items-center overflow-auto">
+            <TabTitle className={cn(`text-md w-full`)}>Timeline Scrubber</TabTitle>
+            <TimelineScrubber events={flowEvents.historyRecords} />
+            <TabTitle className={cn(`text-md w-full`)}>Records</TabTitle>
+            {flowEvents?.historyRecords.length > 0 ? <BulletedList className="max-h-[125px]" items={flowEvents?.getHistoryRecords()} /> : <div className="text-primary/80 px-2 py-4">No Records</div>}
           </div>
         </div>
       ),

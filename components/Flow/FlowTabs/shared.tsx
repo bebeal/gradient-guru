@@ -30,7 +30,7 @@ export const UnderlinedTitle = ({ children, className }: { children?: any, class
   );
 };
 
-export const BulletedList = ({items}: {items: any[]}) => {
+export const BulletedList = ({items, className}: {items: any[], className?: string}) => {
   const getItem = (item: any) => {
     if (
       typeof item === 'object' &&
@@ -41,7 +41,7 @@ export const BulletedList = ({items}: {items: any[]}) => {
       const key: any = Object.keys(item)[0]
       const value = item[key]
       return (
-        <div className="flex flex-col">
+        <div className={cn("flex flex-col", className)}>
           <Label className="text-xs text-primary font-bold">{key}</Label>
           <FakeForm object={value} className="p-1" />
         </div>
