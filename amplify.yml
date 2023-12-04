@@ -1,0 +1,24 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - yarn install
+        # - pip install beautifulsoup4 tqdm
+        # - yarn generate-iconsets
+    build:
+      commands:
+        - yarn build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - assets/**/*
+      - packages/**/*
+
+# Node.js version 20
+# Next.js version 13.5.6
+# Using Amazon Linux:2023 image
