@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useEditor } from '@tldraw/editor';
 import * as yup from 'yup';
 import {
@@ -22,7 +22,6 @@ export interface FlowNodesTabProps {}
 export const FlowNodesTab = () => {
   const editor = useEditor();
   const flowExtractor = useFlowExtractor();
-  const [nodeSchemas, setNodeSchemas] = useState<{ [key: string]: any }>({});
 
   const onNodeChange = useCallback((newNodeProperties: any) => {
     if (newNodeProperties.type === 'icon') {
@@ -34,7 +33,7 @@ export const FlowNodesTab = () => {
     editor.updateShape(newNodeProperties);
   }, [editor]);
 
-  useEffect(() => {
+  const buildNodeSchemas = useCallback(() => {
     const newNodeSchema: any = {};
     editor?.getCurrentPageShapesSorted().map((node: any, index: number) => {
       // filter out unnecessary fields
@@ -54,11 +53,12 @@ export const FlowNodesTab = () => {
       const nodeSchema = yup.object().shape(filterObject(schemaFields, KeysToIgnore));
       newNodeSchema[node.id] = nodeSchema;
     });
-    setNodeSchemas(newNodeSchema);
+    return newNodeSchema;
   }, [editor]);
 
   const items = useCallback(() => {
     if (!editor) return [];
+    const nodeSchemas = buildNodeSchemas();
     const selectedNodes = editor.getSelectedShapes();
     return editor?.getCurrentPageShapesSorted().map((node: any, index: number) => {
       // check if node is selected
@@ -87,7 +87,7 @@ export const FlowNodesTab = () => {
         selected,
       };
     });
-  }, [editor, flowExtractor, nodeSchemas, onNodeChange]);
+  }, [buildNodeSchemas, editor, flowExtractor, onNodeChange]);
 
   return (
     <FlowTab title="Nodes">
