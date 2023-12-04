@@ -21,3 +21,4 @@ export * from './Custom';
 // export * from './Spinner';
 // export * from './Tldraw';
 // export * from './VSCode';
+export * from './ThreeFanGpu';

@@ -1,6 +1,6 @@
 
 import { useMemo } from 'react';
-import { FlowEventsTab, FlowNodesTab, FlowQueryBuilderTab, FlowStateTab, IconSetCache, SidePanel } from '@/components';
+import { FlowEventsTab, FlowNodesTab, FlowQueryTab, FlowStateTab, IconSetCache, SidePanel } from '@/components';
 
 export interface FlowTabsProps {
   className?: string;
@@ -36,7 +36,7 @@ export const FlowTabs = (props: FlowTabsProps) => {
     return {
       icon: <IconSetCache.Carbon.IbmWatsonStudio height={'100%'} width={'100%'} stroke={'transparent'} />,
       name: 'Query Builder',
-      content: <FlowQueryBuilderTab />,
+      content: <FlowQueryTab />,
     };
   }, []);
 

@@ -4,6 +4,7 @@ import CenterCircle from '@/assets/icons/Carbon/CenterCircle.svg';
 import DotMark from '@/assets/icons/Carbon/DotMark.svg';
 import StatusPartialFail from '@/assets/icons/Carbon/StatusPartialFail.svg';
 import { cn } from "@/utils";
+import { ThreeFanGpu } from "./ThreeFanGpu";
 
 export interface SpinnerProps extends React.ComponentProps<'svg'> {
   active?: boolean;
@@ -294,5 +295,6 @@ export const CustomIconSet = {
   Folder,
   OpenFolder,
   Indeterminate,
-  Check
+  Check,
+  ThreeFanGpu: ThreeFanGpu
 };

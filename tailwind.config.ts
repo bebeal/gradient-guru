@@ -242,6 +242,56 @@ const config: Config = {
           "to": {
             "background-position": "-100% 0"
           }
+        },
+        "svg-glow": {
+          "0%": { "filter": "drop-shadow(0 0 3px var(--tw-shadow-color)) drop-shadow(0 0 6px var(--tw-shadow-color))" },
+          "50%": { "filter": "drop-shadow(0 0 7px var(--tw-shadow-color)) drop-shadow(0 0 14px var(--tw-shadow-color))" },
+          "100%": { "filter": "drop-shadow(0 0 3px var(--tw-shadow-color)) drop-shadow(0 0 6px var(--tw-shadow-color))" }
+        },
+        "bigger-svg-glow": {
+          "0%": { "filter": "drop-shadow(0 0 3px var(--tw-shadow-color)) drop-shadow(0 0 5px var(--tw-shadow-color)) drop-shadow(0 0 7px var(--tw-shadow-color))" },
+          "50%": { "filter": "drop-shadow(0 0 5px var(--tw-shadow-color)) drop-shadow(0 0 7px var(--tw-shadow-color)) drop-shadow(0 0 10px var(--tw-shadow-color))" },
+          "100%": { "filter": "drop-shadow(0 0 3px var(--tw-shadow-color)) drop-shadow(0 0 5px var(--tw-shadow-color)) drop-shadow(0 0 7px var(--tw-shadow-color))" }
+        },
+        "text-glow": {
+          "0%": { "text-shadow": "0 0 2px var(--tw-shadow-color)" },
+          "50%": { "text-shadow": "0 0 8px var(--tw-shadow-color)" },
+          "100%": { "text-shadow": "0 0 2px var(--tw-shadow-color)" }
+        },
+        "bigger-text-glow": {
+          "0%": { "text-shadow": "0 0 8px var(--tw-shadow-color)" },
+          "50%": { "text-shadow": "0 0 14px var(--tw-shadow-color)" },
+          "100%": { "text-shadow": "0 0 8px var(--tw-shadow-color)" }
+        },
+        "full-rotation": {
+          "0%": {
+            transform: "rotate(0deg)",
+          },
+          "100%": {
+            transform: "rotate(360deg)",
+          }
+        },
+        "ramp-up-spin": {
+          "0%": {
+            transform: "rotate(0deg)",
+          },
+          "25%": {
+            transform: "rotate(360deg)",
+          },
+          "50%": {
+            transform: "rotate(720deg)",
+          },
+          "75%": {
+            transform: "rotate(1080deg)",
+          },
+          "100%": {
+            transform: "rotate(1440deg)",
+          }
+        },
+        "neon-light": {
+          "100%": {
+            transform: "translate3d(50%,50%,0)"
+          }
         }
       },
       animation: {
@@ -257,7 +307,15 @@ const config: Config = {
         "slide-right-fade": "slide-right-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         "slide-down-fade": "slide-down-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         "slide-left-fade": "slide-left-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-        "move-background": "move-background 1s linear infinite"
+        "move-background": "move-background 1s linear infinite",
+        "rotate-clockwise": "full-rotation 2s linear infinite forwards",
+        "rotate-counter-clockwise": "full-rotation 2s linear infinite reverse",
+        "svg-glow": "svg-glow 1.5s ease-in-out infinite alternate",
+        "bigger-svg-glow": "bigger-svg-glow 1.5s infinite alternate",
+        "text-glow": "text-glow 1.5s ease-in-out infinite alternate",
+        "bigger-text-glow": "bigger-text-glow 1.5s infinite alternate",
+        "ramp-up-spin": "ramp-up-spin 2s linear infinite reverse",
+        "neon-light": "neon-light 5s infinite linear"
       }
     },
   },
