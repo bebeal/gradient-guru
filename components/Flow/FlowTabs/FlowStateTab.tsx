@@ -35,6 +35,7 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
   const refetchImage = useCallback(() => {
     fetchImage().then((dataurl: any) => {
       if (dataurl === null) return;
+      URL.revokeObjectURL(dataurl);
       setFlowImage(dataurl);
     }); 
   }, [fetchImage]);

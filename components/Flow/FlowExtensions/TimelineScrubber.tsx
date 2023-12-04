@@ -17,7 +17,7 @@ export interface TimelineScrubberProps {
 }
 
 export const TimelineScrubber = (props: TimelineScrubberProps) => {
-  const { maxCacheSize = 10000, events=[] } = props;
+  const { maxCacheSize = 1000, events=[] } = props;
   const scrubberRef = useRef(null);
   // Pointer to keep track of the current position of the timeline slider
   const [pointer, setPointer] = useState(maxCacheSize);
