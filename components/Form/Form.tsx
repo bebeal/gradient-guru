@@ -25,7 +25,7 @@ const getSchema = (object: Record<string, any>, schemaFromProps?: yup.AnyObjectS
         inferredSchema[key] = yup.object().shape(getSchema(value));
       }
     }
-    return inferredSchema;
+    return yup.object().shape({...inferredSchema});
   }
   return schemaFromProps;
 };
@@ -61,7 +61,7 @@ export const Form = forwardRef<any, FormProps>((props, ref) => {
   const form: any = useForm<FormSchema>({
     resolver: yupResolver(schema),
     // cast initial values to schema
-    values: schema.cast(object),
+    values: schema.cast({...object}),
     mode,
     ...rest,
   });

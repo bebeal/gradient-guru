@@ -63,8 +63,6 @@ export const FlowNodesTab = () => {
     return editor?.getCurrentPageShapesSorted().map((node: any, index: number) => {
       // check if node is selected
       const selected = selectedNodes.includes(node);
-      
-
       const stringName = `${node.type} - ${node.id.replace('shape:', '')}`;
       return {
         name: (
