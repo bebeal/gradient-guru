@@ -1,7 +1,7 @@
 
 import canvasSize from "canvas-size"
 import { PngHelpers } from "./png";
-import { Editor, TLShapeId } from "@tldraw/editor";
+import { Editor, SVG_PADDING, SvgExportContext, SvgExportDef, TLFrameShape, TLGroupShape, TLShape, TLShapeId, TLSvgOptions, getDefaultColorTheme, uniqueId } from "@tldraw/editor";
 import { ImageConfig, ImageExtractorProps } from "@/hooks";
 
 export type TLCopyType = 'svg' | 'png' | 'jpeg' | 'json'
@@ -52,7 +52,7 @@ export const getTextBoundingBox = (text: SVGTextElement) => {
 }
 
 export const getExportSvgElement = async (editor: Editor, ids: TLShapeId[], imageConfig?: ImageExtractorProps) => {
-	const svg = await editor.getSvg(ids, imageConfig);
+	const svg = await getSvg(editor, ids, imageConfig);
 	if (!svg) throw new Error('Could not construct SVG.');
 
 	return svg;
@@ -196,7 +196,6 @@ export const getSvgAsImage = async (svg: SVGElement, isSafari: boolean, options:
 	})
 }
 
-
 export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], options: ImageConfig) => {
 	return await getSvgAsImage(await getExportSvgElement(editor, ids, options), editor.environment.isSafari, options)
 }
@@ -214,3 +213,229 @@ export const fallbackWriteTextAsync = async (getText: () => Promise<string>) => 
 	if (!(navigator && navigator.clipboard)) return
 	navigator.clipboard.writeText(await getText())
 }
+
+	/**
+	 * Get an exported SVG of the given shapes.
+	 *
+	 * @param ids - The shapes (or shape ids) to export.
+	 * @param opts - Options for the export.
+	 *
+	 * @returns The SVG element.
+	 *
+	 * @public
+	 */
+	export const getSvg = async (editor: Editor, shapes: TLShapeId[] | TLShape[], opts = {} as Partial<TLSvgOptions>) => {
+		const ids =
+			typeof shapes[0] === 'string'
+				? (shapes as TLShapeId[])
+				: (shapes as TLShape[]).map((s) => s.id)
+
+		if (ids.length === 0) return
+		if (!window.document) throw Error('No document')
+
+		const {
+			scale = 1,
+			background = false,
+			padding = SVG_PADDING,
+			preserveAspectRatio = false,
+		} = opts
+
+		// todo: we shouldn't depend on the public theme here
+		const theme = getDefaultColorTheme({ isDarkMode: editor.user.getIsDarkMode() })
+
+		// ---Figure out which shapes we need to include
+		const shapeIdsToInclude = editor.getShapeAndDescendantIds(ids)
+		const renderingShapes = editor.getUnorderedRenderingShapes(false).filter(({ id }) =>
+			shapeIdsToInclude.has(id)
+		)
+
+		// --- Common bounding box of all shapes
+		let bbox = null
+		if (opts.bounds) {
+			bbox = opts.bounds
+		} else {
+			for (const { maskedPageBounds } of renderingShapes) {
+				if (!maskedPageBounds) continue
+				if (bbox) {
+					bbox.union(maskedPageBounds)
+				} else {
+					bbox = maskedPageBounds.clone()
+				}
+			}
+		}
+
+		// no unmasked shapes to export
+		if (!bbox) return
+
+		const singleFrameShapeId =
+			ids.length === 1 && editor.isShapeOfType<TLFrameShape>(editor.getShape(ids[0])!, 'frame')
+				? ids[0]
+				: null
+		if (!singleFrameShapeId) {
+			// Expand by an extra 32 pixels
+			bbox.expandBy(padding)
+		}
+
+		// We want the svg image to be BIGGER THAN USUAL to account for image quality
+		const w = bbox.width * scale
+		const h = bbox.height * scale
+
+		// --- Create the SVG
+
+		// Embed our custom fonts
+		const svg = window.document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+
+		if (preserveAspectRatio) {
+			svg.setAttribute('preserveAspectRatio', preserveAspectRatio)
+		}
+
+		svg.setAttribute('direction', 'ltr')
+		svg.setAttribute('width', w + '')
+		svg.setAttribute('height', h + '')
+		svg.setAttribute('viewBox', `${bbox.minX} ${bbox.minY} ${bbox.width} ${bbox.height}`)
+		svg.setAttribute('stroke-linecap', 'round')
+		svg.setAttribute('stroke-linejoin', 'round')
+		// Add current background color, or else background will be transparent
+
+		if (background) {
+			if (singleFrameShapeId) {
+				svg.style.setProperty('background', theme.solid)
+			} else {
+				svg.style.setProperty('background-color', theme.background)
+			}
+		} else {
+			svg.style.setProperty('background-color', 'transparent')
+		}
+
+		try {
+			document.body.focus?.() // weird but necessary
+		} catch (e) {
+			// not implemented
+		}
+
+		// Add the defs to the svg
+		const defs = window.document.createElementNS('http://www.w3.org/2000/svg', 'defs')
+		// svg.append(defs)
+
+		const exportDefPromisesById = new Map<string, Promise<void>>()
+		const exportContext: SvgExportContext = {
+			addExportDef: (def: SvgExportDef) => {
+        return;
+				// if (exportDefPromisesById.has(def.key)) return
+				// const promise = (async () => {
+				// 	const elements = await def.getElement()
+				// 	if (!elements) return
+
+				// 	const comment = document.createComment(`def: ${def.key}`)
+				// 	defs.appendChild(comment)
+
+				// 	for (const element of Array.isArray(elements) ? elements : [elements]) {
+				// 		defs.appendChild(element)
+				// 	}
+				// })()
+				// exportDefPromisesById.set(def.key, promise)
+			},
+		}
+
+		const unorderedShapeElements = (
+			await Promise.all(
+				renderingShapes.map(async ({ id, opacity, index, backgroundIndex }) => {
+					// Don't render the frame if we're only exporting a single frame
+					if (id === singleFrameShapeId) return []
+
+					const shape = editor.getShape(id)!
+
+					if (editor.isShapeOfType<TLGroupShape>(shape, 'group')) return []
+
+					const util = editor.getShapeUtil(shape)
+
+					let shapeSvgElement = await util.toSvg?.(shape, exportContext)
+					let backgroundSvgElement = await util.toBackgroundSvg?.(shape, exportContext)
+
+					// wrap the shapes in groups so we can apply properties without overwriting ones from the shape util
+					if (shapeSvgElement) {
+						const outerElement = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+						outerElement.appendChild(shapeSvgElement)
+						shapeSvgElement = outerElement
+					}
+
+					if (backgroundSvgElement) {
+						const outerElement = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+						outerElement.appendChild(backgroundSvgElement)
+						backgroundSvgElement = outerElement
+					}
+
+					if (!shapeSvgElement && !backgroundSvgElement) {
+						const bounds = editor.getShapePageBounds(shape)!
+						const elm = window.document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+						elm.setAttribute('width', bounds.width + '')
+						elm.setAttribute('height', bounds.height + '')
+						elm.setAttribute('fill', theme.solid)
+						elm.setAttribute('stroke', theme.grey.pattern)
+						elm.setAttribute('stroke-width', '1')
+						shapeSvgElement = elm
+					}
+
+					let pageTransform = editor.getShapePageTransform(shape)!.toCssString()
+					if ('scale' in shape.props) {
+						if (shape.props.scale !== 1) {
+							pageTransform = `${pageTransform} scale(${shape.props.scale}, ${shape.props.scale})`
+						}
+					}
+
+					shapeSvgElement?.setAttribute('transform', pageTransform)
+					backgroundSvgElement?.setAttribute('transform', pageTransform)
+					shapeSvgElement?.setAttribute('opacity', opacity + '')
+					backgroundSvgElement?.setAttribute('opacity', opacity + '')
+
+					// Create svg mask if shape has a frame as parent
+					const pageMask = editor.getShapeMask(shape.id)
+					if (pageMask) {
+						// Create a clip path and add it to defs
+						const clipPathEl = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath')
+						defs.appendChild(clipPathEl)
+						const id = uniqueId()
+						clipPathEl.id = id
+
+						// Create a polyline mask that does the clipping
+						const mask = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+						mask.setAttribute('d', `M${pageMask.map(({ x, y }) => `${x},${y}`).join('L')}Z`)
+						clipPathEl.appendChild(mask)
+
+						// Create group that uses the clip path and wraps the shape elements
+						if (shapeSvgElement) {
+							const outerElement = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+							outerElement.setAttribute('clip-path', `url(#${id})`)
+							outerElement.appendChild(shapeSvgElement)
+							shapeSvgElement = outerElement
+						}
+
+						if (backgroundSvgElement) {
+							const outerElement = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+							outerElement.setAttribute('clip-path', `url(#${id})`)
+							outerElement.appendChild(backgroundSvgElement)
+							backgroundSvgElement = outerElement
+						}
+					}
+
+					const elements = []
+					if (shapeSvgElement) {
+						elements.push({ zIndex: index, element: shapeSvgElement })
+					}
+					if (backgroundSvgElement) {
+						elements.push({ zIndex: backgroundIndex, element: backgroundSvgElement })
+					}
+
+					return elements
+				})
+			)
+		).flat()
+
+		// await Promise.all(exportDefPromisesById.values())
+
+		for (const { element } of unorderedShapeElements.sort((a, b) => a.zIndex - b.zIndex)) {
+			svg.appendChild(element)
+		}
+
+		return svg
+	}

@@ -33,10 +33,9 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
   const textSchema = getTextSchema();
 
   const refetchImage = useCallback(() => {
-    fetchImage().then((dataUrl: any) => {
-      if (dataUrl === null) return;
-      URL.revokeObjectURL(dataUrl)
-      setFlowImage(dataUrl);
+    fetchImage().then((dataurl: any) => {
+      if (dataurl === null) return;
+      setFlowImage(dataurl);
     }); 
   }, [fetchImage]);
 
