@@ -1,5 +1,6 @@
 'use client'
 
+import { noop } from '@/utils';
 // ref: https://github.com/saadeghi/daisyui/blob/35dbea89ca5b82dd0c3ba4bb69d5f39a7b7c4d54/src/components/styled/toggle.css#L2
 
 import * as TogglePrimitive from '@radix-ui/react-toggle';
@@ -81,9 +82,10 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) =>
       <TogglePrimitive.Root
         ref={ref} className={className} style={style} disabled={disabled}
         pressed={isPressed}
+        {...rest}
+        onChange={noop}
         onClick={onClick}
         onPressedChange={onPressedChange}
-        {...rest}
       />
   );
 });

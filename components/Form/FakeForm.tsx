@@ -1,11 +1,11 @@
 'use client'
 import { forwardRef, memo } from 'react';
-import { Accordion, Checkbox, Input } from '@/components';
+import { Accordion, Checkbox, Input, Slider } from '@/components';
 import { cn, sortObject } from '@/utils';
 import React from 'react';
 
-export const FakeFieldRender = memo(({ name, value, className, ...rest }: any) => {
-  switch (typeof value) {
+export const FakeFieldRender = memo(({ name, value, type, className, ...rest }: any) => {
+  switch (type ? type : typeof value) {
     case 'boolean':
       return (<Checkbox checked={value} className={className} {...rest} />);
     case 'object':
@@ -32,6 +32,8 @@ export const FakeFieldRender = memo(({ name, value, className, ...rest }: any) =
           />
         );
       }
+    case 'slider':
+      return (<Slider value={value} className={className} {...rest} />);
     case 'number':
       return (<Input value={value.toFixed(2)} extraCharWidth={0} readOnly className={cn(className, `p-0 cursor-text bg-transparent border-transparent text-primary/80 ring-transparent hover:border-transparent hover:bg-transparent hover:cursor-text hover:text-primary/80 hover:ring-transparent focus:border-transparent focus:bg-transparent focus:cursor-text focus:text-primary/80 focus:ring-transparent`,)} {...rest} />);
     default:

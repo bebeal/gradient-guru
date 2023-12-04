@@ -13,7 +13,7 @@ export const FormLabel = forwardRef<HTMLLabelElement, FormLabelProps>((props, re
   return (
     <Label
       ref={ref}
-      className={cn("font-semibold text-primary text-xs", className)}
+      className={cn("font-semibold text-primary", className)}
       htmlFor={formItemId}
       {...rest}
     >

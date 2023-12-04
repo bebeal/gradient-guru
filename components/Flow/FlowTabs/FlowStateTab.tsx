@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Accordion, BulletedList, FakeForm, Switch } from '@/components';
-import { useFlowExtractor } from '@/hooks';
+import { useCallback, useEffect, useState } from 'react';
+import { Accordion, BulletedList, Form, Switch } from '@/components';
+import { ImageConfig, useFlowEventsRecorder, useFlowExtractor, useMounted } from '@/hooks';
 import { cn } from '@/utils';
 import { FlowTab, TabTitle, UnderlinedTitle } from './shared';
 import { useEditor } from '@tldraw/editor';
@@ -14,10 +14,12 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
   const {
     ...rest
   } = props;
-  const editor = useEditor();
-  const [recordsCount, setRecordsCount] = useState<number>(0);
   const [flowText, setFlowText] = useState<string | null>(null);
-  const flowImageRef = useRef<HTMLDivElement | null>(null);
+  const [flowImage, setFlowImage] = useState<string | null>(null);
+  const editor = useEditor();
+  const flowEventsRecorder = useFlowEventsRecorder();
+  const mounted = useMounted();
+
   const {
     fetchImage,
     imageConfig,
@@ -25,24 +27,47 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
     fetchText,
     textConfig,
     setTextConfig,
-    extractHistoryRecords
+    getImageSchema,
+    getTextSchema,
   } = useFlowExtractor();
+  const imageSchema = getImageSchema();
+  const textSchema = getTextSchema();
+
+  const refetchImage = useCallback(() => {
+    fetchImage().then((image: any) => {
+      setFlowImage(image);
+    }); 
+  }, [fetchImage]);
+
+  const refetchText = useCallback(() => {
+    fetchText().then((text: string | null) => {
+      setFlowText(text);
+    });
+  }, [fetchText]);
 
   useEffect(() => {
-    const newRecords = extractHistoryRecords();
-    if (recordsCount != newRecords.length) {
-      fetchImage().then((image: any) => {
-        if (image && flowImageRef.current) {
-          flowImageRef.current.innerHTML = '';
-          flowImageRef.current?.appendChild(image);
-        }
+    editor.on('change', () => {
+      refetchImage();
+      refetchText();
+    });
+    return () => {
+      editor.off('change', () => {
+        refetchImage();
+        refetchText();
       });
-      fetchText().then((text: string | null) => {
-        setFlowText(text);
-      });
-      setRecordsCount(newRecords.length);
     }
-  }, [extractHistoryRecords, fetchImage, fetchText, recordsCount]);
+  }, [editor, refetchImage, refetchText]);
+
+  useEffect(() => {
+    if (mounted) {
+      refetchImage();
+      refetchText();
+    }
+  }, [mounted, refetchImage, refetchText]);
+
+  const onSubmit = useCallback((newImageConfig: Partial<ImageConfig>) => {
+    setImageConfig({ ...imageConfig, ...newImageConfig });
+  }, [imageConfig, setImageConfig]);
 
   const FlowImageAccordion = useCallback(() => {
     const { enabled, ...controls } = imageConfig;
@@ -67,24 +92,30 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
           {Object.keys(controls).length > 0 && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <FakeForm object={controls} />
+              <Form object={controls} schema={imageSchema} onSubmit={onSubmit} />
             </div>
           )}
-          <div className="flex flex-wrap flex-col w-full justify-center items-center">
-            <TabTitle className={cn(`text-md w-full`)}>Image</TabTitle>
-            <div
-              className={cn(
-                `flex h-[200px] w-full overflow-hidden p-1 flex-shrink-0 flex-col items-center justify-center will-change-contents`
-              )}
-            >
-              <div ref={flowImageRef} className={cn(`flex w-full h-full overflow-hidden justify-stetch items-stetch [&>svg]:w-full [&>svg]:h-full border border-primary`)} />
+          <div className="flex flex-wrap flex-col w-full justify-center items-center gap-1">
+            {Object.keys(controls).length > 0 && <TabTitle className={cn(`text-md w-full`)}>Image</TabTitle>}
+            <div className={cn(`relative flex h-[200px] w-full overflow-hidden p-2 flex-shrink-0 flex-col items-center justify-center`)}>
+              {flowImage 
+                ? (<img
+                    src={flowImage}
+                    className="flex w-full h-full overflow-hidden justify-stretch items-stretch [&>svg]:w-full [&>svg]:h-full will-change-contents transform transition-all duration-100 ease-in-out object-contain"
+                    width="auto"
+                    height="100%"
+                    alt="Flow image"
+                    style={{ transform: `scale(${imageConfig.scale})` }}
+                  />)
+                : (<div className="flex w-full h-full overflow-hidden justify-center items-center">No Image</div>)
+              }
             </div>
           </div>
         </div>
       ),
       open: true,
     };
-  }, [flowImageRef, imageConfig, setImageConfig]);
+  }, [flowImage, imageConfig, imageSchema, onSubmit, setImageConfig]);
 
   const FlowTextAccordion = useCallback(() => {
     const { enabled, ...controls } = textConfig;
@@ -109,11 +140,11 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
           {Object.keys(controls).length > 0 && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <FakeForm object={controls} />
+              <Form object={controls} schema={textSchema} onSubmit={(newTextConfig: any) => setTextConfig({ enabled: textConfig.enabled, ...newTextConfig })} />
             </div>
           )}
           <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
-            <TabTitle className={cn(`text-md w-full`)}>Text From Nodes</TabTitle>
+          {Object.keys(controls).length > 0 && <TabTitle className={cn(`text-md w-full`)}>Text From Nodes</TabTitle>}
             {!flowText ? (
               <div className="items-center justify-center px-2 py-4 text-primary/80">No Text</div>
             ) : (<BulletedList items={flowText.split('\n')} />)
@@ -123,7 +154,7 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
       ),
       open: true,
     };
-  }, [flowText, textConfig, setTextConfig]);
+  }, [textConfig, textSchema, flowText, setTextConfig]);
 
   return (
     <FlowTab title="State" {...rest}>

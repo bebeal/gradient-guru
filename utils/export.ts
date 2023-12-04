@@ -198,12 +198,17 @@ export const getSvgAsImage = async (svg: SVGElement, isSafari: boolean, options:
 
 
 export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], options: ImageConfig) => {
-	return await getSvgAsImage(await getExportSvgElement(editor, ids), editor.environment.isSafari, options)
+	return await getSvgAsImage(await getExportSvgElement(editor, ids, options), editor.environment.isSafari, options)
 }
 
 export const getCanvasImageUrl = async (editor: Editor, ids: TLShapeId[], options: ImageConfig) => {
   return URL.createObjectURL((await getExportedImageBlob(editor, ids, options))!);
 }
+
+export const getDataUrl = async (editor: Editor, ids: TLShapeId[], options: ImageConfig): Promise<string> => {
+  const svg = await getExportSvgElement(editor, ids, options);
+	return await getSvgAsDataUrl(svg)
+};
 
 export const fallbackWriteTextAsync = async (getText: () => Promise<string>) => {
 	if (!(navigator && navigator.clipboard)) return

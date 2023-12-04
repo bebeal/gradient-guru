@@ -8,7 +8,9 @@ import { cn } from "@/utils";
 const schema = yup.object({
     longList: yup.string().oneOf(CarbonIconNames, 'Invalid value').default(CarbonIconNames[0]).label('icon list').meta({ type: 'select', disabled: false }),
     model: yup.string().min(1, "Model is required").required().label('Model').meta({ type: 'input', disabled: false }),
-    age: yup.number().min(0).max(50).label('Age').meta({ type: 'input', disabled: false }),
+    decimalSlider: yup.number().min(0).max(1).label('Decimal Slider').meta({ type: 'slider', disabled: false, step: 0.1 }),
+    age: yup.number().min(0).max(50).default(0).label('Age').meta({ type: 'slider', disabled: false }),
+    age2: yup.number().min(0).max(50).default(-100).label('Age2').meta({ type: 'input', disabled: false }),
     apiId: yup
       .string()
       .min(1, "The API ID is required")
@@ -34,7 +36,7 @@ const schema = yup.object({
 }).required();
 
   const values = {
-    age: -100,
+    age2: -100,
     model: '',
     apiId: "api-id",
     coordinatesArray: [1, 2, 3],

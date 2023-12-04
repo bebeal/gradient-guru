@@ -12,7 +12,7 @@ export const mapSchemaToFormFields = (schema: any, form: any, labels: any, prefi
     acc[key] = field.spec.meta.type;
     return acc;
   }, {});
-  const order = ['checkbox', 'switch', 'select', 'readonly', 'input', 'array', 'object'];
+  const order = ['readonly', 'checkbox', 'switch', 'select', 'slider', 'input', 'array', 'object'];
   const sortedFields = sortObject(schema.fields, types, order);
   return Object.entries(sortedFields).map(([key, fieldSchema]: any) => {
     return (

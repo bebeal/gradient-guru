@@ -9,3 +9,4 @@ export * from './regex';
 export * from './styles';
 export * from './svg';
 export * from './utils';
+export * from './math';

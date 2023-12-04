@@ -70,13 +70,40 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
     return events;
   }, [historyRecords]);
 
+  const isShapeEvent = useCallback((event: TLStoreEventInfo) => {
+    const { added, updated, removed } = event.changes;
+    let isShape = false;
+    if (added) {
+      Object.values(added).forEach((record: any) => {
+        if (record.typeName === 'shape') {
+          isShape = true;
+        }
+      });
+    }
+    if (!isShape && removed) {
+      Object.values(removed).forEach((record: any) => {
+        if (record.typeName === 'shape') {
+          isShape = true;
+        }
+      });
+    }
+    if (!isShape && updated) {
+      Object.values(updated).forEach(([from, to]: any) => {
+        if (from.typeName === 'shape' || to.typeName === 'shape') {
+          isShape = true;
+        }
+      });
+    }
+    return isShape;
+  }, []);
+
 
   // lower fidelity event logging for store events
   const onStoreEvent = useCallback((event: TLStoreEventInfo) => {
-    if (event.source === 'user') {
+    if (event.source === 'user' && isShapeEvent(event)) {
       historyRecords.current.push(event.changes);
     }
-  }, []);
+  }, [isShapeEvent]);
 
   useEffect(() => {
     if (!editor) return;

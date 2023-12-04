@@ -2,7 +2,7 @@
 
 import React, { ForwardedRef, forwardRef, useEffect, useState } from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { DisabledClasses, Radius, RadiusClasses, cn } from "@/utils";
+import { DisabledClasses, Radius, RadiusClasses, cn, noop } from "@/utils";
 import { IconSetCache } from "..";
 
 export interface CheckboxProps extends CheckboxPrimitive.CheckboxProps {
@@ -66,8 +66,6 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
     <CheckboxPrimitive.Root
       ref={ref} disabled={disabled}
       checked={isChecked}
-      onClick={onClick}
-      onCheckedChange={onCheckedChange}
       className={cn(
         `flex w-[${size}px] h-[${size}px] items-center justify-center rounded border border-primary`,
         "bg-secondary radix-state-checked:bg-accent hover:ring-accent hover:ring-opacity-50 hover:ring-[0.5px] hover:outline-none",
@@ -76,6 +74,9 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
         RadiusClasses(radius),
       )}
       {...rest}
+      onChange={noop}
+      onClick={onClick}
+      onCheckedChange={onCheckedChange}
     >
       <CheckboxPrimitive.Indicator className={cn(`flex h-full justify-center items-center animate-slide-up-fade`, RadiusClasses(radius))}>
         {isChecked === undefined || isChecked === 'indeterminate' && <IconSetCache.Custom.Indeterminate className={cn(`w-full h-full text-[rgb(var(--border-primary))]`)} />}

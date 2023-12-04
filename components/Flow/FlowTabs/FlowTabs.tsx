@@ -40,7 +40,7 @@ export const FlowTabs = (props: FlowTabsProps) => {
     };
   }, []);
 
-  const tabs = [EventsTab, NodesTab, StateTab, QueryBuilderTab];
+  const tabs = useMemo(() => [EventsTab, NodesTab, StateTab, QueryBuilderTab], [EventsTab, NodesTab, StateTab, QueryBuilderTab]);
 
   return <SidePanel className={className} tabs={tabs} />;
 };

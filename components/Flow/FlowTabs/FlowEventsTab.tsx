@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Accordion, BulletedList, FakeForm, FlowTab, Switch, TabTitle, UnderlinedTitle } from '@/components';
+import { Accordion, BulletedList, FakeForm, FlowTab, Form, Switch, TabTitle, UnderlinedTitle } from '@/components';
 import { FlowEventsRecorderContextType, useFlowEventsRecorder, useFlowExtractor } from '@/hooks';
 import { cn } from '@/utils';
 
@@ -31,11 +31,11 @@ export const FlowEventsTab = (props: FlowEventsTabProps) => {
           {Object.keys(controls).length > 0 && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <FakeForm object={controls} />
+              <Form object={controls} schema={flowExtractor.getUiEventSchema()} onSubmit={(newUiEventConfig: any) => flowExtractor.setUiEventConfig({...flowExtractor.uiEventConfig, ...newUiEventConfig})} />
             </div>
           )}
           <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
-            <TabTitle className={cn(`text-md w-full`)}>State</TabTitle>
+          {Object.keys(controls).length > 0 && <TabTitle className={cn(`text-md w-full`)}>State</TabTitle>}
             {flowEvents?.uiEvents?.length > 0 ? <FakeForm object={flowEvents?.uiEvents[0]} /> : <div className="text-primary/80 px-2 py-4">No UI State</div>}
           </div>
         </div>
@@ -63,11 +63,11 @@ export const FlowEventsTab = (props: FlowEventsTabProps) => {
           {Object.keys(controls).length > 0 && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <FakeForm object={controls} />
+              <Form object={controls} schema={flowExtractor.getHistoryRecordsSchema()} onSubmit={(newHistoryRecordsConfig: any) => flowExtractor.setHistoryRecordsConfig({...flowExtractor.historyRecordsConfig, ...newHistoryRecordsConfig})} />
             </div>
           )}
-          <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
-            <TabTitle className={cn(`text-md w-full`)}>State</TabTitle>
+          <div className="flex p-1 flex-col w-full h-full justify-center items-center overflow-auto max-h-[125px]">
+          {Object.keys(controls).length > 0 && <TabTitle className={cn(`text-md w-full`)}>Records</TabTitle>}
             {flowEvents?.historyRecords.length > 0 ? <BulletedList items={flowEvents?.getHistoryRecords()} /> : <div className="text-primary/80 px-2 py-4">No Records</div>}
           </div>
         </div>
@@ -95,11 +95,11 @@ export const FlowEventsTab = (props: FlowEventsTabProps) => {
           {Object.keys(controls).length > 0 && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <FakeForm object={controls} />
+              <Form object={controls} schema={flowExtractor.getCanvasEventSchema()} onSubmit={(newCanvasEventConfig: any) => flowExtractor.setCanvasEventConfig({...flowExtractor.canvasEventConfig, ...newCanvasEventConfig})} />
             </div>
           )}
           <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
-            <TabTitle className={cn(`text-md w-full`)}>State</TabTitle>
+          {Object.keys(controls).length > 0 && <TabTitle className={cn(`text-md w-full`)}>State</TabTitle>}
             {flowEvents?.canvasEvent ? <FakeForm object={flowEvents?.canvasEvent} /> : <div className="text-primary/80 px-2 py-4">No Canvas Event</div>}
           </div>
         </div>
@@ -110,7 +110,7 @@ export const FlowEventsTab = (props: FlowEventsTabProps) => {
 
   return (
     <FlowTab title="Events">
-      <Accordion spaceBetween={16} items={[UIStateAccordion(), HistoryRecordsAccordion(), CanvasEventAccordion()]} />
+      <Accordion className={cn(`overflow-hidden`)} spaceBetween={16} items={[UIStateAccordion(), HistoryRecordsAccordion(), CanvasEventAccordion()]} />
     </FlowTab>
   )
 };
