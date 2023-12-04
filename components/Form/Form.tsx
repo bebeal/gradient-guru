@@ -1,12 +1,12 @@
 'use client'
 
-import { forwardRef, useEffect, useMemo, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import * as FormPrimitive from '@radix-ui/react-form';
 import { FormProvider, UseFormProps, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { cn } from '@/utils';
-import { getDefaultValues, mapSchemaToFormFields } from './shared';
+import { mapSchemaToFormFields } from './shared';
 
 const getSchema = (object: Record<string, any>, schemaFromProps?: yup.AnyObjectSchema): any => {
   if (!schemaFromProps) {
@@ -25,6 +25,7 @@ const getSchema = (object: Record<string, any>, schemaFromProps?: yup.AnyObjectS
         inferredSchema[key] = yup.object().shape(getSchema(value));
       }
     }
+    return inferredSchema;
   }
   return schemaFromProps;
 };
@@ -56,11 +57,11 @@ export const Form = forwardRef<any, FormProps>((props, ref) => {
   const [schema, setSchema] = useState(getSchema(object, schemaFromProps));
   type FormSchema = yup.InferType<typeof schema>;
   // parse defaults out of schema and merge with defaults from props
-  const defaultValues: any = useMemo(() => getDefaultValues(schema, defaultValuesFromProps), [defaultValuesFromProps, schema]);
+  // const defaultValues: any = useMemo(() => getDefaultValues(schema, defaultValuesFromProps), [defaultValuesFromProps, schema]);
   const form: any = useForm<FormSchema>({
     resolver: yupResolver(schema),
     // cast initial values to schema
-    values: schema.cast({ ...defaultValues, ...object }),
+    values: schema.cast(object),
     mode,
     ...rest,
   });
@@ -73,7 +74,7 @@ export const Form = forwardRef<any, FormProps>((props, ref) => {
         setInitialized(true);
       }, 0);
     }
-  }, [form, initialized, defaultValues]);
+  }, [form, initialized]);
 
   // submit on change
   useEffect(() => {

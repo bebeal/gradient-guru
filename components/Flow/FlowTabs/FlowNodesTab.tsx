@@ -75,7 +75,7 @@ export const FlowNodesTab = () => {
               onPressedChange={(pressed: boolean) => flowExtractor.toggleNodeState(node.id)}
               className="absolute left-0"
             ><div /></Switch>
-            <div className="text-primary/80 text-xs font-bold">{stringName}</div>
+            <div className="text-primary/80 text-xs font-bold mx-[40px]">{stringName}</div>
           </div>
         ),
         content: (

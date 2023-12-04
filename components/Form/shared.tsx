@@ -28,7 +28,8 @@ export const mapSchemaToFormFields = (schema: any, form: any, labels: any, prefi
 };
 
 export const getDefaultValues: React.FC<any> = ( schema: any, defaultValuesFromProps: any) => {
-  const yupDefaults = Object.keys(schema.fields).reduce((acc: any, key) => {
+  console.log('mapSchemaToFormFields', schema.fields);
+  const yupDefaults = Object.keys(schema?.fields).reduce((acc: any, key) => {
     const field = yup.reach(schema, key);
     const defaultValue = (field as any).getDefault();
     if (defaultValue !== undefined) {

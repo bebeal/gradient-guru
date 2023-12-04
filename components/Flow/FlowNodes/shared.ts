@@ -19,8 +19,9 @@ export const GlobalSchemaMappings: any = {
   'labelColor': yup.string().oneOf(DefaultLabelColorStyle.values).label('Text Color').meta({ type: 'select', disabled: false }),
   'geo': yup.string().oneOf(GeoShapeGeoStyle.values).label('Geo').meta({ type: 'select', disabled: false }),
   'id': yup.string().label('ID').meta({ type: 'readonly', disabled: true }),
-  'parentId': yup.string().label('Parent-ID').meta({ type: 'readonly', disabled: true }),
+  'parentId': yup.string().label('Parent').meta({ type: 'readonly', disabled: true }),
   'opacity': yup.number().min(0.0).max(1.0).label('Opacity').meta({ type: 'input', disabled: false }),
+  'isLocked': yup.boolean().label('Locked').meta({ type: 'checkbox', disabled: false }),
 };
 
 // infer schema field from key and value
