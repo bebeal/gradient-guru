@@ -1,7 +1,7 @@
 'use client'
 
 import { Tldraw } from '@tldraw/tldraw'
-import { FlowTimelineScrubber } from '@/components';
+import { TimelineScrubber } from '@/components';
 import '@tldraw/tldraw/tldraw.css'
 
 const TldrawPage = () => {
@@ -9,7 +9,7 @@ const TldrawPage = () => {
 		<div className="tldraw__editor w-full h-full flex flex-col overflow-hidden">
 			<Tldraw autoFocus>
         <div className="absolute top-20 left-0 w-auto h-auto z-[501]">
-				<FlowTimelineScrubber />
+				<TimelineScrubber />
         </div>
 			</Tldraw>
 		</div>
