@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, TLUiEventHandler, TldrawUiContextProvider, TldrawUiProps, useActions, useBreakpoint, useKeyboardShortcuts, useNativeClipboardEvents, useTranslation } from '@tldraw/tldraw';
-import { TLShape, setUserPreferences, useEditor, useValue } from '@tldraw/editor'
+import { TLAnyShapeUtilConstructor, TLShape, setUserPreferences, useEditor, useValue } from '@tldraw/editor'
 import { useEditorEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useEditorEvents';
 import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
 import { NavigationZone } from '@tldraw/tldraw/src/lib/ui/components/NavigationZone/NavigationZone';
@@ -20,9 +20,11 @@ import { ToastProvider, ToastViewport } from '@radix-ui/react-toast'
 import { cn } from '@/utils';
 import { FlowTabs } from '@/components';
 import { FlowConfigProvider, useFlowEventsRecorder } from '@/hooks';
+import { NodePanel } from './FlowExtensions';
 
 export type FlowUiProps = TldrawUiProps & {
   initialShapes?: TLShape[];
+  panelShapeUtils?: TLAnyShapeUtilConstructor[];
 };
 
 export const FlowUi = (props: FlowUiProps) => {
@@ -30,6 +32,7 @@ export const FlowUi = (props: FlowUiProps) => {
     children,
     hideUi=false,
     initialShapes,
+    panelShapeUtils,
     onUiEvent: onUiEventCallback,
     ...rest
   } = props;
@@ -46,6 +49,7 @@ export const FlowUi = (props: FlowUiProps) => {
         <FlowUiInner
           initialShapes={initialShapes}
           hideUi={hideUi}
+          panelShapeUtils={panelShapeUtils}
           {...rest}
         >
           {children}
@@ -60,6 +64,7 @@ const FlowUiInner = (props: FlowUiProps) => {
     children,
     hideUi,
     initialShapes,
+    panelShapeUtils,
     ...rest
   } = props;
 	// The hideUi prop should prevent the UI from mounting.
@@ -68,7 +73,7 @@ const FlowUiInner = (props: FlowUiProps) => {
 	return (
 		<>
 			{children}
-			{hideUi ? null : <FlowUiContent initialShapes={initialShapes} {...rest} />}
+			{hideUi ? null : <FlowUiContent initialShapes={initialShapes} panelShapeUtils={panelShapeUtils} {...rest} />}
 		</>
 	)
 };
@@ -76,6 +81,7 @@ const FlowUiInner = (props: FlowUiProps) => {
 const FlowUiContent = (props: FlowUiProps) => {
   const {
     initialShapes,
+    panelShapeUtils,
     ...rest
   } = props;
   const [mounted, setMounted] = useState(false);
@@ -147,6 +153,7 @@ const FlowUiContent = (props: FlowUiProps) => {
 										<StylePanel />
 									</div>
 								)}
+                <NodePanel shapeUtils={panelShapeUtils || []} />
 							</div>
 						</div>
 						<div className={cn("tlui-layout__bottom")}>

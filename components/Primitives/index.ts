@@ -11,3 +11,4 @@ export * from './SidePanel';
 export * from './Switch';
 export * from './Slider';
 export * from './Tooltip';
+export * from './Panel';

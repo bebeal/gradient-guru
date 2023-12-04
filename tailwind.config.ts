@@ -238,12 +238,17 @@ const config: Config = {
           '50%': { opacity: "0.5", transform: "translateX(-10%)" },
           '100%': { opacity: "1", transform: "translateX(0)" },
         },
+        "move-background": {
+          "to": {
+            "background-position": "-100% 0"
+          }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out both",
         "accordion-up": "accordion-up 0.2s ease-out both",
-        "accordion-out": "accordion-down 0.2s ease-out both",
-        "accordion-in": "accordion-up 0.2s ease-out both",
+        "accordion-out": "accordion-out 0.2s ease-out both",
+        "accordion-in": "accordion-in 0.2s ease-out both",
         "bigger-bounce": "bigger-bounce 1s infinite",
         "focus-chat": "focus-chat 3s infinite cubic-bezier(0.8, 0, 1, 1)",
         "banner-pulse": "banner-pulse 5s infinite linear",
@@ -252,6 +257,7 @@ const config: Config = {
         "slide-right-fade": "slide-right-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         "slide-down-fade": "slide-down-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         "slide-left-fade": "slide-left-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        "move-background": "move-background 1s linear infinite"
       }
     },
   },

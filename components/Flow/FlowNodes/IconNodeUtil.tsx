@@ -34,8 +34,8 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
     return {
       w: 32,
       h: 32,
-      iconSet: 'Custom',
-      icon: 'CPU',
+      iconSet: 'Carbon',
+      icon: 'MachineLearning',
     };
   }
 
@@ -95,6 +95,15 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
 
     // Return the SVG element
     return svgElement;
+  }
+
+  panelPreview(node: IconNode) {
+    const Icon = <IconSetCache.Carbon.MachineLearning width="100%" height="100%" />;
+    return (
+      <HTMLContainer id={node.parentId} className='p-1'>
+        {Icon}
+      </HTMLContainer>
+    );
   }
 
   getSchema(node: IconNode) {

@@ -2,7 +2,7 @@
 import canvasSize from "canvas-size"
 import { PngHelpers } from "./png";
 import { Editor, SVG_PADDING, SvgExportContext, SvgExportDef, TLFrameShape, TLGroupShape, TLShape, TLShapeId, TLSvgOptions, getDefaultColorTheme, uniqueId } from "@tldraw/editor";
-import { ImageConfig, ImageExtractorProps } from "@/hooks";
+import { ImageConfig } from "@/hooks";
 
 export type TLCopyType = 'svg' | 'png' | 'jpeg' | 'json'
 export type TLExportType = 'svg' | 'png' | 'jpeg' | 'webp' | 'json'
@@ -51,7 +51,7 @@ export const getTextBoundingBox = (text: SVGTextElement) => {
 	return bbox;
 }
 
-export const getExportSvgElement = async (editor: Editor, ids: TLShapeId[], imageConfig?: ImageExtractorProps) => {
+export const getExportSvgElement = async (editor: Editor, ids: TLShapeId[], imageConfig?: Partial<ImageConfig>) => {
 	const svg = await getSvg(editor, ids, imageConfig);
 	if (!svg) throw new Error('Could not construct SVG.');
 
@@ -109,8 +109,8 @@ export const getSvgAsDataUrl = async (svg: SVGElement) => {
 	return getSvgAsDataUrlSync(clone);
 }
 
-export const getSvgAsImage = async (svg: SVGElement, isSafari: boolean, options: ImageConfig) => {
-	const { type, quality, scale } = options
+export const getSvgAsImage = async (svg: SVGElement, isSafari: boolean, options: Partial<ImageConfig>) => {
+	const { type, quality, scale=1 } = options
 
 	const width = +svg.getAttribute('width')!
 	const height = +svg.getAttribute('height')!
@@ -157,8 +157,8 @@ export const getSvgAsImage = async (svg: SVGElement, isSafari: boolean, options:
 			canvas.width = scaledWidth
 			canvas.height = scaledHeight
 
-			ctx.imageSmoothingEnabled = options.imageSmoothingEnabled;
-			ctx.imageSmoothingQuality = options.imageSmoothingQuality;
+			ctx.imageSmoothingEnabled = options.imageSmoothingEnabled || true;
+			ctx.imageSmoothingQuality = options.imageSmoothingQuality || 'high';
 			ctx.drawImage(image, 0, 0, scaledWidth, scaledHeight)
 
 			URL.revokeObjectURL(dataUrl)
@@ -196,15 +196,15 @@ export const getSvgAsImage = async (svg: SVGElement, isSafari: boolean, options:
 	})
 }
 
-export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], options: ImageConfig) => {
+export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], options: Partial<ImageConfig>) => {
 	return await getSvgAsImage(await getExportSvgElement(editor, ids, options), editor.environment.isSafari, options)
 }
 
-export const getCanvasImageUrl = async (editor: Editor, ids: TLShapeId[], options: ImageConfig) => {
+export const getCanvasImageUrl = async (editor: Editor, ids: TLShapeId[], options: Partial<ImageConfig>) => {
   return URL.createObjectURL((await getExportedImageBlob(editor, ids, options))!);
 }
 
-export const getDataUrl = async (editor: Editor, ids: TLShapeId[], options: ImageConfig): Promise<string> => {
+export const getDataUrl = async (editor: Editor, ids: TLShapeId[], options: Partial<ImageConfig>): Promise<string> => {
   const svg = await getExportSvgElement(editor, ids, options);
 	return await getSvgAsDataUrl(svg)
 };

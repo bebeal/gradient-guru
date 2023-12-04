@@ -44,6 +44,7 @@ import '@tldraw/tldraw/tldraw.css';
 import './Flow.css';
 
 export type FlowProps = TldrawProps & FlowUiProps & {
+  shapeUtils?: TLAnyShapeUtilConstructor[];
 }
 
 export const Flow = (props: FlowProps) => {
@@ -118,7 +119,7 @@ export const Flow = (props: FlowProps) => {
 	return (
 		<TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)} >
       <FlowEventsRecorderProvider>
-        <FlowUi overrides={overrides} initialShapes={initialShapes} {...withDefaults}>
+        <FlowUi overrides={overrides} initialShapes={initialShapes} panelShapeUtils={customShapeUtils as any} {...withDefaults}>
           <ContextMenu>
             <DropWrapper>
               <Canvas />

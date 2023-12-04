@@ -10,39 +10,46 @@ export const DropWrapperContainer = styled.div<any>`
   height: 100%;
 `;
 
-export interface DropWrapperProps {
+interface DropWrapperProps {
   children: React.ReactNode;
 }
 
+// Used with NodePanel to drag n drop nodes from and to the panel and canvas
 export const DropWrapper = (props: DropWrapperProps) => {
   const { children } = props;
   const editor = useEditor();
 
+  const dropNode = useCallback((point: any, parsedData: any, defaultProps: any) => {
+    const node = {
+      ...parsedData,
+      id: createShapeId(),
+      x: point.x - (defaultProps?.w / 2 || 0),
+      y: point.y - (defaultProps?.h / 2 || 0),
+    } as TLShape;
+    editor.createShape(node);
+  }, [editor]);
+
   const handleDrop = useCallback((event: any) => {
     event.preventDefault();
 
-    const shapeData = event.dataTransfer.getData('application/tldraw');
-    const type = JSON.parse(shapeData).type;
-    const rect = editor.getShapeUtil(type).getDefaultProps();
     const point = editor.screenToPage({ x: event.clientX, y: event.clientY });
-    
-    const shape = {
-      type: type,
-      id: createShapeId(),
-      props: {
-        ...editor.getShapeUtil(type).getDefaultProps(),
-      },
-      x: point.x - rect.w/2,
-      y: point.y - rect.h/2,
-    } as TLShape;
+    const nodeData = event.dataTransfer.getData("application/tldraw");
+    const parsedData = JSON.parse(nodeData);
+    const type = parsedData?.type;
+    // is either a single node indicated by type
+    if (type) {
+      if (editor.shapeUtils[type] === undefined) return;
+      const defaultProps = editor.getShapeUtil(parsedData?.type).getDefaultProps();
+      dropNode(point, parsedData, defaultProps);
+    } else {
+      // or a group of nodes indicated by nodesToAdd
+      const nodesToAdd = parsedData?.nodesToAdd;
+      nodesToAdd.forEach((node: any) => {
+        dropNode(point, node, node.props);
+      });
+    }
 
-    editor.createShape(shape);
+  }, [dropNode, editor] );
 
-  }, [editor]);
-
-  return (
-    <DropWrapperContainer onDrop={handleDrop}>
-      {children}
-    </DropWrapperContainer>
-  );
+  return ( <DropWrapperContainer onDrop={handleDrop}>{children}</DropWrapperContainer> );
 };
