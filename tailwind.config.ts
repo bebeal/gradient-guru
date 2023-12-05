@@ -6,6 +6,7 @@ const config: Config = {
     ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`]),
     `radix-state-open:rounded-t-lg radix-state-closed:rounded-lg rounded-b-lg rounded-t-lg`,
     `radix-state-open:rounded-t-xl radix-state-closed:rounded-xl rounded-b-xl rounded-t-xl`,
+    `text-accent-500 text-accent-400`
   ],
   darkMode: ['class'],
   content: [

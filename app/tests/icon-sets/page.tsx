@@ -21,7 +21,7 @@ const IconSets = () => {
                     className="flex bg-gray-600 bg-opacity-[50%] border border-gray-400 rounded shadow-2xl"
                   >
                     <div className="flex flex-col items-center justify-center gap-1 p-1 w-full h-full">
-                      <Icon height={`${size}px`} width={`${size}px`} className={`text-white w-auto h-[${size}px]`} />
+                      <Icon height={`${size}px`} width={`${size}px`} className={`w-auto h-[${size}px]`} />
                       <div className="text-md">{IconName}</div>
                     </div>
                   </div>
