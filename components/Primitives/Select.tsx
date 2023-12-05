@@ -241,21 +241,31 @@ SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 // ***********************
 //         Select
 // ***********************
-export interface SelectProps extends SelectPrimitive.SelectProps {
+// export interface SelectProps extends SelectPrimitive.SelectProps {
+  export interface SelectProps {
   items?: SelectItemProps[] | string[];
   placeholder?: string;
-  onChange?: (event: React.ChangeEvent<HTMLButtonElement>) => void;
+  onChange?: (event: any) => void;
   virtualize?: boolean;
   className?: string;
+  defaultValue?: any;
+  value?: any;
+  onValueChange?: (value: any) => void;
+  defaultOpen?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  name?: string;
+  disabled?: boolean;
+  required?: boolean;
 }
-export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<HTMLButtonElement>) => {
+export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) => {
   const { 
     items:initialItems=[],
     className='',
     placeholder='',
     onChange: onChangeCallback=noop,
     defaultValue,
-    value,
+    value=defaultValue,
     onValueChange: onValueChangeCallback=noop,
     defaultOpen=false,
     open,
@@ -285,7 +295,7 @@ export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<HTMLButt
       },
     };
     onValueChangeCallback?.(newValue);
-    onChangeCallback(event);
+    onChangeCallback?.(event);
   }, [name, onChangeCallback, onValueChangeCallback]);
 
   return (

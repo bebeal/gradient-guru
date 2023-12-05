@@ -10,8 +10,8 @@ import {
   Form,
   IconSetCache,
   KeysToIgnore,
-  Switch,
   TabTitle,
+  ToggleTitle,
   inferSchemaField,
 } from '@/components';
 import { useFlowExtractor } from '@/hooks';
@@ -27,7 +27,8 @@ export const FlowNodesTab = () => {
     if (newNodeProperties.type === 'icon') {
       const icon = IconSetCache[newNodeProperties.props.iconSet]?.[newNodeProperties.props.icon];
       if (!icon) {
-        newNodeProperties.props.icon = Object.keys(IconSetCache?.[newNodeProperties.props.iconSet])[0];
+        const newIcon = Object.keys(IconSetCache?.[newNodeProperties.props.iconSet])[0];
+        newNodeProperties.props.icon = newIcon;
       }
     }
     editor.updateShape(newNodeProperties);
@@ -41,7 +42,7 @@ export const FlowNodesTab = () => {
       // infer schema fields for node
       const schemaFields: { [key: string]: any } =
       editor.getShapeUtil(filteredNode.type) instanceof FlowNodeUtil
-        ? (editor.getShapeUtil(filteredNode.type) as FlowNodeUtil<any>).getSchema(node)
+        ? (editor.getShapeUtil(filteredNode.type) as FlowNodeUtil<any>).getSchema({...node})
         : {};
       Object.keys(node).forEach((key) => {
         if (schemaFields[key]) return;
@@ -65,29 +66,19 @@ export const FlowNodesTab = () => {
       const selected = selectedNodes.includes(node);
       const stringName = `${node.type} - ${node.id.replace('shape:', '')}`;
       return {
-        name: (
-          <div className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-0.5 gap-1 justify-center items-center`)}>
-            <Switch
-              asChild
-              pressed={!flowExtractor.nodesConfig.nodesToExclude.includes(node.id)}
-              onPressedChange={(pressed: boolean) => flowExtractor.toggleNodeState(node.id)}
-              className="absolute left-0"
-            ><div /></Switch>
-            <div className="text-primary/80 text-xs font-bold mx-[40px]">{stringName}</div>
-          </div>
-        ),
+        name: <ToggleTitle title={stringName} pressed={!flowExtractor.nodesConfig.nodesToExclude.includes(node.id)} onPressedChange={(pressed: boolean) => flowExtractor.toggleNodeState(node.id)} />,
         content: (
           <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Properties</TabTitle>
-              <Form object={node} schema={nodeSchemas[node.id]} onSubmit={onNodeChange} />
+              <Form object={{...node}} schema={nodeSchemas[node.id]} onSubmit={onNodeChange} />
             </div>
           </div>
         ),
         selected,
       };
     });
-  }, [buildNodeSchemas, editor, flowExtractor, onNodeChange]);
+  }, [editor, buildNodeSchemas, flowExtractor, onNodeChange]);
 
   return (
     <FlowTab title="Nodes">

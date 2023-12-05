@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useCallback, useEffect, useState } from 'react';
-import { Accordion, BulletedList, Form, Switch } from '@/components';
+import { Accordion, BulletedList, Form } from '@/components';
 import { ImageConfig, useFlowExtractor, useMounted } from '@/hooks';
 import { cn } from '@/utils';
-import { FlowTab, TabTitle, UnderlinedTitle } from './shared';
+import { FlowTab, TabTitle, ToggleTitle } from './shared';
 import { useEditor } from '@tldraw/editor';
 
 export interface FlowStateTabProps {
@@ -72,33 +72,20 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
   }, [imageConfig, setImageConfig]);
 
   const FlowImageAccordion = useCallback(() => {
-    const { enabled, ...controls } = imageConfig;
+    const { enabled, ...config } = imageConfig;
+    const hasConfig = Object.keys(config).length > 0;
     return {
-      name: (
-        <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-0.5`)}>
-          <Switch
-            asChild
-            pressed={imageConfig.enabled}
-            onPressedChange={(pressed: boolean) =>
-              setImageConfig({ ...imageConfig, enabled: pressed })
-            }
-            className="absolute left-0"
-          >
-            <div />
-          </Switch>
-          Image
-        </UnderlinedTitle>
-      ),
+      name: <ToggleTitle title="Image" pressed={imageConfig.enabled} onPressedChange={(enabled: boolean) => setImageConfig({ ...imageConfig, enabled })} />,
       content: (
         <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
-          {Object.keys(controls).length > 0 && (
+          {hasConfig && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <Form object={controls} schema={imageSchema} onSubmit={onSubmit} />
+              <Form object={config} schema={imageSchema} onSubmit={onSubmit} />
             </div>
           )}
           <div className="flex flex-wrap flex-col w-full justify-center items-center gap-1">
-            {Object.keys(controls).length > 0 && <TabTitle className={cn(`text-md w-full`)}>Image</TabTitle>}
+            {hasConfig && <TabTitle className={cn(`text-md w-full`)}>Image</TabTitle>}
             <div className={cn("relative flex h-[200px] w-full overflow-hidden p-2 flex-shrink-0 flex-col items-center justify-center")}>
               {flowImage 
                 ? (<div 
@@ -126,33 +113,20 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
   }, [flowImage, imageConfig, imageSchema, onSubmit, setImageConfig]);
 
   const FlowTextAccordion = useCallback(() => {
-    const { enabled, ...controls } = textConfig;
+    const { enabled, ...config } = textConfig;
+    const hasConfig = Object.keys(config).length > 0;
     return {
-      name: (
-        <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-0.5`)}>
-          <Switch
-            asChild
-            pressed={textConfig.enabled}
-            onPressedChange={(pressed: boolean) =>
-              setTextConfig({ ...textConfig, enabled: pressed })
-            }
-            className="absolute left-0"
-          >
-            <div />
-          </Switch>
-          Text
-        </UnderlinedTitle>
-      ),
+      name: <ToggleTitle title="Text" pressed={textConfig.enabled} onPressedChange={(enabled: boolean) => setTextConfig({ ...textConfig, enabled })} />,
       content: (
         <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
-          {Object.keys(controls).length > 0 && (
+          {hasConfig && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <Form object={controls} schema={textSchema} onSubmit={(newTextConfig: any) => setTextConfig({ enabled: textConfig.enabled, ...newTextConfig })} />
+              <Form object={config} schema={textSchema} onSubmit={(newTextConfig: any) => setTextConfig({ enabled: textConfig.enabled, ...newTextConfig })} />
             </div>
           )}
           <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
-          {Object.keys(controls).length > 0 && <TabTitle className={cn(`text-md w-full`)}>Text From Nodes</TabTitle>}
+          {hasConfig && <TabTitle className={cn(`text-md w-full`)}>Text From Nodes</TabTitle>}
             {!flowText ? (
               <div className="items-center justify-center px-2 py-4 text-primary/80">No Text</div>
             ) : (<BulletedList items={flowText.split('\n')} />)

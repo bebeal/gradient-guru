@@ -5,10 +5,8 @@ import {
   SvgExportContext,
   TLBaseShape,
   TLOnResizeHandler,
-  // getDefaultColorTheme,
   resizeBox,
 } from '@tldraw/tldraw';
-// import { getFillDefForExport } from '@tldraw/tldraw/src/lib/shapes/shared/defaultStyleDefs';
 import * as yup from 'yup';
 import { IconSetCache, SetNames } from '@/components';
 import { FlowNodeUtil } from './FlowNodeUtil';
@@ -49,7 +47,11 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
 
   // Render method — the React component that will be rendered for the shape
   component(node: IconNode) {
-    const Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
+    let Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
+    if (!Icon) {
+      node.props.icon = Object.keys(IconSetCache?.[node.props.iconSet])[0];
+      Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
+    }
     return (
       <HTMLContainer id={node.parentId}>
         {Icon && <Icon width="100%" height="100%" />}
@@ -67,13 +69,20 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
 
   override toSvg = (node: IconNode, ctx: SvgExportContext): Promise<SVGElement> | SVGElement => {
     const Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
+    if (!Icon) {
+      // return dummy svg element
+      const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svgElement.setAttribute('width', `${node.props.w}`);
+      svgElement.setAttribute('height', `${node.props.h}`);
+      return svgElement;
+    }
     const iconComponent = <Icon width={node.props.w} height={node.props.h} xmlns='http://www.w3.org/2000/svg' />;
     // Render the Icon component to markup string
     const svgString = ReactDOMServer.renderToStaticMarkup(iconComponent);
     // Parse the string to an SVGElement
     const parser = new DOMParser();
     const svgDocument = parser.parseFromString(svgString, "image/svg+xml");
-    const svgElement = svgDocument.documentElement;
+    const svgElement: any = svgDocument.documentElement;
 
     const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim();
 
@@ -86,11 +95,6 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
     const stroke = svgElement.getAttribute('stroke');
     if (stroke === 'currentColor') {
       svgElement.setAttribute('stroke', `rgb(${primaryColor})`);
-    }
-
-    // Ensure that the parsed element is an SVGElement
-    if (!(svgElement instanceof SVGElement)) {
-      throw new Error('Parsed element is not an SVGElement');
     }
 
     // Return the SVG element
@@ -111,8 +115,8 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
       props: yup.object({
         'w': yup.number().min(0).label('Width').meta({ type: 'input', disabled: false }),
         'h': yup.number().min(0).label('Height').meta({ type: 'input', disabled: false }),
-        'iconSet': yup.string().oneOf(Object.keys(IconSetCache)).label('Set').meta({ type: 'select', disabled: false }),
-        'icon': yup.string().oneOf(Object.keys(IconSetCache?.[node.props.iconSet])).label('Icon').meta({ type: 'select', disabled: false }),
+        'iconSet': yup.string().oneOf(Object.keys(IconSetCache)) .label('Set') .meta({ type: 'select', disabled: false }),
+        'icon': yup.string().oneOf(Object.keys(IconSetCache?.[node.props.iconSet]), "Invalid Icon").label('Icon').meta({ type: 'select', disabled: false }),
       }).meta({ type: 'object', disabled: false }),
     };
   }

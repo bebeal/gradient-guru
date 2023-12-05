@@ -5,14 +5,18 @@ import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { DisabledClasses, Radius, RadiusClasses, cn, noop } from "@/utils";
 import { IconSetCache } from "..";
 
-export interface CheckboxProps extends CheckboxPrimitive.CheckboxProps {
+// export interface CheckboxProps extends CheckboxPrimitive.CheckboxProps {
+  export interface CheckboxProps {
   checked?: boolean | undefined | 'indeterminate';
   defaultChecked?: boolean | undefined | 'indeterminate';
   radius?: Radius;
   children?: any;
-  onChange?: (event: React.ChangeEvent<HTMLButtonElement>) => void;
+  onChange?: (event: any) => void;
   onCheckedChange?: (checked: CheckboxPrimitive.CheckedState) => void;
   size?: number;
+  className?: string;
+  disabled?: boolean;
+  name?: string;
 }
 
 export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>) => {
@@ -26,6 +30,7 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
     radius='base',
     size=16,
     className='',
+    name,
     ...rest
    } = props;
    const [internalChecked, setInternalChecked] = useState<boolean | undefined | 'indeterminate'>(defaultChecked);
@@ -43,7 +48,7 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
     const event = {
       target: {
         value: newChecked,
-        name: rest.name,
+        name: name,
         type: 'button',
       },
     };

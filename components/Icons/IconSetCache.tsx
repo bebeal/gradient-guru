@@ -1,7 +1,7 @@
 'use client'
 
 // import { AcademiconsIconSet, CarbonIconSet, CustomIconSet, DevIconSet, EntypoPlusIconSet, EntypoSocialIconSet, FlagIconSet, FontAudioIconSet, FontAwesomeRegularIconSet, FontGISIconSet, GameIconSet, GeoglyphsIconSet, HeroiconsSolidIconSet, LogosIconSet, LucideIconSet, MapIconSet, MedicalIconSet, MuiLineIconSet, RadixIconSet, SkillIconSet, SpinnerIconSet, TldrawIconSet, VSCodeIconSet } from './IconSets';
-import { CarbonIconSet, CustomIconSet } from './IconSets';
+import { CarbonIconSet, CustomIconSet, TldrawIconSet } from './IconSets';
 import { MapCache } from "@/utils";
 import { IconWrapper } from './IconWrapper';
 
@@ -15,6 +15,7 @@ export interface IconSetMap {
 
 export const IconSets: IconSetMap = {
   'Carbon': {Icons: CarbonIconSet},
+  'Tldraw': {Icons: TldrawIconSet},
   'Custom': {Icons: CustomIconSet},
 };
 export const IconSetNames: string[] = Object.keys(IconSets) || [];

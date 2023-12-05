@@ -13,7 +13,7 @@ export const FlowQueryTab = (props: FlowQueryTabProps) => {
     <FlowTab title="Query Builder" className="h-full">
       <div className="h-full w-full flex-1" />
       <Button variant="gradient" onClick={() => console.log('query builder')}>
-        Build Query
+        Run Query
       </Button>
     </FlowTab>
   );

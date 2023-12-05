@@ -18,10 +18,12 @@ export type FlowEventsRecorderContextType = {
 export const FlowEventsRecorderContext = createContext<FlowEventsRecorderContextType | undefined>(undefined);
 
 export type FlowEventsRecorderProviderProps = {
+  historyRecordsBufferSize?: number;
 	children: any;
 };
 export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProps) => {
   const {
+    historyRecordsBufferSize = 1000,
     children,
     ...rest
   } = props;
@@ -101,9 +103,13 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
   // lower fidelity event logging for store events
   const onStoreEvent = useCallback((event: TLStoreEventInfo) => {
     if (event.source === 'user' && isShapeEvent(event)) {
-      historyRecords.current.push(event.changes);
+      historyRecords.current.unshift(event.changes);
+      // If over buffer size, remove oldest event
+      if (historyRecords.current.length > historyRecordsBufferSize) {
+        historyRecords.current.length = historyRecordsBufferSize;
+      }
     }
-  }, [isShapeEvent]);
+  }, [historyRecordsBufferSize, isShapeEvent]);
 
   useEffect(() => {
     if (!editor) return;

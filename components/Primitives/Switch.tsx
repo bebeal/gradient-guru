@@ -6,16 +6,21 @@ import { noop } from '@/utils';
 import * as TogglePrimitive from '@radix-ui/react-toggle';
 import { forwardRef, useState, useEffect } from 'react';
 
-export interface SwitchProps extends TogglePrimitive.ToggleProps {
+// export interface SwitchProps extends TogglePrimitive.ToggleProps {
+export interface SwitchProps {
   handleOffset?: string;
   baseColor?: string;
   animationTime?: string;
   pressed?: boolean | undefined;
-  onChange?: (event: React.ChangeEvent<HTMLButtonElement>) => void;
+  onChange?: (event: any) => void;
   className?: string;
+  disabled?: boolean;
+  name?: string;
+  defaultPressed?: boolean | undefined;
+  onPressedChange?: (pressed: boolean) => void;
 }
 
-export const Switch = forwardRef<HTMLButtonElement, SwitchProps>((props, ref) => {
+export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
   const {
     pressed: externalPressed,
     defaultPressed = undefined,

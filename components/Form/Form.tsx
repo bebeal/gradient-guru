@@ -61,7 +61,7 @@ export const Form = forwardRef<any, FormProps>((props, ref) => {
   const form: any = useForm<FormSchema>({
     resolver: yupResolver(schema),
     // cast initial values to schema
-    values: schema.cast({...object}),
+    values: schema.cast(object),
     mode,
     ...rest,
   });

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Accordion, BulletedList, FakeForm, FlowTab, Form, Switch, TabTitle, TimelineScrubber, UnderlinedTitle } from '@/components';
+import { Accordion, BulletedList, FakeForm, FlowTab, Form, TabTitle, TimelineScrubber, ToggleTitle } from '@/components';
 import { FlowEventsRecorderContextType, useFlowEventsRecorder, useFlowExtractor } from '@/hooks';
 import { cn } from '@/utils';
 
@@ -13,29 +13,20 @@ export const FlowEventsTab = (props: FlowEventsTabProps) => {
   const flowExtractor = useFlowExtractor();
 
   const UIStateAccordion = useCallback(() => {
-    const { enabled, ...controls } = flowExtractor.uiEventConfig;
+    const { enabled, ...config } = flowExtractor.uiEventConfig;
+    const hasConfig = Object.keys(config).length > 0;
     return {
-      name: (
-        <UnderlinedTitle className={cn(`flex w-full relative h-full py-0.5 pointer-events-auto z-[1000]`)}>
-          <Switch
-            asChild
-            pressed={flowExtractor.uiEventConfig.enabled}
-            onPressedChange={(pressed: boolean) => flowExtractor.setUiEventConfig({ ...flowExtractor.uiEventConfig, enabled: pressed })}
-            className='absolute left-0'
-          ><div/></Switch>
-          UI State
-        </UnderlinedTitle>
-      ),
+      name: <ToggleTitle title="UI State" pressed={flowExtractor.uiEventConfig.enabled} onPressedChange={(enabled: boolean) => flowExtractor.setUiEventConfig({ ...flowExtractor.uiEventConfig, enabled })} />,
       content: (
         <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
-          {Object.keys(controls).length > 0 && (
+          {hasConfig && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <Form object={controls} schema={flowExtractor.getUiEventSchema()} onSubmit={(newUiEventConfig: any) => flowExtractor.setUiEventConfig({...flowExtractor.uiEventConfig, ...newUiEventConfig})} />
+              <Form object={config} schema={flowExtractor.getUiEventSchema()} onSubmit={(newUiEventConfig: any) => flowExtractor.setUiEventConfig({...flowExtractor.uiEventConfig, ...newUiEventConfig})} />
             </div>
           )}
           <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
-          {Object.keys(controls).length > 0 && <TabTitle className={cn(`text-md w-full`)}>State</TabTitle>}
+          {hasConfig && <TabTitle className={cn(`text-md w-full`)}>State</TabTitle>}
             {flowEvents?.uiEvents?.length > 0 ? <FakeForm object={flowEvents?.uiEvents[0]} /> : <div className="text-primary/80 px-2 py-4">No UI State</div>}
           </div>
         </div>
@@ -45,25 +36,16 @@ export const FlowEventsTab = (props: FlowEventsTabProps) => {
   }, [flowEvents?.uiEvents, flowExtractor]);
 
   const HistoryRecordsAccordion = useCallback(() => {
-    const { enabled, ...controls } = flowExtractor.historyRecordsConfig;
+    const { enabled, ...config } = flowExtractor.historyRecordsConfig;
+    const hasConfig = Object.keys(config).length > 0;
     return {
-      name: (
-        <UnderlinedTitle className={cn(`flex w-full relative h-full py-0.5 pointer-events-auto z-[1000]`)}>
-          <Switch
-            asChild
-            pressed={flowExtractor.historyRecordsConfig.enabled}
-            onPressedChange={(pressed: boolean) => flowExtractor.setHistoryRecordsConfig({ ...flowExtractor.historyRecordsConfig, enabled: pressed })}
-            className='absolute left-0'
-          ><div/></Switch>
-          History Records
-        </UnderlinedTitle>
-      ),
+      name: <ToggleTitle title="History Records" pressed={flowExtractor.historyRecordsConfig.enabled} onPressedChange={(enabled: boolean) => flowExtractor.setHistoryRecordsConfig({ ...flowExtractor.historyRecordsConfig, enabled })} />,
       content: (
         <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
-          {Object.keys(controls).length > 0 && (
+          {hasConfig && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <Form object={controls} schema={flowExtractor.getHistoryRecordsSchema()} onSubmit={(newHistoryRecordsConfig: any) => flowExtractor.setHistoryRecordsConfig({...flowExtractor.historyRecordsConfig, ...newHistoryRecordsConfig})} />
+              <Form object={config} schema={flowExtractor.getHistoryRecordsSchema()} onSubmit={(newHistoryRecordsConfig: any) => flowExtractor.setHistoryRecordsConfig({...flowExtractor.historyRecordsConfig, ...newHistoryRecordsConfig})} />
             </div>
           )}
           <div className="flex p-1 flex-col w-full h-full justify-center items-center overflow-auto">
@@ -79,29 +61,20 @@ export const FlowEventsTab = (props: FlowEventsTabProps) => {
   }, [flowEvents, flowExtractor]);
 
   const CanvasEventAccordion = useCallback(() => {
-    const { enabled, ...controls } = flowExtractor.canvasEventConfig;
+    const { enabled, ...config } = flowExtractor.canvasEventConfig;
+    const hasConfig = Object.keys(config).length > 0;
     return {
-      name: (
-        <UnderlinedTitle className={cn(`flex w-full relative h-full py-0.5 pointer-events-auto z-[1000]`)}>
-          <Switch
-            asChild
-            pressed={flowExtractor.canvasEventConfig.enabled}
-            onPressedChange={(pressed: boolean) => flowExtractor.setCanvasEventConfig({ ...flowExtractor.canvasEventConfig, enabled: pressed })}
-            className='absolute left-0'
-          ><div/></Switch>
-          Canvas Event
-        </UnderlinedTitle>
-      ),
+      name: <ToggleTitle title="Canvas Event" pressed={flowExtractor.canvasEventConfig.enabled} onPressedChange={(enabled: boolean) => flowExtractor.setCanvasEventConfig({ ...flowExtractor.canvasEventConfig, enabled })} />,
       content: (
         <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
-          {Object.keys(controls).length > 0 && (
+          {hasConfig && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <Form object={controls} schema={flowExtractor.getCanvasEventSchema()} onSubmit={(newCanvasEventConfig: any) => flowExtractor.setCanvasEventConfig({...flowExtractor.canvasEventConfig, ...newCanvasEventConfig})} />
+              <Form object={config} schema={flowExtractor.getCanvasEventSchema()} onSubmit={(newCanvasEventConfig: any) => flowExtractor.setCanvasEventConfig({...flowExtractor.canvasEventConfig, ...newCanvasEventConfig})} />
             </div>
           )}
           <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
-          {Object.keys(controls).length > 0 && <TabTitle className={cn(`text-md w-full`)}>State</TabTitle>}
+          {hasConfig && <TabTitle className={cn(`text-md w-full`)}>State</TabTitle>}
             {flowEvents?.canvasEvent ? <FakeForm object={flowEvents?.canvasEvent} /> : <div className="text-primary/80 px-2 py-4">No Canvas Event</div>}
           </div>
         </div>

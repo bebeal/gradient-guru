@@ -2,6 +2,36 @@
 
 idk
 
+## Build
+
+* To run the development server
+
+server on `localhost:3000`
+
+```bash
+yarn install
+yarn dev
+```
+
+* Clean node_modules and .next directories
+
+```bash
+yarn clean
+```
+
+* Generate iconset assets and ts files
+
+```bash
+yarn generate-iconsets
+```
+
+* Build for deployment
+  * Under the hood this will build tldraw embed in packages/tldraw
+
+```bash
+yarn build
+```
+
 ## Libraries
 
 ---
@@ -54,23 +84,9 @@ idk
 * [Carbon](https://github.com/carbon-design-system/carbon)
 * [Tldraw](https://github.com/tldraw/tldraw)
 
-### Structure
-
-* `app/`
-* `assets/`
-  * `fonts/`
-  * `icons/`
-* `components/`
-* `hooks/`
-* `packages/`
-  * `tldraw/`
-* `public/`
-* `scripts/`
-* `utils/`
-
 ### Pages
 
-* `https://gradient-guru.com`
+* [`/`](https://gradient-guru.com)
   * [`/tests`](https://gradient-guru.com/tests)
     * [`/fonts`](https://gradient-guru.com/tests/fonts)
     * [`/form`](https://gradient-guru.com/tests/form)
@@ -83,34 +99,14 @@ idk
       * [`/switch`](https://gradient-guru.com/tests/primitives/switch)
       * [`/side-panel`](https://gradient-guru.com/tests/primitives/side-panel)
       * [`/radix-themed-components`](https://gradient-guru.com/tests/primitives/radix-themed-components)
-  * [`/flow`](https://gradient-guru.com/flow)
 
-## Build
+### TODO
 
-* To run the development server
-
-server on `localhost:3000`
-
-```bash
-yarn install
-yarn dev
-```
-
-* Clean node_modules and .next directories
-
-```bash
-yarn clean
-```
-
-* Generate iconset assets and ts files
-
-```bash
-yarn generate-iconsets
-```
-
-* Build for deployment
-  * Under the hood this will build tldraw embed in packages/tldraw
-
-```bash
-yarn build
-```
+* [ ] Setup CDN for icons/fonts distribution
+* [ ] Cleanup schema related stuff
+* [ ] Calculate stats on context length used/left
+* [ ] fix way image preview gets generated to not spam network tab
+* [ ] Custom functions to give to LLM to manipulate editor
+* [ ] Add ability to add custom fonts/iconsets easily
+* [ ] Way to persist boards
+* [ ] yjs

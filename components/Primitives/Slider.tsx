@@ -29,18 +29,23 @@ const calcStepMarkOffset = (value: number, min: number, max: number, thumbSize: 
   return `calc(${percent}% + ${thumbInBoundsOffset}px)`;
 }
 
-export type SliderProps = Omit<SliderPrimitive.SliderProps, "value" | "onValueChange" | "onChange" | "defaultValue" > & {
+// export type SliderProps = Omit<SliderPrimitive.SliderProps, "value" | "onValueChange" | "onChange" | "defaultValue" > & {
+export type SliderProps = {
   value?: number;
-  defaultValue?: number;
-  onChange?: (value: number) => void;
-  onValueChange?: (value: number) => void;
+  defaultValue?: any;
+  onChange?: (value: any) => void;
+  onValueChange?: (value: any) => void;
   marks?: number[];
   showValue?: 'value' | 'percent' | 'none' | false;
   thumbSize?: number;
   className?: string;
+  name?: string;
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
-export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
+export const Slider = forwardRef<any, SliderProps>((props, ref) => {
   const {
     min = 0,
     max = 100,

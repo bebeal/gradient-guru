@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { FormField } from "@/components";
 import { sortObject } from "@/utils";
 
-export const formFieldTypes = ['input', 'select', 'checkbox', 'switch', 'array', 'object', 'readonly'] as const;
+export const formFieldTypes = ['input', 'slider', 'select', 'checkbox', 'switch', 'array', 'object', 'readonly'] as const;
 export type FormFieldType = typeof formFieldTypes[number];
 
 export const mapSchemaToFormFields = (schema: any, form: any, labels: any, prefix: string = '') => {

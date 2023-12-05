@@ -83,7 +83,6 @@ export const NodePanelProvider = ({ children }: { children: React.ReactNode }) =
   );
 }
 
-
 export const useNodePanel = () => {
   const ctx = useContext(NodePanelContext);
 

@@ -187,9 +187,9 @@ def download_iconsets(max_depth, clean):
         # "Spinner": {
         #     "url": "https://github.com/n3r4zzurr0/svg-spinners/tree/main/svg-smil"
         # },
-        # "Tldraw": {
-        #     "url": "https://github.com/tldraw/tldraw/tree/main/assets/icons/icon" 
-        # },
+        "Tldraw": {
+            "url": "https://github.com/tldraw/tldraw/tree/main/assets/icons/icon" 
+        },
         # "VSCode": {
         #     "url": "https://github.com/vscode-icons/vscode-icons/tree/master/icons"
         # },
