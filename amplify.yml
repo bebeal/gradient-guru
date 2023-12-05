@@ -4,10 +4,10 @@ frontend:
     preBuild:
       commands:
         - yarn install
-        # - pip install beautifulsoup4 tqdm
-        # - yarn generate-iconsets
     build:
       commands:
+        - pip install beautifulsoup4 tqdm
+        - yarn generate-iconsets
         - yarn build
   artifacts:
     baseDirectory: .next
