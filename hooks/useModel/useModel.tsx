@@ -2,7 +2,8 @@
 import { createContext, useCallback, useContext, useState } from 'react';
 import API from "openai";
 import { getContentFromChatCompletion, Message, ModelConfig, mockResponse, ModelInput, DefaultModelConfig } from './shared';
-import { useFlowExtractor, useOpenAI } from '@/hooks';
+import { useFlowExtractor } from '@/hooks';
+import { useOpenAI } from './useOpenAI';
 import { useQuery } from 'react-query';
 
 export const ModelContext = createContext(
