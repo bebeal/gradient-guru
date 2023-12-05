@@ -56,7 +56,7 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
         }
       }
       for (const [from, to] of Object.values(updated) as any) {
-        if ( from.typeName === 'shape' && to.typeName === 'shape') {
+        if ( from.typeName === 'shape' || to.typeName === 'shape') {
           // collpase when pushing this event only if its different from last event in arary
           if (events.length > 0 && !events[events.length - 1].includes(`user updated shape (${(to.id).replace('shape:', '')})`)) {
             events.push(`user updated shape (${(to.id).replace('shape:', '')})`);
@@ -73,30 +73,18 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
   }, [historyRecords]);
 
   const isShapeEvent = useCallback((event: TLStoreEventInfo) => {
-    const { added, updated, removed } = event.changes;
-    let isShapeEvent = false;
-    if (added) {
-      Object.values(added).forEach((record: any) => {
+    const checkRecords = (records: any) => {
+      for (const record of Object.values(records) as any) {
         if (record.typeName === 'shape') {
-          isShapeEvent= true;
+          return true;
         }
-      });
-    }
-    if (!isShapeEvent && removed) {
-      Object.values(removed).forEach((record: any) => {
-        if (record.typeName === 'shape') {
-          isShapeEvent= true;
-        }
-      });
-    }
-    if (!isShapeEvent && updated) {
-      Object.values(updated).forEach(([from, to]: any) => {
-        if (from.typeName === 'shape' && to.typeName === 'shape') {
-          isShapeEvent= true;
-        }
-      });
-    }
-    return isShapeEvent;
+      }
+      return false;
+    };
+  
+    const { added, removed, updated } = event.changes;
+  
+    return checkRecords(added) || checkRecords(removed) || Object.values(updated).some(([from, to]: any) => from.typeName === 'shape' && to.typeName === 'shape');
   }, []);
 
 
