@@ -14,7 +14,7 @@ export const useOpenAI = () => {
   const [errors, setErrors] = useState<Error | undefined>(noKeyError);
 
   useEffect(() => {
-    console.log('openAIKey', openAIKey);
+    // console.log('openAIKey', openAIKey);
   }, [openAIKey]);
 
   const useChatCompletion = useCallback(async (body: string) => {

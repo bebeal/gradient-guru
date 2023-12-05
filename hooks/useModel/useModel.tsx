@@ -99,10 +99,10 @@ export const useModel = () => {
   }, {
     enabled: false,
     onSuccess: (response) => {
-      console.log('response', response);
+      // console.log('response', response);
     },
     onError: (error) => {
-      console.log('error', error);
+      // console.log('error', error);
     },
   });
 

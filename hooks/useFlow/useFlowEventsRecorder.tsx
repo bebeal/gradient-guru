@@ -74,40 +74,39 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
 
   const isShapeEvent = useCallback((event: TLStoreEventInfo) => {
     const { added, updated, removed } = event.changes;
-    let isShape = false;
+    let isShapeEvent = false;
     if (added) {
       Object.values(added).forEach((record: any) => {
         if (record.typeName === 'shape') {
-          isShape = true;
+          isShapeEvent= true;
         }
       });
     }
-    if (!isShape && removed) {
+    if (!isShapeEvent && removed) {
       Object.values(removed).forEach((record: any) => {
         if (record.typeName === 'shape') {
-          isShape = true;
+          isShapeEvent= true;
         }
       });
     }
-    if (!isShape && updated) {
+    if (!isShapeEvent && updated) {
       Object.values(updated).forEach(([from, to]: any) => {
-        if (from.typeName === 'shape' || to.typeName === 'shape') {
-          isShape = true;
+        if (from.typeName === 'shape' && to.typeName === 'shape') {
+          isShapeEvent= true;
         }
       });
     }
-    return isShape;
+    return isShapeEvent;
   }, []);
 
 
   // lower fidelity event logging for store events
   const onStoreEvent = useCallback((event: TLStoreEventInfo) => {
     if (event.source === 'user' && isShapeEvent(event)) {
-      historyRecords.current.unshift(event.changes);
-      // If over buffer size, remove oldest event
       if (historyRecords.current.length > historyRecordsBufferSize) {
-        historyRecords.current.length = historyRecordsBufferSize;
+        historyRecords.current.shift();
       }
+      historyRecords.current.push(event.changes);
     }
   }, [historyRecordsBufferSize, isShapeEvent]);
 

@@ -9,7 +9,7 @@ export const ModelTab = (props: ModelTabProps) => {
   const model = useModel();
 
   useEffect(() => {
-    console.log('model', model);
+    // console.log('model', model);
   }, [model]);
 
   return (
