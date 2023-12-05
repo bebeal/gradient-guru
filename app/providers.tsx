@@ -14,13 +14,13 @@ import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
 import '@/assets/fonts/Monaspace/Monaspace.css';
 import '@radix-ui/themes/styles.css';
 import '@/app/globals.css';
-import { cn, isDevEnv } from "@/utils";
+import { cn } from "@/utils";
 
 const queryClient = new QueryClient();
 
 const Providers = ({ children }: any) => {
   const [themePanelEnabled, setThemePanelEnabled] = useState<boolean>(false);
-  const [debugMode, setDebug] = useState<number>(isDevEnv ? 1 : 0);
+  const [debugMode, setDebug] = useState<number>(1); //isDevEnv ? 1 : 0
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
