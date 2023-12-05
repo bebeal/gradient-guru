@@ -7,10 +7,10 @@ import { cn } from '@/utils';
 import { FlowTab, TabTitle, ToggleTitle } from './shared';
 import { useEditor } from '@tldraw/editor';
 
-export interface FlowStateTabProps {
+export interface StateTabProps {
 }
 
-export const FlowStateTab = (props: FlowStateTabProps) => {
+export const StateTab = (props: StateTabProps) => {
   const {
     ...rest
   } = props;
@@ -149,4 +149,4 @@ export const FlowStateTab = (props: FlowStateTabProps) => {
     </FlowTab>
   );
 };
-FlowStateTab.displayName = 'FlowStateTab';
+StateTab.displayName = 'StateTab';

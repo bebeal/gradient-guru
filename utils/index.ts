@@ -10,3 +10,4 @@ export * from './styles';
 export * from './svg';
 export * from './utils';
 export * from './math';
+export * from './prompts';

@@ -51,3 +51,12 @@ export const sortObject = (
 
 // check if object is empty
 export const isEmptyObject = (obj?: object) => obj ? Object.keys(obj).length === 0 : false;
+
+export const toCamelCase = (snakeStr: string): string => {
+  const components = snakeStr.split('_');
+  return components[0] + components.slice(1).map(x => x.charAt(0).toUpperCase() + x.slice(1)).join('');
+};
+
+export const toSnakeCase = (camelStr: string): string => {
+  return camelStr.split('').map(c => c === c.toUpperCase() ? `_${c.toLowerCase()}` : c).join('').trimStart();
+};

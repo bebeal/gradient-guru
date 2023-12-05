@@ -74,7 +74,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
           return (
             <Accordion 
               highlightActive={false}
-              className="text-xs w-full"
+              className="text-xs w-full h-full overflow-hidden"
               triggerClassName="px-2 py-1 font-semibold text-xs text-primary"
               items={[ 
                 {name: controller?.field?.name, open: true, content: content} 
@@ -90,17 +90,14 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
     }, [type, placeholder, controller, disabled, rest, schema, form]);
 
   return (
-    <div className={cn(`w-full h-auto grid overflow-auto rounded justify-start items-center`, type !== 'object' ? 'grid-cols-[minmax(0,_1fr)_1fr]' : 'grid-cols-[minmax(0,_1fr)] col-span-2')}>
-     {(description || type !== 'object') && (<div className="flex flex-col text-center h-auto w-auto flex-wrap">
-        {type !== 'object' && <FormLabel className="text-xs">{label}</FormLabel>}
+    <div className={cn(`w-full h-full grid overflow-auto rounded items-end p-1 gap-px`, type !== 'object' ? '' : 'col-span-2')}>
+     {(description || type !== 'object') && (<div className="flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start">
+        {type !== 'object' && <FormLabel className="text-xs">{label}:</FormLabel>}
         {description && <FormDescription>{description}</FormDescription>}
       </div>)}
-      <div className={cn("flex-col flex w-full h-auto items-start py-0.5", type === 'object' && 'col-span-2')}>
+      <div className={cn("flex-col flex w-full h-auto justify-center items-center px-1.5", type === 'object' && 'col-span-2')}>
         <FormControl>
-          <div className="flex flex-row w-full gap-0.5 justify-start items-center">
-          {type !== 'object' && ':'}
-          <FormFieldRender className={cn('flex text-xs placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', error && 'border-error')} />
-          </div>
+          <FormFieldRender className={cn('text-xs w-full placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', error && 'border-error')} />
         </FormControl>
         {type !== 'object' && <FormMessage />}
       </div>

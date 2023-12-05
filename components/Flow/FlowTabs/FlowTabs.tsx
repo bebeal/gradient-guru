@@ -1,6 +1,6 @@
 
 import { useMemo } from 'react';
-import { FlowEventsTab, FlowNodesTab, FlowQueryTab, FlowStateTab, IconSetCache, SidePanel } from '@/components';
+import { EventsTab, IconSetCache, ModelTab, NodesTab, SidePanel, StateTab } from '@/components';
 
 export interface FlowTabsProps {
   className?: string;
@@ -8,39 +8,39 @@ export interface FlowTabsProps {
 export const FlowTabs = (props: FlowTabsProps) => {
   const { className = '' } = props;
 
-  const EventsTab = useMemo(() => {
+  const FlowEventsTab = useMemo(() => {
     return {
       icon: <IconSetCache.Carbon.Network3 height={'100%'} width={'100%'} stroke={'transparent'} />,
       name: 'Events',
-      content: <FlowEventsTab />,
+      content: <EventsTab />,
     };
   }, []);
 
-  const NodesTab = useMemo(() => {
+  const FlowNodesTab = useMemo(() => {
     return {
       icon: <IconSetCache.Carbon.ChartNetwork height={'100%'} width={'100%'} stroke={'transparent'} />,
       name: 'Nodes',
-      content: <FlowNodesTab />,
+      content: <NodesTab />,
     };
   }, []);
 
-  const StateTab = useMemo(() => {
+  const FlowStateTab = useMemo(() => {
     return {
       icon: <IconSetCache.Carbon.VisualRecognition height={'100%'} width={'100%'} stroke={'transparent'} />,
       name: 'State',
-      content: <FlowStateTab />,
+      content: <StateTab />,
     };
   }, []);
 
-  const QueryBuilderTab = useMemo(() => {
+  const FlowModelTab = useMemo(() => {
     return {
       icon: <IconSetCache.Carbon.IbmWatsonStudio height={'100%'} width={'100%'} stroke={'transparent'} />,
       name: 'Query Builder',
-      content: <FlowQueryTab />,
+      content: <ModelTab />,
     };
   }, []);
 
-  const tabs = useMemo(() => [EventsTab, NodesTab, StateTab, QueryBuilderTab], [EventsTab, NodesTab, StateTab, QueryBuilderTab]);
+  const tabs = useMemo(() => [FlowEventsTab, FlowNodesTab, FlowStateTab, FlowModelTab], [FlowEventsTab, FlowNodesTab, FlowStateTab, FlowModelTab]);
 
   return <SidePanel className={className} tabs={tabs} />;
 };

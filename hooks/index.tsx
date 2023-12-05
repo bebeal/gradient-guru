@@ -6,6 +6,6 @@ export * from './useIsomorphicLayout';
 export * from './useMounted';
 export * from './usePosition';
 export * from "./useThemePanel";
-
+export * from './useModel';
 export * from './useFlow';
 export * from './useRippleEffect';

@@ -121,7 +121,8 @@ const config: Config = {
       },
       backgroundColor: {
         primary: 'rgb(var(--background-primary) / <alpha-value>)',
-        secondary: 'rgb(var(--background-secondary) / <alpha-value>)'
+        secondary: 'rgb(var(--background-secondary) / <alpha-value>)',
+        tertiary: 'rgb(var(--background-tertiary) / <alpha-value>)',
       },
       fill: {
         primary: 'rgb(var(--background-primary) / <alpha-value>)',
@@ -291,10 +292,10 @@ const config: Config = {
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out both",
-        "accordion-up": "accordion-up 0.2s ease-out both",
-        "accordion-out": "accordion-out 0.2s ease-out both",
-        "accordion-in": "accordion-in 0.2s ease-out both",
+        "accordion-down": "accordion-down 0.3s ease-in-out both",
+        "accordion-up": "accordion-up 0.3s ease-in-out both",
+        "accordion-out": "accordion-out 0.3s ease-in-out both",
+        "accordion-in": "accordion-in 0.3s ease-in-out both",
         "bigger-bounce": "bigger-bounce 1s infinite",
         "focus-chat": "focus-chat 3s infinite cubic-bezier(0.8, 0, 1, 1)",
         "banner-pulse": "banner-pulse 5s infinite linear",

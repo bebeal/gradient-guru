@@ -10,6 +10,7 @@ import {
   Form,
   IconSetCache,
   KeysToIgnore,
+  Switch,
   TabTitle,
   ToggleTitle,
   inferSchemaField,
@@ -17,9 +18,9 @@ import {
 import { useFlowExtractor } from '@/hooks';
 import { cn, filterObject } from '@/utils';
 
-export interface FlowNodesTabProps {}
+export interface NodesTabProps {}
 
-export const FlowNodesTab = () => {
+export const NodesTab = () => {
   const editor = useEditor();
   const flowExtractor = useFlowExtractor();
 
@@ -82,6 +83,10 @@ export const FlowNodesTab = () => {
 
   return (
     <FlowTab title="Nodes">
+      <div className="w-full flex justify-around items-center">
+        <Switch offLabel={"Include Nodes (JSON)"} onLabel={"Don't Include Nodes"} pressed={flowExtractor.nodesConfig.enabled} onPressedChange={(pressed: boolean) => flowExtractor.setNodesConfig({ ...flowExtractor.nodesConfig, enabled: pressed})} />
+        <Switch offLabel={"All Nodes"} onLabel={"Selected Nodes"} pressed={flowExtractor.nodesConfig.filterSelected} onPressedChange={(pressed: boolean) => flowExtractor.setNodesConfig({ ...flowExtractor.nodesConfig, filterSelected: pressed})} />
+      </div>
       <Accordion
         spaceBetween={0}
         className="w-full text-xs"
@@ -91,4 +96,4 @@ export const FlowNodesTab = () => {
     </FlowTab>
   );
 };
-FlowNodesTab.displayName = 'FlowNodesTab';
+NodesTab.displayName = 'NodesTab';

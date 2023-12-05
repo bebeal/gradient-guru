@@ -62,17 +62,14 @@ export const FakeForm = forwardRef<any, FakeFormProps>((props, ref) => {
         {...rest}
       >
         {Object.entries(objectSortedByType).map(([key, value]) => (
-          <div key={`${key}`} className={cn(`w-auto h-auto grid overflow-auto rounded items-center`, typeof value !== 'object' ? 'grid-cols-[minmax(0,_1fr)_1fr]' : 'grid-cols-[minmax(0,_1fr)] col-span-2')}>
-            {typeof value !== 'object' && <div className={cn(`font-semibold text-xs text-primary text-right`)}>{key}</div>}
-            <div className="flex-col flex w-auto items-start py-0.5">
-              <div className="flex flex-row items-center w-full gap-0.5">
-                {typeof value !== 'object' && ':'}
+          <div key={`${key}`} className={cn(`w-auto h-full grid overflow-hidden rounded items-end p-1 gap-px`, typeof value !== 'object' ? '' : 'col-span-2')}>
+            {typeof value !== 'object' && <div className={cn(`font-semibold text-xs text-primary text-left flex-wrap self-justify-left self-start`)}>{key}:</div>}
+            <div className={cn("flex-col flex w-full h-auto py-0.5 justify-center items-center px-1.5", typeof value === 'object' && 'col-span-2')}>
                 <FakeFieldRender
                   name={key}
                   value={value}
-                  className={cn('text-xs w-auto font-normal p-0')}
+                  className={cn('text-xs w-full placeholder:text-secondary/80')}
                 />
-              </div>
             </div>
             </div>
           )

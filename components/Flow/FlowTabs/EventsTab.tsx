@@ -3,9 +3,9 @@ import { Accordion, BulletedList, FakeForm, FlowTab, Form, TabTitle, TimelineScr
 import { FlowEventsRecorderContextType, useFlowEventsRecorder, useFlowExtractor } from '@/hooks';
 import { cn } from '@/utils';
 
-export type FlowEventsTabProps = {
+export type EventsTabProps = {
 };
-export const FlowEventsTab = (props: FlowEventsTabProps) => {
+export const EventsTab = (props: EventsTabProps) => {
   const {
     ...rest
   } = props;
@@ -89,4 +89,4 @@ export const FlowEventsTab = (props: FlowEventsTabProps) => {
     </FlowTab>
   )
 };
-FlowEventsTab.displayName = 'FlowEventsTab';
+EventsTab.displayName = 'EventsTab';

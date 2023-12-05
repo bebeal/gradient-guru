@@ -104,9 +104,28 @@ yarn build
 
 * [ ] Setup CDN for icons/fonts distribution
 * [ ] Cleanup schema related stuff
-* [ ] Calculate stats on context length used/left
 * [ ] fix way image preview gets generated to not spam network tab
 * [ ] Custom functions to give to LLM to manipulate editor
 * [ ] Add ability to add custom fonts/iconsets easily
 * [ ] Way to persist boards
 * [ ] yjs
+
+* [ ] Add my other llm exampels and notebooks
+* [ ] Add the hardcoded demo
+* [ ] Add flask backend env back in
+* [ ] Add Context Calculator to track context length used/left over time, show estimate at all times for estimate of what will be added to context length is query was executed now
+
+### Setup your API key for all projects
+
+Open Terminal: You can find it in the Applications folder or search for it using Spotlight (Command + Space).
+
+Edit bash profile: Use the command nano ~/.bash_profile or nano ~/.zshrc (for newer MacOS versions) to open the profile file in a text editor.
+
+Add Environment Variable: In the editor, add the line below, replacing your-api-key-here with your actual API key:
+
+export OPENAI_API_KEY='your-api-key-here'
+Save and exit: Press Ctrl+O to write the changes, followed by Ctrl+X to close the editor.
+
+Load your profile: Use the command source ~/.bash_profile or source ~/.zshrc to load the updated profile.
+
+Verification: Verify the setup by typing echo $OPENAI_API_KEY in the terminal. It should display your API key.

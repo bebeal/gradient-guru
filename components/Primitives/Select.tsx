@@ -221,7 +221,7 @@ export const SelectTrigger = forwardRef<any, SelectTriggerProps>((props, ref) =>
       ref={ref}
       placeholder={placeholder}
       className={cn(
-        `relative text-secondary flex w-full h-auto justify-center items-center whitespace-nowrap border border-secondary bg-secondary px-2 py-0.5 text-sm shadow-sm`,
+        `relative text-secondary flex w-full h-auto overflow-hidden justify-center items-center whitespace-normal break-all border border-secondary bg-secondary px-2 py-0.5 text-sm shadow-sm`,
         `placeholder:text-muted focus:outline-none focus:ring-inset focus:ring-1 focus:ring-accent disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1`,
         `data-[state=open]:outline-none data-[state=open]:ring-1 data-[state=open]:ring-accent data-[state=open]:ring-inset data-[state=open]:text-primary`,
         RadiusClasses(radius),

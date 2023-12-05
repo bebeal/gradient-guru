@@ -90,16 +90,16 @@ export const Slider = forwardRef<any, SliderProps>((props, ref) => {
       defaultValue={defaultValue !== undefined ? [defaultValue] : undefined}
       value={[value]}
       aria-label="value"
-      className={cn("relative flex items-center select-none touch-none w-full h-5 mt-[1em] mx-[0.5em]", className)}
+      className={cn("relative flex items-center select-none touch-none w-full h-5 mt-[1em] mx-[1em] p-1", className)}
       {...rest}
       onChange={noop}
       onValueChange={onValueChange}
     >
-      <SliderPrimitive.Track className="relative h-1 w-full flex-grow rounded-full bg-secondary cursor-pointer">
+      <SliderPrimitive.Track className="relative h-1 w-full flex-grow rounded-full bg-tertiary cursor-pointer">
         {marks?.map((markValue, index) => (
           <div
             key={index}
-            className={cn(`absolute h-[200%] top-[-50%] w-[1px] bg-secondary hover:bg-accent/50`)}
+            className={cn(`absolute h-[200%] top-[-50%] w-[1.5px] bg-tertiary hover:bg-accent/50`)}
             onClick={(e) => {
               e.stopPropagation();
               onChange(markValue);
@@ -115,7 +115,7 @@ export const Slider = forwardRef<any, SliderProps>((props, ref) => {
       <SliderPrimitive.Thumb
         ref={thumbRef}
         className={cn(
-          `block h-[${thumbSize}px] w-[${thumbSize}px] rounded-full bg-accent cursor-pointer overflow-hidden pointer-events-auto`,
+          `block h-[${thumbSize}px] w-[${thumbSize}px] rounded-full bg-accent cursor-pointer pointer-events-auto overflow-hidden`,
           "hover:outline-none hover:ring-[0.5px] hover:ring-accent hover:ring-opacity-75 ",
           "focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75",
           "focus-within:outline-none focus-within:ring-2 focus-within:ring-accent focus-within:ring-opacity-75",

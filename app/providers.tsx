@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 import * as Toast from "@radix-ui/react-toast";
 import { DirectionProvider } from '@radix-ui/react-direction';
-import { DebugPanelContext, ThemePanelContext } from "@/hooks";
+import { DebugPanelContext, ModelProvider, ThemePanelContext } from "@/hooks";
 import StyledComponentsRegistry from "./registry";
 
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
@@ -40,11 +40,13 @@ const Providers = ({ children }: any) => {
               <DebugPanelContext.Provider value={{ debugMode, setDebug }}>
                 <QueryClientProvider client={queryClient}>
                   <Toast.Provider>
-                    <div className="flex flex-col h-screen w-full overflow-hidden">
-                      {children}
-                      {debugMode === 1 && <div className="absolute z-[99999] bg-primary"><ReactQueryDevtools closeButtonProps={{className: cn(`hidden`)}} initialIsOpen={true} position="bottom-left" /></div>}
-                    </div>
-                    {themePanelEnabled && <ThemePanel />}
+                    <ModelProvider>
+                      <div className="flex flex-col h-screen w-full overflow-hidden">
+                        {children}
+                        {debugMode === 1 && <div className="absolute z-[99999] bg-primary"><ReactQueryDevtools closeButtonProps={{className: cn(`hidden`)}} initialIsOpen={true} position="top-left" /></div>}
+                      </div>
+                      {themePanelEnabled && <ThemePanel />}
+                    </ModelProvider>
                   </Toast.Provider>
                 </QueryClientProvider>
               </DebugPanelContext.Provider>

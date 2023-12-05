@@ -7,6 +7,11 @@
 
 /* https://tailwindcss.com/docs/preflight */
 @layer base {
+  html,
+  body {
+    overscroll-behavior-x: none;
+  }
+
   * {
     @apply box-border font-mono;
   }
@@ -53,6 +58,7 @@
 
   --background-primary: 54 61 68;
   --background-secondary: 44 49 54;
+  --background-tertiary: 32 35 39;
 
   --border-primary: 73 85 95;
   --border-secondary: 85 95 105;
@@ -73,6 +79,7 @@
   --error: 255 69 58;
 }
 
+/* React Query Devtools overrides */
 .ReactQueryDevtools {
   position: absolute !important;
 }
@@ -80,6 +87,9 @@
 .ReactQueryDevtools > button {
   margin: 0 !important;
   transform: scale(0.75) !important;
+  top: 95vh !important;
+  left: 5% !important;
+  position: absolute !important;
 }
 
 .ReactQueryDevtoolsPanel {
@@ -88,13 +98,13 @@
   position: fixed !important;
   width: 90% !important;
   left: 5% !important;
-  bottom: 0 !important;
+  top: 0 !important;
   background: rgb(var(--background-primary)) !important;
-  border-top: 1px solid rgb(var(--border-primary)) !important;
+  border-bottom: 1px solid rgb(var(--border-primary)) !important;
   border-left: 1px solid rgb(var(--border-primary)) !important;
   border-right: 1px solid rgb(var(--border-secondary)) !important;
-  border-top-right-radius: 6px !important;
-  border-top-left-radius: 6px !important;
+  border-bottom-right-radius: 6px !important;
+  border-bottom-left-radius: 6px !important;
   padding: 6px !important;
   overflow: hidden !important;
 }

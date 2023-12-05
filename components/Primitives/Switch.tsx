@@ -1,6 +1,6 @@
 'use client'
 
-import { noop } from '@/utils';
+import { cn, noop } from '@/utils';
 // ref: https://github.com/saadeghi/daisyui/blob/35dbea89ca5b82dd0c3ba4bb69d5f39a7b7c4d54/src/components/styled/toggle.css#L2
 
 import * as TogglePrimitive from '@radix-ui/react-toggle';
@@ -18,6 +18,10 @@ export interface SwitchProps {
   name?: string;
   defaultPressed?: boolean | undefined;
   onPressedChange?: (pressed: boolean) => void;
+  offLabel?: any;
+  onLabel?: any;
+  children?: React.ReactNode;
+  asChild?: boolean;
 }
 
 export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
@@ -30,6 +34,10 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
     handleOffset = '1.25rem',
     animationTime = '0.2s',
     className,
+    offLabel,
+    onLabel,
+    children,
+    asChild,
     ...rest
   } = props;
   const [internalPressed, setInternalPressed] = useState<boolean | undefined>(defaultPressed);
@@ -84,13 +92,26 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
   };
 
   return (
+    <div className="flex w-auto justify-center items-center gap-1">
+      {offLabel && (
+        <div className={cn("text-[10px] text-muted break-words text-center w-12", !internalPressed && `text-primary`)}>
+          {offLabel}
+        </div>
+      )}
       <TogglePrimitive.Root
+        asChild={asChild}
         ref={ref} className={className} style={style} disabled={disabled}
         pressed={isPressed}
         {...rest}
         onChange={noop}
         onClick={onClick}
         onPressedChange={onPressedChange}
-      />
+      >{children}</TogglePrimitive.Root>
+      {onLabel && (
+        <div className={cn("text-[10px] text-muted break-words text-center w-12", internalPressed && `text-primary`)}>
+          {onLabel}
+        </div>
+      )}
+      </div>
   );
 });

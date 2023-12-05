@@ -1,7 +1,8 @@
 'use client';
+// Benjamin Noah Beal
 
-import { cn } from "@/utils";
 import React, { forwardRef, useCallback, useMemo, useRef } from "react";
+import { cn } from "@/utils";
 
 export const GPU_PARTS = ["base", "fan-1", "fan-2", "fan-3", "PCIE", "gpu", "inner-circle"];
 export type GpuParts = typeof GPU_PARTS[number];
