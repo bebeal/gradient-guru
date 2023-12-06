@@ -4,44 +4,44 @@ import * as yup from 'yup';
 export const GPT_4_TURBO_WITH_VISION = {
   model: 'gpt-4-vision-preview',
   max_tokens: 4096,
-  context_window: 128000,
-  training_data_end_date: '2023-04-01',
-  api_endpoint: 'https://api.openai.com/v1/chat/completions',
+  // context_window: 128000,
+  // training_data_end_date: '2023-04-01',
+  // api_endpoint: 'https://api.openai.com/v1/chat/completions',
 };
 export const GPT_4_TURBO = {
   model: 'gpt-4-1106-preview',
   max_tokens: 4096,
-  context_window: 128000,
-  training_data_end_date: '2023-04-01',
-  api_endpoint: 'https://api.openai.com/v1/chat/completions',
+  // context_window: 128000,
+  // training_data_end_date: '2023-04-01',
+  // api_endpoint: 'https://api.openai.com/v1/chat/completions',
 };
 export const GPT_4 = {
   model: 'gpt-4',
   max_tokens: 4096,
-  context_window: 8192,
-  training_data_end_date: '2021-09-01',
-  api_endpoint: 'https://api.openai.com/v1/chat/completions',
+  // context_window: 8192,
+  // training_data_end_date: '2021-09-01',
+  // api_endpoint: 'https://api.openai.com/v1/chat/completions',
 };
 export const GPT_4_32K = {
   model: 'gpt-4-32k',
   max_tokens: 32768,
-  context_window: 32768,
-  training_data_end_date: '2021-09-01',
-  api_endpoint: 'https://api.openai.com/v1/chat/completions',
+  // context_window: 32768,
+  // training_data_end_date: '2021-09-01',
+  // api_endpoint: 'https://api.openai.com/v1/chat/completions',
 };
 export const GPT_3_TURBO_1106 = {
   model: 'gpt-3.5-turbo-1106',
   max_tokens: 4096,
-  context_window: 16384,
-  training_data_end_date: '2021-09-01',
-  api_endpoint: 'https://api.openai.com/v1/chat/completions',
+  // context_window: 16384,
+  // training_data_end_date: '2021-09-01',
+  // api_endpoint: 'https://api.openai.com/v1/chat/completions',
 };
 export const GPT_3_TURBO = {
   model: 'gpt-3.5-turbo',
   max_tokens: 4096,
-  context_window: 4096,
-  training_data_end_date: '2021-09-01',
-  api_endpoint: 'https://api.openai.com/v1/chat/completions',
+  // context_window: 4096,
+  // training_data_end_date: '2021-09-01',
+  // api_endpoint: 'https://api.openai.com/v1/chat/completions',
 };
 export const Models: Record<string, ModelConfig> = {
   'gpt-4-vision-preview': GPT_4_TURBO_WITH_VISION,
@@ -64,7 +64,7 @@ export const DefaultModelConfig: Partial<ModelConfig> = {
 };
 
 export const ModelConfigSchema = yup.object().shape({
-  model: yup.string().required().oneOf(['gpt-4-vision-preview', 'identity']).meta({ item: 'select' }),
+  model: yup.string().required().oneOf(ModelNames).meta({ item: 'select' }),
   temperature: yup.number().min(0).max(1).meta({ item: 'slider', step: 0.01 }),
   top_p: yup.number().min(0).max(1).meta({ item: 'slider', step: 0.01 }),
   max_tokens: yup.number().min(1).max(4096).meta({ item: 'slider', step: 1 }),

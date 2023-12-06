@@ -34,6 +34,10 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   if (typeof field.value === 'number') {
     field.value = field.value.toFixed(2);
   }
+  // if step is 1 then we can assume it's an integer
+  if (step === 1) {
+    field.value = parseInt(field.value);
+  }
 
   const Item = useMemo(() => {
     switch (item) {
@@ -66,7 +70,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
           return (
             <Accordion 
               highlightActive={false}
-              className="text-xs w-full h-full overflow-hidden"
+              className="text-xs w-full"
               triggerClassName="px-2 py-1 font-semibold text-xs text-primary"
               items={[ 
                 {name: field?.name, open: true, content: content} 
@@ -98,7 +102,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   }, [item, field, schema, className, min, max, step, placeholder, form]);
 
   return (
-    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-end p-1 gap-px`, isObject && 'col-span-2')}>
+    <div ref={ref} className={cn(`w-full h-auto grid overflow-auto rounded items-end p-1 gap-px`, isObject && 'col-span-2')}>
       {(description || !isObject) && (<div className="flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start">
         {!isObject && (<FormLabel className="text-xs">{label}:</FormLabel>)}
         {description && (<FormDescription>{description}</FormDescription>)}

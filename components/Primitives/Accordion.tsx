@@ -82,7 +82,7 @@ export const Accordion = (props: AccordionProps) => {
           )}
          >
             <AccordionPrimitive.Header className={cn(
-              "w-full h-full radix-state-open:border-b", "radix-state-open:border-b-secondary", 
+              "w-full h-auto radix-state-open:border-b", "radix-state-open:border-b-secondary", 
               highlightActive && "radix-state-open:border-b-accent/75",
               item.content === null && RadiusClasses(radius),
             )}>
@@ -100,7 +100,7 @@ export const Accordion = (props: AccordionProps) => {
                   "hover:bg-secondary/80 hover:text-primary radix-state-open:text-primary",
                 )}
               >
-                <div className={cn("flex w-full h-full items-center px-2 py-1 pointer-events-none", triggerClassName)}>
+                <div className={cn("flex w-full h-auto items-center px-2 py-1 pointer-events-none", triggerClassName)}>
                   <div className="font-bold w-full text-left">
                     {item.name}
                   </div>
@@ -113,7 +113,7 @@ export const Accordion = (props: AccordionProps) => {
               </AccordionPrimitive.Trigger>
             </AccordionPrimitive.Header>
             <AccordionPrimitive.Content className={cn(
-              "w-full h-full bg-primary overflow-auto border border-transparent",
+              "w-full h-auto bg-primary overflow-auto border border-transparent",
               spaceBetween !== 0 && `rounded-b-${ConvertRadiusClass(radius)}`,
               spaceBetween !== 0 || index === items.length - 1 && `rounded-b-${ConvertRadiusClass(radius)}`,
               "radix-state-closed:animate-accordion-up radix-state-open:animate-accordion-down transition-all",

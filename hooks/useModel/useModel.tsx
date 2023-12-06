@@ -1,7 +1,7 @@
 
 import { createContext, useCallback, useContext, useState } from 'react';
 import API from "openai";
-import { getContentFromChatCompletion, Message, ModelConfig, ModelInput, DefaultModelConfig, mockResponse } from './shared';
+import { getContentFromChatCompletion, Message, ModelConfig, ModelInput, DefaultModelConfig } from './shared';
 import { useFlowExtractor, useOpenAi } from '@/hooks';
 import { useQuery } from 'react-query';
 
@@ -80,8 +80,7 @@ export const useModel = () => {
       const requestBody = { ...config, ...configOverride, messages: prompt };
       let response = undefined;
       try {
-        response = mockResponse(requestBody);
-        // response = openAi.useChatCompletion(requestBody);
+        response = openAi.useChatCompletion(requestBody);
         updateMessages(response);
       } catch (error) {
         setError(error as Error);
@@ -89,19 +88,21 @@ export const useModel = () => {
       setRunningInference(false);
       return response;
     },
-    [config, messages, setError, setRunningInference, updateMessages]
+    [config, messages, openAi, setError, setRunningInference, updateMessages]
   );
 
   const queryModel = useQuery('model-query', async () => {
-    const input = flowExtractor.extractAll();
-    return await predict(input);
+    return flowExtractor.extractAll().then(async (flows) => {
+      console.log('flows', flows);
+      // return await predict('yo test');
+    })
   }, {
     enabled: false,
     onSuccess: (response) => {
-      // console.log('response', response);
+      console.log('response', response);
     },
     onError: (error) => {
-      // console.log('error', error);
+      console.log('error', error);
     },
   });
 

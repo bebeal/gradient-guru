@@ -12,3 +12,4 @@ export * from './Switch';
 export * from './Slider';
 export * from './Tooltip';
 export * from './Panel';
+export * from './TextArea';

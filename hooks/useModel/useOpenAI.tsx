@@ -22,7 +22,6 @@ export const useOpenAi = (props: useOpenAiProps) => {
       }
 
       try {
-        console.log('body', body)
         const repsonse = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -31,7 +30,6 @@ export const useOpenAi = (props: useOpenAiProps) => {
           },
           body: JSON.stringify(body),
         });
-        console.log('response', repsonse);
         return await repsonse.json();
       } catch (e) {
         console.error(e);
