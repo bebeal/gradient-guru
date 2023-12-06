@@ -105,7 +105,7 @@ yarn build
 ### Pages
 
 * [`/`](https://gradient-guru.com)
-  * [`/tests`](https://gradient-guru.com/compute)
+  * [`/compute`](https://gradient-guru.com/compute)
   * [`/tests`](https://gradient-guru.com/tests)
     * [`/fonts`](https://gradient-guru.com/tests/fonts)
     * [`/form`](https://gradient-guru.com/tests/form)

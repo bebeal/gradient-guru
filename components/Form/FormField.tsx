@@ -78,7 +78,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
         const items: string[] = Array.from(schema?._whitelist)
         return (<Select className={className} items={items} {...field} />);
       case 'slider':
-        return (<Slider thumbSize={10} className={className} min={min} max={max} step={step} {...field} />);
+        return (<Slider thumbSize={10} showValue="value" className={className} min={min} max={max} step={step} {...field} />);
       case 'boolean':
       case 'checkbox':
       case 'switch':
