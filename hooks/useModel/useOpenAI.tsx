@@ -1,29 +1,28 @@
 
 import { isDevEnv } from '@/utils';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 
-export const useOpenAI = () => {
-  // const apiKey = useKeys().openAIKey;
-  const apiKey = '';
-
-  // apiKey takes priority
+export interface useOpenAiProps {
+  apiKey?: string;
+}
+export const useOpenAi = (props: useOpenAiProps) => {
+  const {
+    apiKey: apiKeyFromProp,
+  } = props;
   // if in dev mode, can use env variable
-  const [openAIKey, setOpenAIKey] = useState(apiKey || isDevEnv ? process.env.NEXT_PUBLIC_OPENAI_API_KEY : '');
-  const noKeyError = useCallback(() => (openAIKey ? undefined : new Error('No OpenAI API key provided')), [openAIKey]);
+  const [apiKey, setApiKey] = useState(apiKeyFromProp || isDevEnv ? process.env.NEXT_PUBLIC_OPENAI_API_KEY : '');
+  const noKeyError = useCallback(() => (apiKey ? undefined : new Error('No OpenAI API key provided')), [apiKey]);
   const [errors, setErrors] = useState<Error | undefined>(noKeyError);
 
-  useEffect(() => {
-    // console.log('openAIKey', openAIKey);
-  }, [openAIKey]);
-
-  const useChatCompletion = useCallback(async (body: string) => {
+  const useChatCompletion = useCallback(async (body: Record<string, any>) => {
       if (errors) {
         setErrors(noKeyError);
         return;
       }
 
       try {
+        console.log('body', body)
         const repsonse = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -32,7 +31,7 @@ export const useOpenAI = () => {
           },
           body: JSON.stringify(body),
         });
-
+        console.log('response', repsonse);
         return await repsonse.json();
       } catch (e) {
         console.error(e);
@@ -43,8 +42,8 @@ export const useOpenAI = () => {
   );
 
   return {
-    openAIKey,
-    setOpenAIKey,
+    apiKey,
+    setApiKey,
     errors,
     setErrors,
     useChatCompletion,

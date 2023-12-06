@@ -1,9 +1,8 @@
 
 import { createContext, useCallback, useContext, useState } from 'react';
 import API from "openai";
-import { getContentFromChatCompletion, Message, ModelConfig, mockResponse, ModelInput, DefaultModelConfig } from './shared';
-import { useFlowExtractor } from '@/hooks';
-import { useOpenAI } from './useOpenAI';
+import { getContentFromChatCompletion, Message, ModelConfig, ModelInput, DefaultModelConfig, mockResponse } from './shared';
+import { useFlowExtractor, useOpenAi } from '@/hooks';
 import { useQuery } from 'react-query';
 
 export const ModelContext = createContext(
@@ -71,7 +70,7 @@ export const useModel = () => {
     updateMessages,
   } = context;
   // const backendApi = useBackendApi();
-  const openAI = useOpenAI();
+  const openAi = useOpenAi({});
   const flowExtractor = useFlowExtractor();
 
   // Perform inference on model with input
@@ -82,7 +81,7 @@ export const useModel = () => {
       let response = undefined;
       try {
         response = mockResponse(requestBody);
-        // response = openAi.useChatCompletion(JSON.stringify(requestBody));
+        // response = openAi.useChatCompletion(requestBody);
         updateMessages(response);
       } catch (error) {
         setError(error as Error);

@@ -55,7 +55,7 @@ export const ModelNames = Object.keys(Models);
 export type ModelName = keyof typeof Models;
 
 export const DefaultModelConfig: Partial<ModelConfig> = {
-  ...GPT_4_TURBO_WITH_VISION,
+  ...GPT_3_TURBO,
   temperature: 0.6,
   top_p: 1,
   frequency_penalty: 0,
