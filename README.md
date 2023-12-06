@@ -1,12 +1,18 @@
 # gradient-guru
 
-idk
+Developer-oriented playground site which aims to provide a structural, modular, and interactive environment for experimenting with AI models
+
+* Domain Aliases:
+  * https://gradient-guru.com
+  * https://gradient-guru.org
+  * https://gradient-guru.net
+  * https://gradient-guru.dev
 
 ## Build
 
 * To run the development server
 
-server on `localhost:3000`
+server on `localhost:3407`
 
 ```bash
 yarn install
@@ -36,32 +42,44 @@ yarn build
 
 ---
 
-* [React](https://github.com/facebook/react): JavaScript library for building user interfaces
-  * [React Docs](https://react.dev/)
-* [TypeScript](https://github.com/microsoft/TypeScript)
-  * [TypeScript Docs](https://www.typescriptlang.org/docs/)
-* [Next.js](https://github.com/vercel/next.js/): React framework and tooling
-  * [Next.js Docs](https://nextjs.org/docs)
-  * [next-themes](https://github.com/pacocoursey/next-themes): An abstraction for themes in Next.js
-* [Radix-UI](https://github.com/radix-ui): Open-source UI component library for building high-quality, modular, themable, accessible components
-  * [Radix Primitives](radix-ui.com/docs/primitives): Low-level UI component library
-  * [Radix Themes](radix-ui.com/themes/docs): Add integration with radix-ui primitives to make them themable
-* [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss): Utility-first CSS framework
-  * [Tailwind CSS Docs](https://tailwindcss.com)
-  * Plugins:
-    * [tailwindcss-animate](https://github.com/jamiebuilds/tailwindcss-animate): For creating animations
-    * [@tailwindcss/typography](https://github.com/tailwindlabs/tailwindcss-typography): Sets typographic defaults for HTML elements
-    * [tailwindcss-radix](https://github.com/ecklf/tailwindcss-radix): Utilities and variants for styling radix state
-* [Styled Components](https://github.com/styled-components): CSS-in-JS library
-  * [Styled Components Docs](https://styled-components.com/docs)
-* [Tldraw](https://github.com/tldraw/tldraw)
-  * [Tldraw Docs](https://tldraw.dev/docs)
-* [react-form-hook](https://github.com/react-hook-form/react-hook-form)
-  * [react-form-hook Docs](https://react-hook-form.com/get-started)
-* [yup](https://github.com/jquense/yup)
-  * [yup Docs](https://github.com/jquense/yup)
-* [react-query](https://github.com/TanStack/query)
-  * [react-query Docs](https://tanstack.com/query/v3/docs/react/overview)
+* Infrastructure:
+  * [React](https://github.com/facebook/react): JavaScript library for building user interfaces
+    * [React Docs](https://react.dev/)
+  * [TypeScript](https://github.com/microsoft/TypeScript)
+    * [TypeScript Docs](https://www.typescriptlang.org/docs/)
+  * [Next.js](https://github.com/vercel/next.js/): React framework and tooling
+    * [Next.js Docs](https://nextjs.org/docs)
+    * [next-themes](https://github.com/pacocoursey/next-themes): An abstraction for themes in Next.js
+
+* Styling
+  * [Radix-UI](https://github.com/radix-ui): Open-source UI component library for building high-quality, modular, themable, accessible components
+    * [Radix Primitives](radix-ui.com/docs/primitives): Low-level UI component library
+    * [Radix Themes](radix-ui.com/themes/docs): Add integration with radix-ui primitives to make them themable
+  * [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss): Utility-first CSS framework
+    * [Tailwind CSS Docs](https://tailwindcss.com)
+    * Plugins:
+      * [tailwindcss-animate](https://github.com/jamiebuilds/tailwindcss-animate): For creating animations
+      * [@tailwindcss/typography](https://github.com/tailwindlabs/tailwindcss-typography): Sets typographic defaults for HTML elements
+      * [tailwindcss-radix](https://github.com/ecklf/tailwindcss-radix): Utilities and variants for styling radix state
+  * [Styled Components](https://github.com/styled-components): CSS-in-JS library
+    * [Styled Components Docs](https://styled-components.com/docs)
+
+* Utility:
+  * Canvas Whiteboard + Nodes:
+    * [Tldraw](https://github.com/tldraw/tldraw)
+      * [Tldraw Docs](https://tldraw.dev/docs)
+  * Forms:
+    * [react-form-hook](https://github.com/react-hook-form/react-hook-form)
+      * [react-form-hook Docs](https://react-hook-form.com/get-started)
+  * Schema Validation:
+    * [yup](https://github.com/jquense/yup)
+      * [yup Docs](https://github.com/jquense/yup)
+  * Queries:
+    * [react-query](https://github.com/TanStack/query)
+      * [react-query Docs](https://tanstack.com/query/v3/docs/react/overview)
+  * Data Tables:
+    * [ag-grid](https://github.com/ag-grid/ag-grid)
+      * [ag-grid Docs](https://www.ag-grid.com/)
 
 ---
 
@@ -87,6 +105,7 @@ yarn build
 ### Pages
 
 * [`/`](https://gradient-guru.com)
+  * [`/tests`](https://gradient-guru.com/compute)
   * [`/tests`](https://gradient-guru.com/tests)
     * [`/fonts`](https://gradient-guru.com/tests/fonts)
     * [`/form`](https://gradient-guru.com/tests/form)

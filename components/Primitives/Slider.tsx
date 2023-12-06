@@ -1,6 +1,6 @@
 'use client'
 
-import React, { forwardRef, useCallback, useRef } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import { cn, noop } from '@/utils';
 
@@ -55,13 +55,18 @@ export const Slider = forwardRef<any, SliderProps>((props, ref) => {
     value = defaultValue,
     onChange: onChangeCallback,
     onValueChange: onValueChangeCallback,
-    marks=[min, defaultValue, max],
+    marks=[],
     showValue = 'none',
     thumbSize = 20,
     className,
     ...rest
   } = props;
   const thumbRef = useRef<HTMLDivElement | null>(null);
+  const [internalValue, setInternalValue] = useState<number>(value || defaultValue);
+
+  useEffect(() => {
+    setInternalValue(value);
+  }, [value]);
 
   const onChange = useCallback((newValue: number) => {
     // synthetic event
@@ -76,10 +81,11 @@ export const Slider = forwardRef<any, SliderProps>((props, ref) => {
   }, [name, onChangeCallback]);
 
   const onValueChange = useCallback((newValue: number[]) => {
-    if (newValue[0] === value) return;
+    if (newValue[0] === internalValue) return;
+    setInternalValue(newValue[0]);
     onValueChangeCallback?.(newValue[0]);
     onChange(newValue[0]);
-  }, [onChange, onValueChangeCallback, value]);
+  }, [internalValue, onChange, onValueChangeCallback]);
 
   return (
     <SliderPrimitive.Root
@@ -88,7 +94,7 @@ export const Slider = forwardRef<any, SliderProps>((props, ref) => {
       max={max}
       step={step}
       defaultValue={defaultValue !== undefined ? [defaultValue] : undefined}
-      value={[value]}
+      value={[internalValue]}
       aria-label="value"
       className={cn("relative flex items-center select-none touch-none w-full h-5 mt-[1em] mx-[1em] p-1", className)}
       {...rest}
@@ -125,10 +131,10 @@ export const Slider = forwardRef<any, SliderProps>((props, ref) => {
         {(showValue && showValue !== 'none') && (
           <span 
             className={cn(`absolute text-primary/50 text-xs top-[-.75em] -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center leading-none`)}
-            style={{ left: calcStepMarkOffset(value, min, max, thumbSize) }}
+            style={{ left: calcStepMarkOffset(internalValue, min, max, thumbSize) }}
           >
-            {showValue === 'percent' && `${convertValueToPercentage(value, min, max).toFixed(0)}%`}
-            {showValue === 'value' && `${value}`}
+            {showValue === 'percent' && `${convertValueToPercentage(internalValue, min, max).toFixed(0)}%`}
+            {showValue === 'value' && `${internalValue}`}
           </span>
         )}
       </SliderPrimitive.Thumb>

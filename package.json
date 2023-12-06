@@ -17,15 +17,16 @@
   "scripts": {
     "build": "yarn build:tldraw && next build",
     "build:tldraw": "cd packages/tldraw && yarn && yarn build && cd ../..",
-    "dev": "next dev",
     "clean": "rm -rf yarn.lock && rm -rf node_modules && rm -rf .next",
+    "dev": "PORT=3407 next dev",
     "generate-iconsets": "cd ./scripts && ./download-iconsets.sh",
-    "start": "next start",
+    "info": "next info",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
+    "start": "next start",
     "test": "jest",
-    "test:watch": "jest --watch",
     "test:ci": "jest --ci",
+    "test:watch": "jest --watch",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {

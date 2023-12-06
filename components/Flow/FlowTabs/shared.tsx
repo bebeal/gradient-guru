@@ -1,5 +1,6 @@
-import { FakeForm, Label, Separator, Switch } from "@/components";
+import { Form, Label, Separator, Switch } from "@/components";
 import { cn, isEmptyObject } from "@/utils";
+import { memo } from "react";
 
 export const TabClasses = `w-full h-full flex flex-col p-2 gap-2`;
 
@@ -13,7 +14,7 @@ export const TabTitle = ({title, children, className}: {title?: string, children
   );
 };
 
-export const FlowTab = ({title, children, className}: {title?: string, children?: any, className?: string}) => {
+export const FlowTab = memo(({title, children, className}: {title?: string, children?: any, className?: string}) => {
   return (
     <div className={cn(TabClasses)}>
       <TabTitle title={title} />
@@ -22,7 +23,7 @@ export const FlowTab = ({title, children, className}: {title?: string, children?
       </div>
     </div>
   );
-};
+});
 
 export const UnderlinedTitle = ({ children, className }: { children?: any, className?: string }) => {
   return (
@@ -43,7 +44,7 @@ export const BulletedList = ({items, className}: {items: any[], className?: stri
       return (
         <div className={cn("flex flex-col", className)}>
           <Label className="text-xs text-primary font-bold">{key}</Label>
-          <FakeForm object={value} className="p-1" />
+          <Form object={value} readOnly={true} className="p-1" />
         </div>
       )
     } else {

@@ -1,4 +1,5 @@
 'use client'
+
 import React from "react";
 import { Slot } from "@radix-ui/themes";
 import { useFormField } from "@/hooks";
@@ -13,18 +14,18 @@ export const FormControl = React.forwardRef<HTMLDivElement, FormControlProps>((p
     className = "",
     ...rest
   } = props;
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+  const { fieldState, id, descriptionId, messageId } = useFormField();
 
   return (
     <Slot
       ref={ref}
-      id={formItemId}
+      id={id}
       aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
+        !fieldState.error
+          ? `${descriptionId}`
+          : `${descriptionId} ${messageId}`
       }
-      aria-invalid={!!error}
+      aria-invalid={!!fieldState.error}
       className={cn(`flex`, className)}
       {...rest}
     >{children}</Slot>

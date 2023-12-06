@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Accordion, BulletedList, Form } from '@/components';
-import { ImageConfig, useFlowExtractor, useMounted } from '@/hooks';
+import { useFlowExtractor } from '@/hooks';
 import { cn } from '@/utils';
 import { FlowTab, TabTitle, ToggleTitle } from './shared';
 import { useEditor } from '@tldraw/editor';
@@ -17,7 +17,7 @@ export const StateTab = (props: StateTabProps) => {
   const [flowText, setFlowText] = useState<string | null>(null);
   const [flowImage, setFlowImage] = useState<string | null>(null);
   const editor = useEditor();
-  const mounted = useMounted();
+  const [mounted, setMounted] = useState(false);
 
   const {
     fetchImage,
@@ -61,15 +61,12 @@ export const StateTab = (props: StateTabProps) => {
   }, [editor, refetchImage, refetchText]);
 
   useEffect(() => {
-    if (mounted) {
+    if (!mounted) {
       refetchImage();
       refetchText();
+      setMounted(true);
     }
   }, [mounted, refetchImage, refetchText]);
-
-  const onSubmit = useCallback((newImageConfig: Partial<ImageConfig>) => {
-    setImageConfig({ ...imageConfig, ...newImageConfig });
-  }, [imageConfig, setImageConfig]);
 
   const FlowImageAccordion = useCallback(() => {
     const { enabled, ...config } = imageConfig;
@@ -81,7 +78,7 @@ export const StateTab = (props: StateTabProps) => {
           {hasConfig && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <Form object={config} schema={imageSchema} onSubmit={onSubmit} />
+              <Form object={config} schema={imageSchema} onSubmit={(newImageConfig: any) => setImageConfig({ ...imageConfig, ...newImageConfig })} />
             </div>
           )}
           <div className="flex flex-wrap flex-col w-full justify-center items-center gap-1">
@@ -110,7 +107,7 @@ export const StateTab = (props: StateTabProps) => {
       ),
       open: true,
     };
-  }, [flowImage, imageConfig, imageSchema, onSubmit, setImageConfig]);
+  }, [flowImage, imageConfig, imageSchema, setImageConfig]);
 
   const FlowTextAccordion = useCallback(() => {
     const { enabled, ...config } = textConfig;

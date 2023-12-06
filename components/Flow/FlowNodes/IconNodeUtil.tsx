@@ -113,11 +113,11 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
   getSchema(node: IconNode) {
     return {
       props: yup.object({
-        'w': yup.number().min(0).label('Width').meta({ type: 'input', disabled: false }),
-        'h': yup.number().min(0).label('Height').meta({ type: 'input', disabled: false }),
-        'iconSet': yup.string().oneOf(Object.keys(IconSetCache)) .label('Set') .meta({ type: 'select', disabled: false }),
-        'icon': yup.string().oneOf(Object.keys(IconSetCache?.[node.props.iconSet]), "Invalid Icon").label('Icon').meta({ type: 'select', disabled: false }),
-      }).meta({ type: 'object', disabled: false }),
+        'w': yup.number().min(0).label('Width').meta({ item: 'input' }),
+        'h': yup.number().min(0).label('Height').meta({ item: 'input' }),
+        'iconSet': yup.string().oneOf(Object.keys(IconSetCache)) .label('Set') .meta({ item: 'select' }),
+        'icon': yup.string().oneOf(Object.keys(IconSetCache?.[node.props.iconSet]), "Invalid Icon").label('Icon').meta({ item: 'select' }),
+      }).meta({ item: 'object' }),
     };
   }
 }

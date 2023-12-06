@@ -72,16 +72,16 @@ export const defaultHistoryRecordsConfig: HistoryRecordsConfig = {
 };
 
 export const SchemaFields = {
-  'enabled': yup.boolean().meta({ type: 'switch', disabled: false }),
-  'filterSelected': yup.boolean().meta({ type: 'checkbox', disabled: false, label: 'Filter by Selected' }),
-  'width': yup.number().max(400).min(1).meta({ type: 'slider', disabled: false }),
-  'height': yup.number().max(400).min(1).meta({ type: 'slider', disabled: false }),
-  'type': yup.string().oneOf(['svg', 'png', 'jpeg', 'webp']).meta({ type: 'select', disabled: false }),
-  'quality': yup.number().min(0).max(1).meta({ type: 'slider', disabled: false, step: 0.1 }),
-  'scale': yup.number().min(0).max(2).meta({ type: 'slider', disabled: false, step: 0.1 }),
-  'imageSmoothingEnabled': yup.boolean().meta({ type: 'checkbox', disabled: false, label: 'Image Smoothing' }),
-  'imageSmoothingQuality': yup.string().oneOf(['low', 'medium', 'high']).meta({ type: 'select', disabled: false, label: 'Image Smoothing Quality' }),
-  'background': yup.boolean().meta({ type: 'checkbox', disabled: false, label: 'Background' }),
+  'enabled': yup.boolean().meta({ item: 'switch' }),
+  'filterSelected': yup.boolean().meta({ item: 'checkbox', label: 'Filter by Selected' }),
+  'width': yup.number().max(400).min(1).meta({ item: 'slider' }),
+  'height': yup.number().max(400).min(1).meta({ item: 'slider' }),
+  'type': yup.string().oneOf(['svg', 'png', 'jpeg', 'webp']).meta({ item: 'select' }),
+  'quality': yup.number().min(0).max(1).meta({ item: 'slider', step: 0.1 }),
+  'scale': yup.number().min(0).max(2).meta({ item: 'slider', step: 0.1 }),
+  'imageSmoothingEnabled': yup.boolean().meta({ item: 'checkbox', label: 'Image Smoothing' }),
+  'imageSmoothingQuality': yup.string().oneOf(['low', 'medium', 'high']).meta({ item: 'select', label: 'Image Smoothing Quality' }),
+  'background': yup.boolean().meta({ item: 'checkbox', label: 'Background' }),
 }
 
 // Each of these configs will be accessible to the rest of the app via a provider

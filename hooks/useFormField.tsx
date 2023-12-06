@@ -1,9 +1,5 @@
-'use client'
-
-import { FormFieldType } from '@/components';
-import React from 'react';
 import { createContext, useContext } from 'react';
-import { FieldPath, FieldValues, UseControllerReturn, useFormContext } from 'react-hook-form';
+import { ControllerFieldState, ControllerRenderProps, FieldPath, FieldValues, UseFormStateReturn, useFormContext } from 'react-hook-form';
 
 // ***********************
 //    FormFieldContext
@@ -12,52 +8,64 @@ export type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = {
-  name: TName,
   schema?: any,
-  controller: UseControllerReturn<TFieldValues, TName>,
+  field: ControllerRenderProps<TFieldValues, TName>;
+  formState: UseFormStateReturn<TFieldValues>;
+  fieldState: ControllerFieldState;
   label?: React.ReactNode,
-  id: string
+  description?: React.ReactNode,
+  placeholder?: React.ReactNode,
+  readOnly?: boolean,
 };
 export const FormFieldContext = createContext<FormFieldContextValue>({} as FormFieldContextValue);
 
-// ***********************
-//      useFormField
-// ***********************
 export const useFormField = () => {
-  const { name, schema, controller, label: labelRenderer, id } = useContext(FormFieldContext);
+  // unpack everything
+  const context = useContext(FormFieldContext);
+  const {
+    schema,
+    field,
+    fieldState,
+    formState,
+    label: labelRenderer,
+    description,
+    placeholder,
+    readOnly=false,
+  } = context;
   const form = useFormContext();
-  const fieldState = form?.getFieldState(name, form?.formState);
-  const meta = schema?.spec?.meta || {};
-  const type = meta?.type as FormFieldType || 'input';
-  const placeholder = meta?.placeholder || '';
+  const name = field.name;
+  const id = name;
+  const meta = schema.spec.meta || {};
+  const item = meta.item || 'input';
   const label = labelRenderer || meta?.label || schema?.spec?.label || name;
-  const readonly = meta?.readonly || false;
-  const description = meta?.description || '';
-  let disabled = meta?.disabled || false;
+  let disabled = field?.disabled || meta?.disabled || false;
   // if disabled is a function then call it and pass form context
   if (typeof disabled === 'function') {
     disabled = disabled(form);
   }
 
-  if (!name || !schema) {
+  if (!context) {
     throw new Error("useFormField should be used within <FormField>");
   }
-
   return {
     id,
-    formItemId: `${id}-form-item`,
-    formDescriptionId: `${id}-form-item-description`,
-    formMessageId: `${id}-form-item-message`,
-    type,
-    placeholder,
-    label,
-    description,
-    readonly,
-    disabled,
-    name,
+    field: {
+      ...field,
+      ...meta,
+      disabled,
+    },
+    fieldState,
+    formState,
     schema,
-    controller,
+    label,
+    labelId: `${name}-label`,
+    description,
+    descriptionId: `${name}-description`,
+    placeholder,
+    placeholderId: `${name}-placeholder`,
+    messageId: `${name}-message`,
+    readOnly,
     form,
-    ...fieldState,
-  };
+    item,
+  }
 };

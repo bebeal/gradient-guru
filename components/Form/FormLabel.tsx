@@ -8,17 +8,18 @@ export type FormLabelProps = LabelProps & {
 };
 export const FormLabel = forwardRef<HTMLLabelElement, FormLabelProps>((props, ref) => {
   const { children, className, ...rest } = props;
-  const { error, formItemId } = useFormField();
+  const { fieldState, labelId, id } = useFormField();
 
   return (
     <Label
       ref={ref}
       className={cn("font-semibold text-primary", className)}
-      htmlFor={formItemId}
+      id={labelId}
+      htmlFor={id}
       {...rest}
     >
-      {error && <span className="text-error align-top">*</span>}
-      <span className={cn(error && "underline decoration-error")}>{typeof children === 'string' ? children.split('.').pop() : children}</span>
+      {fieldState.error && <span className="text-error align-top">*</span>}
+      <span className={cn(fieldState.error && "underline decoration-error")}>{typeof children === 'string' ? children.split('.').pop() : children}</span>
     </Label>
   )
 })

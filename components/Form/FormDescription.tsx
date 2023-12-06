@@ -13,12 +13,12 @@ export const FormDescription = forwardRef<HTMLParagraphElement, FormDescriptionP
     className = "",
     ...rest
   } = props;
-  const { formDescriptionId } = useFormField();
+  const { descriptionId } = useFormField();
 
   return (
     <p
       ref={ref}
-      id={formDescriptionId}
+      id={descriptionId}
       className={cn("text-xs text-muted", className)}
       {...rest}
     >{children}</p>

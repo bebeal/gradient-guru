@@ -64,12 +64,12 @@ export const DefaultModelConfig: Partial<ModelConfig> = {
 };
 
 export const ModelConfigSchema = yup.object().shape({
-  model: yup.string().required().oneOf(['gpt-4-vision-preview', 'identity']).meta({ type: 'select' }),
-  temperature: yup.number().min(0).max(1).meta({ type: 'slider', step: 0.01 }),
-  top_p: yup.number().min(0).max(1).meta({ type: 'slider', step: 0.01 }),
-  max_tokens: yup.number().min(1).max(4096).meta({ type: 'slider', step: 1 }),
-  frequency_penalty: yup.number().min(0).max(1).meta({ type: 'slider', step: 0.01 }),
-  presence_penalty: yup.number().min(0).max(1).meta({ type: 'slider', step: 0.01 }),
+  model: yup.string().required().oneOf(['gpt-4-vision-preview', 'identity']).meta({ item: 'select' }),
+  temperature: yup.number().min(0).max(1).meta({ item: 'slider', step: 0.01 }),
+  top_p: yup.number().min(0).max(1).meta({ item: 'slider', step: 0.01 }),
+  max_tokens: yup.number().min(1).max(4096).meta({ item: 'slider', step: 1 }),
+  frequency_penalty: yup.number().min(0).max(1).meta({ item: 'slider', step: 0.01 }),
+  presence_penalty: yup.number().min(0).max(1).meta({ item: 'slider', step: 0.01 }),
 });
 
 export const mockInput: ModelInput = {

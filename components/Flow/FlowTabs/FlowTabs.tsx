@@ -1,11 +1,11 @@
 
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { EventsTab, IconSetCache, ModelTab, NodesTab, SidePanel, StateTab } from '@/components';
 
 export interface FlowTabsProps {
   className?: string;
 }
-export const FlowTabs = (props: FlowTabsProps) => {
+export const FlowTabs = memo((props: FlowTabsProps) => {
   const { className = '' } = props;
 
   const FlowEventsTab = useMemo(() => {
@@ -43,5 +43,5 @@ export const FlowTabs = (props: FlowTabsProps) => {
   const tabs = useMemo(() => [FlowEventsTab, FlowNodesTab, FlowStateTab, FlowModelTab], [FlowEventsTab, FlowNodesTab, FlowStateTab, FlowModelTab]);
 
   return <SidePanel className={className} tabs={tabs} />;
-};
+});
 FlowTabs.displayName = 'FlowTabs';

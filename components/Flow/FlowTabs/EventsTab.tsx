@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Accordion, BulletedList, FakeForm, FlowTab, Form, TabTitle, TimelineScrubber, ToggleTitle } from '@/components';
+import { Accordion, BulletedList, FlowTab, Form, TabTitle, TimelineScrubber, ToggleTitle } from '@/components';
 import { FlowEventsRecorderContextType, useFlowEventsRecorder, useFlowExtractor } from '@/hooks';
 import { cn } from '@/utils';
 
@@ -27,7 +27,7 @@ export const EventsTab = (props: EventsTabProps) => {
           )}
           <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
           {hasConfig && <TabTitle className={cn(`text-md w-full`)}>State</TabTitle>}
-            {flowEvents?.uiEvents?.length > 0 ? <FakeForm object={flowEvents?.uiEvents[0]} /> : <div className="text-primary/80 px-2 py-4">No UI State</div>}
+            {flowEvents?.uiEvents?.length > 0 ? <Form object={flowEvents?.uiEvents[0]} readOnly={true} /> : <div className="text-primary/80 px-2 py-4">No UI State</div>}
           </div>
         </div>
       ),
@@ -66,16 +66,16 @@ export const EventsTab = (props: EventsTabProps) => {
     return {
       name: <ToggleTitle title="Canvas Event" pressed={flowExtractor.canvasEventConfig.enabled} onPressedChange={(enabled: boolean) => flowExtractor.setCanvasEventConfig({ ...flowExtractor.canvasEventConfig, enabled })} />,
       content: (
-        <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
+        <div className={cn(`w-full h-full flex flex-col justify-center items-center overflow-auto`)}>
           {hasConfig && (
-            <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
+            <div className="flex p-1 flex-wrap flex-col w-full h-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
               <Form object={config} schema={flowExtractor.getCanvasEventSchema()} onSubmit={(newCanvasEventConfig: any) => flowExtractor.setCanvasEventConfig({...flowExtractor.canvasEventConfig, ...newCanvasEventConfig})} />
             </div>
           )}
-          <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
+          <div className="flex p-1 flex-wrap flex-col w-full h-full justify-center items-center">
           {hasConfig && <TabTitle className={cn(`text-md w-full`)}>State</TabTitle>}
-            {flowEvents?.canvasEvent ? <FakeForm object={flowEvents?.canvasEvent} /> : <div className="text-primary/80 px-2 py-4">No Canvas Event</div>}
+            {flowEvents?.canvasEvent ? <Form object={flowEvents?.canvasEvent} readOnly={true} /> : <div className="text-primary/80 px-2 py-4">No Canvas Event</div>}
           </div>
         </div>
       ),
@@ -85,7 +85,7 @@ export const EventsTab = (props: EventsTabProps) => {
 
   return (
     <FlowTab title="Events">
-      <Accordion className={cn(`overflow-hidden`)} spaceBetween={16} items={[UIStateAccordion(), HistoryRecordsAccordion(), CanvasEventAccordion()]} />
+      <Accordion className={cn(`p-1`)} spaceBetween={16} items={[UIStateAccordion(), HistoryRecordsAccordion(), CanvasEventAccordion()]} />
     </FlowTab>
   )
 };
