@@ -100,6 +100,10 @@ export const DefaultModelConfig: OpenAIModelConfig = {
   ...GPT_4_TURBO_WITH_VISION,
   temperature: 0,
   max_tokens: 4096,
+  top_p: 1,
+  n: 1,
+  frequency_penalty: 0,
+  presence_penalty: 0,
 };
 
 export const ModelConfigSchema = yup.object().shape({

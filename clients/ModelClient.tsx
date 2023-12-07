@@ -42,7 +42,7 @@ export class BaseModelClient<Config extends ModelConfig, Input = ModelInput, Out
   state: ModelState;
 
   constructor(config: Config) {
-    this.config = config;
+    this.config = config || {};
     this.error = undefined;
     this.state = 'idle';
   }
