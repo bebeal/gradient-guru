@@ -4,8 +4,6 @@ Developer-oriented playground site which aims to provide a structured, modular, 
 
 https://github.com/bebeal/gradient-guru/assets/42706447/fa0f0606-f56d-411d-b2a6-8529ef1b4a71
 
-
-
 ## Architecture
 
 ![gradient-guru-diagram](https://github.com/bebeal/gradient-guru/blob/main/assets/icons/GradientGuru.svg)

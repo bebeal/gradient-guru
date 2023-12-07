@@ -1,7 +1,7 @@
 'use client'
 
 import { Button as ThemedButton } from "@radix-ui/themes";
-import { Variant, noop, cn, GradientDiv, isDefaultVariant, Radius, RadiusClasses, VariantClasses, isCustomVariant } from "@/utils";
+import { Variant, noop, cn, GradientDiv, isDefaultVariant, Radius, RadiusClasses, VariantClasses, isCustomVariant, DisabledClasses } from "@/utils";
 import { useRippleEffect } from '@/hooks'
 import { forwardRef, useRef, useState } from "react";
 
@@ -9,6 +9,7 @@ export interface ButtonProps {
   children?: any;
   className?: string;
   onClick?: (event: any) => void;
+  disabled?: boolean;
   variant?: Variant;
   colors?: string[];
   radius?: Radius;
@@ -23,6 +24,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
     children,
     className='',
     onClick: onClickCallback=noop,
+    disabled=false,
     variant='gradient',
     colors= ['#7F00DE', '#C81BBD', '#FF007E', '#FF1834', '#FF0000', '#FFDA16', '#7FDC4D', '#00E0D9', '#00CDAC', '#02AAB0', '#0074E0'],
     radius='medium',
@@ -40,7 +42,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
   }
 
   return isDefaultVariant(variant) ? (
-    <ThemedButton ref={ref} className={cn(RadiusClasses(radius))} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
+    <ThemedButton ref={ref} className={cn(`pointer-events-all !cursor-pointer`, disabled && DisabledClasses, RadiusClasses(radius))} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
   ) : (
     <div className="relative">
       <button
@@ -48,6 +50,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
         type={type}
         className={cn(
           `relative w-auto h-auto flex overflow-hidden select-none align-top cursor-pointer text-base leading-none z-[2]`,
+          disabled && DisabledClasses,
           RadiusClasses(radius),
           VariantClasses(variant),
           className
