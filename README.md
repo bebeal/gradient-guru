@@ -1,14 +1,18 @@
 # gradient-guru
 
-Developer-oriented playground site which aims to provide a structured, modular, and interactive environment for experimenting with AI models
-
-![gradient-guru-diagram](https://github.com/bebeal/gradient-guru/blob/main/assets/icons/GradientGuru.svg)
-
 * Domain Aliases:
   * https://gradient-guru.com
   * https://gradient-guru.org
   * https://gradient-guru.net
   * https://gradient-guru.dev
+
+* Current State: https://www.youtube.com/watch?v=Gzk1-hnx7-w
+
+## Architecture
+
+Developer-oriented playground site which aims to provide a structured, modular, and interactive environment for experimenting with AI models
+
+![gradient-guru-diagram](https://github.com/bebeal/gradient-guru/blob/main/assets/icons/GradientGuru.svg)
 
 ## Build
 
