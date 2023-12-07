@@ -102,7 +102,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   }, [item, field, schema, className, min, max, step, placeholder, form]);
 
   return (
-    <div ref={ref} className={cn(`w-full h-auto grid overflow-auto rounded items-end p-1 gap-px`, isObject && 'col-span-2')}>
+    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-end p-1 gap-px`, isObject && 'col-span-2')}>
       {(description || !isObject) && (<div className="flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start">
         {!isObject && (<FormLabel className="text-xs">{label}:</FormLabel>)}
         {description && (<FormDescription>{description}</FormDescription>)}

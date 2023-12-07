@@ -11,7 +11,7 @@ const box_1: any = {
   y: 0,
   props: {
     w: 300,
-    h: 300,
+    h: 200,
     geo: 'rectangle',
     color: 'black',
     labelColor: 'black',
@@ -31,10 +31,10 @@ const box_2: any = {
   id: createShapeId(`box-2`),
   type: 'geo',
   x: 100,
-  y: 225,
+  y: 125,
   props: {
     w: 100,
-    h: 35,
+    h: 25,
     geo: 'rectangle',
     color: 'black',
     labelColor: 'black',
@@ -54,7 +54,7 @@ const icon_node: any = {
   id: createShapeId(`icon-node`),
   type: 'icon',
   x: 18,
-  y: 25,
+  y: 10,
   props: {
     w: 36,
     h: 36,
@@ -65,17 +65,24 @@ const icon_node: any = {
 
 const text_node: any = {
   id: createShapeId(`text-node`),
-  type: 'text',
-  x: 60,
-  y: 25,
+  type: 'geo',
+  x: 0,
+  y: 0,
   props: {
+    w: 300,
+    h: 36,
+    geo: 'rectangle',
     color: 'black',
+    labelColor: 'black',
+    fill: 'none',
+    dash: 'draw',
     size: 's',
-    w: 150,
-    text: 'Gradient Guru',
     font: 'mono',
+    text: 'gradient-guru',
     align: 'middle',
-    scale: 1.5,
+    verticalAlign: 'middle',
+    growY: 0,
+    url: '',
   }
 };
 
