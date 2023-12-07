@@ -1,8 +1,8 @@
 # gradient-guru
 
-* Current State:
+https://github.com/bebeal/gradient-guru/assets/42706447/fa0f0606-f56d-411d-b2a6-8529ef1b4a71
 
-https://github.com/bebeal/gradient-guru/assets/42706447/1f5f3d4d-2d55-49bc-9ca5-a8fb361049d
+
 
 ## Architecture
 
