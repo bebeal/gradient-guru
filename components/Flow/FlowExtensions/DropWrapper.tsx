@@ -14,7 +14,7 @@ interface DropWrapperProps {
   children: React.ReactNode;
 }
 
-// Used with NodePanel to drag n drop nodes from and to the panel and canvas
+// Used with ScratchPad to drag n drop nodes from and to the panel and canvas
 export const DropWrapper = (props: DropWrapperProps) => {
   const { children } = props;
   const editor = useEditor();

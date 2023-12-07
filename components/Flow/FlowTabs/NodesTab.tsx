@@ -69,7 +69,7 @@ export const NodesTab = () => {
       return {
         name: <ToggleTitle title={stringName} pressed={!flowExtractor.nodesConfig.nodesToExclude.includes(node.id)} onPressedChange={(pressed: boolean) => flowExtractor.toggleNodeState(node.id)} />,
         content: (
-          <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
+          <div className={cn(`w-full h-full flex flex-col justify-stretch items-center`)}>
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Properties</TabTitle>
               <Form object={{...node}} schema={nodeSchemas[node.id]} onSubmit={onNodeChange} />
@@ -89,7 +89,7 @@ export const NodesTab = () => {
       </div>
       <Accordion
         spaceBetween={0}
-        className="w-full text-xs"
+        className="w-full text-xs p-1"
         triggerClassName="w-full flex justify-center items-center"
         items={items()}
       />

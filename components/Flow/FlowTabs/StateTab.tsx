@@ -72,7 +72,7 @@ export const StateTab = (props: StateTabProps) => {
     const { enabled, ...config } = imageConfig;
     const hasConfig = Object.keys(config).length > 0;
     return {
-      name: <ToggleTitle title="Image" pressed={imageConfig.enabled} onPressedChange={(enabled: boolean) => setImageConfig({ ...imageConfig, enabled })} />,
+      name: <ToggleTitle title="Image Preview" pressed={imageConfig.enabled} onPressedChange={(enabled: boolean) => setImageConfig({ ...imageConfig, enabled })} />,
       content: (
         <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
           {hasConfig && (
@@ -113,7 +113,7 @@ export const StateTab = (props: StateTabProps) => {
     const { enabled, ...config } = textConfig;
     const hasConfig = Object.keys(config).length > 0;
     return {
-      name: <ToggleTitle title="Text" pressed={textConfig.enabled} onPressedChange={(enabled: boolean) => setTextConfig({ ...textConfig, enabled })} />,
+      name: <ToggleTitle title="Extracted Text" pressed={textConfig.enabled} onPressedChange={(enabled: boolean) => setTextConfig({ ...textConfig, enabled })} />,
       content: (
         <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
           {hasConfig && (
@@ -139,7 +139,7 @@ export const StateTab = (props: StateTabProps) => {
     <FlowTab title="State" {...rest}>
       <Accordion
         spaceBetween={16}
-        className="w-full text-xs"
+        className="w-full text-xs p-1"
         triggerClassName="w-full flex justify-center items-center"
         items={[FlowTextAccordion(), FlowImageAccordion()]}
       />

@@ -20,11 +20,11 @@ import { ToastProvider, ToastViewport } from '@radix-ui/react-toast'
 import { cn } from '@/utils';
 import { FlowTabs } from '@/components';
 import { FlowConfigProvider, useFlowEventsRecorder } from '@/hooks';
-import { NodePanel } from './FlowExtensions';
+import { ScratchPanel } from './FlowExtensions';
 
 export type FlowUiProps = TldrawUiProps & {
   initialShapes?: TLShape[];
-  panelShapeUtils?: TLAnyShapeUtilConstructor[];
+  scratchNodeUtils?: TLAnyShapeUtilConstructor[];
 };
 
 export const FlowUi = (props: FlowUiProps) => {
@@ -32,7 +32,7 @@ export const FlowUi = (props: FlowUiProps) => {
     children,
     hideUi=false,
     initialShapes,
-    panelShapeUtils,
+    scratchNodeUtils,
     onUiEvent: onUiEventCallback,
     ...rest
   } = props;
@@ -49,7 +49,7 @@ export const FlowUi = (props: FlowUiProps) => {
         <FlowUiInner
           initialShapes={initialShapes}
           hideUi={hideUi}
-          panelShapeUtils={panelShapeUtils}
+          scratchNodeUtils={scratchNodeUtils}
           {...rest}
         >
           {children}
@@ -64,7 +64,7 @@ const FlowUiInner = (props: FlowUiProps) => {
     children,
     hideUi,
     initialShapes,
-    panelShapeUtils,
+    scratchNodeUtils,
     ...rest
   } = props;
 	// The hideUi prop should prevent the UI from mounting.
@@ -73,7 +73,7 @@ const FlowUiInner = (props: FlowUiProps) => {
 	return (
 		<>
 			{children}
-			{hideUi ? null : <FlowUiContent initialShapes={initialShapes} panelShapeUtils={panelShapeUtils} {...rest} />}
+			{hideUi ? null : <FlowUiContent initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils} {...rest} />}
 		</>
 	)
 };
@@ -81,7 +81,7 @@ const FlowUiInner = (props: FlowUiProps) => {
 const FlowUiContent = (props: FlowUiProps) => {
   const {
     initialShapes,
-    panelShapeUtils,
+    scratchNodeUtils,
     ...rest
   } = props;
   const [mounted, setMounted] = useState(false);
@@ -153,7 +153,7 @@ const FlowUiContent = (props: FlowUiProps) => {
 										<StylePanel />
 									</div>
 								)}
-                <NodePanel shapeUtils={panelShapeUtils || []} />
+                <ScratchPanel scratchNodeUtils={scratchNodeUtils || []} />
 							</div>
 						</div>
 						<div className={cn("tlui-layout__bottom")}>

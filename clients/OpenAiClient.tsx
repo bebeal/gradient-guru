@@ -1,5 +1,6 @@
 import API from 'openai';
 import { ApiKeyError, BaseModelClient, ModelConfig } from '@/clients';
+import { isDevEnv } from '@/utils';
 
 export const getContentFromChatCompletion = (response: API.ChatCompletion): string => response?.choices?.[0]?.message?.content || '';
 
@@ -37,18 +38,18 @@ export interface OpenAIModelConfig extends ModelConfig {
 }
 
 export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAIModelInput, OpenAIModelOutput> {
-  apiKey: string;
+  apiKey?: string;
 
-  constructor(config: OpenAIModelConfig, apiKey: string) {
+  constructor(config: OpenAIModelConfig, apiKey?: string) {
     super(config);
-    this.apiKey = apiKey;
+    this.apiKey = apiKey || isDevEnv ? process.env.NEXT_PUBLIC_OPENAI_API_KEY : '';
   }
 
   async callApi(input: OpenAIModelInput): Promise<OpenAIModelOutput> {
     if (!this.apiKey) {
       throw ApiKeyError(this.apiKey);
     }
-    return await this.chatCompletion({ ...this.config, input });
+    return await this.chatCompletion({ ...this.config, messages: input });
   }
 
   updateMessages(content: any): void {

@@ -96,13 +96,10 @@ export const Models: Record<string, any> = {
 export const OpenAiModelNames = Object.keys(Models);
 export type OpenAiModelName = keyof typeof Models;
 
-export const DefaultModelConfig: Partial<OpenAIModelConfig> = {
-  ...GPT_3_TURBO,
-  temperature: 0.6,
-  top_p: 1,
-  frequency_penalty: 0,
-  presence_penalty: 0,
-  n: 1,
+export const DefaultModelConfig: OpenAIModelConfig = {
+  ...GPT_4_TURBO_WITH_VISION,
+  temperature: 0,
+  max_tokens: 4096,
 };
 
 export const ModelConfigSchema = yup.object().shape({

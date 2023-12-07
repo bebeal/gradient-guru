@@ -37,7 +37,7 @@ import { BuyMeComputeButton, DropWrapper, FlowUi, FlowUiProps } from '@/componen
 import { Erroring, Loading, cn } from '@/utils';
 
 import { FlowEventsRecorderProvider } from '@/hooks';
-import { IconNodeUtil } from './FlowNodes';
+import { IconNodeUtil, PreviewNodeUtil } from './FlowNodes';
 import { IconNodeTool } from './FlowTools';
 
 import '@tldraw/tldraw/tldraw.css';
@@ -64,8 +64,9 @@ export const Flow = (props: FlowProps) => {
 	} = props;
   const assets: TLEditorAssetUrls = useDefaultEditorAssetsWithOverrides(rest.assetUrls);
   const { done: preloadingComplete, error: preloadingError } = usePreloadAssets(assets);
-  const customShapeUtils: TLAnyShapeUtilConstructor[] = useMemo(() => [IconNodeUtil], []);
+  const customShapeUtils: TLAnyShapeUtilConstructor[] = useMemo(() => [IconNodeUtil, PreviewNodeUtil], []);
   const customTools: TLStateNodeConstructor[] = useMemo(() => [IconNodeTool], []);
+  const scratchNodeUtils = useMemo(() => [IconNodeUtil], []);
 
   const overrides: TLUiOverrides = useMemo(() => ({
     tools(editor, tools) {
@@ -119,7 +120,7 @@ export const Flow = (props: FlowProps) => {
 	return (
 		<TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)} >
       <FlowEventsRecorderProvider>
-        <FlowUi overrides={overrides} initialShapes={initialShapes} panelShapeUtils={customShapeUtils as any} {...withDefaults}>
+        <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} {...withDefaults}>
           <ContextMenu>
             <DropWrapper>
               <Canvas />

@@ -18,7 +18,7 @@ export const EventsTab = (props: EventsTabProps) => {
     return {
       name: <ToggleTitle title="UI State" pressed={flowExtractor.uiEventConfig.enabled} onPressedChange={(enabled: boolean) => flowExtractor.setUiEventConfig({ ...flowExtractor.uiEventConfig, enabled })} />,
       content: (
-        <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
+        <div className={cn(`w-full h-full flex flex-col justify-stretch items-center`)}>
           {hasConfig && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
@@ -41,7 +41,7 @@ export const EventsTab = (props: EventsTabProps) => {
     return {
       name: <ToggleTitle title="History Records" pressed={flowExtractor.historyRecordsConfig.enabled} onPressedChange={(enabled: boolean) => flowExtractor.setHistoryRecordsConfig({ ...flowExtractor.historyRecordsConfig, enabled })} />,
       content: (
-        <div className={cn(`w-full h-full flex flex-col justify-center items-center`)}>
+        <div className={cn(`w-full h-full flex flex-col justify-stretch items-center`)}>
           {hasConfig && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
@@ -66,7 +66,7 @@ export const EventsTab = (props: EventsTabProps) => {
     return {
       name: <ToggleTitle title="Canvas Event" pressed={flowExtractor.canvasEventConfig.enabled} onPressedChange={(enabled: boolean) => flowExtractor.setCanvasEventConfig({ ...flowExtractor.canvasEventConfig, enabled })} />,
       content: (
-        <div className={cn(`w-full h-full flex flex-col justify-center items-center overflow-auto`)}>
+        <div className={cn(`w-full h-full flex flex-col justify-stretch items-center overflow-auto`)}>
           {hasConfig && (
             <div className="flex p-1 flex-wrap flex-col w-full h-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>

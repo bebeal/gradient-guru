@@ -3,24 +3,24 @@ import { getExportedImageBlob } from "@/utils";
 import { TLAnyShapeUtilConstructor, TLShape, createShapeId, useEditor } from "@tldraw/tldraw";
 import { createContext, useCallback, useContext, useState } from "react";
 
-export interface PanelNode {
+export interface ScratchNode {
   panelPreview: React.ReactNode;
   type?: string;
   nodesToAdd?: TLShape[];
 }
 
-export const NodePanelContext = createContext(
+export const ScratchPanelContext = createContext(
   {} as {
-  nodesInPanel: PanelNode[];
+  scratchNodes: ScratchNode[];
   addNodeFromShapeUtil: (Shape: TLAnyShapeUtilConstructor) => void;
   addNodeFromSelectedNodes?: () => void;
-  onDragStart: (event: any, node: PanelNode) => void;
+  onDragStart: (event: any, node: ScratchNode) => void;
   onEmptyNodeInPanelClick?: () => void;
 });
 
-export const NodePanelProvider = ({ children }: { children: React.ReactNode }) => {
+export const ScratchPanelProvider = ({ children }: { children: React.ReactNode }) => {
   const editor = useEditor();
-  const [nodesInPanel, setNodesInPanel] = useState<PanelNode[]>([]);
+  const [scratchNodes, setScratchNodes] = useState<ScratchNode[]>([]);
 
   const addNodeFromSelectedNodes = useCallback(() => {
     const nodesToAdd = editor.getSelectedShapes();
@@ -29,14 +29,14 @@ export const NodePanelProvider = ({ children }: { children: React.ReactNode }) =
     getExportedImageBlob(editor, ids, {type: 'png', background: false}).then(imageBlob => {
       if (imageBlob) {
         const objectURL = URL.createObjectURL(imageBlob);
-        const nodeToAdd: PanelNode = {
+        const nodeToAdd: ScratchNode = {
           panelPreview: <img src={objectURL} alt="shape" />,
           nodesToAdd,
         };
-        setNodesInPanel([...nodesInPanel, nodeToAdd]);
+        setScratchNodes([...scratchNodes, nodeToAdd]);
       }
     });
-  }, [editor, nodesInPanel]);
+  }, [editor, scratchNodes]);
 
   const addNodeFromShapeUtil = (Shape: TLAnyShapeUtilConstructor) => {
     const id = `${Shape.type}-${createShapeId()}`
@@ -48,22 +48,22 @@ export const NodePanelProvider = ({ children }: { children: React.ReactNode }) =
     } as unknown as TLShape;
     const shapeUtil: any = editor.getShapeUtil(Shape.type);
     const panelPreview = (shapeUtil as FlowNodeUtil).panelPreview(shape);
-    const nodeToAdd: PanelNode = {
+    const nodeToAdd: ScratchNode = {
       panelPreview,
       type: Shape.type,
     };
     // ensure node in panel with type doesn't already exist, if it does overwrite it
-    const nodeIndex = nodesInPanel.findIndex((node: PanelNode) => node.type === Shape.type);
+    const nodeIndex = scratchNodes.findIndex((node: ScratchNode) => node.type === Shape.type);
     if (nodeIndex > -1) {
-      const newNodesInPanel = [...nodesInPanel];
-      newNodesInPanel[nodeIndex] = nodeToAdd;
-      setNodesInPanel(newNodesInPanel);
+      const newscratchNodes = [...scratchNodes];
+      newscratchNodes[nodeIndex] = nodeToAdd;
+      setScratchNodes(newscratchNodes);
     } else {
-      setNodesInPanel([...nodesInPanel, nodeToAdd]);
+      setScratchNodes([...scratchNodes, nodeToAdd]);
     }
   }
 
-  const onDragStart = useCallback((event: any, node: PanelNode) => {
+  const onDragStart = useCallback((event: any, node: ScratchNode) => {
     const { type, nodesToAdd } = node;
     event.dataTransfer.setData('application/tldraw', JSON.stringify({type, nodesToAdd}));      
     event.dataTransfer.effectAllowed = 'move';
@@ -77,17 +77,17 @@ export const NodePanelProvider = ({ children }: { children: React.ReactNode }) =
 
 
   return (
-    <NodePanelContext.Provider value={{ nodesInPanel, addNodeFromShapeUtil, addNodeFromSelectedNodes, onDragStart, onEmptyNodeInPanelClick }}>
+    <ScratchPanelContext.Provider value={{ scratchNodes, addNodeFromShapeUtil, addNodeFromSelectedNodes, onDragStart, onEmptyNodeInPanelClick }}>
       {children}
-    </NodePanelContext.Provider>
+    </ScratchPanelContext.Provider>
   );
 }
 
-export const useNodePanel = () => {
-  const ctx = useContext(NodePanelContext);
+export const useScratchPanel = () => {
+  const ctx = useContext(ScratchPanelContext);
 
   if (!ctx) {
-    throw new Error('useNodePanel must be used within a NodePanelProvider');
+    throw new Error('useScratchPanel must be used within a ScratchPanelProvider');
   }
 
   return {

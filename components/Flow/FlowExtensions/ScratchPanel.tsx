@@ -1,29 +1,29 @@
 import { Direction, IconSetCache, Panel } from '@/components';
-import { NodePanelProvider, PanelNode, useNodePanel } from '@/hooks';
+import { ScratchPanelProvider, ScratchNode, useScratchPanel } from '@/hooks';
 import { cn } from '@/utils';
 import { TLAnyShapeUtilConstructor, useEditor } from '@tldraw/tldraw';
 import React, { useEffect, useState } from 'react';
 import { useCallback } from 'react';
 
-export interface NodePanelProps {
-  shapeUtils: TLAnyShapeUtilConstructor[];
+export interface ScratchPanelProps {
+  scratchNodeUtils: TLAnyShapeUtilConstructor[];
 }
 
-export const NodePanel = (props: NodePanelProps) => {
+export const ScratchPanel = (props: ScratchPanelProps) => {
   return (
-    <NodePanelProvider>
-      <div className={cn(`absolute right-0 top-[47%] h-[302px] z-[501]`)}>
-        <Panel direction={Direction.left} className='h-[302px]'>
-          <NodePanelInner {...props} />
+    <ScratchPanelProvider>
+      <div className={cn(`absolute right-0 top-[47%] h-[250px] z-[501]`)}>
+        <Panel direction={Direction.left} className='h-[250px]'>
+          <ScratchPanelInner {...props} />
         </Panel>
       </div>
-    </NodePanelProvider>
+    </ScratchPanelProvider>
   );
 };
 
-export const NodeInPanel = ({children, onDragStart, index}: any) => {
+export const ScratchedNode = ({children, onDragStart, index}: any) => {
   const editor = useEditor();
-  const { onEmptyNodeInPanelClick } = useNodePanel();
+  const { onEmptyNodeInPanelClick } = useScratchPanel();
   const hoverStyles = `hover:border-[#888] hover:bg-[#363d44] hover:shadow-[0px_1px_2px_#00000029,0px_1px_3px_#00000038,inset_0px_0px_0px_1px_var(--color-panel-contrast),0px_1px_3px_#00000077,0px_2px_6px_#00000055,inset_0px_0px_0px_1px_var(--color-panel-contrast),0px_1px_3px_#00000077,0px_2px_12px_rgba(0,0,0,0.22),inset_0px_0px_0px_1px_var(--color-panel-contrast)]`;
   // no children === empty slot which if, clicked and there are selected nodes, then will add snapshot of selected nodes to panel as a new draggable node
   const numChildren = React.Children.count(children);
@@ -40,55 +40,55 @@ export const NodeInPanel = ({children, onDragStart, index}: any) => {
   )
 }
 
-export const NodePanelInner = (props: NodePanelProps) => {
+export const ScratchPanelInner = (props: ScratchPanelProps) => {
   const {
-    shapeUtils,
+    scratchNodeUtils,
   } = props;
   const {
-    nodesInPanel,
+    scratchNodes,
     addNodeFromShapeUtil,
     onDragStart,
-  } = useNodePanel();
+  } = useScratchPanel();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     if (!mounted) {
-      shapeUtils.map((Shape) => {
+      scratchNodeUtils.map((Shape) => {
         addNodeFromShapeUtil(Shape);
       });
       setMounted(true);
     }
-  }, [shapeUtils, addNodeFromShapeUtil, mounted]);
+  }, [scratchNodeUtils, addNodeFromShapeUtil, mounted]);
 
-  const NodeList = useCallback(() => {
-    return nodesInPanel.map((node: PanelNode, index: number) => {
+  const ScratchNodes = useCallback(() => {
+    return scratchNodes.map((node: ScratchNode, index: number) => {
       return (
-        <NodeInPanel onDragStart={(event: any) => onDragStart(event, node)} index={index} key={`draggable-node-${index}`}>
+        <ScratchedNode onDragStart={(event: any) => onDragStart(event, node)} index={index} key={`draggable-node-${index}`}>
           <div
             className={cn(`relative flex grow cursor-pointer overflow-hidden items-center justify-center w-full h-full text-[8px] [&>*]:pointer-events-none [&>*]:max-w-full [&>*]:max-h-full [&>*]:overflow-hidden`)}
           >
             {node.panelPreview}
           </div>
-        </NodeInPanel>
+        </ScratchedNode>
       );
     });
-  }, [nodesInPanel, onDragStart]);
+  }, [scratchNodes, onDragStart]);
 
-  const EmptyNodeList = useCallback(() => {
+  const EmptyScratchNodes = useCallback(() => {
     // round up to nearest multiple of 3, or set to 3 if already a multiple of 3
-    const numEmptyNodes = Math.ceil(nodesInPanel.length / 3) * 3 - nodesInPanel.length || 3;
+    const numEmptyNodes = Math.ceil(scratchNodes.length / 3) * 3 - scratchNodes.length || 3;
     return [...Array(numEmptyNodes)].map((_, index) => {
       return (
-        <NodeInPanel onDragStart={() => {}} index={index} key={`empty-node-${index}`}>
-        </NodeInPanel>
+        <ScratchedNode onDragStart={() => {}} index={index} key={`empty-node-${index}`}>
+        </ScratchedNode>
       );
     });
-  }, [nodesInPanel]);
+  }, [scratchNodes]);
 
   return (
-    <div className={cn(`rounded-lg overflow-hidden touch-auto gap-1 grid grid-cols-[repeat(3,1fr)] w-[300px] h-[300px] m-0 p-2 rounded-tr-none rounded-br-none border-0`)}>
-      <NodeList />
-      <EmptyNodeList />
+    <div className={cn(`rounded-lg overflow-hidden touch-auto gap-1 grid grid-cols-[repeat(3,1fr)] w-[300px] h-full m-0 p-2 rounded-tr-none rounded-br-none border-0`)}>
+      <ScratchNodes />
+      <EmptyScratchNodes />
     </div>
   )
 };

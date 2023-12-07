@@ -1,4 +1,4 @@
-export * from './IconWrapper';
-export * from './IconSets';
+export * from './CustomIcons/ThreeFanGpu';
 export * from './IconSetCache';
-export * from './ThreeFanGpu';
+export * from './IconSets';
+export * from './IconWrapper';
