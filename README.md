@@ -1,6 +1,6 @@
 # gradient-guru
 
-Developer-oriented playground site which aims to provide a structural, modular, and interactive environment for experimenting with AI models
+Developer-oriented playground site which aims to provide a structured, modular, and interactive environment for experimenting with AI models
 
 ![gradient-guru-diagram](https://github.com/bebeal/gradient-guru/blob/main/assets/icons/GradientGuru.svg)
 
