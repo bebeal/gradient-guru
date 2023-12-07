@@ -2,7 +2,7 @@
 
 Developer-oriented playground site which aims to provide a structural, modular, and interactive environment for experimenting with AI models
 
-![gradient-guru-diagram](https://github.com/bebeal/gradient-guru/assets/icons/GradientGuru.svg)
+![gradient-guru-diagram](https://github.com/bebeal/gradient-guru/blob/main/assets/icons/GradientGuru.svg)
 
 * Domain Aliases:
   * https://gradient-guru.com
