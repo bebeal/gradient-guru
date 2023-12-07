@@ -1,12 +1,8 @@
 # gradient-guru
 
-* Domain Aliases:
-  * https://gradient-guru.com
-  * https://gradient-guru.org
-  * https://gradient-guru.net
-  * https://gradient-guru.dev
+* Current State:
 
-* Current State: https://www.youtube.com/watch?v=Gzk1-hnx7-w
+https://github.com/bebeal/gradient-guru/assets/42706447/1f5f3d4d-2d55-49bc-9ca5-a8fb361049d
 
 ## Architecture
 
@@ -122,6 +118,12 @@ yarn build
 * [Tldraw](https://github.com/tldraw/tldraw)
 
 ### Pages
+
+* Domain Aliases:
+  * https://gradient-guru.com
+  * https://gradient-guru.org
+  * https://gradient-guru.net
+  * https://gradient-guru.dev
 
 * [`/`](https://gradient-guru.com)
   * [`/compute`](https://gradient-guru.com/compute)
