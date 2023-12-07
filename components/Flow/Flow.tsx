@@ -36,7 +36,7 @@ import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 're
 import { BuyMeComputeButton, DropWrapper, FlowUi, FlowUiProps } from '@/components';
 import { Erroring, Loading, cn } from '@/utils';
 
-import { FlowEventsRecorderProvider } from '@/hooks';
+import { ContentRecorderProvider } from '@/hooks';
 import { IconNodeUtil, PreviewNodeUtil } from './FlowNodes';
 import { IconNodeTool } from './FlowTools';
 
@@ -119,7 +119,7 @@ export const Flow = (props: FlowProps) => {
 	if (!preloadingComplete) { return <LoadingScreen><div className="flex w-full h-auto justify-center items-center"><Loading dots={true} spinner={false}>Loading assets</Loading></div></LoadingScreen> }
 	return (
 		<TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)} >
-      <FlowEventsRecorderProvider>
+      <ContentRecorderProvider>
         <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} {...withDefaults}>
           <ContextMenu>
             <DropWrapper>
@@ -135,7 +135,7 @@ export const Flow = (props: FlowProps) => {
           />
           {children}
         </FlowUi>
-      </FlowEventsRecorderProvider>
+      </ContentRecorderProvider>
       <div className="absolute top-5 right-[185px] w-auto h-auto z-[501]">
         <BuyMeComputeButton />
       </div>

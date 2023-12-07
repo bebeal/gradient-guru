@@ -6,7 +6,7 @@ import { RecordsDiff } from '@tldraw/store';
 import { TLEventInfo, TLStoreEventInfo, UiEvent, useEditor } from "@tldraw/editor";
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 
-export type FlowEventsRecorderContextType = {
+export type ContentRecorderContextType = {
   canvasEvent: TLEventInfo;
   historyRecords: RecordsDiff<TLRecord>[];
   uiEvents: UiEvent[];
@@ -15,13 +15,13 @@ export type FlowEventsRecorderContextType = {
   setCanvasEvent: (newCanvasEvent: TLEventInfo) => void;
   setUiEvents: (newUiEvents: any[]) => void;
 };
-export const FlowEventsRecorderContext = createContext<FlowEventsRecorderContextType | undefined>(undefined);
+export const ContentRecorderContext = createContext<ContentRecorderContextType | undefined>(undefined);
 
-export type FlowEventsRecorderProviderProps = {
+export type ContentRecorderProviderProps = {
   historyRecordsBufferSize?: number;
 	children: any;
 };
-export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProps) => {
+export const ContentRecorderProvider = (props: ContentRecorderProviderProps) => {
   const {
     historyRecordsBufferSize = 1000,
     children,
@@ -110,7 +110,7 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
     };
   }, [editor, onCanvasEvent, onStoreEvent]);
 
-  const context: FlowEventsRecorderContextType = {
+  const context: ContentRecorderContextType = {
     canvasEvent,
     historyRecords: historyRecords.current,
     uiEvents,
@@ -120,14 +120,14 @@ export const FlowEventsRecorderProvider = (props: FlowEventsRecorderProviderProp
     setCanvasEvent,
   };
 
-  return <FlowEventsRecorderContext.Provider value={context}>{children}</FlowEventsRecorderContext.Provider>
+  return <ContentRecorderContext.Provider value={context}>{children}</ContentRecorderContext.Provider>
 }
 
-export const useFlowEventsRecorder = () => {
-	const flowEventsRecorder = useContext(FlowEventsRecorderContext)
+export const useContentRecorder = () => {
+	const flowEventsRecorder = useContext(ContentRecorderContext)
 
 	if (!flowEventsRecorder) {
-		throw new Error('useFlowEventsRecorder must be used within a FlowEventsRecorderProvider')
+		throw new Error('useContentRecorder must be used within a FlowEventsRecorderProvider')
 	}
 
 	return flowEventsRecorder;

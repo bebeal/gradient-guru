@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Accordion, BulletedList, Form } from '@/components';
-import { useFlowExtractor } from '@/hooks';
+import { useContentExtractor } from '@/hooks';
 import { cn } from '@/utils';
 import { FlowTab, TabTitle, ToggleTitle } from './shared';
 import { useEditor } from '@tldraw/editor';
@@ -28,7 +28,7 @@ export const StateTab = (props: StateTabProps) => {
     setTextConfig,
     getImageSchema,
     getTextSchema,
-  } = useFlowExtractor();
+  } = useContentExtractor();
   const imageSchema = getImageSchema();
   const textSchema = getTextSchema();
 

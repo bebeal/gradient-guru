@@ -7,18 +7,18 @@ import ReactDOMServer from "react-dom/server";
 const box_1: any = {
   id: createShapeId(`box-1`),
   type: 'geo',
-  x: 100,
-  y: 100,
+  x: 0,
+  y: 0,
   props: {
-    w: 100,
-    h: 100,
+    w: 300,
+    h: 300,
     geo: 'rectangle',
     color: 'black',
     labelColor: 'black',
     fill: 'none',
     dash: 'draw',
-    size: 'm',
-    font: 'draw',
+    size: 's',
+    font: 'mono',
     text: '',
     align: 'middle',
     verticalAlign: 'middle',
@@ -30,36 +30,52 @@ const box_1: any = {
 const box_2: any = {
   id: createShapeId(`box-2`),
   type: 'geo',
-  x: 200,
-  y: 200,
+  x: 100,
+  y: 225,
   props: {
-    w: 110,
-    h: 110,
+    w: 100,
+    h: 35,
     geo: 'rectangle',
     color: 'black',
     labelColor: 'black',
     fill: 'none',
-    dash: 'draw',
-    size: 'm',
-    font: 'draw',
-    text: 'GG',
+    dash: 'solid',
+    size: 's',
+    font: 'mono',
+    text: 'Button',
     align: 'middle',
     verticalAlign: 'middle',
     growY: 0,
-    url: 'https://www.gradient-guru.org',
+    url: '',
   }
 };
 
 const icon_node: any = {
   id: createShapeId(`icon-node`),
   type: 'icon',
-  x: 300,
-  y: 150,
+  x: 18,
+  y: 25,
   props: {
-    w: 24,
-    h: 24,
+    w: 36,
+    h: 36,
     iconSet: 'Carbon',
     icon: 'MachineLearningModel',
+  }
+};
+
+const text_node: any = {
+  id: createShapeId(`text-node`),
+  type: 'text',
+  x: 60,
+  y: 25,
+  props: {
+    color: 'black',
+    size: 's',
+    w: 150,
+    text: 'Gradient Guru',
+    font: 'mono',
+    align: 'middle',
+    scale: 1.5,
   }
 };
 
@@ -67,6 +83,7 @@ const initialShapes: TLShape[] = [
   box_1,
   box_2,
   icon_node,
+  text_node
 ];
 
 const ApplicationWeb = <IconSetCache.Carbon.ApplicationWeb stroke="white" fill="white" width="32" height="32" />;

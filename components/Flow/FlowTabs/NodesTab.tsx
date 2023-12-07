@@ -15,14 +15,14 @@ import {
   ToggleTitle,
   inferSchemaField,
 } from '@/components';
-import { useFlowExtractor } from '@/hooks';
+import { useContentExtractor } from '@/hooks';
 import { cn, filterObject } from '@/utils';
 
 export interface NodesTabProps {}
 
 export const NodesTab = () => {
   const editor = useEditor();
-  const flowExtractor = useFlowExtractor();
+  const contentExtractor = useContentExtractor();
 
   const onNodeChange = useCallback((newNodeProperties: any) => {
     if (newNodeProperties.type === 'icon') {
@@ -67,7 +67,7 @@ export const NodesTab = () => {
       const selected = selectedNodes.includes(node);
       const stringName = `${node.type} - ${node.id.replace('shape:', '')}`;
       return {
-        name: <ToggleTitle title={stringName} pressed={!flowExtractor.nodesConfig.nodesToExclude.includes(node.id)} onPressedChange={(pressed: boolean) => flowExtractor.toggleNodeState(node.id)} />,
+        name: <ToggleTitle title={stringName} pressed={!contentExtractor.nodesConfig.nodesToExclude.includes(node.id)} onPressedChange={(pressed: boolean) => contentExtractor.toggleNodeState(node.id)} />,
         content: (
           <div className={cn(`w-full h-full flex flex-col justify-stretch items-center`)}>
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
@@ -79,13 +79,13 @@ export const NodesTab = () => {
         selected,
       };
     });
-  }, [editor, buildNodeSchemas, flowExtractor, onNodeChange]);
+  }, [editor, buildNodeSchemas, contentExtractor, onNodeChange]);
 
   return (
     <FlowTab title="Nodes">
       <div className="w-full flex justify-around items-center">
-        <Switch offLabel={"Include Nodes (JSON)"} onLabel={"Don't Include Nodes"} pressed={flowExtractor.nodesConfig.enabled} onPressedChange={(pressed: boolean) => flowExtractor.setNodesConfig({ ...flowExtractor.nodesConfig, enabled: pressed})} />
-        <Switch offLabel={"All Nodes"} onLabel={"Selected Nodes"} pressed={flowExtractor.nodesConfig.filterSelected} onPressedChange={(pressed: boolean) => flowExtractor.setNodesConfig({ ...flowExtractor.nodesConfig, filterSelected: pressed})} />
+        <Switch offLabel={"Include Nodes (JSON)"} onLabel={"Don't Include Nodes"} pressed={contentExtractor.nodesConfig.enabled} onPressedChange={(pressed: boolean) => contentExtractor.setNodesConfig({ ...contentExtractor.nodesConfig, enabled: pressed})} />
+        <Switch offLabel={"All Nodes"} onLabel={"Selected Nodes"} pressed={contentExtractor.nodesConfig.filterSelected} onPressedChange={(pressed: boolean) => contentExtractor.setNodesConfig({ ...contentExtractor.nodesConfig, filterSelected: pressed})} />
       </div>
       <Accordion
         spaceBetween={0}

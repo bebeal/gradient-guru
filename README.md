@@ -12,9 +12,7 @@ Developer-oriented playground site which aims to provide a structured, modular, 
 
 ## Build
 
-* To run the development server
-
-server on `localhost:3407`
+* To run the development server on `localhost:3407`
 
 ```bash
 yarn install
@@ -27,7 +25,7 @@ yarn dev
 yarn clean
 ```
 
-* Generate iconset assets and ts files
+* One time initially to generate iconset assets and ts files
 
 ```bash
 yarn generate-iconsets

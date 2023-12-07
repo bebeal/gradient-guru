@@ -1,11 +1,12 @@
-'use client'
+'use client';
 
 import { createContext, useCallback, useContext, useState } from 'react';
 import { RecordsDiff } from '@tldraw/store';
 import { TLEventInfo, TLRecord, TLShape, TLShapeId, UiEvent, useEditor } from '@tldraw/tldraw';
-import { getDataUrl, getExportedImageBlob } from '@/utils';
 import * as yup from 'yup';
-import { useFlowEventsRecorder } from './useFlowEventsRecorder';
+import { getDataUrl, getExportedImageBlob } from '@/utils';
+import { useContentRecorder } from './useContentRecorder';
+
 
 export const defaultNodePropertiesToExtract = ['x', 'y', 'rotation', 'id', 'type', 'props'] as const;
 
@@ -85,7 +86,7 @@ export const SchemaFields = {
 }
 
 // Each of these configs will be accessible to the rest of the app via a provider
-export const FlowConfigContext = createContext(
+export const ContentExtractorConfigContext = createContext(
   {} as {
     nodesConfig: NodesConfig;
     setNodesConfig: (config: NodesConfig) => void;
@@ -102,7 +103,7 @@ export const FlowConfigContext = createContext(
     toggleNodeState: (nodeId: string) => void;
   }
 );
-export const FlowConfigProvider = ({ children }: { children: any }) => {
+export const ContentExtractorProvider = ({ children }: { children: any }) => {
   const [nodesConfig, setNodesConfig] = useState<NodesConfig>({ ...defaultNodesConfig, enabled: false });
   const [imageConfig, setImageConfig] = useState<ImageConfig>({ ...defaultImageConfig, enabled: true });
   const [textConfig, setTextConfig] = useState<TextConfig>({ ...defaultTextConfig, enabled: true });
@@ -136,11 +137,11 @@ export const FlowConfigProvider = ({ children }: { children: any }) => {
     toggleNodeState,
   };
 
-  return <FlowConfigContext.Provider value={value}>{children}</FlowConfigContext.Provider>;
+  return <ContentExtractorConfigContext.Provider value={value}>{children}</ContentExtractorConfigContext.Provider>;
 };
 
-// Type definition for useFlowExtractor
-export type useFlowExtractorReturn = {
+// Type definition for useContentExtractor
+export type useContentExtractorReturn = {
   nodesConfig: NodesConfig;
   setNodesConfig: (config: NodesConfig) => void;
   imageConfig: ImageConfig;
@@ -180,11 +181,11 @@ export type useFlowExtractorReturn = {
   getHistoryRecordsSchema: () => yup.ObjectSchema<any>;
 };
 
-// useFlowStateExtractor:
+// useContentExtractor:
 // Contains configs which affect how the state is extracted
 // Contains methods to extract each state
 // and extractAll to extract all states at once to be used to feed into the model
-export const useFlowExtractor = (): useFlowExtractorReturn => {
+export const useContentExtractor = (): useContentExtractorReturn => {
   const {
     nodesConfig,
     setNodesConfig,
@@ -199,14 +200,14 @@ export const useFlowExtractor = (): useFlowExtractorReturn => {
     historyRecordsConfig,
     setHistoryRecordsConfig,
     toggleNodeState,
-  } = useContext(FlowConfigContext);
+  } = useContext(ContentExtractorConfigContext);
 
   if (!nodesConfig || !imageConfig || !textConfig || !canvasEventConfig || !uiEventConfig || !historyRecordsConfig) {
     throw new Error('useFlowStateExtractor must be used within a FlowStateExtractorProvider');
   }
 
   const editor = useEditor();
-  const { canvasEvent, uiEvents, historyRecords } = useFlowEventsRecorder();
+  const { canvasEvent, uiEvents, historyRecords } = useContentRecorder();
 
   const getNodeIds = useCallback((filterSelected: boolean = false): TLShapeId[] => {
       const nodeIds = filterSelected ? editor.getSelectedShapeIds() : Array.from(editor.getCurrentPageShapeIds());

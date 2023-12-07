@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { useQuery } from 'react-query';
-import { useFlowExtractor } from '@/hooks';
+import { useContentExtractor } from '@/hooks';
 import { BaseModelClient, DefaultModelConfig, ModelConfig, OpenAIModelClient } from '@/clients';
 import { PROMPT_LIBRARY, blobToBase64 } from '@/utils';
 import { Editor, createShapeId, getSvgAsImage, useEditor } from '@tldraw/tldraw';
@@ -35,10 +35,10 @@ export const useModel = () => {
     setModelClient,
   } = context;
   const editor = useEditor();
-  const flowExtractor = useFlowExtractor();
+  const contentExtractor = useContentExtractor();
 
   const queryModel = useQuery('model-query', async () => {
-      return flowExtractor.extractAll().then(async (flows) => {
+      return contentExtractor.extractAll().then(async (flows) => {
         const text = flows.text;
         const selectedShapes = editor.getSelectedShapes()
         const svg: any = await editor.getSvg(selectedShapes, {
