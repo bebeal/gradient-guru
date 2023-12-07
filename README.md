@@ -42,6 +42,21 @@ yarn generate-iconsets
 yarn build
 ```
 
+### Setup API Key For Local Development
+
+1. **Create .env.local file** in root directory
+
+    ```bash
+    touch .env.local
+    ```
+
+2. **Add API Key**
+
+    ```bash
+    # .env.local
+    NEXT_PUBLIC_OPENAI_API_KEY='your-api-key-here'
+    ```
+
 ## Libraries
 
 ---
@@ -125,29 +140,8 @@ yarn build
 
 ### TODO
 
-* [ ] Setup CDN for icons/fonts distribution
-* [ ] fix way image preview gets generated to not spam network tab
-* [ ] Custom functions to give to LLM to manipulate editor
-* [ ] Add ability to inject in custom fonts/iconsets easily
-* [ ] Way to persist boards (tldraw update coming soon might add this)
+* [ ] CDN
+* [ ] fix image preview
 * [ ] yjs
-
-* [ ] Add my other llm exampels and notebooks
-* [ ] Add the hardcoded demo
-* [ ] Add flask backend env back in
-* [ ] Add Context Calculator to track context length used/left over time, show estimate at all times for estimate of what will be added to context length is query was executed now
-
-### Setup your API key for all projects
-
-Open Terminal: You can find it in the Applications folder or search for it using Spotlight (Command + Space).
-
-Edit bash profile: Use the command nano ~/.bash_profile or nano ~/.zshrc (for newer MacOS versions) to open the profile file in a text editor.
-
-Add Environment Variable: In the editor, add the line below, replacing your-api-key-here with your actual API key:
-
-export OPENAI_API_KEY='your-api-key-here'
-Save and exit: Press Ctrl+O to write the changes, followed by Ctrl+X to close the editor.
-
-Load your profile: Use the command source ~/.bash_profile or source ~/.zshrc to load the updated profile.
-
-Verification: Verify the setup by typing echo $OPENAI_API_KEY in the terminal. It should display your API key.
+* [ ] flask backend
+* [ ] Context Calculator
