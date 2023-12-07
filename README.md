@@ -67,7 +67,7 @@ yarn build
     * [Styled Components Docs](https://styled-components.com/docs)
 
 * Utility:
-  * Canvas Whiteboard + Nodes:
+  * Canvas:
     * [Tldraw](https://github.com/tldraw/tldraw)
       * [Tldraw Docs](https://tldraw.dev/docs)
   * Forms:
@@ -124,11 +124,10 @@ yarn build
 ### TODO
 
 * [ ] Setup CDN for icons/fonts distribution
-* [ ] Cleanup schema related stuff
 * [ ] fix way image preview gets generated to not spam network tab
 * [ ] Custom functions to give to LLM to manipulate editor
-* [ ] Add ability to add custom fonts/iconsets easily
-* [ ] Way to persist boards
+* [ ] Add ability to inject in custom fonts/iconsets easily
+* [ ] Way to persist boards (tldraw update coming soon might add this)
 * [ ] yjs
 
 * [ ] Add my other llm exampels and notebooks
