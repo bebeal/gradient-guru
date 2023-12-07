@@ -1,114 +1,57 @@
-
-import { createContext, useCallback, useContext, useState } from 'react';
-import API from "openai";
-import { getContentFromChatCompletion, Message, ModelConfig, ModelInput, DefaultModelConfig } from './shared';
-import { useFlowExtractor, useOpenAi } from '@/hooks';
+import { createContext, useContext, useState } from 'react';
 import { useQuery } from 'react-query';
+import { useFlowExtractor } from '@/hooks';
+import { BaseModelClient, ModelConfig } from '@/clients';
 
-export const ModelContext = createContext(
+export const ModelClientContext = createContext(
   {} as {
-    config: Partial<ModelConfig>;
-    setConfig: (configOverride: Partial<ModelConfig>) => void;
-    messages: Message[];
-    setMessages: (messages: Message[]) => void;
-    runningInference: boolean;
-    setRunningInference: (running: boolean) => void;
-    error?: Error;
-    setError: (error?: Error) => void;
-    resetMessages: () => void;
-    updateConfig: (configOverride: Partial<ModelConfig>) => void;
-    updateMessages: (response: any) => void;
-});
+    modelClient: BaseModelClient<ModelConfig, any, any>;
+    setModelClient: (client: BaseModelClient<ModelConfig, any, any>) => void;
+  }
+);
 
-export const ModelProvider = ({ children }: { children: React.ReactNode }) => {
-  const [config, setConfig] = useState<Partial<ModelConfig>>(DefaultModelConfig);
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [error, setError] = useState<Error | undefined>(undefined);
-  const [runningInference, setRunningInference] = useState<boolean>(false);
-
-  const resetMessages = useCallback(() => {
-    setMessages([]);
-  }, []);
-
-  // Update messages with response from model forward pass
-  const updateMessages = useCallback((response: any) => {
-      const content: string = getContentFromChatCompletion(response) || '';
-      messages.push({ role: 'assistant' as API.ChatCompletionRole, content: content });
-    },
-    [messages]
-  );
-
-  const updateConfig = useCallback(
-    (configOverride: Partial<ModelConfig>) => {
-      setConfig({ ...config, ...configOverride });
-    },
-    [config]
-  );
+export interface ModelClientProviderProps {
+  children: React.ReactNode;
+}
+export const ModelClientProvider: React.FC<ModelClientProviderProps> = ({ children }) => {
+  const [modelClient, setModelClient] = useState<BaseModelClient<ModelConfig, any, any>>(new BaseModelClient<ModelConfig, any, any>({model: 'identity'} as any));
 
   return (
-    <ModelContext.Provider value={{ config, setConfig, messages, setMessages, runningInference, setRunningInference, error, setError, resetMessages, updateConfig, updateMessages }}>
+    <ModelClientContext.Provider value={{ modelClient, setModelClient }}>
       {children}
-    </ModelContext.Provider>
+    </ModelClientContext.Provider>
   );
 };
 
-
 export const useModel = () => {
-  const context = useContext(ModelContext);
+  const context = useContext(ModelClientContext);
   if (!context) throw new Error('useModel must be used within a ModelProvider');
   const {
-    config,
-    setConfig,
-    messages,
-    setMessages,
-    runningInference,
-    setRunningInference,
-    error,
-    setError,
-    resetMessages,
-    updateConfig,
-    updateMessages,
+    modelClient,
+    setModelClient,
   } = context;
-  // const backendApi = useBackendApi();
-  const openAi = useOpenAi({});
   const flowExtractor = useFlowExtractor();
 
-  // Perform inference on model with input
-  const predict = useCallback(async (input: ModelInput, configOverride: Partial<ModelConfig> = {}) => {
-      setRunningInference(true);
-      const prompt = [...messages, { role: 'user' as API.ChatCompletionRole, content: input }];
-      const requestBody = { ...config, ...configOverride, messages: prompt };
-      let response = undefined;
-      try {
-        response = openAi.useChatCompletion(requestBody);
-        updateMessages(response);
-      } catch (error) {
-        setError(error as Error);
-      }
-      setRunningInference(false);
-      return response;
+  const queryModel = useQuery('model-query', async () => {
+      return flowExtractor.extractAll().then(async (flows) => {
+        console.log('flows', flows);
+        return await modelClient?.forward(flows);
+      });
     },
-    [config, messages, openAi, setError, setRunningInference, updateMessages]
+    {
+      enabled: false,
+      onSuccess: (response) => {
+        console.log('onSuccess Response:', response);
+      },
+      onError: (error) => {
+        console.log('onError Response:', error);
+      },
+    }
   );
 
-  const queryModel = useQuery('model-query', async () => {
-    return flowExtractor.extractAll().then(async (flows) => {
-      console.log('flows', flows);
-      // return await predict('yo test');
-    })
-  }, {
-    enabled: false,
-    onSuccess: (response) => {
-      console.log('response', response);
-    },
-    onError: (error) => {
-      console.log('error', error);
-    },
-  });
-
   return {
-    ...context,
-    predict, runInference: predict, forward: predict,
+    modelClient,
+    setModelClient,
     queryModel,
   };
 };

@@ -1,13 +1,16 @@
 import { Button, Form, Separator, TextArea } from '@/components';
-import { ModelConfigSchema, useModel } from '@/hooks';
+import { useModel } from '@/hooks';
 import { FlowTab } from './shared';
 import { cn } from '@/utils';
 import { ChangeEvent, useState } from 'react';
+import { ModelConfigSchema } from '@/clients';
 
-export type ModelTabProps = {};
-export const ModelTab = (props: ModelTabProps) => {
-  const { ...rest } = props;
-  const model = useModel();
+export const ModelTab = () => {
+  const {
+    modelClient,
+    setModelClient,
+    queryModel,
+  } = useModel();
   const [input, setInput] = useState<string>('');
 
   const onInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -16,7 +19,7 @@ export const ModelTab = (props: ModelTabProps) => {
 
   return (
     <FlowTab title="Query Builder" className="h-full flex flex-col justify-between">
-      <Form object={model.config} schema={ModelConfigSchema} onSubmit={model.updateConfig} />
+      <Form object={modelClient.config} schema={ModelConfigSchema} onSubmit={modelClient.updateConfig} />
       <Separator />
       <div className="h-auto w-full">
         <TextArea
@@ -26,7 +29,7 @@ export const ModelTab = (props: ModelTabProps) => {
         />
       </div>
       <Separator />
-      <Button variant="gradient" onClick={() => model.queryModel.refetch()}>
+      <Button variant="gradient" onClick={() => queryModel.refetch()}>
         Run Query
       </Button>
     </FlowTab>

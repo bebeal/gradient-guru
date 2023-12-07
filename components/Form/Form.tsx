@@ -17,7 +17,7 @@ export type SchemaMeta = {
 export type Schema = yup.ObjectSchema<any & Record<string, yup.AnySchema & SchemaMeta>>;
 
 export interface FormProps extends UseFormProps {
-  object: Record<string, any>;
+  object: any;
   schema?: Schema;
   readOnly?: boolean;
   onSubmit?: any;

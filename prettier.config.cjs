@@ -1,7 +1,7 @@
 /** @type {import('prettier').Config} */
 module.exports = {
   endOfLine: 'lf', // end of line sequence, 'lf' - for linux, 'crlf' - for windows
-  printWidth: 120, // max 120 chars in line, code is easy to read
+  printWidth: 240, // max 240 chars in line, code is easy to read
   semi: true, // enforce semi-colons at the end of statements
   useTabs: false, // use spaces instead of tabs
   singleQuote: true, // use single quotes instead of double quotes
