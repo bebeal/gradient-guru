@@ -200,7 +200,7 @@ export const Loading = (props: LoadingProps) => {
 
   return (
     <div className="w-auto h-auto flex items-center justify-center text-xl text-muted gap-1">
-      <Suspense fallback={"Loading..."}>
+      <Suspense fallback={"..."}>
         {spinner && <IconSetCache.Custom.Loader className={cn('flex items-center justify-center h-6 w-6 text-base gap-1')} />}
         {content}
         {dots && <IconSetCache.Custom.DotsLoader className={'h-6 w-6 self-end'} />}

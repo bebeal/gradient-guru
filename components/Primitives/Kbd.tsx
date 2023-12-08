@@ -1,8 +1,7 @@
+'use client'
 
 import React, { forwardRef } from 'react';
-import { nanoid } from 'nanoid';
-import { KeyMap, Loading, cn } from '@/utils';
-import { useMounted } from '@/hooks';
+import { cn, KeyMap } from '@/utils';
 
 export interface KbdProps {
   children?: any;
@@ -11,24 +10,22 @@ export interface KbdProps {
 }
 
 export const Kbd = forwardRef((props: KbdProps, ref?: any) => {
-  const {
-    children,
-    className='',
-    plusSign=false,
-  } = props;
-  const mounted = useMounted();
+  const { children, className = '', plusSign = false } = props;
+  const mappedKeys = children
+    .split('')
+    .map((key: any) => KeyMap[key] || key)
+    .join('')
 
-  const formatKeys = (keys: string) => {
-    const mappedKeys = keys.split(' ').map(k => KeyMap[k] || k).join(' ');
+  const formatKeys = () => {
     const elements = [];
-  
+
     for (let i = 0; i < mappedKeys.length; i++) {
-      elements.push(mappedKeys[i]);
+      elements.push(<span key={i} className={cn(mappedKeys[i] === '⇧' && 'transform translate-y-[-1px] h-full')}>{mappedKeys[i]}</span>);
       if (plusSign && i < mappedKeys.length - 1 && mappedKeys[i + 1] !== ' ') {
-        elements.push(<span key={nanoid()} className="font-normal mr-1 ml-1">+</span>);
+        elements.push( '+' );
       }
     }
-    
+
     return elements;
   };
 
@@ -42,17 +39,26 @@ export const Kbd = forwardRef((props: KbdProps, ref?: any) => {
     }
   };
 
-  return (<kbd 
-      ref={ref} 
+  return (
+    <kbd
+      ref={ref}
       className={cn(
-        `shadow-kbd rounded-md box-border inline-flex items-center justify-center flex-shrink-0 align-baseline text-center whitespace-nowrap relative top-[-0.05em] text-[0.75em]	leading-[1.7em] min-w-[1.75em] pl-[0.5em] pr-[0.5em] word-spacing`,
-        `bg-zinc-900 text-gray-200 font-bold`,
+        `flex gap-1 h-auto w-auto items-center justify-center rounded px-1.5 text-[10px] opacity-100`,
+        `shadow-kbd bg-zinc-900 text-kbd-foreground border-kbd-foreground font-mono font-bold`,
+        `hover:bg-zinc-950 cursor-pointer hover:text-primary`,
         className,
-        )}
-        onCopy={handleCopy}
-    >
-      {mounted ? formatKeys(children) : <Loading />}
-    </kbd>
+      )}
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (mappedKeys) {
+          navigator.clipboard.writeText(mappedKeys.replace(/\s\+\s/g, ''));
+        }
+        
+        
+      }}
+      onCopy={handleCopy}
+    >{formatKeys()}</kbd>
   );
 });
 Kbd.displayName = 'Kbd';

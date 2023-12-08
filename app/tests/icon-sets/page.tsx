@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Accordion, Button, IconSetCache, Input } from '@/components';
 import { cn } from '@/utils';
 
@@ -63,16 +63,19 @@ const IconSetsPage = () => {
     );
   };
 
-  // Update local search queries when globalSearchQuery changes
-  useEffect(() => {
+  const updateLocalSearchQueries = (newGlobalQuery: string) => {
     const updatedQueries = { ...localSearchQueries };
-
     filteredIconSets.forEach(iconSet => {
-      updatedQueries[iconSet] = globalSearchQuery;
+      updatedQueries[iconSet] = newGlobalQuery;
     });
-
     setLocalSearchQueries(updatedQueries);
-  }, [globalSearchQuery, filteredIconSets, localSearchQueries]);
+  };
+
+  const handleGlobalSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newGlobalQuery = e.target.value;
+    setGlobalSearchQuery(newGlobalQuery);
+    updateLocalSearchQueries(newGlobalQuery);
+  };
 
   return (
     <div className='p-4'>
@@ -81,7 +84,7 @@ const IconSetsPage = () => {
         type="text"
         placeholder="Search icons or sets..."
         value={globalSearchQuery}
-        onChange={(e) => setGlobalSearchQuery(e.target.value)}
+        onChange={handleGlobalSearchChange}
         className="w-full p-1 m-2 border border-gray-300 rounded"
       />
       {filteredIconSets.map((iconSetName: string) => {
@@ -126,8 +129,8 @@ const IconSetsPage = () => {
                                   `flex flex-col items-center justify-center gap-1 w-full h-[${size + 32}px]`
                                 )}
                               >
-                                {Icon && <Icon height={`${size}px`} width={`100%`} className="w-auto h-auto p-px" />}
-                                <div className="flex flex-wrap break-all text-xs text-center justify-center items-center w-full h-10 overflow-hidden">
+                                {Icon && <Icon height={`${size}px`} width={`100%`} className="w-auto h-auto p-1" />}
+                                <div className="flex flex-wrap break-all text-xs text-center justify-center items-center w-full h-12 overflow-hidden">
                                   {IconName}
                                 </div>
                               </div>

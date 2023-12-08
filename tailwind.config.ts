@@ -113,7 +113,8 @@ const config: Config = {
           DEFAULT: colors.rose['500']
         },
         muted: 'rgb(var(--muted) / <alpha-value>)',
-        error: 'rgb(var(--error) / <alpha-value>)'
+        error: 'rgb(var(--error) / <alpha-value>)',
+        'kbd-foreground': 'rgb(var(--kbd-foreground) / <alpha-value>)'
       },
       textColor: {
         primary: 'rgb(var(--text-primary)  / <alpha-value>)',
@@ -153,7 +154,7 @@ const config: Config = {
         xenon: ['Xenon', 'Berkeley Mono', 'monospace']
       },
       boxShadow: {
-        'kbd': 'inset 0 0.05em hsla(0,0%,100%,.372),inset 0 0.25em 0.5em rgba(121,121,250,.031),inset 0 -0.1em rgba(0,0,0,.875),0 0 0 0.075em rgba(222,243,255,.334),0 0.08em 0.17em rgba(0,0,0,.875)',
+        'kbd': 'inset 0 0.05em hsla(0,0%,100%,.372),inset 0 0.25em 0.5em rgba(121,121,250,.031),inset 0 0 rgba(0,0,0,.875),inset 0 0 0 0.075em rgba(222,243,255,.334),inset 0 0.08em 0.17em rgba(0,0,0,.875)',
       },
       keyframes: {
         "accordion-down": {

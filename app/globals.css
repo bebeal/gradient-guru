@@ -10,6 +10,7 @@
   html,
   body {
     overscroll-behavior-x: none;
+    overflow: hidden;
   }
 
   * {
@@ -50,6 +51,8 @@
 
   --muted: 85 85 85;
   --error: 255 69 58;
+
+  --kbd-foreground: 113 113 122;
 }
 
 .dark {
@@ -77,6 +80,8 @@
 
   --muted: 85 85 85;
   --error: 255 69 58;
+
+  --kbd-foreground: 161 161 170;
 }
 
 /* React Query Devtools overrides */

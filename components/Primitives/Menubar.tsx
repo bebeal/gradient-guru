@@ -1,10 +1,13 @@
 
 'use client'
 
-import React, { forwardRef, useCallback } from 'react'
+import {
+  IconSetCache,
+  Kbd,
+} from '@/components'
+import { Radius, RadiusClasses, cn } from '@/utils'
 import * as MenubarPrimitive from '@radix-ui/react-menubar'
-import { Radius, RadiusClasses, cn } from '@/utils';
-import { IconSetCache, Kbd } from '@/components';
+import React, { forwardRef, useCallback } from 'react'
 
 // --------------------------------------------------
 // MenubarShortcut
@@ -17,12 +20,12 @@ export const MenubarShortcut = (props: MenubarShortcutProps) => {
   const { shortcut, className, ...rest } = props;
 
   return (
-    <span 
-      className={cn('text-xs tracking-widest text-secondary', className)} 
+    <div 
+      className={cn('text-xs text-secondary overflow-hidden h-auto w-auto', className)} 
       {...rest}
     >
       <Kbd>{shortcut}</Kbd>
-    </span>
+    </div>
   )
 }
 MenubarShortcut.displayname = 'MenubarShortcut';
@@ -63,7 +66,7 @@ Menubar.displayName = MenubarPrimitive.Menubar.displayName;
 // --------------------------------------------------
 export interface MenubarMenuProps extends MenubarPrimitive.MenubarMenuProps {
   icon?: React.ReactNode;
-  label?: string;
+  children?: string;
   shortcut?: string;
   items?: any[];
   disabled?: boolean;
@@ -73,7 +76,7 @@ export interface MenubarMenuProps extends MenubarPrimitive.MenubarMenuProps {
 export const MenubarMenu = (props: MenubarMenuProps) => {
   const {
     icon,
-    label,
+    children,
     shortcut,
     items = [],
     disabled = false,
@@ -81,12 +84,12 @@ export const MenubarMenu = (props: MenubarMenuProps) => {
     radius='medium',
     ...rest
   } = props;
-  const defaultClassname = "bg-primary text-primary/80 flex items-center gap-1 text-xs font-medium outline-none select-none w-full h-full";
+  const defaultClassname = "bg-primary text-primary/80 flex items-center gap-1 text-sm font-medium outline-none select-none w-full h-full";
   const highlightedClassname = "hover:bg-accent/50 hover:text-primary radix-highlighted:bg-accent/50 radix-highlighted:text-primary";
   const openClassname = "radix-state-open:bg-accent/30 radix-state-open:text-primary radix-state-open:hover:bg-accent/50 radix-state-open:radix-highlighted:bg-accent/50";
   const disabledClassname = "radix-disabled:opacity-50 radix-disabled:cursor-not-allowed";
   const triggerClassname = cn(defaultClassname, highlightedClassname, openClassname, disabledClassname, `cursor-pointer px-2 py-1 border border-primary`, className);
-  const contentClassname = cn(defaultClassname, RadiusClasses('medium'), `z-50 p-1 min-w-[12rem] flex-col border border-primary h-auto w-auto overflow-hidden shadow-lg animate-enter`);
+  const contentClassname = cn(defaultClassname, RadiusClasses('medium'), `z-50 min-w-[12rem] p-1 flex-col border border-primary h-auto w-auto overflow-hidden shadow-lg animate-enter`);
   const itemClassname = cn(defaultClassname, highlightedClassname, openClassname, disabledClassname, `px-2 py-1`, RadiusClasses('base'));
   const subTriggerClassname = cn(defaultClassname, highlightedClassname, openClassname, disabledClassname, `cursor-pointer px-2 py-1`, RadiusClasses('base'));
   const subContentClassname = cn(defaultClassname, RadiusClasses('medium'), `z-50 min-w-[8rem] flex-col border border-primary h-auto w-auto overflow-hidden shadow-lg animate-enter`);
@@ -100,7 +103,7 @@ export const MenubarMenu = (props: MenubarMenuProps) => {
           <MenubarPrimitive.Sub {...rest}>
             <MenubarSubTrigger className={subTriggerClassname}>
               {icon}
-              {label}
+              {children}
               {shortcut && <MenubarShortcut shortcut={shortcut} />}
             </MenubarSubTrigger>
             <MenubarSubContent className={cn(subContentClassname)}>
@@ -123,13 +126,13 @@ export const MenubarMenu = (props: MenubarMenuProps) => {
       default:
         return null;
     }
-  }, [icon, label, rest, shortcut, subContentClassname, subItemClassname, subTriggerClassname]);
+  }, [icon, children, rest, shortcut, subContentClassname, subItemClassname, subTriggerClassname]);
 
    return (
       <MenubarPrimitive.Menu {...rest}>
         <MenubarTrigger className={triggerClassname}>
           {icon}
-          {label}
+          {children}
           {shortcut && <MenubarShortcut shortcut={shortcut} />}
         </MenubarTrigger>
         <MenubarContent className={contentClassname}>
@@ -196,7 +199,7 @@ export const MenubarSubTrigger = forwardRef((props: MenubarSubTriggerProps, ref?
       {...props}
     >
       {children}
-      <IconSetCache.Carbon.ChevronRight className="h-3 w-3 self-end justify-self-end" />
+      <IconSetCache.Carbon.ChevronRight className="h-3 w-3 self-center justify-self-end" />
     </MenubarPrimitive.SubTrigger>
   );
 });
@@ -254,7 +257,7 @@ export interface MenubarRadioGroupProps {
   disabledClassname?: string;
 }
 export const MenubarRadioGroup = (props: MenubarRadioGroupProps) => {
-  const { items = [], value: initialValue=items?.[0]?.label, onValueChange: onValueChangeCallback, radioRadius='full', className, disabledClassname, ...rest } = props;
+  const { items = [], value: initialValue=items?.[0]?.children, onValueChange: onValueChangeCallback, radioRadius='full', className, disabledClassname, ...rest } = props;
   const [value, setValue] = React.useState(initialValue);
 
   const onValueChange = (newValue: string) => {
@@ -269,7 +272,7 @@ export const MenubarRadioGroup = (props: MenubarRadioGroupProps) => {
       className={cn('flex-col w-full')}
     >
       {items.map((item: any, idx: number) => {
-        item.value = item.value || item.label || idx;
+        item.value = item.value || item.children || idx;
         return (
             <MenubarPrimitive.RadioItem
               key={idx}
@@ -285,7 +288,7 @@ export const MenubarRadioGroup = (props: MenubarRadioGroupProps) => {
                 <IconSetCache.Carbon.RadioButton className={cn("absolute inset-0 w-3 h-3 bg-secondary text-[rgb(var(--border-primary))]", radioRadius && RadiusClasses(radioRadius))} />
                 <MenubarPrimitive.ItemIndicator><IconSetCache.Carbon.DotMark className={cn("absolute inset-0 w-3 h-3 text-accent", radioRadius && RadiusClasses(radioRadius))} /></MenubarPrimitive.ItemIndicator>
               </span>
-              {item.label}
+              {item.children}
             </MenubarPrimitive.RadioItem>
         );
       })}
@@ -297,28 +300,28 @@ export const MenubarRadioGroup = (props: MenubarRadioGroupProps) => {
 // MenubarCheckboxItem
 // --------------------------------------------------
 export interface MenubarCheckboxItemProps {
-  label?: string | { label: string; activeLabel: string };
+  children?: string | { children: string; activechildren: string };
   checked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
   checkboxRadius?: Radius;
   className?: string;
 }
 export const MenubarCheckboxItem = (props: MenubarCheckboxItemProps) => {
-  const { label, checked: initialChecked=false, onCheckedChange: onCheckedChangeCallback, checkboxRadius='small', className, ...rest } = props;
+  const { children, checked: initialChecked=false, onCheckedChange: onCheckedChangeCallback, checkboxRadius='small', className, ...rest } = props;
   const [checked, setChecked] = React.useState(initialChecked);
 
-  const getLongerLabelLength = () => {
-    if (typeof label === "string") return label.length;
-    if (label) {
-      return label.label.length > (label.activeLabel?.length || 0) ? label.label.length : label.activeLabel?.length;
+  const getLongerchildrenLength = () => {
+    if (typeof children === "string") return children.length;
+    if (children) {
+      return children.children.length > (children.activechildren?.length || 0) ? children.children.length : children.activechildren?.length;
     }
     return 0;
   };
 
-  const renderLabel = () => {
-    if (typeof label === "string") return label;
-    if (label) {
-      return checked && label.activeLabel ? label.activeLabel : label.label;
+  const renderchildren = () => {
+    if (typeof children === "string") return children;
+    if (children) {
+      return checked && children.activechildren ? children.activechildren : children.children;
     }
     return '';
   };
@@ -344,7 +347,7 @@ export const MenubarCheckboxItem = (props: MenubarCheckboxItemProps) => {
         <div className={cn("absolute inset-0 w-3 h-3 border border-primary", `group-radix-state-checked:bg-accent/50 group-radix-state-unchecked:bg-secondary`, checkboxRadius && RadiusClasses(checkboxRadius) )} />
         <MenubarPrimitive.ItemIndicator><IconSetCache.Carbon.Checkmark className={cn("absolute inset-0 w-2.5 h-2.5 left-[0.0625rem] top-[0.0625rem] text-primary")} /></MenubarPrimitive.ItemIndicator>
       </span>
-      <span className={cn(`${getLongerLabelLength()}ch`)}>{renderLabel()}</span>
+      <span className={cn(`${getLongerchildrenLength()}ch`)}>{renderchildren()}</span>
     </MenubarPrimitive.CheckboxItem>
   )
 };
@@ -354,14 +357,14 @@ export const MenubarCheckboxItem = (props: MenubarCheckboxItemProps) => {
 // --------------------------------------------------
 export interface MenubarItemProps extends MenubarPrimitive.MenubarItemProps {
   icon?: React.ReactNode;
-  label?: string;
+  children?: string;
   shortcut?: string;
   className?: string;
 }
 export const MenubarItem = (props: MenubarItemProps) => {
   const {
     icon,
-    label,
+    children,
     shortcut,
     className,
     ...rest
@@ -375,7 +378,7 @@ export const MenubarItem = (props: MenubarItemProps) => {
     >
       <>
         {icon}
-        {label}
+        {children}
       </>
       {shortcut && <MenubarShortcut shortcut={shortcut} />}
     </MenubarPrimitive.Item>
@@ -383,13 +386,13 @@ export const MenubarItem = (props: MenubarItemProps) => {
 };
 
 // --------------------------------------------------
-// MenubarLabel
+// <MenubarLabel />
 // --------------------------------------------------
 export interface MenubarLabelProps extends MenubarPrimitive.MenubarLabelProps {
-  label?: string;
+  children?: string;
 }
 export const MenubarLabel = forwardRef((props: MenubarLabelProps, ref?: any) => {
-  const { label, ...rest } = props;
+  const { children, ...rest } = props;
   return (
     <MenubarPrimitive.Label
       ref={ref}
@@ -397,7 +400,7 @@ export const MenubarLabel = forwardRef((props: MenubarLabelProps, ref?: any) => 
         'relative flex items-center gap-1 h-[25px] w-full px-[10px] font-bold',
       )}
     >
-      {label}
+      {children}
     </MenubarPrimitive.Label>
   );
 });

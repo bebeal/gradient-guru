@@ -50,7 +50,7 @@ export const Panel = forwardRef((props: PanelProps, ref?: any) => {
     <PanelPrimitive.Item
       value={'item'}
       className={cn(
-        "flex overflow-hidden border border-transparent rounded-lg",
+        "flex overflow-hidden rounded-lg",
         {
           [Direction.up]: "flex-col-reverse h-full",
           [Direction.left]: "flex-row-reverse rounded-r-none",

@@ -1,3 +1,5 @@
+import { cn } from '@/utils'
+import { Kbd as Kbd2 } from '@/components'
 import { kbd } from './shared'
 
 /** @internal */
@@ -7,11 +9,10 @@ export interface KbdProps {
 
 /** @internal */
 export function Kbd({ children }: KbdProps) {
+
 	return (
-		<kbd className="tlui-kbd">
-			{kbd(children).map((k, i) => (
-				<span key={i}>{k}</span>
-			))}
-		</kbd>
+		<Kbd2>
+			{kbd(children).join('')}
+		</Kbd2>
 	)
 }
