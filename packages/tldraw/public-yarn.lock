@@ -1477,6 +1477,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.23.5":
+  version: 7.23.5
+  resolution: "@babel/runtime@npm:7.23.5"
+  dependencies:
+    regenerator-runtime: ^0.14.0
+  checksum: 164d9802424f06908e62d29b8fd3a87db55accf82f46f964ac481dcead11ff7df8391e3696e5fa91a8ca10ea8845bf650acd730fa88cf13f8026cd8d5eec6936
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.18.10, @babel/template@npm:^7.20.7, @babel/template@npm:^7.22.15, @babel/template@npm:^7.3.3":
   version: 7.22.15
   resolution: "@babel/template@npm:7.22.15"
@@ -4508,6 +4517,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.57.0
     "@typescript-eslint/parser": ^5.57.0
     auto: ^10.46.0
+    clsx: ^2.0.0
     eslint: ^8.37.0
     eslint-config-prettier: ^8.8.0
     eslint-plugin-deprecation: ^2.0.0
@@ -4527,6 +4537,7 @@ __metadata:
     prettier-plugin-organize-imports: ^3.2.2
     rimraf: ^4.4.0
     svgo: ^3.0.2
+    tailwind-merge: ^2.1.0
     tsx: ^3.12.7
     typescript: ^5.0.2
     vercel: ^28.16.15
@@ -4611,6 +4622,7 @@ __metadata:
     canvas-size: ^1.2.6
     chokidar-cli: ^3.0.0
     classnames: ^2.3.2
+    clsx: ^2.0.0
     downscale: ^1.0.6
     hotkeys-js: ^3.11.2
     jest-canvas-mock: ^2.5.2
@@ -4618,6 +4630,7 @@ __metadata:
     lazyrepo: 0.0.0-alpha.27
     lz-string: ^1.4.4
     resize-observer-polyfill: ^1.5.1
+    tailwind-merge: ^2.1.0
   peerDependencies:
     react: ^18
     react-dom: ^18
@@ -7171,6 +7184,13 @@ __metadata:
   version: 1.0.4
   resolution: "clone@npm:1.0.4"
   checksum: d06418b7335897209e77bdd430d04f882189582e67bd1f75a04565f3f07f5b3f119a9d670c943b6697d0afb100f03b866b3b8a1f91d4d02d72c4ecf2bb64b5dd
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "clsx@npm:2.0.0"
+  checksum: a2cfb2351b254611acf92faa0daf15220f4cd648bdf96ce369d729813b85336993871a4bf6978ddea2b81b5a130478339c20d9d0b5c6fc287e5147f0c059276e
   languageName: node
   linkType: hard
 
@@ -15392,6 +15412,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"regenerator-runtime@npm:^0.14.0":
+  version: 0.14.0
+  resolution: "regenerator-runtime@npm:0.14.0"
+  checksum: 1c977ad82a82a4412e4f639d65d22be376d3ebdd30da2c003eeafdaaacd03fc00c2320f18120007ee700900979284fc78a9f00da7fb593f6e6eeebc673fba9a3
+  languageName: node
+  linkType: hard
+
 "regenerator-transform@npm:^0.15.1":
   version: 0.15.1
   resolution: "regenerator-transform@npm:0.15.1"
@@ -16679,6 +16706,15 @@ __metadata:
     typical: ^5.2.0
     wordwrapjs: ^4.0.0
   checksum: 8f41b5671f101a5195747ec1727b1d35ea2cd5bf85addda11cc2f4b36892db9696ce3c2c7334b5b8a122505b34d19135fede50e25678df71b0439e0704fd953f
+  languageName: node
+  linkType: hard
+
+"tailwind-merge@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "tailwind-merge@npm:2.1.0"
+  dependencies:
+    "@babel/runtime": ^7.23.5
+  checksum: b864935b891274f804ab6cc85b937e4b6288c12cc5d03d11a674ad7c0e7346d700eb9f80fb3cc9b391d2d412032c96435c843d6875980cb111c48e453bfde57d
   languageName: node
   linkType: hard
 

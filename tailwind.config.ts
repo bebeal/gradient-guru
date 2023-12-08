@@ -155,6 +155,7 @@ const config: Config = {
       },
       boxShadow: {
         'kbd': 'inset 0 0.05em hsla(0,0%,100%,.372),inset 0 0.25em 0.5em rgba(121,121,250,.031),inset 0 0 rgba(0,0,0,.875),inset 0 0 0 0.075em rgba(222,243,255,.334),inset 0 0.08em 0.17em rgba(0,0,0,.875)',
+        'kbd-hover': 'inset 0 0.05em white,inset 0 0.25em 0.5em rgba(121,121,250,.031),inset 0 0 rgba(0,0,0,.875),inset 0 0 0 0.075em rgb(var(--text-secondary)),inset 0 0.08em 0.17em rgba(0,0,0,.875)',
       },
       keyframes: {
         "accordion-down": {
