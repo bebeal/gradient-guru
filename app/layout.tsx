@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Providers from '@/app/providers';
 
-// uncomment in nextjs 14:
+// add in nextjs 14, remove for nextjs 13:
 // export const viewport: Viewport = {
 //   height: 'device-height',
 //   width: 'device-width',
@@ -13,7 +13,7 @@ import Providers from '@/app/providers';
 //   ],
 // };
 
-// remove this in nextjs 14:
+// remove this in nextjs 14, add for nextjs 13:
 export const viewport: any = {
   viewport: 'width=device-width, height=device-height, initial-scale=1, viewport-fit=cover',
   themeColor: [

@@ -2,7 +2,7 @@
 
 import { IconSetCache, Menubar } from '@/components';
 
-export const MenubarMenus: any = [
+const MenubarMenus: any = [
   {
     children: 'File',
     icon: <IconSetCache.Carbon.Document height="100%" />,
@@ -54,10 +54,10 @@ export const MenubarMenus: any = [
 
 ];
 
-export const MenubarCode = ` `;
+const MenubarCode = ` `;
 
 
-export const MenubarPage = () => {
+const MenubarPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-primary text-primary">
     <div className="flex justify-center gap-2 w-[300px] p-4 border border-primary">

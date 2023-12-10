@@ -1,66 +1,80 @@
-import { kbd } from './shared'
-import { clsx, type ClassValue } from 'clsx'
-import { twMerge } from 'tailwind-merge';
-
-export const cn = (...inputs: ClassValue[]): string => {
-  return twMerge(clsx(inputs))
-};
-
-
+import React from 'react'
+import { cn, kbd } from './shared'
 
 /** @internal */
 export interface KbdProps {
-	children: string;
-  className?: string;
-  plusSign?: boolean;
+	children: string
+	className?: string
+	plusSign?: boolean
+	popup?: boolean
 }
 
 /** @internal */
 export function Kbd(props: KbdProps) {
-  const { children, className = '', plusSign = false } = props;
-  const mappedKeys = kbd(children)
+	const { children, className = '', plusSign = false, popup = false } = props
+	const [clicked, setClicked] = React.useState(false)
+	const mappedKeys = kbd(children)
 
-  const formatKeys = () => {
-    const elements = [];
+	const formatKeys = () => {
+		const elements = []
 
-    for (let i = 0; i < mappedKeys.length; i++) {
-      elements.push(<span key={i} className={cn(mappedKeys[i] === '⇧' && 'transform translate-y-[-1px] h-full')}>{mappedKeys[i]}</span>);
-      if (plusSign && i < mappedKeys.length - 1 && mappedKeys[i + 1] !== ' ') {
-        elements.push( '+' );
-      }
-    }
+		for (let i = 0; i < mappedKeys.length; i++) {
+			// I hate that this key is horiztonally offset, so this is to line it up with the other keys
+			elements.push(
+				<span
+					key={i}
+					className={cn(mappedKeys[i] === '⇧' && 'transform translate-y-[-1px] h-full')}
+				>
+					{mappedKeys[i]}
+				</span>
+			)
+			if (plusSign && i < mappedKeys.length - 1 && mappedKeys[i + 1] !== ' ') {
+				elements.push('+')
+			}
+		}
 
-    return elements;
-  };
+		return elements
+	}
 
-  const handleCopy = (e: React.ClipboardEvent) => {
-    const selection = window.getSelection();
-    if (selection) {
-      let text = selection.toString();
-      text = text.replace(/\s\+\s/g, '');
-      e.clipboardData.setData('text/plain', text);
-      e.preventDefault();
-    }
-  };
+	const handleCopy = (e: React.ClipboardEvent) => {
+		const selection = window.getSelection()
+		if (selection) {
+			let text = selection.toString()
+			text = text.replace(/\s\+\s/g, '')
+			e.clipboardData.setData('text/plain', text)
+			e.preventDefault()
+		}
+	}
 
-  return (
-    <kbd
-      className={cn(
-        `flex gap-1 h-auto w-auto items-center justify-center rounded px-1.5 text-[10px] opacity-100`,
-        `shadow-kbd bg-zinc-900 text-kbd-foreground border-kbd-foreground font-mono font-bold`,
-        `hover:bg-zinc-950 cursor-pointer hover:text-primary hover:shadow-kbd-hover`,
-        className,
-      )}
-      onClick={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        if (mappedKeys) {
-          navigator.clipboard.writeText(mappedKeys.join('').replace(/\s\+\s/g, ''));
-        }
-        
-        
-      }}
-      onCopy={handleCopy}
-    >{formatKeys()}</kbd>
-  );
+	const handleClick = (e: React.MouseEvent) => {
+		e.stopPropagation()
+		e.preventDefault()
+		if (mappedKeys) {
+			navigator.clipboard.writeText(mappedKeys.join('').replace(/\s\+\s/g, ''))
+		}
+		if (popup) {
+			setClicked(true)
+			setTimeout(() => setClicked(false), 300)
+		}
+	}
+
+	return (
+		<kbd
+			className={cn(
+				`relative flex gap-1 h-auto w-auto items-center justify-center rounded px-1.5 text-[10px] opacity-100`,
+				`shadow-kbd bg-zinc-900 text-kbd-foreground border-kbd-foreground font-mono font-bold`,
+				`hover:bg-zinc-950 cursor-pointer hover:text-primary hover:shadow-kbd-hover`,
+				className
+			)}
+			onClick={handleClick}
+			onCopy={handleCopy}
+		>
+			{formatKeys()}
+			{clicked && (
+				<span className="absolute top-0 -mt-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs rounded py-1 px-2">
+					Copied
+				</span>
+			)}
+		</kbd>
+	)
 }

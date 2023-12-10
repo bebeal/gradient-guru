@@ -8,7 +8,7 @@
 .yarn/install-state.gz
 /assets/icons/Carbon
 /assets/icons/Tldraw
-
+/packages/tldraw/.git/*
 
 # testing
 /coverage
@@ -49,3 +49,4 @@ next-env.d.ts
 # amplify
 .amplify
 amplifyconfiguration*
+.amplify.yml

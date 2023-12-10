@@ -1,11 +1,12 @@
 
-import React, { InputHTMLAttributes, forwardRef, useCallback } from 'react';
+import React, { InputHTMLAttributes, forwardRef, useCallback, useEffect, useState } from 'react';
 import { Radius, RadiusClasses, cn, noop } from '@/utils';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   type?: string;
   radius?: Radius;
   extraCharWidth?: number;
+  placeholder?: string;
 }
 
 export const Input = forwardRef((props: InputProps, ref: any) => {
@@ -15,15 +16,25 @@ export const Input = forwardRef((props: InputProps, ref: any) => {
     className='',
     placeholder='',
     extraCharWidth=1,
-    value,
-    onChange=noop,
+    value='',
+    onChange: onChangeCallback=noop,
     ...rest
   } = props;
+  const [internalValue, setInternalValue] = useState(value);
+
+  useEffect(() => {
+    setInternalValue(value);
+  }, [value]);
+
+  const onChange = useCallback((e: any) => {
+    setInternalValue(e.target.value);
+    onChangeCallback?.(e);
+  }, [onChangeCallback]);
 
   const getNumChars = useCallback(() => {
-    const length = value ? value.toString().length : placeholder.length;
+    const length = internalValue ? internalValue.toString().length : placeholder?.toString()?.length;
     return Math.min(Math.max(length, 2), 20);
-  }, [value, placeholder]);
+  }, [internalValue, placeholder]);
 
   return (
     <input
@@ -31,7 +42,7 @@ export const Input = forwardRef((props: InputProps, ref: any) => {
       type={type}
       ref={ref}
       placeholder={placeholder}
-      value={value}
+      value={internalValue}
       onChange={onChange}
       size={getNumChars() + extraCharWidth}
       className={cn(

@@ -1,4 +1,4 @@
-const nextJest = require('next/jest')
+import nextJest from 'next/jest'
  
 // Providing the path to your Next.js app which will enable loading next.config.js and .env files
 const createJestConfig = nextJest({ dir: './' })
@@ -23,4 +23,4 @@ async function jestConfig() {
   return nextJestConfig
 }
 
-module.exports = jestConfig
+export default jestConfig

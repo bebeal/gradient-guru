@@ -3,6 +3,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import requests
 from bs4 import BeautifulSoup
 import tempfile
@@ -68,7 +69,7 @@ def handle_progress_bar(svgs: list, directory: str, source_url: str="", from_git
     # Remove dupes and sort
     svgs = sorted(list(set(svgs)))
     pbar_format = "{desc}: {percentage:3.0f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]"
-    with tqdm(total=len(svgs), unit="set", bar_format=pbar_format, leave=False, position=position) as pbar:
+    with tqdm(total=len(svgs), unit="set", bar_format=pbar_format, leave=False, position=position, file=sys.stdout) as pbar:
         new_svgs = []
         for svg in svgs:
             svg_url = f"{source_url}{svg}" if not from_git else os.path.join(repo_path, svg)
@@ -100,12 +101,11 @@ def handle_progress_bar(svgs: list, directory: str, source_url: str="", from_git
                     file.write(content)
             pbar.set_description(f"Downloading {svg}")
             pbar.update(1)
+            pbar.refresh()
         pbar.set_description(f"Generating {directory} iconset file")
         generate_iconset_file(new_svgs, directory, source_url, clean=True)
         icon_set_name = directory.split('/')[-1]
         pbar.set_description(f"Finished {icon_set_name} iconset")
-    # Print the final state of each icon set's progress bar
-    print(f"Processing {icon_set_name}: 100%|{'█'*50}| {len(svgs)}/{len(svgs)} [{pbar.format_interval(pbar.last_print_t - pbar.start_t)}]")
 
 # Function to download SVGs from GitHub using git
 def download_from_github_with_git(repo: str, path: str, directory: str, max_depth: int, clean: bool = True, position: int = 1) -> None:
@@ -197,7 +197,7 @@ def download_iconsets(max_depth, clean):
     
     # Overall progress bar
     total_iconsets = len(iconsets)
-    with tqdm(total=total_iconsets, unit="iconset", leave=True, ncols=300) as overall_pbar:
+    with tqdm(total=total_iconsets, unit="iconset", leave=True, ncols=50, position=0, file=sys.stdout) as overall_pbar:
         position = 1
         for iconset_name in iconsets:
             overall_pbar.set_description(f"Downloading {iconset_name}")
@@ -206,8 +206,8 @@ def download_iconsets(max_depth, clean):
                 shutil.rmtree(directory, ignore_errors=True)
             download_svgs(iconsets[iconset_name]["url"], directory, max_depth, clean, position)
             position += 1
-            overall_pbar.set_description(f"Finished {iconset_name} iconset")
             overall_pbar.update(1)
+            overall_pbar.refresh()
 
 # Main function
 def main() -> None:

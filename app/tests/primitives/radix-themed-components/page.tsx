@@ -2923,7 +2923,8 @@ const PrimitivesTest = () => {
                               </td>
                               <td>
                                 <SelectRoot>
-                                  <SelectTrigger variant={variant} placeholder="Choose a fruit…" />
+                                  {/*  placeholder="Choose a fruit…" */}
+                                  <SelectTrigger variant={variant} />
                                   <SelectContent
                                     variant={selectTriggerVariantToSelectContentVariant(variant)}
                                   >

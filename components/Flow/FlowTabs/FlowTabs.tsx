@@ -1,3 +1,4 @@
+'use client'
 
 import { memo, useMemo } from 'react';
 import { EventsTab, IconSetCache, ModelTab, NodesTab, SidePanel, StateTab } from '@/components';

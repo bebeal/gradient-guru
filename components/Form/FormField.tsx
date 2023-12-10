@@ -9,7 +9,8 @@ import { FormDescription } from "./FormDescription";
 import { FormLabel } from "./FormLabel";
 import { cn } from "@/utils";
 import { FormMessage } from "./FormMessage";
-import { Accordion, Checkbox, FormFields, Input, Select, Slider, Switch } from '@/components';
+import { Accordion, Checkbox, Input, Select, Slider, Switch } from '@/components';
+import { FormFields } from "./shared";
 
 export type FormItemProps = {
   className?: string;

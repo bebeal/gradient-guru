@@ -24,7 +24,8 @@
     "paths": {                                              // paths lets you declare how TypeScript should resolve an import in your require/imports.
       "@/*": ["./*"],
       "@tldraw/*": ["packages/tldraw/packages/*"],
-      "react": ["./node_modules/@types/react"]
+      "react": ["./node_modules/@types/react"],
+      "react-dom": ["./node_modules/@types/react-dom"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.config.js"],

@@ -178,13 +178,15 @@ SelectItem.displayName = SelectPrimitive.Item.displayName;
 // ***********************
 export interface SelectTriggerProps extends SelectPrimitive.SelectTriggerProps {
   radius?: Radius;
+  placeholder?: string;
 }
 export const SelectTrigger = forwardRef<any, SelectTriggerProps>((props, ref) => {
   const { className = '', placeholder = '', radius = 'medium', value, ...rest } = props;
   return (
     <SelectPrimitive.Trigger
       ref={ref}
-      placeholder={placeholder}
+      // placeholder={placeholder}
+      defaultValue={placeholder}
       className={cn(
         `relative text-secondary flex w-full h-auto overflow-hidden justify-center items-center whitespace-normal break-all border border-secondary bg-secondary px-2 py-0.5 text-sm shadow-sm`,
         `placeholder:text-muted focus:outline-none focus:ring-inset focus:ring-1 focus:ring-accent disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1`,

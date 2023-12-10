@@ -1,3 +1,5 @@
+'use client'
+
 import { useCallback } from 'react';
 import { Accordion, BulletedList, FlowTab, Form, TabTitle, TimelineScrubber, ToggleTitle } from '@/components';
 import { ContentRecorderContextType, useContentRecorder, useContentExtractor } from '@/hooks';

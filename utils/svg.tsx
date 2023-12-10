@@ -1,9 +1,11 @@
 'use client'
-import { ReactElement, isValidElement, useEffect, useRef, useState } from "react";
+
+import React, { ReactElement, isValidElement, useEffect, useRef, useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import ReactDOM from "react-dom/client";
+
 import styled from "styled-components";
 import { cn } from "./utils";
-import ReactDOMServer from 'react-dom/server';
-import React from 'react';
 
 // Check if a react element is an svg in various ways
 export const isSVG = (svg: ReactElement): boolean => {
