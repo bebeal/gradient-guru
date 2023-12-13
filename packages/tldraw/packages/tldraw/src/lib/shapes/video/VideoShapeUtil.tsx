@@ -60,7 +60,7 @@ function serializeVideo(id: string): string {
 		const canvas = document.createElement('canvas')
 		canvas.width = video.videoWidth
 		canvas.height = video.videoHeight
-		canvas.getContext('2d')!.drawImage(video, 0, 0)
+		canvas.getContext('2d', { willReadFrequently: true })!.drawImage(video, 0, 0)
 		return canvas.toDataURL('image/png')
 	} else throw new Error('Video with id ' + splitId + ' not found')
 }

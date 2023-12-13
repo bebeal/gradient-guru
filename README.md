@@ -23,12 +23,6 @@ yarn dev
 yarn clean
 ```
 
-* One time initially to generate iconset assets and ts files
-
-```bash
-yarn generate-iconsets
-```
-
 * Build for deployment
   * Under the hood this will build tldraw embed in packages/tldraw
 
@@ -135,6 +129,7 @@ yarn build
     * [`/icon-sets`](https://gradient-guru.com/tests/icon-sets)
     * [`/palettes`](https://gradient-guru.com/tests/palettes)
     * [`/plotly`](https://gradient-guru.com/tests/plotly)
+    * [`/tiptap`](https://gradient-guru.com/tests/tiptap)
     * [`/tldraw`](https://gradient-guru.com/tests/tldraw)
     * [`/primitives`](https://gradient-guru.com/tests/primitives)
       * [`/accordion`](https://gradient-guru.com/tests/primitives/accordion)

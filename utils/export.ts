@@ -192,7 +192,7 @@ export const getSvgAsImage = async (svg: SVGElement, isSafari: boolean, options:
 			}
 
 			const canvas = document.createElement('canvas') as HTMLCanvasElement
-			const ctx = canvas.getContext('2d')!
+			const ctx = canvas.getContext('2d', { willReadFrequently: true })!
 
 			canvas.width = scaledWidth
 			canvas.height = scaledHeight

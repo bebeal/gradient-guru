@@ -11,7 +11,7 @@ export const defaultVariants = ['classic', 'solid', 'soft', 'surface', 'outline'
 export type DefaultVariant = (typeof defaultVariants)[number];
 
 // Custom variants
-export const customVariants = ['gradient', 'glow'] as const;
+export const customVariants = ['gradient', 'glow', 'none'] as const;
 export type CustomVariant = (typeof customVariants)[number];
 
 // Merged variants
@@ -44,6 +44,7 @@ export const VariantClasses = (variant: CustomVariant = 'gradient') => {
   return {
     gradient: cn(`outline-0 bg-transparent focus:shadow-[0_0_0_1px_#FFFFFF]`),
     glow: cn(),
+    none: cn(`outline-0 bg-transparent text-primary`),
   }[variant];
 };
 

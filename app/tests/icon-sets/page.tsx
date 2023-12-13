@@ -11,7 +11,7 @@ interface PageState {
 }
 
 const IconSetsPage = () => {
-  const [size, setSize] = useState<number>(32);
+  const [size, setSize] = useState<number>(24);
   const [currentPage, setCurrentPage] = useState<PageState>({});
   const [globalSearchQuery, setGlobalSearchQuery] = useState<string>('');
   const [localSearchQueries, setLocalSearchQueries] = useState<{ [key: string]: string }>({});
@@ -78,15 +78,25 @@ const IconSetsPage = () => {
   };
 
   return (
-    <div className='p-4'>
+    <div className='p-8'>
+      <div className='flex flex-row w-full justify-center items-center p-2'>
       <Input
         extraCharWidth={10}
         type="text"
         placeholder="Search icons or sets..."
         value={globalSearchQuery}
         onChange={handleGlobalSearchChange}
-        className="w-full p-1 m-2 border border-gray-300 rounded"
+        className="w-full mr-2 border border-gray-300 rounded"
       />
+      <Input
+        extraCharWidth={10}
+        type="number"
+        placeholder="Icon size..."
+        value={size}
+        onChange={(e) => setSize(parseInt(e.target.value))}
+        className="w-auto ml-2 border border-gray-300 rounded"
+      />
+      </div>
       {filteredIconSets.map((iconSetName: string) => {
         const IconSet = IconSetCache[iconSetName];
         const page = currentPage[iconSetName] || 0;
@@ -96,7 +106,7 @@ const IconSetsPage = () => {
         );
 
         return (
-          <div key={iconSetName} className="flex flex-col justify-center items-center gap-4 rounded p-8">
+          <div key={iconSetName} className="flex flex-col justify-center items-center gap-4 rounded p-2">
             <Accordion
               spaceBetween={16}
               items={[
@@ -116,7 +126,7 @@ const IconSetsPage = () => {
                               [iconSetName]: e.target.value,
                             })
                           }
-                          className="w-full p-1 m-2 border border-gray-300 rounded"
+                          className="w-full m-2 border border-gray-300 rounded"
                         />
                         <div className="grid grid-cols-6 gap-2 w-full h-full justify-center items-center">
                           {paginatedIcons.map(([IconName, Icon]: [string, any]) => (
@@ -126,7 +136,7 @@ const IconSetsPage = () => {
                             >
                               <div
                                 className={cn(
-                                  `flex flex-col items-center justify-center gap-1 w-full h-[${size + 64}px] p-1`
+                                  `flex flex-col items-center justify-center gap-1 w-full h-[${size + 32}px] p-1`
                                 )}
                               >
                                 {Icon && <Icon width={`${size}`} height={`${size}`} />}

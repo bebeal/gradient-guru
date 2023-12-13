@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-export const Airbnb = forwardRef((props: any, ref: any) => {
+const Airbnb = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 275">
       <path
@@ -10,7 +10,7 @@ export const Airbnb = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Apple = forwardRef((props: any, ref: any) => {
+const Apple = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 315">
       <path
@@ -20,7 +20,7 @@ export const Apple = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const AppleAppStore = forwardRef((props: any, ref: any) => {
+const AppleAppStore = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <defs>
@@ -37,14 +37,14 @@ export const AppleAppStore = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const ApplePay = forwardRef((props: any, ref: any) => {
+const ApplePay = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 512 211">
       <path d="M93.552 27.103c-6 7.1-15.602 12.702-25.203 11.901c-1.2-9.6 3.5-19.802 9.001-26.103C83.35 5.601 93.852.4 102.353 0c1 10.001-2.9 19.802-8.8 27.103Zm8.701 13.802c-13.902-.8-25.803 7.9-32.404 7.9c-6.7 0-16.802-7.5-27.803-7.3c-14.301.2-27.603 8.3-34.904 21.202c-15.002 25.803-3.9 64.008 10.601 85.01c7.101 10.401 15.602 21.802 26.803 21.402c10.602-.4 14.802-6.9 27.604-6.9c12.901 0 16.602 6.9 27.803 6.7c11.601-.2 18.902-10.4 26.003-20.802c8.1-11.801 11.401-23.303 11.601-23.903c-.2-.2-22.402-8.7-22.602-34.304c-.2-21.402 17.502-31.603 18.302-32.203c-10.002-14.802-25.603-16.402-31.004-16.802Zm80.31-29.004V167.82h24.202v-53.306h33.504c30.603 0 52.106-21.002 52.106-51.406c0-30.403-21.103-51.206-51.306-51.206h-58.507Zm24.202 20.403h27.903c21.003 0 33.004 11.201 33.004 30.903c0 19.702-12.001 31.004-33.104 31.004h-27.803V32.304ZM336.58 169.019c15.202 0 29.303-7.7 35.704-19.902h.5v18.702h22.403V90.21c0-22.502-18.002-37.004-45.706-37.004c-25.703 0-44.705 14.702-45.405 34.904h21.803c1.8-9.601 10.7-15.902 22.902-15.902c14.802 0 23.103 6.901 23.103 19.603v8.6l-30.204 1.8c-28.103 1.7-43.304 13.202-43.304 33.205c0 20.202 15.701 33.603 38.204 33.603Zm6.5-18.502c-12.9 0-21.102-6.2-21.102-15.702c0-9.8 7.901-15.501 23.003-16.401l26.903-1.7v8.8c0 14.602-12.401 25.003-28.803 25.003Zm82.01 59.707c23.603 0 34.704-9 44.405-36.304L512 54.706h-24.603l-28.503 92.11h-.5l-28.503-92.11h-25.303l41.004 113.513l-2.2 6.901c-3.7 11.701-9.701 16.202-20.402 16.202c-1.9 0-5.6-.2-7.101-.4v18.702c1.4.4 7.4.6 9.201.6Z"></path>
     </svg>
   );
 });
-export const AWS = forwardRef((props: any, ref: any) => {
+const AWS = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <path
@@ -58,7 +58,7 @@ export const AWS = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const DeepMind = forwardRef((props: any, ref: any) => {
+const DeepMind = forwardRef((props: any, ref: any) => {
   return (
     <div style={{ backgroundColor: '#0053d6', borderRadius: '5px', alignItems: 'center', display: 'inline-flex', justifyContent: 'center' }}>
       <div style={{ transform: 'scale(0.8)', alignItems: 'center', justifyContent: 'center', display: 'flex', width: '100%', height: '100%' }}>
@@ -74,7 +74,7 @@ export const DeepMind = forwardRef((props: any, ref: any) => {
     </div>
   );
 });
-export const Facebook = forwardRef((props: any, ref: any) => {
+const Facebook = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <rect width="118.35" height="118.35" x="4.83" y="4.83" fill="#3d5a98" rx="6.53" ry="6.53" />
@@ -82,7 +82,7 @@ export const Facebook = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Meta = forwardRef((props: any, ref: any) => {
+const Meta = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 1567 1041">
       <defs>
@@ -108,7 +108,7 @@ export const Meta = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Github = forwardRef((props: any, ref: any) => {
+const Github = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 98 96">
       <path
@@ -120,7 +120,7 @@ export const Github = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const HuggingFace = forwardRef((props: any, ref: any) => {
+const HuggingFace = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} preserveAspectRatio="xMidYMid meet" viewBox="0 0 90 90">
       <defs>
@@ -156,14 +156,14 @@ export const HuggingFace = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const OpenAI = forwardRef((props?: any, ref?: any) => {
+const OpenAI = forwardRef((props?: any, ref?: any) => {
   return (
     <svg ref={ref} {...props} width={'32'} height={'32'} viewBox="0 0 41 41" fill="currentColor" strokeWidth="1.5">
       <path d="M37.5324 16.8707C37.9808 15.5241 38.1363 14.0974 37.9886 12.6859C37.8409 11.2744 37.3934 9.91076 36.676 8.68622C35.6126 6.83404 33.9882 5.3676 32.0373 4.4985C30.0864 3.62941 27.9098 3.40259 25.8215 3.85078C24.8796 2.7893 23.7219 1.94125 22.4257 1.36341C21.1295 0.785575 19.7249 0.491269 18.3058 0.500197C16.1708 0.495044 14.0893 1.16803 12.3614 2.42214C10.6335 3.67624 9.34853 5.44666 8.6917 7.47815C7.30085 7.76286 5.98686 8.3414 4.8377 9.17505C3.68854 10.0087 2.73073 11.0782 2.02839 12.312C0.956464 14.1591 0.498905 16.2988 0.721698 18.4228C0.944492 20.5467 1.83612 22.5449 3.268 24.1293C2.81966 25.4759 2.66413 26.9026 2.81182 28.3141C2.95951 29.7256 3.40701 31.0892 4.12437 32.3138C5.18791 34.1659 6.8123 35.6322 8.76321 36.5013C10.7141 37.3704 12.8907 37.5973 14.9789 37.1492C15.9208 38.2107 17.0786 39.0587 18.3747 39.6366C19.6709 40.2144 21.0755 40.5087 22.4946 40.4998C24.6307 40.5054 26.7133 39.8321 28.4418 38.5772C30.1704 37.3223 31.4556 35.5506 32.1119 33.5179C33.5027 33.2332 34.8167 32.6547 35.9659 31.821C37.115 30.9874 38.0728 29.9178 38.7752 28.684C39.8458 26.8371 40.3023 24.6979 40.0789 22.5748C39.8556 20.4517 38.9639 18.4544 37.5324 16.8707ZM22.4978 37.8849C20.7443 37.8874 19.0459 37.2733 17.6994 36.1501C17.7601 36.117 17.8666 36.0586 17.936 36.0161L25.9004 31.4156C26.1003 31.3019 26.2663 31.137 26.3813 30.9378C26.4964 30.7386 26.5563 30.5124 26.5549 30.2825V19.0542L29.9213 20.998C29.9389 21.0068 29.9541 21.0198 29.9656 21.0359C29.977 21.052 29.9842 21.0707 29.9867 21.0902V30.3889C29.9842 32.375 29.1946 34.2791 27.7909 35.6841C26.3872 37.0892 24.4838 37.8806 22.4978 37.8849ZM6.39227 31.0064C5.51397 29.4888 5.19742 27.7107 5.49804 25.9832C5.55718 26.0187 5.66048 26.0818 5.73461 26.1244L13.699 30.7248C13.8975 30.8408 14.1233 30.902 14.3532 30.902C14.583 30.902 14.8088 30.8408 15.0073 30.7248L24.731 25.1103V28.9979C24.7321 29.0177 24.7283 29.0376 24.7199 29.0556C24.7115 29.0736 24.6988 29.0893 24.6829 29.1012L16.6317 33.7497C14.9096 34.7416 12.8643 35.0097 10.9447 34.4954C9.02506 33.9811 7.38785 32.7263 6.39227 31.0064ZM4.29707 13.6194C5.17156 12.0998 6.55279 10.9364 8.19885 10.3327C8.19885 10.4013 8.19491 10.5228 8.19491 10.6071V19.808C8.19351 20.0378 8.25334 20.2638 8.36823 20.4629C8.48312 20.6619 8.64893 20.8267 8.84863 20.9404L18.5723 26.5542L15.206 28.4979C15.1894 28.5089 15.1703 28.5155 15.1505 28.5173C15.1307 28.5191 15.1107 28.516 15.0924 28.5082L7.04046 23.8557C5.32135 22.8601 4.06716 21.2235 3.55289 19.3046C3.03862 17.3858 3.30624 15.3413 4.29707 13.6194ZM31.955 20.0556L22.2312 14.4411L25.5976 12.4981C25.6142 12.4872 25.6333 12.4805 25.6531 12.4787C25.6729 12.4769 25.6928 12.4801 25.7111 12.4879L33.7631 17.1364C34.9967 17.849 36.0017 18.8982 36.6606 20.1613C37.3194 21.4244 37.6047 22.849 37.4832 24.2684C37.3617 25.6878 36.8382 27.0432 35.9743 28.1759C35.1103 29.3086 33.9415 30.1717 32.6047 30.6641C32.6047 30.5947 32.6047 30.4733 32.6047 30.3889V21.188C32.6066 20.9586 32.5474 20.7328 32.4332 20.5338C32.319 20.3348 32.154 20.1698 31.955 20.0556ZM35.3055 15.0128C35.2464 14.9765 35.1431 14.9142 35.069 14.8717L27.1045 10.2712C26.906 10.1554 26.6803 10.0943 26.4504 10.0943C26.2206 10.0943 25.9948 10.1554 25.7963 10.2712L16.0726 15.8858V11.9982C16.0715 11.9783 16.0753 11.9585 16.0837 11.9405C16.0921 11.9225 16.1048 11.9068 16.1207 11.8949L24.1719 7.25025C25.4053 6.53903 26.8158 6.19376 28.2383 6.25482C29.6608 6.31589 31.0364 6.78077 32.2044 7.59508C33.3723 8.40939 34.2842 9.53945 34.8334 10.8531C35.3826 12.1667 35.5464 13.6095 35.3055 15.0128ZM14.2424 21.9419L10.8752 19.9981C10.8576 19.9893 10.8423 19.9763 10.8309 19.9602C10.8195 19.9441 10.8122 19.9254 10.8098 19.9058V10.6071C10.8107 9.18295 11.2173 7.78848 11.9819 6.58696C12.7466 5.38544 13.8377 4.42659 15.1275 3.82264C16.4173 3.21869 17.8524 2.99464 19.2649 3.1767C20.6775 3.35876 22.0089 3.93941 23.1034 4.85067C23.0427 4.88379 22.937 4.94215 22.8668 4.98473L14.9024 9.58517C14.7025 9.69878 14.5366 9.86356 14.4215 10.0626C14.3065 10.2616 14.2466 10.4877 14.2479 10.7175L14.2424 21.9419ZM16.071 17.9991L20.4018 15.4978L24.7325 17.9975V22.9985L20.4018 25.4983L16.071 22.9985V17.9991Z"></path>
     </svg>
   );
 });
-export const Wikipedia = forwardRef((props: any, ref: any) => {
+const Wikipedia = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <g transform="translate(1)">
@@ -173,7 +173,7 @@ export const Wikipedia = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Youtube = forwardRef((props: any, ref: any) => {
+const Youtube = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 180">
       <path
@@ -184,7 +184,7 @@ export const Youtube = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Instagram = forwardRef((props: any, ref: any) => {
+const Instagram = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <g fill="none">
@@ -211,7 +211,7 @@ export const Instagram = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Android = forwardRef((props: any, ref: any) => {
+const Android = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 145">
       <path
@@ -221,7 +221,7 @@ export const Android = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Atom = forwardRef((props: any, ref: any) => {
+const Atom = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <circle cx="128.002" cy="128.002" fill="#60B57D" r="128.002"></circle>
@@ -232,21 +232,21 @@ export const Atom = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Codepen = forwardRef((props: any, ref: any) => {
+const Codepen = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <path d="m127.574.007l.222-.005h.41l.28.008l.333.018c2.146.142 4.138.844 5.834 1.96l115.73 76.804a12.052 12.052 0 0 1 3.174 2.934l.224.306l.155.225A12.06 12.06 0 0 1 256 88.941v77.87a12.064 12.064 0 0 1-1.794 6.51l-.132.209l-.138.21a12.082 12.082 0 0 1-3.216 3.244l-115.88 76.9a12.048 12.048 0 0 1-6.004 2.085l-.513.024l-.323.005h-.21l-.315-.012l-.327-.018a12.043 12.043 0 0 1-5.959-2.065L5.649 177.226a12.036 12.036 0 0 1-2.789-2.43l-.027-.034a12.114 12.114 0 0 1-.723-.955l-.046-.067A12.066 12.066 0 0 1 0 166.854V89.186a12.062 12.062 0 0 1 1.453-5.919l.248-.435l.1-.168a12.172 12.172 0 0 1 3.848-3.892L121.168 2.109a12.046 12.046 0 0 1 5.59-2.046l.458-.038l.358-.018ZM70.058 142.6l-36.133 24.307l81.959 54.386v-47.865L70.058 142.6Zm115.883-.001l-45.826 30.829v47.865l81.957-54.388l-36.131-24.306Zm-57.94-38.978l-36.233 24.374L128 152.365l36.232-24.37L128 103.621Zm-103.78 8.143v32.468l24.132-16.234l-24.132-16.234Zm207.537.013l-24.112 16.221l24.112 16.221v-32.442ZM115.884 34.686L33.918 89.083l36.143 24.311l45.823-30.826V34.686Zm24.231.013v47.869l45.823 30.826l36.14-24.308l-81.963-54.387Z"></path>
     </svg>
   );
 });
-export const CodeSandbox = forwardRef((props: any, ref: any) => {
+const CodeSandbox = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <path d="M256 0v256H0V0h256Zm-26.182 26.182H26.182v203.636h203.636V26.182Z"></path>
     </svg>
   );
 });
-export const Discord = forwardRef((props: any, ref: any) => {
+const Discord = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <g fill="none">
@@ -266,7 +266,7 @@ export const Discord = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Jetbrains = forwardRef((props: any, ref: any) => {
+const Jetbrains = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <path d="M0 0h256v256H0z"></path>
@@ -277,7 +277,7 @@ export const Jetbrains = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const JetbrainsSpace = forwardRef((props: any, ref: any) => {
+const JetbrainsSpace = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <defs>
@@ -305,7 +305,7 @@ export const JetbrainsSpace = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Pycharm = forwardRef((props: any, ref: any) => {
+const Pycharm = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <linearGradient id="Pycharm0" x1="38.78" x2="95.91" y1="41.59" y2="41.59" gradientUnits="userSpaceOnUse">
@@ -370,7 +370,7 @@ export const Pycharm = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Eclipse = forwardRef((props: any, ref: any) => {
+const Eclipse = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 240">
       <defs>
@@ -405,7 +405,7 @@ export const Eclipse = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const KhanAcademy = forwardRef((props: any, ref: any) => {
+const KhanAcademy = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 276">
       <path
@@ -420,7 +420,7 @@ export const KhanAcademy = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const LinuxKernel = forwardRef((props: any, ref: any) => {
+const LinuxKernel = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <g fill="none">
@@ -453,7 +453,7 @@ export const LinuxKernel = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Linkedin = forwardRef((props: any, ref: any) => {
+const Linkedin = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <g fill="none">
@@ -467,7 +467,7 @@ export const Linkedin = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Microsoft = forwardRef((props: any, ref: any) => {
+const Microsoft = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <path d="M121.666 121.666H0V0h121.666z" fill="#F1511B"></path>
@@ -477,14 +477,14 @@ export const Microsoft = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Windows = forwardRef((props: any, ref: any) => {
+const Windows = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <path fill="#0078d4" d="M67.328 67.331h60.669V128H67.328zm-67.325 0h60.669V128H.003zM67.328 0h60.669v60.669H67.328zM.003 0h60.669v60.669H.003z" />
     </svg>
   );
 });
-export const Netflix = forwardRef((props: any, ref: any) => {
+const Netflix = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <defs>
@@ -522,7 +522,7 @@ export const Netflix = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Reddit = forwardRef((props: any, ref: any) => {
+const Reddit = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <circle cx="128" cy="128" fill="#FF4500" r="128"></circle>
@@ -533,7 +533,7 @@ export const Reddit = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Replit = forwardRef((props: any, ref: any) => {
+const Replit = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 308">
       <path
@@ -543,7 +543,7 @@ export const Replit = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Slack = forwardRef((props: any, ref: any) => {
+const Slack = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <path
@@ -565,7 +565,7 @@ export const Slack = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const StackOverflow = forwardRef((props: any, ref: any) => {
+const StackOverflow = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 304">
       <path d="M216.33 276.188v-81.211h26.953v108.165H0V194.977h26.954v81.211z" fill="#BCBBBB"></path>
@@ -576,7 +576,7 @@ export const StackOverflow = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Tidal = forwardRef((props: any, ref: any) => {
+const Tidal = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 171">
       <path
@@ -586,7 +586,7 @@ export const Tidal = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const TikTok = forwardRef((props: any, ref: any) => {
+const TikTok = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 290">
       <path
@@ -601,7 +601,7 @@ export const TikTok = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Todoist = forwardRef((props: any, ref: any) => {
+const Todoist = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <path d="M224.002 0H31.998C14.358.04.061 14.337 0 32v192c0 17.6 14.397 32 31.998 32h192.004c17.6 0 31.998-14.4 31.998-32V32c0-17.6-14.397-32-31.998-32" fill="#E44332"></path>
@@ -620,14 +620,14 @@ export const Todoist = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Tumblr = forwardRef((props: any, ref: any) => {
+const Tumblr = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} width="100" height="100" viewBox="0 0 50 50">
       <path d="M 40 0 L 10 0 C 4.484375 0 0 4.484375 0 10 L 0 40 C 0 45.515625 4.484375 50 10 50 L 40 50 C 45.515625 50 50 45.515625 50 40 L 50 10 C 50 4.484375 45.515625 0 40 0 Z M 34 40.238281 C 34 40.363281 33.945313 40.480469 33.855469 40.5625 C 33.738281 40.664063 31.011719 43 24.742188 43 C 17.230469 43 17 34.617188 17 33.664063 L 17 23.011719 L 13.429688 23 C 13.191406 23 13 22.816406 13 22.578125 L 13 18.808594 C 13 18.632813 13.109375 18.472656 13.273438 18.40625 C 13.34375 18.382813 20.058594 15.773438 20.058594 9.429688 C 20.058594 9.191406 20.253906 9 20.492188 9 L 24.578125 9 C 24.816406 9 25.007813 9.191406 25.007813 9.429688 L 25 17 L 31.5625 17 C 31.800781 17 31.992188 17.207031 31.992188 17.445313 L 31.992188 22.554688 C 31.992188 22.789063 31.800781 23 31.5625 23 L 25 23 C 25 23 25 33.253906 25 33.503906 C 25 33.75 25.226563 36.765625 28.433594 36.765625 C 31.089844 36.765625 33.320313 35.398438 33.34375 35.382813 C 33.476563 35.296875 33.640625 35.292969 33.777344 35.371094 C 33.914063 35.445313 34 35.589844 34 35.746094 Z"></path>
     </svg>
   );
 });
-export const Firefox = forwardRef((props: any, ref: any) => {
+const Firefox = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <ellipse cx="63.833" cy="63.79" fill="#110070" rx="59.102" ry="59.14" />
@@ -1077,7 +1077,7 @@ export const Firefox = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Figma = forwardRef((props: any, ref: any) => {
+const Figma = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <path fill="#0acf83" d="M45.5 129c11.9 0 21.5-9.6 21.5-21.5V86H45.5C33.6 86 24 95.6 24 107.5S33.6 129 45.5 129zm0 0" />
@@ -1088,7 +1088,7 @@ export const Figma = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Safari = forwardRef((props: any, ref: any) => {
+const Safari = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <linearGradient id="Safari0" x1="295.835" x2="295.835" y1="274.049" y2="272.933" gradientTransform="matrix(112 0 0 -112 -33069.5 30695)" gradientUnits="userSpaceOnUse">
@@ -1108,7 +1108,7 @@ export const Safari = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Putty = forwardRef((props: any, ref: any) => {
+const Putty = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <path fill="#0403ff" d="M69.531 19.84h31.281v20.25H69.531zm0 0" />
@@ -1157,7 +1157,7 @@ export const Putty = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Chrome = forwardRef((props: any, ref: any) => {
+const Chrome = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <circle cx="64.149" cy="64.236" r="60.999" fill="#fff" />
@@ -1204,7 +1204,7 @@ export const Chrome = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Google = forwardRef((props: any, ref: any) => {
+const Google = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 262">
       <path d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622l38.755 30.023l2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4"></path>
@@ -1217,7 +1217,7 @@ export const Google = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const GoogleDeveloper = forwardRef((props: any, ref: any) => {
+const GoogleDeveloper = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 189">
       <defs>
@@ -1262,7 +1262,7 @@ export const GoogleDeveloper = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const GooglePay = forwardRef((props: any, ref: any) => {
+const GooglePay = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 218">
       <path
@@ -1284,7 +1284,7 @@ export const GooglePay = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const GooglePlay = forwardRef((props: any, ref: any) => {
+const GooglePlay = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 274">
       <path d="M188.813 178.875c32.46-17.823 57.067-31.404 59.188-32.46c6.785-3.608 13.792-13.158 0-20.576c-4.453-2.333-28.428-15.491-59.188-32.46l-42.642 43.065l42.642 42.43Z" fill="#FFD900"></path>
@@ -1294,7 +1294,7 @@ export const GooglePlay = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const GoogleDomains = forwardRef((props: any, ref: any) => {
+const GoogleDomains = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 239">
       <path
@@ -1306,7 +1306,7 @@ export const GoogleDomains = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const VSCode = forwardRef((props: any, ref: any) => {
+const VSCode = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <mask id="Vscode0" width="128" height="128" x="0" y="0" maskUnits="userSpaceOnUse">
@@ -1369,7 +1369,7 @@ export const VSCode = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Anaconda = forwardRef((props: any, ref: any) => {
+const Anaconda = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <path
@@ -1379,7 +1379,7 @@ export const Anaconda = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Angular = forwardRef((props: any, ref: any) => {
+const Angular = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 272">
       <path d="M.1 45.522L125.908.697l129.196 44.028l-20.919 166.45l-108.277 59.966l-106.583-59.169L.1 45.522Z" fill="#E23237"></path>
@@ -1388,7 +1388,7 @@ export const Angular = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Angularjs = forwardRef((props: any, ref: any) => {
+const Angularjs = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <path fill="#B3B3B3" d="M63.81 1.026L4.553 21.88l9.363 77.637l49.957 27.457l50.214-27.828l9.36-77.635z" />
@@ -1399,7 +1399,7 @@ export const Angularjs = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Asteroid = forwardRef((props: any, ref: any) => {
+const Asteroid = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
       <path d="M19.66,20.63l1.94,7.9,2.11-6.83H27.6V20.51H23L21.87,24,17.26,5.38,11.1,21.75,8.68,14.21l-2,6.14H5.27v1.58H7.46L8.7,18.26,11.06,26l2-5.41Zm-.34-1.38-2.24-9.13-3.45,9.13Z" fill="currentColor" fillRule="evenodd"></path>
@@ -1410,7 +1410,7 @@ export const Asteroid = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Matplotlib = forwardRef((props: any, ref: any) => {
+const Matplotlib = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 180 180">
       <g strokeWidth="2" fill="#FFF">
@@ -1423,7 +1423,7 @@ export const Matplotlib = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Bootstrap = forwardRef((props: any, ref: any) => {
+const Bootstrap = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <defs>
@@ -1458,7 +1458,7 @@ export const Bootstrap = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const CMake = forwardRef((props: any, ref: any) => {
+const CMake = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <path fill="#064F8C" d="M62.8.4L.3 123.8l68.1-57.9z" />
@@ -1468,7 +1468,7 @@ export const CMake = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Debian = forwardRef((props: any, ref: any) => {
+const Debian = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <path
@@ -1478,7 +1478,7 @@ export const Debian = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const D3js = forwardRef((props: any, ref: any) => {
+const D3js = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <linearGradient id="D3js0" x1="-201.009" x2="-200.098" y1="376.844" y2="375.873" gradientTransform="matrix(82.4907 0 0 -81.4303 16634.416 30700.326)" gradientUnits="userSpaceOnUse">
@@ -1520,7 +1520,7 @@ export const D3js = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const TensorFlow = forwardRef((props: any, ref: any) => {
+const TensorFlow = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 274">
       <path d="M145.726 42.065v42.07l72.861 42.07v-42.07l-72.86-42.07zM0 84.135v42.07l36.43 21.03V105.17L0 84.135zm109.291 21.035l-36.43 21.034v126.2l36.43 21.035v-84.135l36.435 21.035v-42.07l-36.435-21.034V105.17z" fill="#E55B2D"></path>
@@ -1532,7 +1532,7 @@ export const TensorFlow = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const JAX = forwardRef((props: any, ref: any) => {
+const JAX = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 451 260.81">
       <title>JAX Light Stroke</title>
@@ -1581,7 +1581,7 @@ export const JAX = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Caffe2 = forwardRef((props: any, ref: any) => {
+const Caffe2 = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="-18.5 0 292 292" preserveAspectRatio="xMidYMid">
       <g>
@@ -1609,7 +1609,7 @@ export const Caffe2 = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Keras = forwardRef((props: any, ref: any) => {
+const Keras = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 32 32">
       <path d="M32,32H0V0H32V32Z" fill="#fff"></path>
@@ -1621,7 +1621,7 @@ export const Keras = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Diffusers = forwardRef((props: any, ref: any) => {
+const Diffusers = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 36 36">
       <circle fill="#FFE8B6" cx="29" cy="4" r="4"></circle>
@@ -1637,7 +1637,7 @@ export const Diffusers = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const JupyterNotebook = forwardRef((props: any, ref: any) => {
+const JupyterNotebook = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="-22 0 300 300" preserveAspectRatio="xMidYMid">
       <g>
@@ -1669,7 +1669,7 @@ export const JupyterNotebook = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Onnx = forwardRef((props: any, ref: any) => {
+const Onnx = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
       <path
@@ -1687,7 +1687,7 @@ export const Onnx = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const SafeTensor = forwardRef((props: any, ref: any) => {
+const SafeTensor = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 4 32 26">
       <g fill="none">
@@ -1706,7 +1706,7 @@ export const SafeTensor = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const ESPnet = forwardRef((props: any, ref: any) => {
+const ESPnet = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
       <path
@@ -1719,7 +1719,7 @@ export const ESPnet = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const spaCy = forwardRef((props: any, ref: any) => {
+const spaCy = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
       <path
@@ -1729,7 +1729,7 @@ export const spaCy = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Fastai = forwardRef((props: any, ref: any) => {
+const Fastai = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" fill="#8DD8D5">
       <path d="M11.6209 3.29849H8.30423V0H11.6209V3.29849Z"></path>
@@ -1751,7 +1751,7 @@ export const Fastai = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const PaddlePaddle = forwardRef((props: any, ref: any) => {
+const PaddlePaddle = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 9">
       <path
@@ -1763,7 +1763,7 @@ export const PaddlePaddle = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const CoreML = forwardRef((props: any, ref: any) => {
+const CoreML = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 734 734">
       <path
@@ -1796,7 +1796,7 @@ export const CoreML = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Flair = forwardRef((props: any, ref: any) => {
+const Flair = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
       <path
@@ -1807,7 +1807,7 @@ export const Flair = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const SpeechBrain = forwardRef((props: any, ref: any) => {
+const SpeechBrain = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 181.2 181.2">
       <ellipse cx="90.8" cy="90.5" fill="#fff" rx="89.8" ry="90"></ellipse>
@@ -1835,7 +1835,7 @@ export const SpeechBrain = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Stanza = forwardRef((props: any, ref: any) => {
+const Stanza = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
       <path
@@ -1845,7 +1845,7 @@ export const Stanza = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const OpenVINO = forwardRef((props: any, ref: any) => {
+const OpenVINO = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 201 200" version="1.1" preserveAspectRatio="xMidYMid" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round">
       <g transform="matrix(1,0,0,1,-1393,0)">
@@ -1865,7 +1865,7 @@ export const OpenVINO = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Pytorch = forwardRef((props: any, ref: any) => {
+const Pytorch = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 310">
       <path
@@ -1875,7 +1875,7 @@ export const Pytorch = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Docker = forwardRef((props: any, ref: any) => {
+const Docker = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 185">
       <path
@@ -1885,7 +1885,7 @@ export const Docker = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Seaborn = forwardRef((props: any, ref: any) => {
+const Seaborn = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 256">
       <path d="M128.902 2.393a124.702 124.702 0 0 0-124.7 124.7a124.702 124.702 0 0 0 124.7 124.698A124.702 124.702 0 0 0 253.59 128.676l.01-1.584l-.01-1.584A124.702 124.702 0 0 0 128.902 2.393Z" fill="#FFF"></path>
@@ -1923,7 +1923,7 @@ export const Seaborn = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Svelte = forwardRef((props: any, ref: any) => {
+const Svelte = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 308">
       <path
@@ -1937,7 +1937,7 @@ export const Svelte = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Tailwindcss = forwardRef((props: any, ref: any) => {
+const Tailwindcss = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 154">
       <defs>
@@ -1953,7 +1953,7 @@ export const Tailwindcss = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const React = forwardRef((props: any, ref: any) => {
+const React = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <g fill="#61DAFB">
@@ -1963,7 +1963,7 @@ export const React = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const ReactQuery = forwardRef((props: any, ref: any) => {
+const ReactQuery = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 256 230">
       <path
@@ -1985,7 +1985,7 @@ export const ReactQuery = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Numpy = forwardRef((props: any, ref: any) => {
+const Numpy = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <path
@@ -2001,7 +2001,7 @@ export const Numpy = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Plotly = forwardRef((props: any, ref: any) => {
+const Plotly = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <path fill="#0F1113" d="M117.214 128H10.782C5.16 128 .598 123.289.598 117.482V10.518C.598 4.707 5.16 0 10.786 0h106.428c5.63 0 10.188 4.707 10.188 10.518v106.964c0 5.807-4.562 10.518-10.188 10.518"></path>
@@ -2022,7 +2022,7 @@ export const Plotly = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Pandas = forwardRef((props: any, ref: any) => {
+const Pandas = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 128 128">
       <path fill="#130754" d="M48.697 15.176h12.25v25.437h-12.25zm0 52.251h12.25v25.436h-12.25z" color="#000"></path>
@@ -2033,7 +2033,7 @@ export const Pandas = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const arXiv = forwardRef((props: any, ref: any) => {
+const arXiv = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 17.732 24.269">
       <g id="tiny">
@@ -2052,7 +2052,7 @@ export const arXiv = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const csulb = forwardRef((props: any, ref: any) => {
+const csulb = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 29.999 36.658">
       <path
@@ -2063,7 +2063,7 @@ export const csulb = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Cornell = forwardRef((props: any, ref: any) => {
+const Cornell = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 16 16">
       <image
@@ -2075,7 +2075,7 @@ export const Cornell = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const lilianweng = forwardRef((props: any, ref: any) => {
+const lilianweng = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 47.5 47.5" xmlSpace="preserve">
       <defs id="defs6">
@@ -2123,7 +2123,7 @@ export const lilianweng = forwardRef((props: any, ref: any) => {
   );
 });
 
-export const MindProject = forwardRef((props: any, ref: any) => {
+const MindProject = forwardRef((props: any, ref: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 612 623">
       <g clipRule="evenodd" fillRule="evenodd">
@@ -2149,14 +2149,14 @@ export const MindProject = forwardRef((props: any, ref: any) => {
     </svg>
   );
 });
-export const Vercel = forwardRef((props?: any, ref?: any) => {
+const Vercel = forwardRef((props?: any, ref?: any) => {
   return (
     <svg ref={ref} {...props} viewBox="0 0 74 64">
       <path d="M37.5896 0.25L74.5396 64.25H0.639648L37.5896 0.25Z" fill="currentColor"></path>
     </svg>
   );
 });
-export const Tldraw = forwardRef((props?: any, ref?: any) => {
+const Tldraw = forwardRef((props?: any, ref?: any) => {
   return (
     <svg ref={ref} fill={'currentColor'} viewBox="0 0 722 184" {...props}>
       <path

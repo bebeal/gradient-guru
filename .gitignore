@@ -6,8 +6,6 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
-/assets/icons/Carbon
-/assets/icons/Tldraw
 /packages/tldraw/.git/*
 
 # testing
@@ -19,6 +17,7 @@
 
 # production
 /build
+scripts/old_download-icons.py
 
 # misc
 .DS_Store

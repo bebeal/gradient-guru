@@ -1,3 +1,5 @@
+'use client'
+
 import { PlotlyProps } from '@/components';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';

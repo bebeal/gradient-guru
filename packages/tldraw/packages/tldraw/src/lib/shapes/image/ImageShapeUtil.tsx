@@ -34,7 +34,7 @@ const getStateFrame = async (url: string) => {
 	canvas.width = image.width
 	canvas.height = image.height
 
-	const ctx = canvas.getContext('2d')
+	const ctx = canvas.getContext('2d', { willReadFrequently: true })
 	if (!ctx) return
 
 	ctx.drawImage(image, 0, 0)

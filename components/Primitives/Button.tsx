@@ -49,7 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
         ref={ref}
         type={type}
         className={cn(
-          `relative w-auto h-auto flex overflow-hidden select-none align-top cursor-pointer text-base leading-none z-[2]`,
+          `relative w-auto h-auto flex overflow-hidden select-none align-top cursor-pointer text-base leading-none z-[2] [&>*]:pointer-events-none`,
           disabled && DisabledClasses,
           RadiusClasses(radius),
           VariantClasses(variant),
@@ -59,12 +59,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {isGradientVariant && (
+        {isGradientVariant ? (
           <div className={cn( `w-full h-full bg-primary text-transparent font-bold py-2 px-2.5 m-px`, RadiusClasses(radius))}>
             {/* For sizing the div properly since the gradient is an absolutely positioned div and this parent div needs to size as if its child is relative */}
             <div className={cn(`invisible w-auto h-auto flex gap-1 justify-center items-center`)}>{children}</div>
             {/* This is 1 out of 2 absolutely positioned divs with a linear-gradient backgrounds and is used to apply gradients to the child components */}
             <GradientDiv backglow={false} isHovered={isHovered} colors={colors} radius={radius}>{children}</GradientDiv>
+          </div>
+        ) : (
+          <div className="w-full h-full flex justify-center items-center gap-1">
+            {children}
           </div>
         )}
       </button>

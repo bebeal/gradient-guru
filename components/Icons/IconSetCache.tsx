@@ -1,7 +1,7 @@
 'use client'
 
 // import { AcademiconsIconSet, CarbonIconSet, CustomIconSet, DevIconSet, EntypoPlusIconSet, EntypoSocialIconSet, FlagIconSet, FontAudioIconSet, FontAwesomeRegularIconSet, FontGISIconSet, GameIconSet, GeoglyphsIconSet, HeroiconsSolidIconSet, LogosIconSet, LucideIconSet, MapIconSet, MedicalIconSet, MuiLineIconSet, RadixIconSet, SkillIconSet, SpinnerIconSet, TldrawIconSet, VSCodeIconSet } from './IconSets';
-import { CarbonIconSet, CustomIconSet, LogosIconSet, TldrawIconSet } from './IconSets';
+import { CarbonIconSet, CustomIconSet, LogosIconSet, LucideIconSet, RadixIconSet, TldrawIconSet } from './IconSets';
 import { MapCache } from "@/utils";
 import { IconWrapper } from './IconWrapper';
 
@@ -15,9 +15,11 @@ export interface IconSetMap {
 
 export const IconSets: IconSetMap = {
   'Carbon': {Icons: CarbonIconSet},
-  'Tldraw': {Icons: TldrawIconSet},
+  'Tldraw': {Icons: TldrawIconSet, overrideDefaultProps: {stroke: 'black'}},
   'Logos': {Icons: LogosIconSet},
   'Custom': {Icons: CustomIconSet},
+  'Lucide': {Icons: LucideIconSet, overrideDefaultProps: {stroke: 'currentColor', fill: 'none'}},
+  'Radix': {Icons: RadixIconSet},
 };
 export const IconSetNames: string[] = Object.keys(IconSets) || [];
 export type SetNames = keyof typeof IconSets;
