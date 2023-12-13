@@ -1,3 +1,5 @@
+'use client'
+
 import { FlowNodeUtil } from "@/components";
 import { getExportedImageBlob } from "@/utils";
 import { TLAnyShapeUtilConstructor, TLShape, createShapeId, useEditor } from "@tldraw/tldraw";
@@ -12,7 +14,7 @@ export interface ScratchNode {
 export const ScratchPanelContext = createContext(
   {} as {
   scratchNodes: ScratchNode[];
-  addNodeFromShapeUtil: (Shape: TLAnyShapeUtilConstructor) => void;
+  addNodeFromNodeeUtil: (Shape: TLAnyShapeUtilConstructor) => void;
   addNodeFromSelectedNodes?: () => void;
   onDragStart: (event: any, node: ScratchNode) => void;
   onEmptyNodeInPanelClick?: () => void;
@@ -33,12 +35,12 @@ export const ScratchPanelProvider = ({ children }: { children: React.ReactNode }
           panelPreview: <img src={objectURL} alt="shape" />,
           nodesToAdd,
         };
-        setScratchNodes([...scratchNodes, nodeToAdd]);
+        setScratchNodes((prevScratchNodes) => [...prevScratchNodes, nodeToAdd]);
       }
     });
-  }, [editor, scratchNodes]);
+  }, [editor]);
 
-  const addNodeFromShapeUtil = (Shape: TLAnyShapeUtilConstructor) => {
+  const addNodeFromNodeeUtil = useCallback((Shape: TLAnyShapeUtilConstructor) => {
     const id = `${Shape.type}-${createShapeId()}`
     const defaultProps = (new Shape(editor)).getDefaultProps();
     const shape = {
@@ -47,21 +49,24 @@ export const ScratchPanelProvider = ({ children }: { children: React.ReactNode }
       props: defaultProps,
     } as unknown as TLShape;
     const shapeUtil: any = editor.getShapeUtil(Shape.type);
-    const panelPreview = (shapeUtil as FlowNodeUtil).panelPreview(shape);
+    const panelPreview = (shapeUtil as FlowNodeUtil<any>).panelPreview(shape);
     const nodeToAdd: ScratchNode = {
       panelPreview,
       type: Shape.type,
     };
     // ensure node in panel with type doesn't already exist, if it does overwrite it
-    const nodeIndex = scratchNodes.findIndex((node: ScratchNode) => node.type === Shape.type);
-    if (nodeIndex > -1) {
-      const newscratchNodes = [...scratchNodes];
-      newscratchNodes[nodeIndex] = nodeToAdd;
-      setScratchNodes(newscratchNodes);
-    } else {
-      setScratchNodes([...scratchNodes, nodeToAdd]);
-    }
-  }
+    setScratchNodes(prevScratchNodes => {
+      // Check if node of this type already exists, if so, replace it
+      const existingNodeIndex = prevScratchNodes.findIndex((node) => node.type === Shape.type);
+      if (existingNodeIndex > -1) {
+        const newscratchNodes = [...prevScratchNodes];
+        newscratchNodes[existingNodeIndex] = nodeToAdd;
+        return newscratchNodes;
+      } else {
+        return [...prevScratchNodes, nodeToAdd];
+      }
+    });
+  }, [editor]);
 
   const onDragStart = useCallback((event: any, node: ScratchNode) => {
     const { type, nodesToAdd } = node;
@@ -77,7 +82,7 @@ export const ScratchPanelProvider = ({ children }: { children: React.ReactNode }
 
 
   return (
-    <ScratchPanelContext.Provider value={{ scratchNodes, addNodeFromShapeUtil, addNodeFromSelectedNodes, onDragStart, onEmptyNodeInPanelClick }}>
+    <ScratchPanelContext.Provider value={{ scratchNodes, addNodeFromNodeeUtil, addNodeFromSelectedNodes, onDragStart, onEmptyNodeInPanelClick }}>
       {children}
     </ScratchPanelContext.Provider>
   );

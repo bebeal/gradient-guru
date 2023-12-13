@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useContentExtractor } from '@/hooks';

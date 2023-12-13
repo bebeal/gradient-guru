@@ -22,7 +22,6 @@ import {
 	LoadingScreen,
 	TLAnyShapeUtilConstructor,
 	TLOnMountHandler,
-	TLStateNodeConstructor,
 	TldrawEditor,
 	TldrawEditorProps,
 	assert,
@@ -38,10 +37,10 @@ import { Erroring, Loading, cn } from '@/utils';
 
 import { ContentRecorderProvider } from '@/hooks';
 import { IconNodeUtil, PreviewNodeUtil } from './FlowNodes';
-import { IconNodeTool } from './FlowTools';
 
 import '@tldraw/tldraw/tldraw.css';
 import './Flow.css';
+import { PlotlyNodeUtil } from './FlowNodes/PlotlyNodeUil';
 
 export type FlowProps = TldrawProps & FlowUiProps & {
   shapeUtils?: TLAnyShapeUtilConstructor[];
@@ -64,9 +63,8 @@ export const Flow = (props: FlowProps) => {
 	} = props;
   const assets: TLEditorAssetUrls = useDefaultEditorAssetsWithOverrides(rest.assetUrls);
   const { done: preloadingComplete, error: preloadingError } = usePreloadAssets(assets);
-  const customShapeUtils: TLAnyShapeUtilConstructor[] = useMemo(() => [IconNodeUtil, PreviewNodeUtil], []);
-  const customTools: TLStateNodeConstructor[] = useMemo(() => [IconNodeTool], []);
-  const scratchNodeUtils = useMemo(() => [IconNodeUtil], []);
+  const customShapeUtils: TLAnyShapeUtilConstructor[] = useMemo(() => [IconNodeUtil, PlotlyNodeUtil, PreviewNodeUtil], []);
+  const scratchNodeUtils = useMemo(() => [IconNodeUtil, PlotlyNodeUtil], []);
 
   const overrides: TLUiOverrides = useMemo(() => ({
     tools(editor, tools) {
@@ -110,8 +108,8 @@ export const Flow = (props: FlowProps) => {
 			[customShapeUtils, shapeUtils]
 		),
 		tools: useMemo(
-			() => [...defaultTools, ...customTools, ...defaultShapeTools, ...(tools ?? [])],
-			[customTools, tools]
+			() => [...defaultTools, ...defaultShapeTools, ...(tools ?? [])],
+			[tools]
 		),
 	};
 

@@ -90,6 +90,9 @@ yarn build
   * Queries:
     * [react-query](https://github.com/TanStack/query)
       * [react-query Docs](https://tanstack.com/query/v3/docs/react/overview)
+  * Data Visualization:
+    * [plotly.js](https://github.com/plotly/plotly.js)
+      * [plotly.js Docs](https://plotly.com/javascript/)
   * Data Tables:
     * [ag-grid](https://github.com/ag-grid/ag-grid)
       * [ag-grid Docs](https://www.ag-grid.com/)
@@ -114,6 +117,7 @@ yarn build
 
 * [Carbon](https://github.com/carbon-design-system/carbon)
 * [Tldraw](https://github.com/tldraw/tldraw)
+* Custom
 
 ### Pages
 
@@ -130,7 +134,7 @@ yarn build
     * [`/form`](https://gradient-guru.com/tests/form)
     * [`/icon-sets`](https://gradient-guru.com/tests/icon-sets)
     * [`/palettes`](https://gradient-guru.com/tests/palettes)
-    * [`/form`](https://gradient-guru.com/tests/palettes)
+    * [`/plotly`](https://gradient-guru.com/tests/plotly)
     * [`/tldraw`](https://gradient-guru.com/tests/tldraw)
     * [`/primitives`](https://gradient-guru.com/tests/primitives)
       * [`/accordion`](https://gradient-guru.com/tests/primitives/accordion)
@@ -140,8 +144,10 @@ yarn build
 
 ### TODO
 
-* [ ] CDN
+* [ ] make node schemas dynamic
+* [ ] fix utils export
 * [ ] fix image preview
-* [ ] yjs
-* [ ] flask backend
 * [ ] Context Calculator
+* [ ] CDN
+* [ ] flask backend
+* [ ] fix plotly component

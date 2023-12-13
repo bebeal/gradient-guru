@@ -1,8 +1,10 @@
+'use client'
+
 import { Direction, IconSetCache, Panel } from '@/components';
 import { ScratchPanelProvider, ScratchNode, useScratchPanel } from '@/hooks';
 import { cn } from '@/utils';
 import { TLAnyShapeUtilConstructor, useEditor } from '@tldraw/tldraw';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useCallback } from 'react';
 
 export interface ScratchPanelProps {
@@ -38,7 +40,7 @@ export const ScratchedNode = ({children, onDragStart, index}: any) => {
       {numChildren === 0 && <div onClick={onEmptyNodeInPanelClick} className={cn(`flex w-full h-full justify-center items-center [background-image:linear-gradient(90deg,transparent,transparent_50%,#ffffff0d_50%,#ffffff0d)] [background-size:200%_100%] bg-secondary shadow-[0px_1px_2px_#00000029,0px_1px_3px_#00000038,inset_0px_0px_0px_1px_var(--color-panel-contrast)] pointer-events-none`, editor.getSelectedShapeIds().length > 0 && `animate-move-background cursor-pointer pointer-events-auto`)}><IconSetCache.Carbon.Add stroke="none" width="50%" height="50%" /></div>}
     </div>
   )
-}
+};
 
 export const ScratchPanelInner = (props: ScratchPanelProps) => {
   const {
@@ -46,19 +48,10 @@ export const ScratchPanelInner = (props: ScratchPanelProps) => {
   } = props;
   const {
     scratchNodes,
-    addNodeFromShapeUtil,
+    addNodeFromNodeeUtil,
     onDragStart,
   } = useScratchPanel();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    if (!mounted) {
-      scratchNodeUtils.map((Shape) => {
-        addNodeFromShapeUtil(Shape);
-      });
-      setMounted(true);
-    }
-  }, [scratchNodeUtils, addNodeFromShapeUtil, mounted]);
+  const [mounted, setMounted] = React.useState(false);
 
   const ScratchNodes = useCallback(() => {
     return scratchNodes.map((node: ScratchNode, index: number) => {
@@ -84,6 +77,15 @@ export const ScratchPanelInner = (props: ScratchPanelProps) => {
       );
     });
   }, [scratchNodes]);
+
+  useEffect(() => {
+    if (!mounted) {
+      scratchNodeUtils.forEach((node) => {
+        addNodeFromNodeeUtil(node);
+      });
+      setMounted(true);
+    }
+  }, [scratchNodeUtils, addNodeFromNodeeUtil, mounted]);
 
   return (
     <div className={cn(`rounded-lg overflow-hidden touch-auto gap-1 grid grid-cols-[repeat(3,1fr)] w-[300px] h-full m-0 p-2 rounded-tr-none rounded-br-none border-0`)}>

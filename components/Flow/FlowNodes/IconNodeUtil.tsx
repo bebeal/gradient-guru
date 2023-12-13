@@ -1,11 +1,8 @@
 'use client'
 import {
   HTMLContainer,
-  Rectangle2d,
   SvgExportContext,
   TLBaseShape,
-  TLOnResizeHandler,
-  resizeBox,
 } from '@tldraw/tldraw';
 import * as yup from 'yup';
 import { IconSetCache, SetNames } from '@/components';
@@ -24,28 +21,21 @@ export type IconNode = TLBaseShape<
 
 export class IconNodeUtil extends FlowNodeUtil<IconNode> {
   static override type = 'icon' as const;
-  override isAspectRatioLocked = (node: IconNode) => false;
-  override canResize = (node: IconNode) => true;
-  override canBind = (node: IconNode) => true;
+	override canEdit = () => true
+	override isAspectRatioLocked = (node: IconNode) => false
+	override canResize = (node: IconNode) => true
+	override canBind = (node: IconNode) => false
+	override canUnmount = () => false
 
   getDefaultProps(): IconNode['props'] {
     return {
       w: 32,
       h: 32,
       iconSet: 'Carbon',
-      icon: 'MachineLearning',
+      icon: Object.keys(IconSetCache.Carbon)[Math.floor(Math.random() * Object.keys(IconSetCache.Carbon).length)],
     };
   }
 
-  getGeometry(node: IconNode) {
-    return new Rectangle2d({
-      width: node.props.w,
-      height: node.props.h,
-      isFilled: true,
-    });
-  }
-
-  // Render method — the React component that will be rendered for the shape
   component(node: IconNode) {
     let Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
     if (!Icon) {
@@ -53,7 +43,7 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
       Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
     }
     return (
-      <HTMLContainer id={node.parentId}>
+      <HTMLContainer id={node.id}>
         {Icon && <Icon width="100%" height="100%" />}
       </HTMLContainer>
     );
@@ -62,10 +52,6 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
   indicator(node: IconNode) {
     return <rect width={node.props.w} height={node.props.h} />;
   }
-
-  override onResize: TLOnResizeHandler<IconNode> = (node, info) => {
-    return resizeBox(node, info);
-  };
 
   override toSvg = (node: IconNode, ctx: SvgExportContext): Promise<SVGElement> | SVGElement => {
     const Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
@@ -102,19 +88,21 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
   }
 
   panelPreview(node: IconNode) {
-    const Icon = <IconSetCache.Carbon.MachineLearning width="100%" height="100%" />;
+    // const RandomIcon = IconSetCache[node.props.iconSet][Object.keys(IconSetCache?.[node.props.iconSet])[Math.floor(Math.random() * Object.keys(IconSetCache?.[node.props.iconSet]).length)]];
     return (
-      <HTMLContainer id={node.parentId} className='p-1'>
-        {Icon}
+      <HTMLContainer className='p-1 flex flex-col gap-1 w-full h-auto justify-center items-center text-primary text-lg'>
+        <div>Icon</div>
+        {/* <RandomIcon className="h-auto" /> */}
+        <IconSetCache.Carbon.MachineLearning className="h-auto" />
       </HTMLContainer>
     );
   }
 
   getSchema(node: IconNode) {
+    const baseSchema = super.getSchema(node);
     return {
       props: yup.object({
-        'w': yup.number().min(0).label('Width').meta({ item: 'input' }),
-        'h': yup.number().min(0).label('Height').meta({ item: 'input' }),
+        ...baseSchema.props.fields,
         'iconSet': yup.string().oneOf(Object.keys(IconSetCache)) .label('Set') .meta({ item: 'select' }),
         'icon': yup.string().oneOf(Object.keys(IconSetCache?.[node.props.iconSet]), "Invalid Icon").label('Icon').meta({ item: 'select' }),
       }).meta({ item: 'object' }),

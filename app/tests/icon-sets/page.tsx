@@ -11,7 +11,7 @@ interface PageState {
 }
 
 const IconSetsPage = () => {
-  const [size, setSize] = useState<number>(24);
+  const [size, setSize] = useState<number>(32);
   const [currentPage, setCurrentPage] = useState<PageState>({});
   const [globalSearchQuery, setGlobalSearchQuery] = useState<string>('');
   const [localSearchQueries, setLocalSearchQueries] = useState<{ [key: string]: string }>({});
@@ -126,10 +126,10 @@ const IconSetsPage = () => {
                             >
                               <div
                                 className={cn(
-                                  `flex flex-col items-center justify-center gap-1 w-full h-[${size + 32}px]`
+                                  `flex flex-col items-center justify-center gap-1 w-full h-[${size + 64}px] p-1`
                                 )}
                               >
-                                {Icon && <Icon height={`${size}px`} width={`100%`} className="w-auto h-auto p-1" />}
+                                {Icon && <Icon width={`${size}`} height={`${size}`} />}
                                 <div className="flex flex-wrap break-all text-xs text-center justify-center items-center w-full h-12 overflow-hidden">
                                   {IconName}
                                 </div>

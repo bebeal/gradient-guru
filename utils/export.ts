@@ -1,8 +1,9 @@
+// TODO: Clean this up
 
 import canvasSize from "canvas-size"
 import { PngHelpers } from "./png";
-import { Editor, TLShapeId } from "@tldraw/editor";
-import { ImageConfig } from "@/hooks";
+import { Editor, SVG_PADDING, TLShape, TLShapeId } from "@tldraw/editor";
+import { ImageConfig, defaultImageConfig } from "@/hooks";
 
 export type TLCopyType = 'svg' | 'png' | 'jpeg' | 'json'
 export type TLExportType = 'svg' | 'png' | 'jpeg' | 'json' | 'webp'
@@ -58,6 +59,44 @@ export const getExportSvgElement: any = async (editor: Editor, ids: TLShapeId[],
 
 	return await svg;
 }
+
+export const getSvg = (editor: Editor, shapes: TLShapeId[] | TLShape[], options: Partial<ImageConfig> = defaultImageConfig) => {
+  if (!window.document) throw Error('No document');
+
+  const ids = typeof shapes[0] === 'string' ? (shapes as TLShapeId[]) : (shapes as TLShape[]).map((s) => s.id);
+  if (ids.length === 0) return;
+
+  const {
+    scale = 1,
+    background = false,
+    padding = SVG_PADDING,
+    preserveAspectRatio = false,
+  } = options;
+
+  // ---Figure out which shapes we need to include
+  const shapeIdsToInclude = editor.getShapeAndDescendantIds(ids)
+  const renderingShapes = editor.getUnorderedRenderingShapes(false).filter(({ id }) =>
+			shapeIdsToInclude.has(id)
+		)
+
+    // --- Common bounding box of all shapes
+		let bbox = null
+		if (options.bounds) {
+			bbox = options.bounds
+		} else {
+			for (const { maskedPageBounds } of renderingShapes) {
+				if (!maskedPageBounds) continue
+				if (bbox) {
+					bbox.union(maskedPageBounds)
+				} else {
+					bbox = maskedPageBounds.clone()
+				}
+			}
+		}
+
+
+  
+};
 
 export const getSvgAsString = (svg: SVGElement) => {
 	const clone = svg.cloneNode(true) as SVGGraphicsElement;

@@ -166,7 +166,7 @@ def download_iconsets(max_depth, clean):
         # "Lucide": {
         #     "url": "https://github.com/lucide-icons/lucide/tree/main/icons"
         # },
-        # "Logos": {
+        # "SVGLogos": {
         #     "url": "https://github.com/gilbarbara/logos/tree/main/logos"
         # },
         # "Map": {

@@ -9,3 +9,4 @@ export * from "./useThemePanel";
 export * from './useModel';
 export * from './useFlow';
 export * from './useRippleEffect';
+export * from './usePlotly';

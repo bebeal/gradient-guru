@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useState } from 'react';
 import { RecordsDiff } from '@tldraw/store';
-import { TLEventInfo, TLRecord, TLShape, TLShapeId, UiEvent, useEditor } from '@tldraw/tldraw';
+import { Box2d, SVG_PADDING, TLEventInfo, TLRecord, TLShape, TLShapeId, UiEvent, useEditor } from '@tldraw/tldraw';
 import * as yup from 'yup';
 import { getDataUrl, getExportedImageBlob } from '@/utils';
 import { useContentRecorder } from './useContentRecorder';
@@ -14,9 +14,12 @@ export type ImageExtractorProps = {
   type: 'svg' | 'png' | 'jpeg' | 'webp';
   quality: number;
   scale: number;
-  imageSmoothingEnabled: boolean;
-  imageSmoothingQuality: 'low' | 'medium' | 'high';
   background: boolean;
+  imageSmoothingEnabled?: boolean;
+  imageSmoothingQuality?: 'low' | 'medium' | 'high';
+  padding?: number;
+  preserveAspectRatio?: React.SVGAttributes<SVGSVGElement>['preserveAspectRatio'];
+  bounds?: Box2d;
 };
 
 export type NodesExtractorProps = {
@@ -58,6 +61,7 @@ export const defaultImageConfig: ImageConfig = {
   imageSmoothingEnabled: true,
   imageSmoothingQuality: 'high',
   background: true,
+  padding: SVG_PADDING,
 };
 export const defaultTextConfig: TextConfig = {
   ...defaultBaseConfig,
