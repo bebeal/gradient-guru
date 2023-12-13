@@ -104,11 +104,15 @@ const FlowUiContent = (props: FlowUiProps) => {
     if (!mounted) {
       setUserPreferences({ id: editor?.user?.getId(), isDarkMode: true });
       editor.updateInstanceState({ isReadonly: false, isGridMode: true });
-      if (initialShapes && initialShapes?.length > 0) {
-        editor.createShapes(initialShapes);
-      }
-      editor.zoomToFit();
-      setMounted(true);
+
+      // to get the initial history records to show up 
+      setTimeout(() => {
+        if (initialShapes && initialShapes?.length > 0) {
+          editor.createShapes(initialShapes);
+        }
+        editor.zoomToFit();
+        setMounted(true);
+      }, 0);
     }
   }, [editor, initialShapes, mounted]);
 
