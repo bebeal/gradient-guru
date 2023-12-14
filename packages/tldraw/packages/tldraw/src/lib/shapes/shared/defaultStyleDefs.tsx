@@ -150,7 +150,7 @@ const canvasBlob = (size: [number, number], fn: (ctx: CanvasRenderingContext2D) 
 	const canvas = document.createElement('canvas')
 	canvas.width = size[0]
 	canvas.height = size[1]
-	const ctx = canvas.getContext('2d', { willReadFrequently: true })
+	const ctx = canvas.getContext('2d')
 	if (!ctx) return ''
 	fn(ctx)
 	return canvas.toDataURL()

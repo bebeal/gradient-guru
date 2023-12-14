@@ -34,7 +34,7 @@
 	],
 	"scripts": {
 		"clean": "scripts/clean.sh",
-		"postinstall": "yarn refresh-assets",
+		"postinstall": "husky install && yarn refresh-assets",
 		"refresh-assets": "lazy refresh-assets",
 		"build": "lazy build",
 		"dev": "lazy run dev --filter='{,bublic/}apps/examples' --filter='{,bublic/}packages/tldraw'",
@@ -97,6 +97,8 @@
 		"@microsoft/api-extractor@^7.35.4": "patch:@microsoft/api-extractor@npm%3A7.35.4#./.yarn/patches/@microsoft-api-extractor-npm-7.35.4-5f4f0357b4.patch"
 	},
 	"dependencies": {
-		"svgo": "^3.0.2"
+		"clsx": "^2.0.0",
+		"svgo": "^3.0.2",
+		"tailwind-merge": "^2.1.0"
 	}
 }

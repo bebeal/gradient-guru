@@ -53,7 +53,7 @@ export async function getSvgAsImage(
 			}
 
 			const canvas = document.createElement('canvas') as HTMLCanvasElement
-			const ctx = canvas.getContext('2d', { willReadFrequently: true })!
+			const ctx = canvas.getContext('2d')!
 
 			canvas.width = scaledWidth
 			canvas.height = scaledHeight
