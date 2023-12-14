@@ -140,8 +140,6 @@ yarn build
 ### TODO
 
 * [ ] make node schemas dynamic
-* [ ] fix utils export
-* [ ] fix image preview
 * [ ] Context Calculator
 * [ ] CDN
 * [ ] flask backend

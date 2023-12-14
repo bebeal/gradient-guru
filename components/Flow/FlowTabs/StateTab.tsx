@@ -7,7 +7,6 @@ import { Accordion, BulletedList, Form } from '@/components';
 import { useContentExtractor } from '@/hooks';
 import { cn } from '@/utils';
 import { FlowTab, TabTitle, ToggleTitle } from './shared';
-import { debounce } from 'lodash';
 
 export interface StateTabProps {}
 
