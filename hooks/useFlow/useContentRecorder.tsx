@@ -105,8 +105,8 @@ export const ContentRecorderProvider = (props: ContentRecorderProviderProps) => 
     editor.on('event', onCanvasEvent);
 
     return () => {
-      editor.off('change', onStoreEvent);
-      editor.off('event', onCanvasEvent);
+      editor.off('change');
+      editor.off('event');
     };
   }, [editor, onCanvasEvent, onStoreEvent]);
 

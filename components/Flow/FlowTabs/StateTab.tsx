@@ -16,7 +16,6 @@ export const StateTab = (props: StateTabProps) => {
   const [flowImage, setFlowImage] = useState<string | null>(null);
   const editor = useEditor();
   const [mounted, setMounted] = useState(false);
-
   const { fetchImage, imageConfig, setImageConfig, fetchText, textConfig, setTextConfig, getImageSchema, getTextSchema } = useContentExtractor();
   const imageSchema = getImageSchema();
   const textSchema = getTextSchema();
@@ -50,6 +49,7 @@ export const StateTab = (props: StateTabProps) => {
     return checkRecords(added) || checkRecords(removed) || Object.values(updated).some(([from, to]: any) => from.typeName === 'shape' && to.typeName === 'shape');
   }, []);
 
+  // todo: editor.on consumes the event, so we need to find another way so that content recorder can record the event
   useEffect(() => {
     editor.on('change', (e: any) => {
       if (e.source === 'user' && isShapeEvent(e)) {
