@@ -11,7 +11,7 @@ export const FlowTabs = memo((props: FlowTabsProps) => {
 
   const FlowEventsTab = useMemo(() => {
     return {
-      icon: <IconSetCache.Carbon.Network3 height={'100%'} width={'100%'} stroke={'transparent'} />,
+      icon: <IconSetCache.Carbon.Network3 height={'100%'} width={'100%'} />,
       name: 'Events',
       content: <EventsTab />,
     };
@@ -19,7 +19,7 @@ export const FlowTabs = memo((props: FlowTabsProps) => {
 
   const FlowNodesTab = useMemo(() => {
     return {
-      icon: <IconSetCache.Carbon.ChartNetwork height={'100%'} width={'100%'} stroke={'transparent'} />,
+      icon: <IconSetCache.Carbon.ChartNetwork height={'100%'} width={'100%'} />,
       name: 'Nodes',
       content: <NodesTab />,
     };
@@ -27,7 +27,7 @@ export const FlowTabs = memo((props: FlowTabsProps) => {
 
   const FlowStateTab = useMemo(() => {
     return {
-      icon: <IconSetCache.Carbon.VisualRecognition height={'100%'} width={'100%'} stroke={'transparent'} />,
+      icon: <IconSetCache.Carbon.VisualRecognition height={'100%'} width={'100%'} />,
       name: 'State',
       content: <StateTab />,
     };
@@ -35,14 +35,12 @@ export const FlowTabs = memo((props: FlowTabsProps) => {
 
   const FlowModelTab = useMemo(() => {
     return {
-      icon: <IconSetCache.Carbon.IbmWatsonStudio height={'100%'} width={'100%'} stroke={'transparent'} />,
+      icon: <IconSetCache.Carbon.IbmWatsonStudio height={'100%'} width={'100%'} />,
       name: 'Query Builder',
       content: <ModelTab />,
     };
   }, []);
 
-  const tabs = useMemo(() => [FlowEventsTab, FlowNodesTab, FlowStateTab, FlowModelTab], [FlowEventsTab, FlowNodesTab, FlowStateTab, FlowModelTab]);
-
-  return <SidePanel className={className} tabs={tabs} />;
+  return <SidePanel className={className} tabs={[FlowEventsTab, FlowNodesTab, FlowStateTab, FlowModelTab]} />;
 });
 FlowTabs.displayName = 'FlowTabs';

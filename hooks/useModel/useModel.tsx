@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useContentExtractor } from '@/hooks';
 import { BaseModelClient, DefaultModelConfig, ModelConfig, OpenAIModelClient } from '@/clients';
-import { PROMPT_LIBRARY, blobToBase64 } from '@/utils';
+import { PROMPT_LIBRARY, encodeBlobAsBase64 } from '@/utils';
 import { Editor, createShapeId, getSvgAsImage, useEditor } from '@tldraw/tldraw';
 import { PreviewNode } from '@/components';
 
@@ -54,7 +54,7 @@ export const useModel = () => {
           quality: 0.8,
           scale: 1,
         });
-        const dataUrl = await blobToBase64(blob!)
+        const dataUrl = await encodeBlobAsBase64(blob!);
         const userMessages = [
           {
             type: 'image_url',
