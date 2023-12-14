@@ -14,7 +14,7 @@ export interface ScratchPanelProps {
 export const ScratchPanel = (props: ScratchPanelProps) => {
   return (
     <ScratchPanelProvider>
-      <div className={cn(`absolute right-0 top-[47%] h-[250px] z-[501]`)}>
+      <div className={cn(`absolute right-0 top-[54%] h-[250px] z-[501]`)}>
         <Panel direction={Direction.left} className='h-[250px]'>
           <ScratchPanelInner {...props} />
         </Panel>
@@ -27,6 +27,7 @@ export const ScratchedNode = ({children, onDragStart, index}: any) => {
   const editor = useEditor();
   const { onEmptyNodeInPanelClick } = useScratchPanel();
   const hoverStyles = `hover:border-[#888] hover:bg-[#363d44] hover:shadow-[0px_1px_2px_#00000029,0px_1px_3px_#00000038,inset_0px_0px_0px_1px_var(--color-panel-contrast),0px_1px_3px_#00000077,0px_2px_6px_#00000055,inset_0px_0px_0px_1px_var(--color-panel-contrast),0px_1px_3px_#00000077,0px_2px_12px_rgba(0,0,0,0.22),inset_0px_0px_0px_1px_var(--color-panel-contrast)]`;
+  const emptyStyles = `border-[#888] bg-[#363d44] shadow-[0px_1px_2px_#00000029,0px_1px_3px_#00000038,inset_0px_0px_0px_1px_var(--color-panel-contrast),0px_1px_3px_#00000077,0px_2px_6px_#00000055,inset_0px_0px_0px_1px_var(--color-panel-contrast),0px_1px_3px_#00000077,0px_2px_12px_rgba(0,0,0,0.22),inset_0px_0px_0px_1px_var(--color-panel-contrast)]`
   // no children === empty slot which if, clicked and there are selected nodes, then will add snapshot of selected nodes to panel as a new draggable node
   const numChildren = React.Children.count(children);
   return (
@@ -34,10 +35,10 @@ export const ScratchedNode = ({children, onDragStart, index}: any) => {
       key={`draggable-node-${index}-box`}
       draggable
       onDragStart={onDragStart}
-      className={cn(`overflow-hidden block items-center justify-center row-span-1 col-span-1 rounded-lg border bg-[#2c3136] border-secondary`, (numChildren > 0 || editor.getSelectedShapeIds().length > 0) && hoverStyles)}
+      className={cn(`overflow-hidden flex items-center justify-center row-span-1 col-span-1 rounded-lg border bg-[#2c3136] border-secondary`, numChildren > 0 && editor.getSelectedShapeIds().length === 0 && hoverStyles, numChildren === 0 && editor.getSelectedShapeIds().length > 0 && emptyStyles)}
     >
       {numChildren > 0 && children}
-      {numChildren === 0 && <div onClick={onEmptyNodeInPanelClick} className={cn(`flex w-full h-full justify-center items-center [background-image:linear-gradient(90deg,transparent,transparent_50%,#ffffff0d_50%,#ffffff0d)] [background-size:200%_100%] bg-secondary shadow-[0px_1px_2px_#00000029,0px_1px_3px_#00000038,inset_0px_0px_0px_1px_var(--color-panel-contrast)] pointer-events-none`, editor.getSelectedShapeIds().length > 0 && `animate-move-background cursor-pointer pointer-events-auto`)}><IconSetCache.Carbon.Add stroke="none" width="50%" height="50%" /></div>}
+      {numChildren === 0 && <div onClick={onEmptyNodeInPanelClick} className={cn(`flex w-full h-full justify-center items-center [background-image:linear-gradient(90deg,transparent,transparent_50%,#ffffff0d_50%,#363d44)] [background-size:200%_100%] bg-secondary pointer-events-none border-0 rounded-md`, editor.getSelectedShapeIds().length > 0 && `animate-move-background cursor-pointer pointer-events-auto`)}><IconSetCache.Carbon.Add stroke="none" width="50%" height="50%" /></div>}
     </div>
   )
 };

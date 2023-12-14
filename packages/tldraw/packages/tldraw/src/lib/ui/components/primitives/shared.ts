@@ -1,3 +1,11 @@
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+
+/** @internal */
+export const cn = (...inputs: ClassValue[]): string => {
+	return twMerge(clsx(inputs))
+}
+
 /** @internal */
 export function toStartCase(str: string) {
 	return str

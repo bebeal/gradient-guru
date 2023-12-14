@@ -93,7 +93,7 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
       <HTMLContainer className='p-1 flex flex-col gap-1 w-full h-auto justify-center items-center text-primary text-lg'>
         <div>Icon</div>
         {/* <RandomIcon className="h-auto" /> */}
-        <IconSetCache.Carbon.MachineLearning className="h-auto" />
+        <IconSetCache.Carbon.FlowStream className="h-auto" />
       </HTMLContainer>
     );
   }

@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useState } from 'react';
 import { RecordsDiff } from '@tldraw/store';
 import { Box2d, SVG_PADDING, TLEventInfo, TLRecord, TLShape, TLShapeId, UiEvent, useEditor } from '@tldraw/tldraw';
 import * as yup from 'yup';
-import { encodeSVGAsBase64, getExportedImageBlob, getSvgElement } from '@/utils';
+import { getExportedImageBlob, getSVGAsBlob, getSvgPreview } from '@/utils';
 import { useContentRecorder } from './useContentRecorder';
 
 
@@ -313,7 +313,8 @@ export const useContentExtractor = (): useContentExtractorReturn => {
   const fetchImage = useCallback(async () => {
     const nodesInImage: TLShapeId[] = getNodeIds(nodesConfig.filterSelected);
     if (nodesInImage.length === 0) return null;
-    return await encodeSVGAsBase64(await getSvgElement(editor, nodesInImage, imageConfig));
+    const svgPreview = await getSvgPreview(editor, nodesInImage, imageConfig);
+    return await getSVGAsBlob(svgPreview!);
   }, [editor, getNodeIds, imageConfig, nodesConfig.filterSelected]);
 
   const fetchText = useCallback(async () => {

@@ -798,6 +798,17 @@ export class Editor extends EventEmitter<TLEventMap> {
     // @internal (undocumented)
     getStyleForNextShape<T>(style: StyleProp<T>): T;
     getSvg(shapes: TLShape[] | TLShapeId[], opts?: Partial<TLSvgOptions>): Promise<SVGSVGElement | undefined>;
+    // (undocumented)
+    getUnorderedRenderingShapes(useEditorState: boolean): {
+        id: TLShapeId;
+        shape: TLShape;
+        util: ShapeUtil;
+        index: number;
+        backgroundIndex: number;
+        opacity: number;
+        isCulled: boolean;
+        maskedPageBounds: Box2d | undefined;
+    }[];
     getViewportPageBounds(): Box2d;
     getViewportPageCenter(): Vec2d;
     getViewportScreenBounds(): Box2d;

@@ -14005,6 +14005,90 @@
             },
             {
               "kind": "Method",
+              "canonicalReference": "@tldraw/editor!Editor#getUnorderedRenderingShapes:member(1)",
+              "docComment": "/**\n * @public\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUnorderedRenderingShapes(useEditorState: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{\n        id: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TLShapeId",
+                  "canonicalReference": "@tldraw/tlschema!TLShapeId:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";\n        shape: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TLShape",
+                  "canonicalReference": "@tldraw/tlschema!TLShape:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";\n        util: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ShapeUtil",
+                  "canonicalReference": "@tldraw/editor!ShapeUtil:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";\n        index: number;\n        backgroundIndex: number;\n        opacity: number;\n        isCulled: boolean;\n        maskedPageBounds: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Box2d",
+                  "canonicalReference": "@tldraw/editor!Box2d:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | undefined;\n    }[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 12
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "useEditorState",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
+              "isAbstract": false,
+              "name": "getUnorderedRenderingShapes"
+            },
+            {
+              "kind": "Method",
               "canonicalReference": "@tldraw/editor!Editor#getViewportPageBounds:member(1)",
               "docComment": "/**\n * The current viewport in the current page space.\n *\n * @public\n */\n",
               "excerptTokens": [

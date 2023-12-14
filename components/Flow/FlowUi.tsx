@@ -111,6 +111,9 @@ const FlowUiContent = (props: FlowUiProps) => {
           editor.createShapes(initialShapes);
         }
         editor.zoomToFit();
+        const zoomLevel = editor.getZoomLevel();
+        const roundedZoomLevel = Math.floor(zoomLevel * 4) / 4;
+        editor.setCamera({...editor.getCamera(), z: roundedZoomLevel});
         setMounted(true);
       }, 0);
     }
