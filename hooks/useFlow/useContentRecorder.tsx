@@ -4,14 +4,14 @@ import { TLUiEventHandler } from "@tldraw/tldraw";
 import { TLRecord } from '@tldraw/tlschema';
 import { RecordsDiff } from '@tldraw/store';
 import { TLEventInfo, TLStoreEventInfo, UiEvent, useEditor } from "@tldraw/editor";
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 export type ContentRecorderContextType = {
   canvasEvent: TLEventInfo;
   historyRecords: RecordsDiff<TLRecord>[];
   uiEvents: UiEvent[];
   onUiEvent: TLUiEventHandler;
-  getHistoryRecords: () => string[];
+  getReadableHistoryRecords: () => string[];
   setCanvasEvent: (newCanvasEvent: TLEventInfo) => void;
   setUiEvents: (newUiEvents: any[]) => void;
 };
@@ -30,9 +30,7 @@ export const ContentRecorderProvider = (props: ContentRecorderProviderProps) => 
   const editor = useEditor();
   // 3 raw data streams coming from tldraw: canvasEvents, uiEvents, historyRecords
   const [canvasEvent, setCanvasEvent] = useState<TLEventInfo>({} as TLEventInfo);
-  // lower fidelity but more interprettable version of historyRecords
-  // breaks down into 3 types of events: added, updated, removed
-  const historyRecords = useRef<RecordsDiff<TLRecord>[]>([]);
+  const [historyRecords, setHistoryRecords] = useState<RecordsDiff<TLRecord>[]>([]);
   const [uiEvents, setUiEvents] = useState<UiEvent[]>([]);
   
   const onCanvasEvent = useCallback((newCanvasEvent: any) => {    
@@ -46,9 +44,10 @@ export const ContentRecorderProvider = (props: ContentRecorderProviderProps) => 
     setUiEvents((uiEvents: any) => [{name, ...data}, ...uiEvents]);
   }, []);
 
-  const getHistoryRecords = useCallback(() => {
+  // lower fidelity but more interprettable version of historyRecords
+  const getReadableHistoryRecords = useCallback(() => {
     const events: string[] = [];
-    historyRecords.current.forEach((diff: any) => {
+    historyRecords.forEach((diff: any) => {
       const { added, updated, removed } = diff;
       for (const record of Object.values(added) as any) {
         if (record.typeName === 'shape') {
@@ -91,10 +90,16 @@ export const ContentRecorderProvider = (props: ContentRecorderProviderProps) => 
   // lower fidelity event logging for store events
   const onStoreEvent = useCallback((event: TLStoreEventInfo) => {
     if (event.source === 'user' && isShapeEvent(event)) {
-      if (historyRecords.current.length > historyRecordsBufferSize) {
-        historyRecords.current.shift();
-      }
-      historyRecords.current.push(event.changes);
+      setHistoryRecords((prevHistoryRecords: any[]) => {
+        let newHistoryRecords = [...prevHistoryRecords, event.changes];
+
+        // If the buffer size is exceeded, remove the oldest record
+        if (newHistoryRecords.length > historyRecordsBufferSize) {
+          newHistoryRecords = newHistoryRecords.slice(1);
+        }
+
+        return newHistoryRecords;
+      });
     }
   }, [historyRecordsBufferSize, isShapeEvent]);
 
@@ -112,11 +117,11 @@ export const ContentRecorderProvider = (props: ContentRecorderProviderProps) => 
 
   const context: ContentRecorderContextType = {
     canvasEvent,
-    historyRecords: historyRecords.current,
+    historyRecords,
     uiEvents,
     onUiEvent,
     setUiEvents,
-    getHistoryRecords,
+    getReadableHistoryRecords,
     setCanvasEvent,
   };
 

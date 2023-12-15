@@ -21,6 +21,10 @@
     @apply text-[#1976d2] no-underline	hover:underline;
   }
 
+  a:hover {
+    @apply no-underline;
+  }
+
   a:visited svg {
     @apply text-[#8E24AA];
   }

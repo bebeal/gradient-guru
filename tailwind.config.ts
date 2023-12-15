@@ -3,7 +3,7 @@ import colors from 'tailwindcss/colors';
 
 const config: Config = {
   safelist: [
-    ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`]),
+    ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`, `grid-cols-${i}`, `grid-rows-${i}`]),
     `radix-state-open:rounded-t-lg radix-state-closed:rounded-lg rounded-b-lg rounded-t-lg`,
     `radix-state-open:rounded-t-xl radix-state-closed:rounded-xl rounded-b-xl rounded-t-xl`,
     `text-accent-500 text-accent-400`
@@ -292,6 +292,17 @@ const config: Config = {
             transform: "rotate(1440deg)",
           }
         },
+        "pulsate": {
+          "0%": {
+            'box-shadow': "0 0 5px #FFFFFF, 0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF, 0 0 40px #FFFFFF",
+          },
+          "50%": {
+            'box-shadow': "0 0 20px #FFFFFF, 0 0 30px #FFFFFF, 0 0 40px #FFFFFF, 0 0 50px #FFFFFF, 0 0 60px #FFFFFF",
+          },
+          "100%": {
+            'box-shadow': "0 0 5px #FFFFFF, 0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF, 0 0 40px #FFFFFF",
+          }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.3s ease-in-out both",
@@ -314,6 +325,7 @@ const config: Config = {
         "text-glow": "text-glow 1.5s ease-in-out infinite alternate",
         "bigger-text-glow": "bigger-text-glow 1.5s infinite alternate",
         "ramp-up-spin": "ramp-up-spin 2s linear infinite reverse",
+        "pulsate": "pulsate 2s infinite",
       }
     },
   },

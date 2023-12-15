@@ -1,10 +1,9 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import { useCallback, useEffect, useState } from 'react';
-import { TLStoreEventInfo, useEditor } from '@tldraw/editor';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Accordion, BulletedList, Form } from '@/components';
-import { useContentExtractor } from '@/hooks';
+import { useContentExtractor, useContentRecorder } from '@/hooks';
 import { cn } from '@/utils';
 import { FlowTab, TabTitle, ToggleTitle } from './shared';
 
@@ -14,11 +13,9 @@ export const StateTab = (props: StateTabProps) => {
   const { ...rest } = props;
   const [flowText, setFlowText] = useState<string | null>(null);
   const [flowImage, setFlowImage] = useState<string | null>(null);
-  const editor = useEditor();
-  const [mounted, setMounted] = useState(false);
+  const { historyRecords } = useContentRecorder();
   const { fetchImage, imageConfig, setImageConfig, fetchText, textConfig, setTextConfig, getImageSchema, getTextSchema } = useContentExtractor();
-  const imageSchema = getImageSchema();
-  const textSchema = getTextSchema();
+  const previousLength = useRef(historyRecords.length);
 
   const refetchImage = useCallback(() => {
     fetchImage().then((dataurl: any) => {
@@ -34,44 +31,13 @@ export const StateTab = (props: StateTabProps) => {
     });
   }, [fetchText]);
 
-  const isShapeEvent = useCallback((event: TLStoreEventInfo) => {
-    const checkRecords = (records: any) => {
-      for (const record of Object.values(records) as any) {
-        if (record.typeName === 'shape') {
-          return true;
-        }
-      }
-      return false;
-    };
-
-    const { added, removed, updated } = event.changes;
-
-    return checkRecords(added) || checkRecords(removed) || Object.values(updated).some(([from, to]: any) => from.typeName === 'shape' && to.typeName === 'shape');
-  }, []);
-
-  // todo: editor.on consumes the event, so we need to find another way so that content recorder can record the event
   useEffect(() => {
-    editor.on('change', (e: any) => {
-      if (e.source === 'user' && isShapeEvent(e)) {
-        if (flowImage) {
-          URL.revokeObjectURL(flowImage);
-        }
-        refetchImage();
-        refetchText();
-      }
-    });
-    return () => {
-      editor.off('change');
-    };
-  }, [editor, flowImage, isShapeEvent, refetchImage, refetchText]);
-
-  useEffect(() => {
-    if (!mounted) {
+    if (historyRecords.length > previousLength.current) {
       refetchImage();
       refetchText();
-      setMounted(true);
+      previousLength.current = historyRecords.length;
     }
-  }, [mounted, refetchImage, refetchText]);
+  }, [historyRecords.length, refetchImage, refetchText]);
 
   const FlowImageAccordion = useCallback(() => {
     const { enabled, ...config } = imageConfig;
@@ -83,7 +49,7 @@ export const StateTab = (props: StateTabProps) => {
           {hasConfig && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <Form object={config} schema={imageSchema} onSubmit={(newImageConfig: any) => setImageConfig({ ...imageConfig, ...newImageConfig })} />
+              <Form object={config} schema={getImageSchema()} onSubmit={(newImageConfig: any) => setImageConfig({ ...imageConfig, ...newImageConfig })} />
             </div>
           )}
           <div className="flex flex-wrap flex-col w-full justify-center items-center gap-1">
@@ -107,7 +73,7 @@ export const StateTab = (props: StateTabProps) => {
       ),
       open: true,
     };
-  }, [flowImage, imageConfig, imageSchema, setImageConfig]);
+  }, [flowImage, imageConfig, getImageSchema, setImageConfig]);
 
   const FlowTextAccordion = useCallback(() => {
     const { enabled, ...config } = textConfig;
@@ -119,7 +85,7 @@ export const StateTab = (props: StateTabProps) => {
           {hasConfig && (
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
               <TabTitle className={cn(`text-md w-full`)}>Controls</TabTitle>
-              <Form object={config} schema={textSchema} onSubmit={(newTextConfig: any) => setTextConfig({ enabled: textConfig.enabled, ...newTextConfig })} />
+              <Form object={config} schema={getTextSchema()} onSubmit={(newTextConfig: any) => setTextConfig({ enabled: textConfig.enabled, ...newTextConfig })} />
             </div>
           )}
           <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
@@ -130,7 +96,7 @@ export const StateTab = (props: StateTabProps) => {
       ),
       open: true,
     };
-  }, [textConfig, textSchema, flowText, setTextConfig]);
+  }, [textConfig, getTextSchema, flowText, setTextConfig]);
 
   return (
     <FlowTab title="State" {...rest}>

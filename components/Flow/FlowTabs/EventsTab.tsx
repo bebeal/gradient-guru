@@ -54,7 +54,7 @@ export const EventsTab = (props: EventsTabProps) => {
             <TabTitle className={cn(`text-md w-full`)}>Timeline Scrubber</TabTitle>
             <TimelineScrubber events={contentRecorder.historyRecords} />
             <TabTitle className={cn(`text-md w-full`)}>Records</TabTitle>
-            {contentRecorder?.historyRecords.length > 0 ? <BulletedList className="max-h-[125px]" items={contentRecorder?.getHistoryRecords()} /> : <div className="text-primary/80 px-2 py-4">No Records</div>}
+            {contentRecorder?.historyRecords.length > 0 ? <BulletedList className="max-h-[125px]" items={contentRecorder?.getReadableHistoryRecords()} /> : <div className="text-primary/80 px-2 py-4">No Records</div>}
           </div>
         </div>
       ),

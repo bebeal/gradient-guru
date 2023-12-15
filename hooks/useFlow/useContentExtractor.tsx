@@ -308,7 +308,7 @@ export const useContentExtractor = (): useContentExtractorReturn => {
     extractHistoryRecords,
   ]);
 
-  // ********** Helper methods **********
+  // ********** Helpers **********
 
   const fetchImage = useCallback(async () => {
     const nodesInImage: TLShapeId[] = getNodeIds(nodesConfig.filterSelected);
@@ -321,7 +321,7 @@ export const useContentExtractor = (): useContentExtractorReturn => {
     return textConfig?.enabled ? extractText() : null;
   }, [textConfig, extractText]);
 
-  // ********** Schema methods **********
+  // ********** Schemas **********
 
   const getImageSchema = useCallback(() => {
     return yup.object().shape({
