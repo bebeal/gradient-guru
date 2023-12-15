@@ -6,14 +6,18 @@ import { RecordsDiff } from '@tldraw/store';
 import { TLEventInfo, TLStoreEventInfo, UiEvent, useEditor } from "@tldraw/editor";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
+export type UiState = UiEvent & {
+  name: string;
+};
+
 export type ContentRecorderContextType = {
-  canvasEvent: TLEventInfo;
-  historyRecords: RecordsDiff<TLRecord>[];
-  uiEvents: UiEvent[];
+  canvasState: TLEventInfo;
+  setCanvasState: (newCanvasEvent: TLEventInfo) => void;
+  uiState: UiState;
   onUiEvent: TLUiEventHandler;
+  setUiState: (newUiState: UiEvent) => void;
+  historyRecords: RecordsDiff<TLRecord>[];
   getReadableHistoryRecords: () => string[];
-  setCanvasEvent: (newCanvasEvent: TLEventInfo) => void;
-  setUiEvents: (newUiEvents: any[]) => void;
 };
 export const ContentRecorderContext = createContext<ContentRecorderContextType | undefined>(undefined);
 
@@ -28,20 +32,19 @@ export const ContentRecorderProvider = (props: ContentRecorderProviderProps) => 
     ...rest
   } = props;
   const editor = useEditor();
-  // 3 raw data streams coming from tldraw: canvasEvents, uiEvents, historyRecords
-  const [canvasEvent, setCanvasEvent] = useState<TLEventInfo>({} as TLEventInfo);
+  const [canvasState, setCanvasState] = useState<TLEventInfo>({} as TLEventInfo);
+  const [uiState, setUiState] = useState<UiState>({} as UiState);
   const [historyRecords, setHistoryRecords] = useState<RecordsDiff<TLRecord>[]>([]);
-  const [uiEvents, setUiEvents] = useState<UiEvent[]>([]);
   
   const onCanvasEvent = useCallback((newCanvasEvent: any) => {    
-    setCanvasEvent(Object.keys(newCanvasEvent).sort().reduce((obj: any, key: any) => {
+    setCanvasState(Object.keys(newCanvasEvent).sort().reduce((obj: any, key: any) => {
       obj[key] = newCanvasEvent?.[key];
       return obj;
     }, {}));
   }, []);
 
   const onUiEvent = useCallback<TLUiEventHandler>((name, data) => {
-    setUiEvents((uiEvents: any) => [{name, ...data}, ...uiEvents]);
+    setUiState({name, ...data} as any);
   }, []);
 
   // lower fidelity but more interprettable version of historyRecords
@@ -116,13 +119,13 @@ export const ContentRecorderProvider = (props: ContentRecorderProviderProps) => 
   }, [editor, onCanvasEvent, onStoreEvent]);
 
   const context: ContentRecorderContextType = {
-    canvasEvent,
-    historyRecords,
-    uiEvents,
+    canvasState,
+    setCanvasState,
+    uiState,
     onUiEvent,
-    setUiEvents,
+    setUiState,
+    historyRecords,
     getReadableHistoryRecords,
-    setCanvasEvent,
   };
 
   return <ContentRecorderContext.Provider value={context}>{children}</ContentRecorderContext.Provider>
@@ -132,7 +135,7 @@ export const useContentRecorder = () => {
 	const flowEventsRecorder = useContext(ContentRecorderContext)
 
 	if (!flowEventsRecorder) {
-		throw new Error('useContentRecorder must be used within a FlowEventsRecorderProvider')
+		throw new Error('useContentRecorder must be used within a ContentRecorderProvider')
 	}
 
 	return flowEventsRecorder;

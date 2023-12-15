@@ -20,7 +20,7 @@ const queryClient = new QueryClient();
 
 const Providers = ({ children }: any) => {
   const [themePanelEnabled, setThemePanelEnabled] = useState<boolean>(false);
-  const [debugMode, setDebug] = useState<number>((isDevEnv || window.location.pathname === '/') ? 1 : 0);
+  const [debugMode, setDebug] = useState<number>(isDevEnv ? 1 : 0);
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

@@ -67,7 +67,7 @@ export const NodesTab = () => {
       const selected = selectedNodes.includes(node);
       const stringName = `${node.type} - ${node.id.replace('shape:', '')}`;
       return {
-        name: <ToggleTitle title={stringName} pressed={!contentExtractor.nodesConfig.nodesToExclude.includes(node.id)} onPressedChange={(pressed: boolean) => contentExtractor.toggleNodeState(node.id)} />,
+        name: <ToggleTitle className="no-underline" title={stringName} pressed={!contentExtractor.nodesConfig.nodesToExclude.includes(node.id)} onPressedChange={(pressed: boolean) => contentExtractor.toggleNodeState(node.id)} />,
         content: (
           <div className={cn(`w-full h-full flex flex-col justify-stretch items-center`)}>
             <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">

@@ -65,9 +65,9 @@ export const BulletedList = ({items, className}: {items: any[], className?: stri
   )
 };
 
-export const ToggleTitle = ({pressed, onPressedChange, title}: any) => {
+export const ToggleTitle = ({pressed, onPressedChange, title, className}: any) => {
   return (
-    <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-0.5 gap-1 justify-center items-center`)}>
+    <UnderlinedTitle className={cn(`pointer-events-auto relative z-[1000] flex h-full w-full py-0.5 gap-1 justify-center items-center`, className)}>
       <Switch asChild pressed={pressed} onPressedChange={onPressedChange} className="absolute left-0"><div /></Switch>
       <div className="text-primary/80 text-xs font-bold mx-[40px]">{title}</div>
     </UnderlinedTitle>

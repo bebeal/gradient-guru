@@ -5,8 +5,7 @@ import { RecordsDiff } from '@tldraw/store';
 import { Box2d, SVG_PADDING, TLEventInfo, TLRecord, TLShape, TLShapeId, UiEvent, useEditor } from '@tldraw/tldraw';
 import * as yup from 'yup';
 import { getExportedImageBlob, getSVGAsBlob, getSvgPreview } from '@/utils';
-import { useContentRecorder } from './useContentRecorder';
-
+import { UiState, useContentRecorder } from './useContentRecorder';
 
 export const defaultNodePropertiesToExtract = ['x', 'y', 'rotation', 'id', 'type', 'props'] as const;
 
@@ -37,8 +36,8 @@ export type FilterBySelectionProps = {
 export type NodesConfig = BaseExtractorProps & FilterBySelectionProps & NodesExtractorProps;
 export type ImageConfig = BaseExtractorProps & ImageExtractorProps;
 export type TextConfig = BaseExtractorProps;
-export type CanvasEventConfig = BaseExtractorProps;
-export type UiEventConfig = BaseExtractorProps;
+export type CanvasStateConfig = BaseExtractorProps;
+export type UiStateConfig = BaseExtractorProps;
 export type HistoryRecordsConfig = BaseExtractorProps;
 
 // Initialize default configs for each state extractor
@@ -66,10 +65,10 @@ export const defaultImageConfig: ImageConfig = {
 export const defaultTextConfig: TextConfig = {
   ...defaultBaseConfig,
 };
-export const defaultCanvasEventConfig: CanvasEventConfig = {
+export const defaultCanvasEventConfig: CanvasStateConfig = {
   ...defaultBaseConfig,
 };
-export const defaultUiEventConfig: UiEventConfig = {
+export const defaultUiStateConfig: UiStateConfig = {
   ...defaultBaseConfig,
 };
 export const defaultHistoryRecordsConfig: HistoryRecordsConfig = {
@@ -77,17 +76,17 @@ export const defaultHistoryRecordsConfig: HistoryRecordsConfig = {
 };
 
 export const SchemaFields = {
-  'enabled': yup.boolean().meta({ item: 'switch' }),
-  'filterSelected': yup.boolean().meta({ item: 'checkbox', label: 'Filter by Selected' }),
-  'width': yup.number().max(400).min(1).meta({ item: 'slider' }),
-  'height': yup.number().max(400).min(1).meta({ item: 'slider' }),
-  'type': yup.string().oneOf(['svg', 'png', 'jpeg', 'webp']).meta({ item: 'select' }),
-  'quality': yup.number().min(0).max(1).meta({ item: 'slider', step: 0.1 }),
-  'scale': yup.number().min(0).max(2).meta({ item: 'slider', step: 0.1 }),
-  'imageSmoothingEnabled': yup.boolean().meta({ item: 'checkbox', label: 'Image Smoothing' }),
-  'imageSmoothingQuality': yup.string().oneOf(['low', 'medium', 'high']).meta({ item: 'select', label: 'Image Smoothing Quality' }),
-  'background': yup.boolean().meta({ item: 'checkbox', label: 'Background' }),
-}
+  enabled: yup.boolean().meta({ item: 'switch' }),
+  filterSelected: yup.boolean().meta({ item: 'checkbox', label: 'Filter by Selected' }),
+  width: yup.number().max(400).min(1).meta({ item: 'slider' }),
+  height: yup.number().max(400).min(1).meta({ item: 'slider' }),
+  type: yup.string().oneOf(['svg', 'png', 'jpeg', 'webp']).meta({ item: 'select' }),
+  quality: yup.number().min(0).max(1).meta({ item: 'slider', step: 0.1 }),
+  scale: yup.number().min(0).max(2).meta({ item: 'slider', step: 0.1 }),
+  imageSmoothingEnabled: yup.boolean().meta({ item: 'checkbox', label: 'Image Smoothing' }),
+  imageSmoothingQuality: yup.string().oneOf(['low', 'medium', 'high']).meta({ item: 'select', label: 'Image Smoothing Quality' }),
+  background: yup.boolean().meta({ item: 'checkbox', label: 'Background' }),
+};
 
 // Each of these configs will be accessible to the rest of the app via a provider
 export const ContentExtractorConfigContext = createContext(
@@ -98,32 +97,34 @@ export const ContentExtractorConfigContext = createContext(
     setImageConfig: (config: ImageConfig) => void;
     textConfig: TextConfig;
     setTextConfig: (config: TextConfig) => void;
-    canvasEventConfig: CanvasEventConfig;
-    setCanvasEventConfig: (config: CanvasEventConfig) => void;
-    uiEventConfig: UiEventConfig;
-    setUiEventConfig: (config: UiEventConfig) => void;
+    canvasStateConfig: CanvasStateConfig;
+    setCanvasStateConfig: (config: CanvasStateConfig) => void;
+    uiStateConfig: UiStateConfig;
+    setUiStateConfig: (config: UiStateConfig) => void;
     historyRecordsConfig: HistoryRecordsConfig;
     setHistoryRecordsConfig: (config: HistoryRecordsConfig) => void;
     toggleNodeState: (nodeId: string) => void;
   }
 );
+
 export const ContentExtractorProvider = ({ children }: { children: any }) => {
   const [nodesConfig, setNodesConfig] = useState<NodesConfig>({ ...defaultNodesConfig, enabled: false });
   const [imageConfig, setImageConfig] = useState<ImageConfig>({ ...defaultImageConfig, enabled: true });
   const [textConfig, setTextConfig] = useState<TextConfig>({ ...defaultTextConfig, enabled: true });
-  const [canvasEventConfig, setCanvasEventConfig] = useState<CanvasEventConfig>(defaultBaseConfig);
-  const [uiEventConfig, setUiEventConfig] = useState<UiEventConfig>(defaultBaseConfig);
+  const [canvasStateConfig, setCanvasStateConfig] = useState<CanvasStateConfig>(defaultCanvasEventConfig);
+  const [uiStateConfig, setUiStateConfig] = useState<UiStateConfig>(defaultUiStateConfig);
   const [historyRecordsConfig, setHistoryRecordsConfig] = useState<HistoryRecordsConfig>(defaultHistoryRecordsConfig);
 
-  const toggleNodeState = useCallback((nodeId: string) => {
-    const nodeExcluded = nodesConfig.nodesToExclude.includes(nodeId);
-    setNodesConfig({
-      ...nodesConfig,
-      nodesToExclude: nodeExcluded
-        ? nodesConfig.nodesToExclude.filter((id) => id !== nodeId)
-        : [...nodesConfig.nodesToExclude, nodeId],
-    });
-  }, [nodesConfig]);
+  const toggleNodeState = useCallback(
+    (nodeId: string) => {
+      const nodeExcluded = nodesConfig.nodesToExclude.includes(nodeId);
+      setNodesConfig({
+        ...nodesConfig,
+        nodesToExclude: nodeExcluded ? nodesConfig.nodesToExclude.filter((id) => id !== nodeId) : [...nodesConfig.nodesToExclude, nodeId],
+      });
+    },
+    [nodesConfig]
+  );
 
   const value = {
     nodesConfig,
@@ -132,10 +133,10 @@ export const ContentExtractorProvider = ({ children }: { children: any }) => {
     setImageConfig,
     textConfig,
     setTextConfig,
-    canvasEventConfig,
-    setCanvasEventConfig,
-    uiEventConfig,
-    setUiEventConfig,
+    canvasStateConfig,
+    setCanvasStateConfig,
+    uiStateConfig,
+    setUiStateConfig,
     historyRecordsConfig,
     setHistoryRecordsConfig,
     toggleNodeState,
@@ -152,10 +153,10 @@ export type useContentExtractorReturn = {
   setImageConfig: (config: ImageConfig) => void;
   textConfig: TextConfig;
   setTextConfig: (config: TextConfig) => void;
-  canvasEventConfig: CanvasEventConfig;
-  setCanvasEventConfig: (config: CanvasEventConfig) => void;
-  uiEventConfig: UiEventConfig;
-  setUiEventConfig: (config: UiEventConfig) => void;
+  canvasStateConfig: CanvasStateConfig;
+  setCanvasStateConfig: (config: CanvasStateConfig) => void;
+  uiStateConfig: UiStateConfig;
+  setUiStateConfig: (config: UiStateConfig) => void;
   historyRecordsConfig: HistoryRecordsConfig;
   setHistoryRecordsConfig: (config: HistoryRecordsConfig) => void;
 
@@ -167,15 +168,15 @@ export type useContentExtractorReturn = {
   extractNodes: () => TLShape[];
   extractImage: () => Promise<Blob | null>;
   extractText: () => Promise<string>;
-  extractCanvasEvent: () => TLEventInfo;
-  extractUiEvent: () => UiEvent;
+  extractCanvasState: () => TLEventInfo;
+  extractUiState: () => UiState;
   extractHistoryRecords: () => RecordsDiff<TLRecord>[];
   extractAll: () => Promise<{
     nodes: TLShape[];
     image: Blob | null;
     text: string;
     canvasEvent: TLEventInfo | {};
-    uiEvent: UiEvent | {};
+    uiState: UiEvent | {};
     historyRecords?: RecordsDiff<TLRecord>[];
   }>;
   getImageSchema: () => yup.ObjectSchema<any>;
@@ -197,31 +198,37 @@ export const useContentExtractor = (): useContentExtractorReturn => {
     setImageConfig,
     textConfig,
     setTextConfig,
-    canvasEventConfig,
-    setCanvasEventConfig,
-    uiEventConfig,
-    setUiEventConfig,
+    canvasStateConfig,
+    setCanvasStateConfig,
+    uiStateConfig,
+    setUiStateConfig,
     historyRecordsConfig,
     setHistoryRecordsConfig,
     toggleNodeState,
   } = useContext(ContentExtractorConfigContext);
 
-  if (!nodesConfig || !imageConfig || !textConfig || !canvasEventConfig || !uiEventConfig || !historyRecordsConfig) {
+  if (!nodesConfig || !imageConfig || !textConfig || !canvasStateConfig || !uiStateConfig || !historyRecordsConfig) {
     throw new Error('useFlowStateExtractor must be used within a FlowStateExtractorProvider');
   }
 
   const editor = useEditor();
-  const { canvasEvent, uiEvents, historyRecords } = useContentRecorder();
+  const { canvasState, uiState, historyRecords } = useContentRecorder();
 
-  const getNodeIds = useCallback((filterSelected: boolean = false): TLShapeId[] => {
+  const getNodeIds = useCallback(
+    (filterSelected: boolean = false): TLShapeId[] => {
       const nodeIds = filterSelected ? editor.getSelectedShapeIds() : Array.from(editor.getCurrentPageShapeIds());
       return nodeIds.filter((id) => !nodesConfig.nodesToExclude.includes(id));
-  }, [editor, nodesConfig.nodesToExclude]);
+    },
+    [editor, nodesConfig.nodesToExclude]
+  );
 
-  const getNodes = useCallback((filterSelected: boolean = false): TLShape[] => {
+  const getNodes = useCallback(
+    (filterSelected: boolean = false): TLShape[] => {
       const nodes = filterSelected ? editor.getSelectedShapes() : editor.getCurrentPageShapesSorted();
       return nodes.filter((node) => !nodesConfig.nodesToExclude.includes(node.id));
-  }, [editor, nodesConfig.nodesToExclude]);
+    },
+    [editor, nodesConfig.nodesToExclude]
+  );
 
   // ********** Extractor methods **********
 
@@ -229,7 +236,7 @@ export const useContentExtractor = (): useContentExtractorReturn => {
   const extractNodes = useCallback((): TLShape[] => {
     const nodes = getNodes(nodesConfig.filterSelected);
     return nodes.map((node) => {
-      const propsToExtract =  defaultNodePropertiesToExtract.reduce((acc, key) => {
+      const propsToExtract = defaultNodePropertiesToExtract.reduce((acc, key) => {
         acc[key] = node[key];
         return acc;
       }, {} as any);
@@ -263,14 +270,14 @@ export const useContentExtractor = (): useContentExtractorReturn => {
   }, [editor, getNodeIds, nodesConfig.filterSelected]);
 
   // Canvas event extractor
-  const extractCanvasEvent = useCallback((): TLEventInfo => {
-    return canvasEvent;
-  }, [canvasEvent]);
+  const extractCanvasState = useCallback((): TLEventInfo => {
+    return canvasState;
+  }, [canvasState]);
 
-  // UI event extractor
-  const extractUiEvent = useCallback((): UiEvent => {
-    return uiEvents?.[0] || {};
-  }, [uiEvents]);
+  // UI state extractor
+  const extractUiState = useCallback((): UiState => {
+    return uiState;
+  }, [uiState]);
 
   // History records extractor
   const extractHistoryRecords = useCallback((): RecordsDiff<TLRecord>[] => {
@@ -282,31 +289,18 @@ export const useContentExtractor = (): useContentExtractorReturn => {
     const nodes = nodesConfig.enabled ? extractNodes() : [];
     const image = imageConfig.enabled ? await extractImage() : null;
     const text = textConfig.enabled ? await extractText() : '';
-    const canvasEvent = canvasEventConfig.enabled ? extractCanvasEvent() : {};
-    const uiEvent = uiEventConfig.enabled ? extractUiEvent() : {};
+    const canvasEvent = canvasStateConfig.enabled ? extractCanvasState() : {};
+    const extractedUiState = uiStateConfig.enabled ? extractUiState() : {};
     const historyRecords = historyRecordsConfig.enabled ? extractHistoryRecords() : [];
     return {
       nodes,
       image,
       text,
       canvasEvent,
-      uiEvent,
+      uiState: extractedUiState,
       historyRecords,
     };
-  }, [
-    nodesConfig,
-    imageConfig,
-    textConfig,
-    canvasEventConfig,
-    uiEventConfig,
-    historyRecordsConfig,
-    extractNodes,
-    extractImage,
-    extractText,
-    extractCanvasEvent,
-    extractUiEvent,
-    extractHistoryRecords,
-  ]);
+  }, [nodesConfig, imageConfig, textConfig, canvasStateConfig, uiStateConfig, historyRecordsConfig, extractNodes, extractImage, extractText, extractCanvasState, extractUiState, extractHistoryRecords]);
 
   // ********** Helpers **********
 
@@ -335,19 +329,19 @@ export const useContentExtractor = (): useContentExtractorReturn => {
   }, []);
 
   const getTextSchema = useCallback(() => {
-    return yup.object().shape({ });
+    return yup.object().shape({});
   }, []);
 
   const getCanvasEventSchema = useCallback(() => {
-    return yup.object().shape({ });
+    return yup.object().shape({});
   }, []);
 
   const getUiEventSchema = useCallback(() => {
-    return yup.object().shape({ });
+    return yup.object().shape({});
   }, []);
 
   const getHistoryRecordsSchema = useCallback(() => {
-    return yup.object().shape({ });
+    return yup.object().shape({});
   }, []);
 
   return {
@@ -357,10 +351,10 @@ export const useContentExtractor = (): useContentExtractorReturn => {
     setImageConfig,
     textConfig,
     setTextConfig,
-    canvasEventConfig,
-    setCanvasEventConfig,
-    uiEventConfig,
-    setUiEventConfig,
+    canvasStateConfig,
+    setCanvasStateConfig,
+    uiStateConfig,
+    setUiStateConfig,
     historyRecordsConfig,
     setHistoryRecordsConfig,
     toggleNodeState,
@@ -369,8 +363,8 @@ export const useContentExtractor = (): useContentExtractorReturn => {
     extractNodes,
     extractImage,
     extractText,
-    extractCanvasEvent,
-    extractUiEvent,
+    extractCanvasState,
+    extractUiState,
     extractHistoryRecords,
     extractAll,
     getImageSchema,

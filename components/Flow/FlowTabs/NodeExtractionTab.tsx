@@ -7,9 +7,9 @@ import { useContentExtractor, useContentRecorder } from '@/hooks';
 import { cn } from '@/utils';
 import { FlowTab, TabTitle, ToggleTitle } from './shared';
 
-export interface StateTabProps {}
+export interface NodeExtractionTabProps {}
 
-export const StateTab = (props: StateTabProps) => {
+export const NodeExtractionTab = (props: NodeExtractionTabProps) => {
   const { ...rest } = props;
   const [flowText, setFlowText] = useState<string | null>(null);
   const [flowImage, setFlowImage] = useState<string | null>(null);
@@ -99,9 +99,9 @@ export const StateTab = (props: StateTabProps) => {
   }, [textConfig, getTextSchema, flowText, setTextConfig]);
 
   return (
-    <FlowTab title="State" {...rest}>
+    <FlowTab title="Node Extraction" {...rest}>
       <Accordion spaceBetween={16} className="w-full text-xs p-1" triggerClassName="w-full flex justify-center items-center" items={[FlowTextAccordion(), FlowImageAccordion()]} />
     </FlowTab>
   );
 };
-StateTab.displayName = 'StateTab';
+NodeExtractionTab.displayName = 'StateTab';

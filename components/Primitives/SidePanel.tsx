@@ -130,7 +130,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
         aria-label="ColumnPanel"
       >
         {tabs.map((tab, index) => {
-          const tabValue = `${tab?.name}-${index}`;
+          const tabValue = `${tab?.name}`;
           const tabIsActive = activeTabIndex === index;
           return (
             <Tabs.Trigger
@@ -162,7 +162,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
         }}
       >
         {tabs.map((tab, index) => {
-          const tabValue = `${tab?.name}-${index}`;
+          const tabValue = `${tab?.name}`;
           const tabIsActive = activeTabIndex === index;
           // type of forceMount is true not boolean so doing this hack
           const extraProps: any = {};
