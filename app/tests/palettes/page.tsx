@@ -1,9 +1,11 @@
-'use client'
-import { cn } from '@/utils';
+'use client';
+
 import React from 'react';
+import { Separator } from '@radix-ui/themes';
 import tailwindConfig from 'tailwind.config';
 import resolveConfig from 'tailwindcss/resolveConfig';
-import { Separator } from '@radix-ui/themes';
+import { cn } from '@/utils';
+
 
 const fullConfig = resolveConfig(tailwindConfig)
 
@@ -24,7 +26,7 @@ const Samples: React.FC<SamplesProps> = ({ bgColorName, bgColor, textColors }: a
       {Object.keys(textColors).map((textColorKey: any) => {
         const textColor = textColors[textColorKey];
         return (
-          <div key={textColorKey} className={`flex items-center justify-center w-full h-10 font-bold text-md`} style={{color: textColor}}>
+          <div key={textColorKey} className={`flex items-center justify-center w-full h-10 font-bold text-base`} style={{color: textColor}}>
             {textColorKey} on bg-{bgColorName}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </div>
         )

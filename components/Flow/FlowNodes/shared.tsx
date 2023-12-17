@@ -1,8 +1,9 @@
 'use client'
 import * as yup from 'yup';
-import { DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, GeoShapeGeoStyle } from "@tldraw/editor";
+import { DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, GeoShapeGeoStyle, TLShape } from "@tldraw/editor";
 import { DefaultLabelColorStyle } from "@tldraw/tlschema/src/styles/TLColorStyle";
 import { FONT_FAMILIES } from "@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants";
+import { cn } from '@/utils';
 
 export const KeysToMakereadOnly: string[] = ['type'] as const;
 export const KeysToIgnore: string[] = ['index', 'typeName'] as const;
@@ -56,4 +57,18 @@ export const inferSchemaField = (key: any, value: any) => {
     default:
       return yup.string().meta({ item: 'readOnly' });
   }
+};
+
+export const getNodeName = (node: TLShape) => {
+  return `[${node.type}] - ${node.id.replace('shape:', '')}`;
+};
+
+export const getNodeNameComponent = (node: TLShape, className: string = '') => {
+  return (
+    <div className={cn("flex justify-between items-center w-full gap-2", className)}>
+      <div className="text-right flex-1">[{node.type}]</div>
+      <div className="flex-0">-</div>
+      <div className="flex-1">{node.id.replace('shape:', '')}</div>
+    </div>
+  );
 };

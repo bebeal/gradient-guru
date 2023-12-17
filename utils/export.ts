@@ -1,7 +1,7 @@
 'use client'
 
 // refactored editor from https://github.com/tldraw/tldraw/blob/main/packages/tldraw/src/lib/utils/export/export.ts
-import { ImageConfig } from '@/hooks';
+import { ImageExtractorConfig } from '@/hooks';
 import { Editor, PngHelpers, SVG_PADDING, SvgExportContext, SvgExportDef, TLFrameShape, TLGroupShape, TLShape, TLShapeId, TLSvgOptions, uniqueId } from '@tldraw/editor';
 import canvasSize from 'canvas-size';
 import { isSafari } from './device';
@@ -69,7 +69,7 @@ export const adjustSizeForCanvasLimits = async (
 }
 
 // Gets an exported SVG from the editor for the given nodes
-export const getSvgElement: any = async (editor: Editor, ids: TLShapeId[], imageConfig?: ImageConfig) => {
+export const getSvgElement: any = async (editor: Editor, ids: TLShapeId[], imageConfig?: ImageExtractorConfig) => {
 	const svg = await editor.getSvg(ids, imageConfig);
 	if (!svg) throw new Error('Could not construct SVG.');
 	return svg;
@@ -150,7 +150,7 @@ export const getSVGAsBlob = async (svg: SVGElement, encodeEmbedImages = true): P
   return URL.createObjectURL(svgBlob);
 };
 
-export const createCanvasFromImage = async (dataUrl: string, width: number, height: number, options: ImageConfig): Promise<HTMLCanvasElement | null> => {
+export const createCanvasFromImage = async (dataUrl: string, width: number, height: number, options: ImageExtractorConfig): Promise<HTMLCanvasElement | null> => {
   const { imageSmoothingEnabled=true, imageSmoothingQuality='high' } = options;
   return await (new Promise((resolve) => {
     const image = new Image();
@@ -197,7 +197,7 @@ export const createBlobFromCanvas = (canvas: HTMLCanvasElement, type: string, qu
 	));
 }
 
-export const getSvgAsCanvas = async (svg: SVGElement, options: ImageConfig, encodeEmbedImages = true) => {
+export const getSvgAsCanvas = async (svg: SVGElement, options: ImageExtractorConfig, encodeEmbedImages = true) => {
   const { scale=1 } = options;
 
   const { width, height } = getSvgDimensions(svg);
@@ -214,7 +214,7 @@ export const getSvgAsCanvas = async (svg: SVGElement, options: ImageConfig, enco
   return { canvas, dimensions: { width: effectiveWidth, height: effectiveHeight, scale: effectiveScale } };
 };
 
-export const getSvgAsImage = async (svg: SVGElement, options: ImageConfig) => {
+export const getSvgAsImage = async (svg: SVGElement, options: ImageExtractorConfig) => {
   const { type='png', quality=1 } = options;
   const { canvas, dimensions } = await getSvgAsCanvas(svg, options);
   if (!canvas) return null;
@@ -227,11 +227,11 @@ export const getSvgAsImage = async (svg: SVGElement, options: ImageConfig) => {
   });
 };
 
-export const getExportedCanvas = async (editor: Editor, ids: TLShapeId[], options: ImageConfig) => {
+export const getExportedCanvas = async (editor: Editor, ids: TLShapeId[], options: ImageExtractorConfig) => {
   return await getSvgAsCanvas(await getSvgElement(editor, ids, options), options);
 }
 
-export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], options: ImageConfig) => {
+export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], options: ImageExtractorConfig) => {
 	return await getSvgAsImage(await getSvgElement(editor, ids, options), options);
 }
 

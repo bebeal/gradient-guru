@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useState } from 'react';
 import { createShapeId, TLAnyShapeUtilConstructor, TLShape, useEditor } from '@tldraw/tldraw';
 import { FlowNodeUtil } from '@/components';
 import { getExportedImageBlob } from '@/utils';
-import { ImageConfig } from './useContentExtractor';
+import { ImageExtractorConfig } from './useContentExtractor';
 
 export interface ScratchNode {
   panelPreview: React.ReactNode;
@@ -30,7 +30,7 @@ export const ScratchPanelProvider = ({ children }: { children: React.ReactNode }
     const nodesToAdd = editor.getSelectedShapes();
     const ids = nodesToAdd.map((s: any) => s.id);
     // get image for panel
-    getExportedImageBlob(editor, ids, { type: 'png', background: false } as ImageConfig).then((imageBlob) => {
+    getExportedImageBlob(editor, ids, { type: 'png', background: false } as ImageExtractorConfig).then((imageBlob) => {
       if (imageBlob) {
         const objectURL = URL.createObjectURL(imageBlob);
         const nodeToAdd: ScratchNode = {

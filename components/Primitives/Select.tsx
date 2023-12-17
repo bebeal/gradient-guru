@@ -70,6 +70,7 @@ export interface SelectContentProps extends SelectPrimitive.SelectContentProps {
   radius?: Radius;
   selectedIndex?: number;
   virtualize?: boolean;
+  readOnly?: boolean;
 }
 const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>((props, forwardedRef: any) => {
   const {
@@ -79,6 +80,7 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>((props, for
     selectedIndex = 0,
     radius = 'medium',
     virtualize = true,
+    readOnly = false,
     ...rest
   } = props;
   const [scrollParent, setScrollParent] = React.useState<HTMLElement>();
@@ -97,6 +99,7 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>((props, for
           position === 'popper' &&
             'max-h-[var(--radix-select-content-available-height)] max-w-[var(--radix-select-content-available-width)] data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
           RadiusClasses(radius),
+          readOnly && 'cursor-default pointer-events-none',
           className
         )}
         {...rest}
@@ -226,6 +229,7 @@ export interface SelectProps {
   name?: string;
   disabled?: boolean;
   required?: boolean;
+  readOnly?: boolean;
 }
 export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) => {
   const {
@@ -243,6 +247,7 @@ export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) =>
     disabled = false,
     required = false,
     virtualize = initialItems.length > 100,
+    readOnly = false,
     ...rest
   } = props;
   const items = useMemo(() => {
@@ -284,7 +289,7 @@ export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) =>
       {...rest}
     >
       <SelectTrigger value={value} ref={ref} className={cn(className)} placeholder={placeholder} />
-      <SelectContent selectedIndex={items.findIndex((v) => v.value === value)} items={items} virtualize={virtualize} />
+      <SelectContent selectedIndex={items.findIndex((v) => v.value === value)} items={items} virtualize={virtualize} readOnly={readOnly} />
     </SelectPrimitive.Root>
   );
 });

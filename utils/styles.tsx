@@ -123,16 +123,7 @@ export interface GradientDivProps {
 }
 
 export const GradientDiv = (props: GradientDivProps) => {
-  const {
-    colors = ['#FF1834', '#FFC900', '#00E0D9', '#0074E0', '#7F00DE', '#FF007E'],
-    radius = 'medium',
-    backglow = true,
-    isHovered = false,
-    direction = 'to left',
-    className = '',
-    children,
-    ...rest
-  } = props;
+  const { colors = ['#FF1834', '#FFC900', '#00E0D9', '#0074E0', '#7F00DE', '#FF007E'], radius = 'medium', backglow = true, isHovered = false, direction = 'to left', className = '', children, ...rest } = props;
 
   // This is an absolutely positioned div with a linear-gradient background and a pseudo after element with the same linear-gradient background.
   return (
@@ -168,10 +159,7 @@ export const GradientDiv = (props: GradientDivProps) => {
                 WebkitMask: `${getEncodedSVGUrl(child)} 0 0 / 100% 100% no-repeat`,
                 mask: `${getEncodedSVGUrl(child)} 0 0 / 100% 100% no-repeat`,
               }}
-              className={cn(
-                `w-auto h-auto justify-center items-center flex`,
-                `after:w-4/5 after:h-4/5 after:brightness-125`
-              )}
+              className={cn(`w-auto h-auto justify-center items-center flex`, `after:w-4/5 after:h-4/5 after:brightness-125`)}
             >
               {child}
             </DynamicGradientBackground>
@@ -201,7 +189,7 @@ export const Loading = (props: LoadingProps) => {
 
   return (
     <div className="w-auto h-auto flex items-center justify-center text-xl text-muted gap-1">
-      <Suspense fallback={"..."}>
+      <Suspense fallback={'...'}>
         {spinner && <IconSetCache.Custom.Loader className={cn('flex items-center justify-center h-6 w-6 text-base gap-1')} />}
         {content}
         {dots && <IconSetCache.Custom.DotsLoader className={'h-6 w-6 self-end'} />}
@@ -239,14 +227,9 @@ export interface UnderConstructionProps {
 export const UnderConstruction = (props: UnderConstructionProps) => {
   const { className = '' } = props;
   return (
-    <div
-      className={cn(
-        'absolute w-full h-full flex justify-center items-center rounded-lg pointer-events-none overflow-visible',
-        className
-      )}
-    >
+    <div className={cn('absolute w-full h-full flex justify-center items-center rounded-lg pointer-events-none overflow-visible', className)}>
       <div className="absolute w-full h-full left-0 top-0 bg-black opacity-50 rounded-lg pointer-events-none overflow-visible z-[9]" />
-      <div className="top-0 left-1/2 -translate-x-1/2 bg-primary text-primary shadow-2xl shadow-black text-md px-1 py-1 rounded-lg border-2 border-solid border-primary animate-banner-pulse w-full z-[10] text-center [transform:scale(0.85)]">
+      <div className="top-0 left-1/2 -translate-x-1/2 bg-primary text-primary shadow-2xl shadow-black text-base px-1 py-1 rounded-lg border-2 border-solid border-primary animate-banner-pulse w-full z-[10] text-center [transform:scale(0.85)]">
         🚧 Under Construction 🚧
       </div>
     </div>

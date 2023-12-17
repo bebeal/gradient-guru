@@ -6,7 +6,7 @@ import { FormProvider, UseFormProps, UseFormReturn, useForm } from "react-hook-f
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { inferSchema, FormFields } from "./shared";
-import { cn, noop } from "@/utils";
+import { arrayToObject, cn, noop } from "@/utils";
 
 // Custom meta properties I'm defining for each field to specify how it should be rendered
 export type SchemaMeta = {
@@ -28,7 +28,7 @@ export interface FormProps extends UseFormProps {
 
 export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
   const {
-    object = {},
+    object: initialObject = {},
     schema: schemaFromProps,
     readOnly = false,
     onSubmit=noop,
@@ -39,8 +39,10 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
     ...rest
   } = props;
   const [initialized, setInitialized] = useState(false);
+  const object = Array.isArray(initialObject) ? arrayToObject(initialObject) : initialObject;
   // if schema is not provided, infer it based on types
   const schema = schemaFromProps || inferSchema(object);
+  const fromArray = schema?.spec?.meta?.item === 'from-array';
   type FormSchema = yup.InferType<typeof schema>;
   const form: UseFormReturn = useForm<FormSchema>({
     resolver: yupResolver(schema),
@@ -70,11 +72,11 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
     <FormProvider {...rest} {...form}>
       <FormPrimitive.Root
         ref={ref}
-        className={cn(`w-full h-auto px-2 py-4 overflow-auto rounded items-center`, readOnly && 'bg-primary/90', className)}
+        className={cn(`w-full h-auto p-2 overflow-auto rounded items-center`, readOnly && 'bg-primary/90', className)}
         onChange={form.handleSubmit(onSubmit, onError)}
       >
-        <div className={cn("w-full h-full grid gap-px p-1 rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1')}>
-          <FormFields form={form} schema={schema} labels={labels} />
+        <div className={cn("w-full h-full grid gap-px p-1 rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`)}>
+          <FormFields form={form} schema={schema} labels={labels} readOnly={readOnly} />
         </div>
       </FormPrimitive.Root>
     </FormProvider>

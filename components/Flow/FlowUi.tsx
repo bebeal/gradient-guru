@@ -19,7 +19,7 @@ import { ExitPenMode } from '@tldraw/tldraw/src/lib/ui/components/PenModeToggle'
 import { ToastProvider, ToastViewport } from '@radix-ui/react-toast'
 import { cn } from '@/utils';
 import { FlowTabs } from '@/components';
-import { ContentExtractorProvider, useContentRecorder } from '@/hooks';
+import { useContentRecorder } from '@/hooks';
 import { ScratchPanel } from './FlowExtensions';
 
 export type FlowUiProps = TldrawUiProps & {
@@ -45,16 +45,14 @@ export const FlowUi = (props: FlowUiProps) => {
 
 	return (
 		<TldrawUiContextProvider onUiEvent={onUiEvent} {...rest}>
-      <ContentExtractorProvider>
-        <FlowUiInner
-          initialShapes={initialShapes}
-          hideUi={hideUi}
-          scratchNodeUtils={scratchNodeUtils}
-          {...rest}
-        >
-          {children}
-        </FlowUiInner>
-      </ContentExtractorProvider>
+      <FlowUiInner
+        initialShapes={initialShapes}
+        hideUi={hideUi}
+        scratchNodeUtils={scratchNodeUtils}
+        {...rest}
+      >
+        {children}
+      </FlowUiInner>
 		</TldrawUiContextProvider>
 	)
 };

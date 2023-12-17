@@ -17,13 +17,14 @@ import { IconSetCache } from "..";
   className?: string;
   disabled?: boolean;
   name?: string;
+  readOnly?: boolean;
 }
 
 export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>) => {
   const {
     children=<IconSetCache.Carbon.Checkmark width={"100%"} />,
     checked: externalChecked,
-    defaultChecked='indeterminate',
+    defaultChecked=false, // 'indeterminate',
     onChange: onChangeCallback,
     onCheckedChange:onCheckedChangeCallback,
     disabled=false,
@@ -31,6 +32,7 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
     size=16,
     className='',
     name,
+    readOnly=false,
     ...rest
    } = props;
    const [internalChecked, setInternalChecked] = useState<boolean | undefined | 'indeterminate'>(defaultChecked);
@@ -77,6 +79,7 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
         "focus:outline-none focus-visible:ring focus-visible:ring-accent focus-visible:ring-opacity-75",
         DisabledClasses,
         RadiusClasses(radius),
+        readOnly && 'cursor-default pointer-events-none',
       )}
       {...rest}
       onChange={noop}

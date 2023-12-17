@@ -4,7 +4,7 @@ import { cn, noop } from '@/utils';
 // ref: https://github.com/saadeghi/daisyui/blob/35dbea89ca5b82dd0c3ba4bb69d5f39a7b7c4d54/src/components/styled/toggle.css#L2
 
 import * as TogglePrimitive from '@radix-ui/react-toggle';
-import { forwardRef, useState, useEffect } from 'react';
+import { forwardRef, useState, useEffect, useCallback } from 'react';
 
 // export interface SwitchProps extends TogglePrimitive.ToggleProps {
 export interface SwitchProps {
@@ -22,6 +22,7 @@ export interface SwitchProps {
   onLabel?: any;
   children?: React.ReactNode;
   asChild?: boolean;
+  readOnly?: boolean;
 }
 
 export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
@@ -38,6 +39,7 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
     onLabel,
     children,
     asChild,
+    readOnly=false,
     ...rest
   } = props;
   const [internalPressed, setInternalPressed] = useState<boolean | undefined>(defaultPressed);
@@ -50,7 +52,7 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
   }, [externalPressed]);
 
    // radix doesn't expose the actual event so we have to create a synthetic one for it to work with react-hook-form
-   const onChange = (pressed: boolean) => {
+   const onChange = useCallback((pressed: boolean) => {
     // synthetic event
     const event: any = {
       target: {
@@ -60,19 +62,19 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
       },
     };
     onChangeCallback?.(event);
-   };
+   }, [onChangeCallback, rest?.name]);
 
-   const onPressedChange = () => {
+   const onPressedChange = useCallback(() => {
     const newPressed = isPressed === undefined ? true : !isPressed;
     setInternalPressed(newPressed);
     onPressedChangeCallback && onPressedChangeCallback?.(newPressed);
     onChange?.(newPressed);
-   }
+   }, [isPressed, onPressedChangeCallback, onChange]);
 
-  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     onPressedChange();
-  };
+  }, [onPressedChange]);
 
   const baseColor = isPressed === undefined ? 'rgba(80, 80, 80, 0.7)' : isPressed ? 'rgba(0, 140, 255, 1)' : 'rgba(80, 80, 80, 0.7)';
   const thumbColor = isPressed === undefined ? 'rgb(255, 255, 255)' : isPressed ? 'rgb(255, 255, 255)' : 'rgb(255, 255, 255)';
@@ -92,7 +94,7 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
   };
 
   return (
-    <div className="flex w-auto justify-center items-center gap-1">
+    <div className={cn("flex w-auto justify-center items-center gap-1", readOnly && 'cursor-default pointer-events-none')}>
       {offLabel && (
         <div className={cn("text-[10px] text-muted break-words text-center w-12", !internalPressed && `text-primary`)}>
           {offLabel}

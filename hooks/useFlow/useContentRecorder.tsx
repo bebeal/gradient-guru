@@ -54,20 +54,20 @@ export const ContentRecorderProvider = (props: ContentRecorderProviderProps) => 
       const { added, updated, removed } = diff;
       for (const record of Object.values(added) as any) {
         if (record.typeName === 'shape') {
-          events.push(`user created shape (${(record.id).replace('shape:', '')} - ${record.type})`)
+          events.push(`user created shape [${record.type}] - ${(record.id).replace('shape:', '')}`)
         }
       }
       for (const [from, to] of Object.values(updated) as any) {
         if ( from.typeName === 'shape' || to.typeName === 'shape') {
           // collpase when pushing this event only if its different from last event in arary
-          if (events.length > 0 && !events[events.length - 1].includes(`user updated shape (${(to.id).replace('shape:', '')})`)) {
-            events.push(`user updated shape (${(to.id).replace('shape:', '')})`);
+          if (events.length > 0 && !events[events.length - 1].includes(`user updated shape [${to.type}] - ${(to.id).replace('shape:', '')}`)) {
+            events.push(`user updated shape [${to.type}] - ${(to.id).replace('shape:', '')}`);
           }
         }
       }
       for (const record of Object.values(removed) as any) {
         if (record.typeName === 'shape') {
-          events.push(`user deleted shape (${(record.id).replace('shape:', '')} - ${record.type})`)
+          events.push(`user deleted shape [${record.type}] - ${(record.id).replace('shape:', '')}`)
         }
       }
     });

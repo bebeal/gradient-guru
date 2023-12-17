@@ -24,7 +24,7 @@ yarn clean
 ```
 
 * Build for deployment
-  * Under the hood this will build tldraw embed in packages/tldraw
+  * Under the hood this will build tldraw embed in `packages/tldraw`
 
 ```bash
 yarn build
@@ -45,30 +45,35 @@ yarn build
     NEXT_PUBLIC_OPENAI_API_KEY='your-api-key-here'
     ```
 
+## Deployement
+
+* Deployed using [AWS Amplify](https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html)
+  * Will probably switch to Vercel cause amplify is a bit of a pain
+
 ## Libraries
 
 ---
 
 * Infrastructure:
-  * [React](https://github.com/facebook/react): JavaScript library for building user interfaces
+  * [React](https://github.com/facebook/react)
     * [React Docs](https://react.dev/)
   * [TypeScript](https://github.com/microsoft/TypeScript)
     * [TypeScript Docs](https://www.typescriptlang.org/docs/)
-  * [Next.js](https://github.com/vercel/next.js/): React framework and tooling
+  * [Next.js](https://github.com/vercel/next.js/)
     * [Next.js Docs](https://nextjs.org/docs)
-    * [next-themes](https://github.com/pacocoursey/next-themes): An abstraction for themes in Next.js
+    * [next-themes](https://github.com/pacocoursey/next-themes)
 
 * Styling
-  * [Radix-UI](https://github.com/radix-ui): Open-source UI component library for building high-quality, modular, themable, accessible components
-    * [Radix Primitives](radix-ui.com/docs/primitives): Low-level UI component library
-    * [Radix Themes](radix-ui.com/themes/docs): Add integration with radix-ui primitives to make them themable
-  * [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss): Utility-first CSS framework
+  * [Radix-UI](https://github.com/radix-ui)
+    * [Radix Primitives](radix-ui.com/docs/primitives)
+    * [Radix Themes](radix-ui.com/themes/docs)
+  * [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)
     * [Tailwind CSS Docs](https://tailwindcss.com)
     * Plugins:
-      * [tailwindcss-animate](https://github.com/jamiebuilds/tailwindcss-animate): For creating animations
-      * [@tailwindcss/typography](https://github.com/tailwindlabs/tailwindcss-typography): Sets typographic defaults for HTML elements
-      * [tailwindcss-radix](https://github.com/ecklf/tailwindcss-radix): Utilities and variants for styling radix state
-  * [Styled Components](https://github.com/styled-components): CSS-in-JS library
+      * [tailwindcss-animate](https://github.com/jamiebuilds/tailwindcss-animate)
+      * [@tailwindcss/typography](https://github.com/tailwindlabs/tailwindcss-typography)
+      * [tailwindcss-radix](https://github.com/ecklf/tailwindcss-radix)
+  * [Styled Components](https://github.com/styled-components)
     * [Styled Components Docs](https://styled-components.com/docs)
 
 * Utility:
@@ -84,6 +89,9 @@ yarn build
   * Queries:
     * [react-query](https://github.com/TanStack/query)
       * [react-query Docs](https://tanstack.com/query/v3/docs/react/overview)
+  * State Management:
+    * [zustand](https://github.com/pmndrs/zustand)
+      * [zustand Docs](https://docs.pmnd.rs/zustand/getting-started/introduction)
   * Data Visualization:
     * [plotly.js](https://github.com/plotly/plotly.js)
       * [plotly.js Docs](https://plotly.com/javascript/)
@@ -123,24 +131,36 @@ yarn build
 
 * [`/`](https://gradient-guru.com)
   * [`/compute`](https://gradient-guru.com/compute)
+  * [`/demo`](https://gradient-guru.com/demo)
+    * [`/make-a-ui`](https://gradient-guru.com/demo/make-a-ui)
+    * [`/make-a-game`](https://gradient-guru.com/demo/make-a-game)
+    * [`/system-architect`](https://gradient-guru.com/demo/system-architect)
+    * [`/canvas-controller`](https://gradient-guru.com/demo/canvas-controller)
+    * [`/ai-art`](https://gradient-guru.com/demo/ai-art)
+    * [`/learn`](https://gradient-guru.com/demo/learn)
+    * [`/bots`](https://gradient-guru.com/demo/bots)
   * [`/tests`](https://gradient-guru.com/tests)
     * [`/fonts`](https://gradient-guru.com/tests/fonts)
     * [`/form`](https://gradient-guru.com/tests/form)
     * [`/icon-sets`](https://gradient-guru.com/tests/icon-sets)
     * [`/palettes`](https://gradient-guru.com/tests/palettes)
     * [`/plotly`](https://gradient-guru.com/tests/plotly)
-    * [`/tiptap`](https://gradient-guru.com/tests/tiptap)
-    * [`/tldraw`](https://gradient-guru.com/tests/tldraw)
     * [`/primitives`](https://gradient-guru.com/tests/primitives)
       * [`/accordion`](https://gradient-guru.com/tests/primitives/accordion)
-      * [`/switch`](https://gradient-guru.com/tests/primitives/switch)
-      * [`/side-panel`](https://gradient-guru.com/tests/primitives/side-panel)
+      * [`/checkbox`](https://gradient-guru.com/tests/primitives/checkbox)
+      * [`/flip-card`](https://gradient-guru.com/tests/primitives/flip-card)
+      * [`/kbd`](https://gradient-guru.com/tests/primitives/kbd)
+      * ['/menubar'](https://gradient-guru.com/tests/primitives/menubar)
       * [`/radix-themed-components`](https://gradient-guru.com/tests/primitives/radix-themed-components)
+      * [`/side-panel`](https://gradient-guru.com/tests/primitives/side-panel)
+      * [`/slider`](https://gradient-guru.com/tests/primitives/slider)
+      * [`/switch`](https://gradient-guru.com/tests/primitives/switch)
+    * [`/tldraw`](https://gradient-guru.com/tests/tldraw)
 
 ### TODO
 
-* [ ] make node schemas dynamic
-* [ ] Context Calculator
-* [ ] CDN
-* [ ] flask backend
-* [ ] fix plotly component
+* [ ] Fix node schemas
+* [ ] Context calculator
+* [ ] Add flask backend
+* [ ] Add other AI clients
+* [ ] Fix plotly component

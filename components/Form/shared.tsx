@@ -47,16 +47,17 @@ export const sortSchema = (
 };
 
 // make form fields per schema
-export const FormFields = ({form, schema, prefix = '', labels={}}: { form: UseFormReturn, schema: Schema, prefix?: string, labels?: Record<string, React.ReactNode | string> }) => {
+export const FormFields = ({form, schema, prefix = '', labels={}, readOnly: boolean = false}: { form: UseFormReturn, schema: Schema, prefix?: string, labels?: Record<string, React.ReactNode | string>, readOnly?: boolean }) => {
   const sortedFields = sortSchema(schema);
   return Object.entries(sortedFields).map(([key, fieldSchema]: any) => {
         return (
             <FormField
-            key={`${prefix}${key}`}
+              key={`${prefix}${key}`}
               name={`${prefix}${key}`}
               schema={fieldSchema}
               control={form.control}
               label={labels?.[key]}
+              readOnly={boolean}
             />
         );
       });

@@ -10,19 +10,15 @@ import {
   Form,
   IconSetCache,
   KeysToIgnore,
-  Switch,
-  TabTitle,
-  ToggleTitle,
+  getNodeNameComponent,
   inferSchemaField,
 } from '@/components';
-import { useContentExtractor } from '@/hooks';
 import { cn, filterObject } from '@/utils';
 
 export interface NodesTabProps {}
 
 export const NodesTab = () => {
   const editor = useEditor();
-  const contentExtractor = useContentExtractor();
 
   const onNodeChange = useCallback((newNodeProperties: any) => {
     if (newNodeProperties.type === 'icon') {
@@ -65,28 +61,19 @@ export const NodesTab = () => {
     return editor?.getCurrentPageShapesSorted().map((node: any, index: number) => {
       // check if node is selected
       const selected = selectedNodes.includes(node);
-      const stringName = `${node.type} - ${node.id.replace('shape:', '')}`;
       return {
-        name: <ToggleTitle className="no-underline" title={stringName} pressed={!contentExtractor.nodesConfig.nodesToExclude.includes(node.id)} onPressedChange={(pressed: boolean) => contentExtractor.toggleNodeState(node.id)} />,
+        name: getNodeNameComponent(node, selected ? `text-accent`: ``),
         content: (
-          <div className={cn(`w-full h-full flex flex-col justify-stretch items-center`)}>
-            <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
-              <TabTitle className={cn(`text-md w-full`)}>Properties</TabTitle>
-              <Form object={{...node}} schema={nodeSchemas[node.id]} onSubmit={onNodeChange} />
-            </div>
+          <div className={cn(`w-full h-full flex flex-col justify-stretch items-center p-1`)}>
+            <Form object={{...node}} schema={nodeSchemas[node.id]} onSubmit={onNodeChange} />
           </div>
         ),
-        selected,
       };
     });
-  }, [editor, buildNodeSchemas, contentExtractor, onNodeChange]);
+  }, [editor, buildNodeSchemas, onNodeChange]);
 
   return (
     <FlowTab title="Nodes">
-      <div className="w-full flex justify-around items-center">
-        <Switch offLabel={"Include Nodes (JSON)"} onLabel={"Don't Include Nodes"} pressed={contentExtractor.nodesConfig.enabled} onPressedChange={(pressed: boolean) => contentExtractor.setNodesConfig({ ...contentExtractor.nodesConfig, enabled: pressed})} />
-        <Switch offLabel={"All Nodes"} onLabel={"Selected Nodes"} pressed={contentExtractor.nodesConfig.filterSelected} onPressedChange={(pressed: boolean) => contentExtractor.setNodesConfig({ ...contentExtractor.nodesConfig, filterSelected: pressed})} />
-      </div>
       <Accordion
         spaceBetween={0}
         className="w-full text-xs p-1"

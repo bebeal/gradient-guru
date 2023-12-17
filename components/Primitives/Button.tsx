@@ -44,7 +44,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
   return isDefaultVariant(variant) ? (
     <ThemedButton ref={ref} className={cn(`pointer-events-all !cursor-pointer`, disabled && DisabledClasses, RadiusClasses(radius))} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
   ) : (
-    <div className="relative">
+    <div className="flex w-auto h-auto relative">
       <button
         ref={ref}
         type={type}

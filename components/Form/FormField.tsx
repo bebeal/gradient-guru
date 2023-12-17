@@ -18,7 +18,8 @@ export type FormItemProps = {
 export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
   const { className: classNameFromProps = '' } = props;
   const { field, fieldState, formState, schema, label, description, placeholder, readOnly, form, item } = useFormField();
-  const isObject = item === 'object';
+  const isBoolean = item === 'boolean' || item === 'checkbox' || item === 'switch';
+  const isObject = item === 'object' || item === 'from-array'
   const className=cn('text-xs w-full placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error',  
                      classNameFromProps)
   const hasMin = schema?.exclusiveTests?.min;
@@ -43,6 +44,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   const Item = useMemo(() => {
     switch (item) {
       case 'object':
+      case 'from-array':
       case 'array':
         if (item === 'array' || Array.isArray(field.value)) {
           return (
@@ -67,7 +69,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
             </div>
           );
         } else {
-          const content = <div className="w-auto h-full grid grid-cols-2 col-span-2 gap-1 p-2 overflow-auto rounded items-center"><FormFields form={form} schema={schema} prefix={`${field?.name}.`} /></div>;
+          const content = <div className="w-auto h-full grid grid-cols-2 col-span-2 gap-1 p-2 overflow-auto rounded items-center"><FormFields form={form} schema={schema} prefix={`${field?.name}.`} readOnly={readOnly} /></div>;
           return (
             <Accordion 
               highlightActive={false}
@@ -81,7 +83,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
         }
       case 'select':
         const items: string[] = Array.from(schema?._whitelist)
-        return (<Select className={className} items={items} {...field} />);
+        return (<Select className={className} items={items} {...field} readOnly={readOnly} />);
       case 'slider':
         return (<Slider thumbSize={10} showValue="value" className={className} min={min} max={max} step={step} {...field} />);
       case 'boolean':
@@ -89,26 +91,26 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
       case 'switch':
         const value: boolean = field?.value;
         return (item === 'switch') ? (
-          <Switch className={className} {...field} pressed={value} />
+          <Switch className={className} {...field} pressed={value} readOnly={readOnly} />
         ) : (
-          <Checkbox className={className} {...field} checked={value} />
+          <Checkbox className={className} {...field} checked={value} readOnly={readOnly} />
         );
       case 'number':
       case 'input':
-        return (<Input placeholder={placeholder} className={className} extraCharWidth={0} {...field} />);
+        return (<Input placeholder={placeholder} className={className} extraCharWidth={0} {...field} readOnly={readOnly} />);
       case 'readOnly':
       default:
         return ( <Input extraCharWidth={0} placeholder={placeholder} readOnly className={cn(className, `p-0 cursor-text bg-transparent border-transparent text-primary/80 ring-transparent hover:border-transparent hover:bg-transparent hover:cursor-text hover:text-primary/80 hover:ring-transparent focus:border-transparent focus:bg-transparent focus:cursor-text focus:text-primary/80 focus:ring-transparent`)} {...field} />);
     }
-  }, [item, field, schema, className, min, max, step, placeholder, form]);
+  }, [item, field, schema, className, min, max, step, readOnly, placeholder, form]);
 
   return (
-    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-end p-1 gap-px`, isObject && 'col-span-2')}>
-      {(description || !isObject) && (<div className="flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start">
+    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-end p-1 gap-px`, isObject && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
+      {(description || !isObject) && (<div className={cn("flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start")}>
         {!isObject && (<FormLabel className="text-xs">{label}:</FormLabel>)}
         {description && (<FormDescription>{description}</FormDescription>)}
       </div>)}
-      <div className={cn("flex-col flex w-full h-auto justify-center items-center px-1.5", isObject && 'col-span-2')}>
+      <div className={cn("flex-col flex w-full h-auto justify-center items-center px-1.5", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end')}>
         <FormControl>
           {Item}
         </FormControl>

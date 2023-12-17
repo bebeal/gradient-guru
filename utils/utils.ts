@@ -50,8 +50,12 @@ export const sortObject = (
   }));
 };
 
-// check if object is empty
 export const isEmptyObject = (obj?: object) => obj ? Object.keys(obj).length === 0 : false;
+
+export const arrayToObject = (arr: string[], value: any = true): { [key: string]: boolean } => {
+  const result = arr.reduce((obj, item) => ({ ...obj, [item]: value }), {});
+  return result;
+}
 
 export const toCamelCase = (snakeStr: string): string => {
   const components = snakeStr.split('_');
