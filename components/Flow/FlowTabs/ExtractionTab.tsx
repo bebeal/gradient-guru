@@ -63,7 +63,7 @@ export const ExtractionTab = () => {
                 className='px-2'
                 items={[
                   {
-                    name: 'Nodes Filter',
+                    name: 'Filter Out Nodes',
                     content: <Form object={Array.from(editor.getCurrentPageShapeIds() || {}).reduce((obj, item) => ({ ...obj, [item]: imageExtractorConfig.nodesToExclude?.includes(item) }), {})} schema={getNodesToExcludeSchema()} onSubmit={(newNodesToExclude: any) => {
                       const nodesToExclude = Object.keys(newNodesToExclude || {}).filter((nodeId: any) => newNodesToExclude[nodeId]) as TLShapeId[];
                       setExtractorConfig('imageExtractorConfig', { ...imageExtractorConfig, nodesToExclude });
