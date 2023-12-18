@@ -1,41 +1,26 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react';
 import { useQuery } from 'react-query';
+import { create } from 'zustand';
 import { useContentExtractor } from '@/hooks';
 import { BaseModelClient, DefaultModelConfig, ModelConfig, OpenAIModelClient } from '@/clients';
 import { PROMPT_LIBRARY, encodeBlobAsBase64 } from '@/utils';
 import { Editor, createShapeId, getSvgAsImage, useEditor } from '@tldraw/tldraw';
 import { PreviewNode } from '@/components';
 
-export const ModelClientContext = createContext(
-  {} as {
-    modelClient: BaseModelClient<ModelConfig, any, any>;
-    setModelClient: (client: BaseModelClient<ModelConfig, any, any>) => void;
-  }
-);
-
-export interface ModelClientProviderProps {
-  children: React.ReactNode;
-}
-export const ModelClientProvider: React.FC<ModelClientProviderProps> = ({ children }) => {
-  // const [modelClient, setModelClient] = useState<BaseModelClient<ModelConfig, any, any>>(new BaseModelClient<ModelConfig, any, any>({model: 'identity'} as any));
-  const [modelClient, setModelClient] = useState<BaseModelClient<ModelConfig, any, any>>(new OpenAIModelClient(DefaultModelConfig));
-
-  return (
-    <ModelClientContext.Provider value={{ modelClient, setModelClient }}>
-      {children}
-    </ModelClientContext.Provider>
-  );
+export type ModelState = {
+  modelClient: BaseModelClient<ModelConfig, any, any>;
+  setModelClient: (client: BaseModelClient<ModelConfig, any, any>) => void;
 };
 
+export const useModelClientStore = create<ModelState>((set, get) => ({
+  modelClient: new OpenAIModelClient(DefaultModelConfig),
+  setModelClient: (client: BaseModelClient<ModelConfig, any, any>) => set({ modelClient: client }),
+}));
+
 export const useModel = () => {
-  const context = useContext(ModelClientContext);
-  if (!context) throw new Error('useModel must be used within a ModelProvider');
-  const {
-    modelClient,
-    setModelClient,
-  } = context;
+  const modelClient = useModelClientStore((state) => state.modelClient);
+  const setModelClient = useModelClientStore((state) => state.setModelClient);
   const editor = useEditor();
   const contentExtractor = useContentExtractor();
 
@@ -71,8 +56,7 @@ export const useModel = () => {
           {
             // send the text of all selected shapes, so that GPT can use it as a reference (if anything is hard to see)
             type: 'text',
-            text:
-              text !== ''
+            text: text && text?.join('\n')?.length > 0
                 ? text
                 : 'Oh, it looks like there was not any text in this design!',
           },
