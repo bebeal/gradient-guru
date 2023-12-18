@@ -67,8 +67,8 @@ export const getNodeNameComponent = (node: TLShape, className: string = '') => {
   return (
     <div className={cn("flex justify-between items-center w-full gap-2", className)}>
       <div className="text-right flex-1">[{node.type}]</div>
-      <div className="flex-0">-</div>
-      <div className="flex-1">{node.id.replace('shape:', '')}</div>
+      <div className="text-center w-auto">-</div>
+      <div className="text-left flex-1">{node.id.replace('shape:', '')}</div>
     </div>
   );
 };

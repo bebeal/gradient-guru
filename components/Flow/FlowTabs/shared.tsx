@@ -62,7 +62,7 @@ export const ToggleTitle = ({ pressed, onPressedChange, name }: any) => {
       <Switch pressed={pressed} onPressedChange={onPressedChange} className="absolute left-0">
         <div />
       </Switch>
-      <div className="font-bold justify-self-center text-sm mx-10">{name}</div>
+      <div className="font-bold justify-self-center text-sm ml-10 mr-8">{name}</div>
     </div>
   );
 };

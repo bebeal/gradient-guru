@@ -31,7 +31,7 @@ const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
   }, [updateSize]);
 
   return (
-    <div className="flex items-center justify-center w-full h-[208px] bg-secondary p-2 rounded border border-primary">
+    <div className="flex items-center justify-center w-full h-full bg-secondary p-2 rounded border border-primary">
       <div className={cn(`relative flex items-center justify-center w-auto h-auto overflow-hidden`)} style={{padding: `${24}px ${46}px`}}>
         {/* Horizontal Size Indicator */}
         <div className={cn("absolute flex flex-col items-center")} style={{width: `${size?.width}px`, height: `${24}px`, top: 0, left: `${position?.x}px`}}>
@@ -46,7 +46,7 @@ const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
         </div>
         <img ref={imgRef} src={src} onLoad={updateSize} className="object-cover w-full h-full border border-primary" alt="Descriptive alt text" />
         {/* Vertical Size Indicator */}
-        <div className={cn("absolute flex flex-row justify-center items-start")} style={{height: `${size?.height}px`, width: `${48}px`, top: `${position?.y}px`, left: `${position?.x + size?.width}px`}}>
+        <div className={cn("absolute flex flex-row justify-center items-start")} style={{height: `${size?.height}px`, width: `${48}px`, top: `${position?.y}px`, left: `${position?.x + size?.width - 1}px`}}>
           <div className="flex flex-col w-auto h-full items-center mr-px">
             <div className="w-[8px] h-[1px] bg-white" />
             <div className="w-[1px] bg-white" style={{height: 'calc(100% - 2px)'}} />
@@ -147,7 +147,7 @@ export const ExtractionTab = () => {
     return (
       <FlipCard
         onFlip={() => onFlip(imageExtractionTabSide, setImageExtractionTabSide)}
-        className={cn(imageExtractorConfig.enabled && `border-accent`)}
+        className={cn(`h-[274px]`, imageExtractorConfig.enabled && `border-accent`)}
         title={<ToggleTitle name={imageExtractionTabSide} pressed={imageExtractorConfig.enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('imageExtractorConfig', { ...imageExtractorConfig, enabled })} />}
         front={{
           children: (
@@ -291,7 +291,7 @@ export const ExtractionTab = () => {
 
   return (
     <FlowTab title="Extraction">
-      <div className="flex flex-col justify-center gap-4 w-full overflow-hidden">
+      <div className="flex flex-col justify-center gap-4 w-full">
         {ImageExtraction}
         {JSONExtraction}
         {TextExtraction}
