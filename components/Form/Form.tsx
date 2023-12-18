@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, useEffect, useState } from "react";
+import { ReactNode, forwardRef, useEffect, useState } from "react";
 import * as FormPrimitive from '@radix-ui/react-form';
 import { FormProvider, UseFormProps, UseFormReturn, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,7 +22,7 @@ export interface FormProps extends UseFormProps {
   readOnly?: boolean;
   onSubmit?: any;
   onError?: any;
-  labels?: Record<string, React.ReactNode | string>;
+  labels?: Record<string, ReactNode | string>;
   className?: string;
 }
 

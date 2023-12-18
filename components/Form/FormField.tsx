@@ -33,8 +33,10 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
     max = schema?.tests?.find((test: any) => test.OPTIONS.name === 'max').OPTIONS?.params?.max;
   }
   const step = schema?.spec?.meta?.step;
-  if (typeof field.value === 'number') {
-    field.value = field.value.toFixed(2);
+  if (typeof field.value === 'number' && step) {
+    // match the same precision as the step
+    const decimalPlaces = (step.toString().split('.')[1] || '').length;
+    field.value = parseFloat(field.value.toFixed(decimalPlaces));
   }
   // if step is 1 then we can assume it's an integer
   if (step === 1) {

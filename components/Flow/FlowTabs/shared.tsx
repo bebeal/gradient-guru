@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { ReactNode, memo } from 'react';
 import { Form, Label, Separator, Switch } from '@/components';
 import { cn, isEmptyObject } from '@/utils';
 
@@ -18,7 +18,7 @@ export const FlowTab = memo(({ title, children, className }: { title?: string; c
   return (
     <div className={cn(TabClasses)}>
       <TabTitle title={title} />
-      <div className={cn('p-2 flex flex-col w-auto h-full items-center gap-1', className)}>{children}</div>
+      <div className={cn('p-2 flex flex-col w-full h-auto items-center gap-1', className)}>{children}</div>
     </div>
   );
 });
@@ -28,9 +28,9 @@ export const Title = ({ children, className }: { children?: any; className?: str
 };
 
 export const BulletedList = ({ items, className }: { items: any[]; className?: string }) => {
-  const getItem = (item: any) => {
+  const getItem = (item: any): ReactNode => {
     if (typeof item === 'object' && item !== null && !Array.isArray(item) && !isEmptyObject(item)) {
-      const key: any = Object.keys(item)[0];
+      const key: any = Object.keys(item)[0]; // Define a more specific type if possible
       const value = item[key];
       return (
         <div className={cn('flex flex-col', className)}>
@@ -44,10 +44,10 @@ export const BulletedList = ({ items, className }: { items: any[]; className?: s
   };
 
   return (
-    <ul role="list" className="relative w-full h-full break-words pl-6 pr-2 py-2 list-inside">
-      {items.map((item: any, index: number) => {
+    <ul role="list" className="relative w-full h-auto break-words pl-6 pr-2 py-2 list-inside">
+      {items.map((item, index: number) => {
         return (
-          <li key={`ui-event-${index}`} className="relative flex items-center m-0 p-0 before:content-[''] before:absolute before:left-[-10px] before:top-[6px] before:w-1 before:h-1 before:bg-white before:rounded-full">
+          <li key={`ui-event-${index}`} className="relative flex items-center m-0 p-0 before:content-['\2022'] before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2 before:text-primary before:text-md">
             {getItem(item)}
           </li>
         );
@@ -62,7 +62,7 @@ export const ToggleTitle = ({ pressed, onPressedChange, name }: any) => {
       <Switch pressed={pressed} onPressedChange={onPressedChange} className="absolute left-0">
         <div />
       </Switch>
-      <div className="font-bold justify-self-center text-sm pl-4">{name}</div>
+      <div className="font-bold justify-self-center text-sm mx-10">{name}</div>
     </div>
   );
 };

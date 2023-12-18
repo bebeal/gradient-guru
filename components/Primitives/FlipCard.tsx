@@ -12,16 +12,18 @@ export interface FlipCardProps {
   title?: ReactNode | string;
   front?: CardSideProps;
   back?: CardSideProps;
+  onFlip?: () => void;
   className?: string;
 }
 
 export const FlipCard = (props: FlipCardProps) => {
-  const { front, back, title, className = '' } = props;
+  const { front, back, title, className = '', onFlip } = props;
   const [flipped, setFlipped] = useState(Boolean(back && !front));
 
   const flip = useCallback(() => {
     setFlipped(!flipped);
-  }, [flipped]);
+    onFlip?.();
+  }, [flipped, onFlip]);
 
   const FlipButton = useCallback(() => {
     return (
@@ -49,7 +51,7 @@ export const FlipCard = (props: FlipCardProps) => {
       )}
     >
       <div className={cn(`relative pointer-events-auto flex flex-row w-full h-auto items-center p-2`, flipped && `[transform:rotateY(-180deg)]`)}>
-          <div className={cn(`font-bold text-base flex-grow text-center items-center w-full`)}>{title}</div>
+        <div className={cn(`font-bold text-base flex-grow text-center items-center w-full break-words`)}>{title}</div>
           {flipped ? front && <FlipButton /> : back && <FlipButton />}
         </div>
       {flipped ? <Side {...back} className="[transform:rotateY(-180deg)]" /> : <Side {...front} />}

@@ -31,7 +31,7 @@ export type JSONExtractorConfig = BaseExtractorConfig & {
 };
 
 export type TextExtractorConfig = BaseExtractorConfig & {
-  nodesToExclude: [],
+  nodesToExclude: TLShapeId[];
 };
 
 export type CanvasStateExtractorConfig = BaseExtractorConfig & {
@@ -51,7 +51,7 @@ export const SchemaFields = {
   enabled: yup.boolean().meta({ item: 'switch' }),
   type: yup.string().oneOf(['svg', 'png', 'jpeg', 'webp']).meta({ item: 'select' }),
   quality: yup.number().min(0).max(1).meta({ item: 'slider', step: 0.1 }),
-  scale: yup.number().min(0).max(2).meta({ item: 'slider', step: 0.1 }),
+  scale: yup.number().min(0).max(1).meta({ item: 'slider', step: 0.1 }),
   background: yup.boolean().meta({ item: 'checkbox', label: 'Background' }),
   imageSmoothingEnabled: yup.boolean().meta({ item: 'checkbox', label: 'Image Smoothing' }),
   imageSmoothingQuality: yup.string().oneOf(['low', 'medium', 'high']).meta({ item: 'select', label: 'Image Smoothing Quality' }),
@@ -95,8 +95,8 @@ export const defaultUiExtractorConfig: UiStateExtractorConfig = {
 };
 
 export type ExtractorConfigs = {
-  jsonExtractorConfig: JSONExtractorConfig;
   imageExtractorConfig: ImageExtractorConfig;
+  jsonExtractorConfig: JSONExtractorConfig;
   textExtractorConfig: TextExtractorConfig;
   canvasExtractorConfig: CanvasStateExtractorConfig;
   uiExtractorConfig: UiStateExtractorConfig;
@@ -107,8 +107,8 @@ export type ContentExtractorConfig = ExtractorConfigs & {
 };
 
 export const useContentExtractorStore = create<ContentExtractorConfig>((set) => ({
-  jsonExtractorConfig: defaultJSONExtractorConfig,
   imageExtractorConfig: defaultImageExtractorConfig,
+  jsonExtractorConfig: defaultJSONExtractorConfig,
   textExtractorConfig: defaultTextExtractorConfig,
   canvasExtractorConfig: defaultCanvasExtractorConfig,
   uiExtractorConfig: defaultUiExtractorConfig,
@@ -118,8 +118,8 @@ export const useContentExtractorStore = create<ContentExtractorConfig>((set) => 
 export const useContentExtractor = () => {
   const editor = useEditor();
   const contentRecorder = useContentRecorder();
-  const jsonExtractorConfig = useContentExtractorStore(state => state.jsonExtractorConfig);
   const imageExtractorConfig = useContentExtractorStore(state => state.imageExtractorConfig);
+  const jsonExtractorConfig = useContentExtractorStore(state => state.jsonExtractorConfig);
   const textExtractorConfig = useContentExtractorStore(state => state.textExtractorConfig);
   const canvasExtractorConfig = useContentExtractorStore(state => state.canvasExtractorConfig);
   const uiExtractorConfig = useContentExtractorStore(state => state.uiExtractorConfig);
@@ -135,32 +135,6 @@ export const useContentExtractor = () => {
       return nodes.filter((node) => !nodesToExclude.includes(node.id));
   }, [editor]);
 
-  const getNodesToExcludeSchema = useCallback(() => {
-    const nodes = editor.getCurrentPageShapesSorted();
-    const nodeSchema = nodes.reduce((acc: any, node: any) => {
-      acc[node.id] = yup.boolean().meta({ item: 'checkbox', label: getNodeName(node) });
-      return acc;
-    }, {});
-    return yup.object().shape(nodeSchema).meta({ item: 'from-array' })
-  }, [editor]);
-
-  const extractJSON = useCallback(async () => {
-    const nodes = getNodes(jsonExtractorConfig.nodesToExclude);
-    return nodes.map((node) => {
-      const propsToExtract = jsonExtractorConfig.nodePropertiesToExtract?.reduce((acc, key) => {
-        acc[key] = node[key];
-        return acc;
-      }, {} as any);
-      return propsToExtract;
-    });
-  }, [getNodes, jsonExtractorConfig]);
-
-  const getJSONExtractorSchema = useCallback(() => {
-    return yup.object().shape({
-      
-    });
-  }, []);
-
   const extractImage = useCallback(async (): Promise<Blob | null> => {
     const nodesInImage: TLShapeId[] = getNodeIds(imageExtractorConfig.nodesToExclude);
     return await getExportedImageBlob(editor, nodesInImage, imageExtractorConfig);
@@ -171,7 +145,7 @@ export const useContentExtractor = () => {
     if (nodesInImage.length === 0) return null;
     const svgPreview = await getSvgPreview(editor, nodesInImage, imageExtractorConfig);
     return await getSVGAsBlob(svgPreview!);
-  }, [editor, getNodeIds, imageExtractorConfig])
+  }, [editor, getNodeIds, imageExtractorConfig]);
 
   const getImageExtractorSchema = useCallback(() => {
     return yup.object().shape({
@@ -184,11 +158,32 @@ export const useContentExtractor = () => {
     });
   }, []);
 
-  const extractText = useCallback(async (): Promise<string> => {
+  const extractJSON = useCallback(async (): Promise<TLShape[]> => {
+    const nodes = getNodes(jsonExtractorConfig.nodesToExclude);
+    return nodes.map((node) => {
+      const propsToExtract = jsonExtractorConfig.nodePropertiesToExtract?.reduce((acc, key) => {
+        if (key === 'id') {
+          acc[key] = node.id.replace('shape:', '');
+          return acc;
+        }
+        acc[key] = node[key];
+        return acc;
+      }, {} as any);
+      return propsToExtract;
+    });
+  }, [getNodes, jsonExtractorConfig]);
+
+  const getJSONExtractorSchema = useCallback(() => {
+    
+    return yup.object().shape({
+      
+    });
+  }, []);
+
+  const extractText = useCallback((): string[] => {
     const nodeIds = getNodeIds(textExtractorConfig.nodesToExclude);
     const nodeDescendantIds = editor.getShapeAndDescendantIds(nodeIds);
-
-    const texts = Array.from(nodeDescendantIds)
+    const text = Array.from(nodeDescendantIds)
       .map((id) => {
         const shape = editor.getShape(id);
         if (!shape) return null;
@@ -199,8 +194,8 @@ export const useContentExtractor = () => {
         return null;
       })
       .filter((v) => v !== null && v !== '');
-    return texts.join('\n');
-  }, [editor, getNodeIds, textExtractorConfig]);
+    return text;
+  }, [editor, getNodeIds, textExtractorConfig.nodesToExclude]);
 
   const getTextExtractorSchema = useCallback(() => {
     return yup.object().shape({
@@ -233,35 +228,48 @@ export const useContentExtractor = () => {
     });
   }, []);
 
-  const extractAll = useCallback(async () => {
+  const getNodesToExcludeSchema = useCallback(() => {
+    const nodes = editor.getCurrentPageShapesSorted();
+    const nodeSchema = nodes.reduce((acc: any, node: any) => {
+      acc[node.id] = yup.boolean().meta({ item: 'checkbox', label: getNodeName(node) });
+      return acc;
+    }, {});
+    return yup.object().shape(nodeSchema).meta({ item: 'from-array' })
+  }, [editor]);
+
+  const extractAll = useCallback(async (): Promise<{ json: TLShape[] | null, image: Blob | null, text: string[] | null, canvasState: TLEventInfo | null, uiState: UiState | null }> => {
     const json = jsonExtractorConfig.enabled ? await extractJSON() : null;
     const image = imageExtractorConfig.enabled ? await extractImage() : null;
-    const text = textExtractorConfig.enabled ? await extractText() : null;
+    const text = textExtractorConfig.enabled ? extractText() : null;
     const canvasState = canvasExtractorConfig.enabled ? extractCanvasState() : null;
     const uiState = uiExtractorConfig.enabled ? extractUiState() : null;
     return { json, image, text, canvasState, uiState };
   }, [jsonExtractorConfig.enabled, extractJSON, imageExtractorConfig.enabled, extractImage, textExtractorConfig.enabled, extractText, canvasExtractorConfig.enabled, extractCanvasState, uiExtractorConfig.enabled, extractUiState]);
 
-
   return {
-    jsonExtractorConfig,
-    getJSONExtractorSchema,
     imageExtractorConfig,
+    extractImage,
     getImagePreview,
     getImageExtractorSchema,
+
+    jsonExtractorConfig,
+    extractJSON,
+    getJSONExtractorSchema,
+
     textExtractorConfig,
+    extractText,
     getTextExtractorSchema,
+
     canvasExtractorConfig,
+    extractCanvasState,
     getCanvasStateExtractorSchema,
+
     uiExtractorConfig,
+    extractUiState,
     getUiStateExtractorSchema,
+
     getNodesToExcludeSchema,
     setExtractorConfig,
-    extractJSON,
-    extractImage,
-    extractText,
-    extractCanvasState,
-    extractUiState,
     extractAll,
   }
 };

@@ -3,7 +3,7 @@ import colors from 'tailwindcss/colors';
 
 const config: Config = {
   safelist: [
-    ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`, `grid-cols-${i}`, `grid-rows-${i}`]),
+    ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`, `h-[${i+100}px]`, `w-[${i+100}px]`,  `h-[${i+200}px]`, `w-[${i+200}px]`, `grid-cols-${i}`, `grid-rows-${i}`]),
     `radix-state-open:rounded-t-lg radix-state-closed:rounded-lg rounded-b-lg rounded-t-lg`,
     `radix-state-open:rounded-t-xl radix-state-closed:rounded-xl rounded-b-xl rounded-t-xl`,
     `text-accent-500 text-accent-400`
