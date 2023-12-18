@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ForwardedRef, forwardRef, useEffect, useState } from "react";
+import React, { ForwardedRef, forwardRef, useCallback, useEffect, useState } from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { DisabledClasses, Radius, RadiusClasses, cn, noop } from "@/utils";
 import { IconSetCache } from "..";
@@ -35,8 +35,7 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
     readOnly=false,
     ...rest
    } = props;
-   const [internalChecked, setInternalChecked] = useState<boolean | undefined | 'indeterminate'>(defaultChecked);
-   const isChecked = externalChecked !== undefined ? externalChecked : internalChecked;
+   const [internalChecked, setInternalChecked] = useState<boolean | undefined | 'indeterminate'>(externalChecked);
 
    useEffect(() => {
     if (externalChecked !== undefined) {
@@ -44,35 +43,31 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
     }
   }, [externalChecked]);
 
-   // radix doesn't expose the actual event so we have to create a synthetic one for it to work with react-hook-form
-   const onChange = (newChecked: boolean) => {
-    // synthetic event
+   const onCheckedChange = useCallback(() => {
+    const newChecked = internalChecked === undefined ? true : !internalChecked;
     const event = {
       target: {
         value: newChecked,
-        name: name,
+        name,
         type: 'button',
       },
     };
-    onChangeCallback?.(event as any);
-   };
-
-   const onCheckedChange = () => {
-    const newChecked = isChecked === undefined ? true : !isChecked;
     setInternalChecked(newChecked);
     onCheckedChangeCallback && onCheckedChangeCallback?.(newChecked);
-    onChange?.(newChecked);
-   };
+    onChangeCallback && onChangeCallback?.(event);
+  },[internalChecked, name, onChangeCallback, onCheckedChangeCallback]);
 
-   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    onCheckedChange();
-  };
+  //  const onClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+  //   event.stopPropagation();
+  //   onCheckedChange();
+  // }, [onCheckedChange]);
 
   return (
     <CheckboxPrimitive.Root
-      ref={ref} disabled={disabled}
-      checked={isChecked}
+      ref={ref}
+      disabled={disabled}
+      defaultChecked={defaultChecked}
+      checked={internalChecked}
       className={cn(
         `flex w-[${size}px] h-[${size}px] items-center justify-center rounded border border-primary`,
         "bg-secondary radix-state-checked:bg-accent hover:ring-accent hover:ring-opacity-50 hover:ring-[0.5px] hover:outline-none",
@@ -83,12 +78,11 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
       )}
       {...rest}
       onChange={noop}
-      onClick={onClick}
       onCheckedChange={onCheckedChange}
     >
       <CheckboxPrimitive.Indicator className={cn(`flex h-full justify-center items-center animate-slide-up-fade`, RadiusClasses(radius))}>
-        {isChecked === undefined || isChecked === 'indeterminate' && <IconSetCache.Custom.Indeterminate className={cn(`w-full h-full text-[rgb(var(--border-primary))]`)} />}
-        {isChecked === true && children}
+        {internalChecked === undefined || internalChecked === 'indeterminate' && <IconSetCache.Custom.Indeterminate className={cn(`w-full h-full text-[rgb(var(--border-primary))]`)} />}
+        {internalChecked === true && children}
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   );

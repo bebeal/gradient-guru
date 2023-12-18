@@ -16,6 +16,16 @@ export interface FlipCardProps {
   className?: string;
 }
 
+export const Side = (props: CardSideProps) => {
+  const { className = '', children } = props;
+
+  return (
+    <div className={cn(`flex flex-col gap-2 w-full h-full overflow-auto`, className)}>
+      {children}
+    </div>
+  );
+};
+
 export const FlipCard = (props: FlipCardProps) => {
   const { front, back, title, className = '', onFlip } = props;
   const [flipped, setFlipped] = useState(Boolean(back && !front));
@@ -33,28 +43,21 @@ export const FlipCard = (props: FlipCardProps) => {
     );
   }, [flip]);
 
-  const Side = useCallback((props: CardSideProps) => {
-      const { className = '', children } = props;
-      return (
-        <div className={cn(`flex flex-col gap-2 w-full h-full justify-center items-center`, className)}>
-          {children}
-        </div>
-      );
-  }, [] );
-
   return (
     <div
       className={cn(
-        `flex flex-col w-full h-auto justify-center items-center rounded py-2 px-1 bg-primary border border-primary text-primary shadow-xl transition-all duration-300 ease-out [transform-style:preserve-3d] [perspective:1000px]`,
+        `relative flex flex-col w-full h-auto overflow-hidden justify-center items-center rounded py-2 bg-primary border border-primary text-primary shadow-xl transition-all duration-300 ease-out [transform-style:preserve-3d] [perspective:1000px]`,
         flipped && `[transform:rotateY(180deg)]`,
         className
       )}
     >
+      <div className={cn(`flex flex-col w-full h-auto gap-1 border-inherit border-b pb-1`)}>
       <div className={cn(`relative pointer-events-auto flex flex-row w-full h-auto justify-center p-2`, flipped && `[transform:rotateY(-180deg)]`)}>
           <div className={cn(`font-bold text-base text-center w-full h-auto self-center break-words`)}>{title}</div>
           {flipped ? front && <FlipButton /> : back && <FlipButton />}
       </div>
-        {flipped ? <Side {...back} className="[transform:rotateY(-180deg)]" /> : <Side {...front} />}
+      </div>
+        {flipped ? <Side {...back} className={cn("[transform:rotateY(-180deg)]", back?.className)} /> : <Side {...front} />}
     </div>
   );
 };

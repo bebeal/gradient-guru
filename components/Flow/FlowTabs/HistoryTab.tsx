@@ -1,11 +1,11 @@
 'use client';
 
 import { BulletedList, FlowTab, Title, TimelineScrubber, FlipCard } from '@/components';
-import { ContentRecorderContextType, useContentRecorder } from '@/hooks';
+import { useContentRecorder } from '@/hooks';
 import { cn } from '@/utils';
 
 export const HistoryTab = () => {
-  const contentRecorder: ContentRecorderContextType = useContentRecorder();
+  const { historyRecords, readableRecords } = useContentRecorder();
 
   return (
     <FlowTab title="History">
@@ -13,13 +13,13 @@ export const HistoryTab = () => {
         <FlipCard
           title={<Title className={cn(`text-sm w-full`)}>Scrubber</Title>}
           front={{
-            children: <TimelineScrubber events={contentRecorder.historyRecords} />
+            children: <TimelineScrubber events={historyRecords} />
           }}
         />
         <FlipCard
           title={<Title className={cn(`text-sm w-full`)}>Records</Title>}
           front={{
-            children: contentRecorder?.historyRecords.length > 0 ? <BulletedList className="max-h-[125px] p-1 text-xs" items={contentRecorder?.getReadableHistoryRecords()} /> : <div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No Records</div>
+            children: readableRecords.length > 0 ? <BulletedList className="max-h-[125px] p-1 text-xs" items={readableRecords} /> : <div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No Records</div>
           }}
         />
       </div>

@@ -104,9 +104,9 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
     if (activeTabIndex !== undefined) {
       setActiveTabIndex(undefined);
     } else {
-      setActiveTabIndex(defatultTabIndex);
+      setActiveTabIndex(0);
     }
-  }, [activeTabIndex, defatultTabIndex]);
+  }, [activeTabIndex]);
 
   return (
     <>

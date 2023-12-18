@@ -75,7 +75,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
         className={cn(`w-full h-auto p-2 overflow-auto rounded items-center`, readOnly && 'bg-primary/90', className)}
         onChange={form.handleSubmit(onSubmit, onError)}
       >
-        <div className={cn("w-full h-full grid gap-px p-1 rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`)}>
+        <div className={cn("w-full h-full grid gap-px rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`)}>
           <FormFields form={form} schema={schema} labels={labels} readOnly={readOnly} />
         </div>
       </FormPrimitive.Root>

@@ -260,8 +260,7 @@ export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) =>
   }, [initialItems]);
 
   // radix doesn't expose the actual event so we have to create a synthetic one for it to work with react-hook-form
-  const onValueChange = useCallback(
-    (newValue: string) => {
+  const onValueChange = useCallback((newValue: string) => {
       const event = {
         target: {
           value: newValue,
@@ -271,9 +270,7 @@ export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) =>
       };
       onValueChangeCallback?.(newValue);
       onChangeCallback?.(event);
-    },
-    [name, onChangeCallback, onValueChangeCallback]
-  );
+  },[name, onChangeCallback, onValueChangeCallback]);
 
   return (
     <SelectPrimitive.Root

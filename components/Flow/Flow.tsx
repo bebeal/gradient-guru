@@ -35,7 +35,6 @@ import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 're
 import { BuyMeComputeButton, DropWrapper, FlowUi, FlowUiProps } from '@/components';
 import { Erroring, Loading, cn } from '@/utils';
 
-import { ContentRecorderProvider } from '@/hooks';
 import { IconNodeUtil, PreviewNodeUtil } from './FlowNodes';
 
 import '@tldraw/tldraw/tldraw.css';
@@ -117,23 +116,21 @@ export const Flow = (props: FlowProps) => {
 	if (!preloadingComplete) { return <LoadingScreen><div className="flex w-full h-auto justify-center items-center"><Loading dots={true} spinner={false}>Loading assets</Loading></div></LoadingScreen> }
 	return (
 		<TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)} >
-      <ContentRecorderProvider>
-        <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} {...withDefaults}>
-          <ContextMenu>
-            <DropWrapper>
-              <Canvas />
-            </DropWrapper>
-          </ContextMenu>
-          <InsideOfEditorContext
-            maxImageDimension={maxImageDimension}
-            maxAssetSize={maxAssetSize}
-            acceptedImageMimeTypes={acceptedImageMimeTypes}
-            acceptedVideoMimeTypes={acceptedVideoMimeTypes}
-            onMount={onMount}
-          />
-          {children}
-        </FlowUi>
-      </ContentRecorderProvider>
+      <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} {...withDefaults}>
+        <ContextMenu>
+          <DropWrapper>
+            <Canvas />
+          </DropWrapper>
+        </ContextMenu>
+        <InsideOfEditorContext
+          maxImageDimension={maxImageDimension}
+          maxAssetSize={maxAssetSize}
+          acceptedImageMimeTypes={acceptedImageMimeTypes}
+          acceptedVideoMimeTypes={acceptedVideoMimeTypes}
+          onMount={onMount}
+        />
+        {children}
+      </FlowUi>
       <div className="absolute top-5 right-[185px] w-auto h-auto z-[501]">
         <BuyMeComputeButton />
       </div>

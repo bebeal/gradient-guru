@@ -19,7 +19,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   const { className: classNameFromProps = '' } = props;
   const { field, fieldState, formState, schema, label, description, placeholder, readOnly, form, item } = useFormField();
   const isBoolean = item === 'boolean' || item === 'checkbox' || item === 'switch';
-  const isObject = item === 'object' || item === 'from-array'
+  const isObject = item === 'object' || item === 'from-array' || item === 'node-schema';
   const className=cn('text-xs w-full placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error',  
                      classNameFromProps)
   const hasMin = schema?.exclusiveTests?.min;
@@ -49,8 +49,12 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
 
   const Item = useMemo(() => {
     switch (item) {
-      case 'object':
+      case 'node-schema':
+        return (
+          <div className="w-full h-full grid grid-cols-1 col-span-2 gap-1 overflow-auto rounded items-center"><FormFields form={form} schema={schema} prefix={`${field?.name}.`} readOnly={readOnly} /></div>
+        )
       case 'from-array':
+      case 'object':
       case 'array':
         if (item === 'array' || Array.isArray(field.value)) {
           return (
@@ -82,7 +86,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
               className="text-xs w-full"
               triggerClassName="px-2 py-1 font-semibold text-xs text-primary"
               items={[ 
-                {name: field?.name, open: true, content: content} 
+                {name: field?.label || field?.name, open: true, content: content} 
               ]} 
             />
           );

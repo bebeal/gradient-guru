@@ -8,14 +8,21 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
   const imgRef = useRef<HTMLImageElement>(null);
-  const [size, setSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
+  type Size = { width: number; height: number };
+  const [size, setSize] = useState<{natural: Size, offset: Size}>({ natural: { width: 0, height: 0 }, offset: { width: 0, height: 0 } });
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const updateSize = useCallback(() => {
     if (imgRef.current) {
       setSize({
-        width: imgRef.current.offsetWidth,
-        height: imgRef.current.offsetHeight
+        natural: {
+          width: imgRef.current.naturalWidth,
+          height: imgRef.current.naturalHeight
+        },
+        offset: {
+          width: imgRef.current.offsetWidth,
+          height: imgRef.current.offsetHeight
+        }
       });
       setPosition({
         x: imgRef.current.offsetLeft,
@@ -32,11 +39,11 @@ const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
 
   return (
     <div className="flex items-center justify-center w-full h-full bg-secondary p-2 rounded border border-primary">
-      <div className={cn(`relative flex items-center justify-center w-auto h-auto overflow-hidden`)} style={{padding: `${24}px ${46}px`}}>
+      <div className={cn(`relative flex items-center justify-center w-auto h-auto flex-1 overflow-hidden`)} style={{padding: `${24}px ${44}px`}}>
         {/* Horizontal Size Indicator */}
-        <div className={cn("absolute flex flex-col items-center")} style={{width: `${size?.width}px`, height: `${24}px`, top: 0, left: `${position?.x}px`}}>
+        <div className={cn("absolute flex flex-col items-center")} style={{width: `${size?.offset?.width}px`, height: `${24}px`, top: 0, left: `${position?.x}px`}}>
           <span className="text-white text-xs flex justify-center">
-            {size?.width}px
+            {size?.natural?.width}px
           </span>
           <div className="flex flex-row w-full items-center mt-px">
             <div className="h-[8px] w-[1px] bg-white" />
@@ -44,16 +51,16 @@ const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
             <div className="h-[8px] w-[1px] bg-white" />
           </div>
         </div>
-        <img ref={imgRef} src={src} onLoad={updateSize} className="object-cover w-full h-full border border-primary" alt="Descriptive alt text" />
+        <img ref={imgRef} src={src} onLoad={updateSize} className="object-cover w-auto h-auto border border-primary" alt="Preview of Image Extraction" />
         {/* Vertical Size Indicator */}
-        <div className={cn("absolute flex flex-row justify-center items-start")} style={{height: `${size?.height}px`, width: `${48}px`, top: `${position?.y}px`, left: `${position?.x + size?.width - 1}px`}}>
+        <div className={cn("absolute flex flex-row justify-center items-start")} style={{height: `${size?.offset?.height}px`, width: `${48}px`, top: `${position?.y}px`, left: `${position?.x + size?.offset?.width - 1}px`}}>
           <div className="flex flex-col w-auto h-full items-center mr-px">
             <div className="w-[8px] h-[1px] bg-white" />
             <div className="w-[1px] bg-white" style={{height: 'calc(100% - 2px)'}} />
             <div className="w-[8px] h-[1px] bg-white" />
           </div>
           <span className="text-white text-xs h-full flex items-center justify-center">
-            {size?.height}px
+            {size?.natural?.height}px
           </span>
         </div>
       </div>
@@ -120,6 +127,10 @@ export const ExtractionTab = () => {
     fetchImage();
   }, [fetchImage, imageExtractorConfig]);
 
+  useEffect(() => {
+    fetchJSON();
+  }, [fetchJSON, jsonExtractorConfig]);
+
   // refetch text when config changes
   useEffect(() => {
     fetchText();
@@ -148,7 +159,7 @@ export const ExtractionTab = () => {
       <FlipCard
         onFlip={() => onFlip(imageExtractionTabSide, setImageExtractionTabSide)}
         className={cn(`h-[274px]`, imageExtractorConfig.enabled && `border-accent`)}
-        title={<ToggleTitle name={imageExtractionTabSide} pressed={imageExtractorConfig.enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('imageExtractorConfig', { ...imageExtractorConfig, enabled })} />}
+        title={<ToggleTitle name={imageExtractionTabSide} pressed={imageExtractorConfig.enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('imageExtractorConfig', { enabled })} />}
         front={{
           children: (
             <div className={cn(`flex flex-col gap-1 w-full`)}>
@@ -175,54 +186,37 @@ export const ExtractionTab = () => {
     )
   }, [imageExtractorConfig, imageExtractionTabSide, getImageExtractorSchema, editor, getNodesToExcludeSchema, imagePreview, onFlip, setExtractorConfig]);
 
-  const JsonViewer: React.FC<any> = ({ jsonPreview }: any) => {
-    return (
-      <div className="flex w-full items-center justify-center px-2 py-4">
-        {jsonPreview ? (
-          <pre className="overflow-auto">
-            <code>{JSON.stringify(jsonPreview, null, 2)}</code>
-          </pre>
-        ) : (
-          <div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No JSON</div>
-        )}
-      </div>
-    );
-  };
+  const onJSONFormSubmit = useCallback((nodePropertiesToExtract: any) => {
+    setExtractorConfig('jsonExtractorConfig', { nodePropertiesToExtract });
+  }, [setExtractorConfig]);
+
   const JSONExtraction = useMemo(() => {
+    const {enabled, nodePropertiesToExtract } = jsonExtractorConfig;
     return (
       <FlipCard
         onFlip={() => onFlip(jsonExtractionTabSide, setJsonExtractionTabSide)}
-        className={cn(``, jsonExtractorConfig.enabled && `border-accent`)}
-        title={<ToggleTitle name={jsonExtractionTabSide} pressed={jsonExtractorConfig.enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('jsonExtractorConfig', { ...jsonExtractorConfig, enabled })} />}
+        className={cn(jsonExtractorConfig.enabled && `border-accent`)}
+        title={<ToggleTitle name={jsonExtractionTabSide} pressed={enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('jsonExtractorConfig', { enabled })} />}
         front={{
           children: (
             <div className={cn(`flex flex-col gap-1 w-full`)}>
-              <Form object={jsonExtractorConfig} schema={getJSONExtractorSchema()} onSubmit={(newJsonConfig: any) => setExtractorConfig('jsonExtractorConfig', newJsonConfig)} />
-              <Accordion
-                className='px-2'
-                items={[
-                  {
-                    name: 'Filter Out Nodes',
-                    content: <Form object={Array.from(editor.getCurrentPageShapeIds() || {}).reduce((obj, item) => ({ ...obj, [item]: jsonExtractorConfig.nodesToExclude?.includes(item) }), {})} schema={getNodesToExcludeSchema()} onSubmit={(newNodesToExclude: any) => { setExtractorConfig('jsonExtractorConfig', { ...jsonExtractorConfig, nodesToExclude: Object.keys(newNodesToExclude || {}).filter((nodeId: any) => newNodesToExclude[nodeId]) as TLShapeId[]}) }} />
-                  }
-                ]}
-              />
+              <Form object={nodePropertiesToExtract} schema={getJSONExtractorSchema()} onSubmit={onJSONFormSubmit} />
             </div>
           )
         }}
         back={{
-          children: <JsonViewer jsonPreview={jsonPreview} />
+          children: jsonPreview ? (<pre className="overflow-auto p-1"> <code>{JSON.stringify(jsonPreview, null, 2)}</code> </pre>) : (<div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No JSON</div>)
         }}
       />
-    )
-  }, [editor, getJSONExtractorSchema, getNodesToExcludeSchema, jsonExtractionTabSide, jsonExtractorConfig, jsonPreview, onFlip, setExtractorConfig]);
+    );
+  }, [getJSONExtractorSchema, jsonExtractionTabSide, jsonExtractorConfig, jsonPreview, onFlip, onJSONFormSubmit, setExtractorConfig]);
 
   const TextExtraction = useMemo(() => {
     return (
       <FlipCard
         onFlip={() => onFlip(textExtractionTabSide, setTextExtractionTabSide)}
         className={cn(textExtractorConfig.enabled && `border-accent`)}
-        title={<ToggleTitle name={textExtractionTabSide} pressed={textExtractorConfig.enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('textExtractorConfig', { ...textExtractorConfig, enabled })} />}
+        title={<ToggleTitle name={textExtractionTabSide} pressed={textExtractorConfig.enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('textExtractorConfig', { enabled })} />}
         front={{
           children: (
             <div className={cn(`flex flex-col gap-1 w-full`)}>
@@ -254,7 +248,7 @@ export const ExtractionTab = () => {
       <FlipCard
         onFlip={() => onFlip(canvasExtractionTabSide, setCanvasExtractionTabSide)}
         className={cn(canvasExtractorConfig.enabled && `border-accent`)}
-        title={<ToggleTitle name={canvasExtractionTabSide} pressed={canvasExtractorConfig.enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('canvasExtractorConfig', { ...canvasExtractorConfig, enabled })} />}
+        title={<ToggleTitle name={canvasExtractionTabSide} pressed={canvasExtractorConfig.enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('canvasExtractorConfig', { enabled })} />}
         front={{
           children: (
             <div className={cn(`flex flex-col gap-1 w-full`)}>
@@ -274,7 +268,7 @@ export const ExtractionTab = () => {
       <FlipCard
         onFlip={() => onFlip(uiExtractionTabSide, setUiExtractionTabSide)}
         className={cn(uiExtractorConfig.enabled && `border-accent`)}
-        title={<ToggleTitle name={uiExtractionTabSide} pressed={uiExtractorConfig.enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('uiExtractorConfig', { ...uiExtractorConfig, enabled })} />}
+        title={<ToggleTitle name={uiExtractionTabSide} pressed={uiExtractorConfig.enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('uiExtractorConfig', { enabled })} />}
         front={{
           children: (
             <div className={cn(`flex flex-col gap-1 w-full`)}>
