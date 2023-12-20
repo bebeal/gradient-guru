@@ -9,8 +9,9 @@ import { FormDescription } from "./FormDescription";
 import { FormLabel } from "./FormLabel";
 import { cn } from "@/utils";
 import { FormMessage } from "./FormMessage";
-import { Accordion, Checkbox, Input, Select, Slider, Switch } from '@/components';
-import { FormFields } from "./shared";
+import { Accordion, Checkbox, IconSetCache, Input, Select, Slider, Switch } from '@/components';
+import { FormFields, DataModalityBadge } from "./shared";
+import { Models } from "@/clients";
 
 export type FormItemProps = {
   className?: string;
@@ -20,6 +21,8 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   const { field, fieldState, formState, schema, label, description, placeholder, readOnly, form, item } = useFormField();
   const isBoolean = item === 'boolean' || item === 'checkbox' || item === 'switch';
   const isObject = item === 'object' || item === 'from-array' || item === 'node-schema';
+  const isModel = item === 'model';
+  const isModelConfig = item === 'model' || item === 'client';
   const className=cn('text-xs w-full placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error',  
                      classNameFromProps)
   const hasMin = schema?.exclusiveTests?.min;
@@ -52,7 +55,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
       case 'node-schema':
         return (
           <div className="w-full h-full grid grid-cols-1 col-span-2 gap-1 overflow-auto rounded items-center"><FormFields form={form} schema={schema} prefix={`${field?.name}.`} readOnly={readOnly} /></div>
-        )
+        );
       case 'from-array':
       case 'object':
       case 'array':
@@ -92,7 +95,32 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
           );
         }
       case 'select':
+      case 'model':
         const items: string[] = Array.from(schema?._whitelist)
+        if (item === 'model') {
+          const values = form.getValues();
+          const client_name = values?.client_name;
+          if (client_name === 'Open AI') {
+            // iterate through array of strings nad replace with { value: string, children: custom component with client logo }
+            const betterItems = items.map((model: string) => {
+              const modelFromMap = Models[model as any];
+              const modalities = modelFromMap?.modalities || [];
+              const DataModalitiesBadges = (<div className="grid grid-cols-2 grid-rows-2 gap-3 ml-2">
+              {modalities?.map((modality: any) => {
+                return (<DataModalityBadge key={modality} modality={modality as any} compact={true} />);
+              })}
+            </div>);
+              return { 
+                value: model,
+                children: (
+                  <div className="flex flex-row justify-start items-center text-center text-primary gap-2 w-auto h-full p-3"><IconSetCache.Logos.OpenAI height={"auto"} width={"100%"} className={cn("flex p-[3px] rounded w-[24px] h-[24px]", model.includes('gpt-3') && 'bg-[#19c37d]', model.includes('gpt-4') && 'bg-[#ab68ff]' )}/> <div className={cn(`flex h-full w-auto leading-none items-center`)}>{model}{DataModalitiesBadges}</div></div>
+                ),
+                className: 'justify-start'
+              }
+            });
+            return (<Select className={className} items={betterItems} {...field} readOnly={readOnly} />);
+          }
+        }
         return (<Select className={className} items={items} {...field} readOnly={readOnly} />);
       case 'slider':
         return (<Slider thumbSize={10} showValue="value" className={className} min={min} max={max} step={step} {...field} />);
@@ -109,15 +137,60 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
       case 'input':
         return (<Input placeholder={placeholder} className={className} extraCharWidth={0} {...field} readOnly={readOnly} />);
       case 'readOnly':
+      case 'client':
+      case 'modality':
       default:
+        if (item === 'modality') {
+          const values = form.getValues();
+          const modalities = values?.modalities;
+          // for the content I want compact versions for teh trigger I want the full version
+          const compact = schema?.spec?.meta?.compact || false;
+          // console.log('compact', compact, '\nmodalities', modalities);
+          if (compact) {
+            // 4x4 GRID
+            return (
+              <div className="grid grid-cols-2 grid-rows-2 gap-1 w-auto h-auto p-1">
+                {modalities?.map((modality: any) => {
+                  return (<DataModalityBadge key={modality} modality={modality as any} compact={true} />);
+                })}
+              </div>
+            )
+          } else {
+            // 2x2 GRID
+            return (
+              <div className="grid grid-cols-2 grid-rows-2 gap-1 w-auto h-auto p-1">
+                {modalities?.map((modality: any) => {
+                  return (<DataModalityBadge key={modality} modality={modality as any} />);
+                })}
+              </div>
+            )
+          }
+        }
+        if (item === 'client') {
+          const values = form.getValues();
+          const client_name = values?.client_name;
+          if (client_name === 'Open AI') {
+            return (<div className="flex flex-row items-center justify-center text-primary gap-1 w-full h-full p-3"><IconSetCache.Logos.OpenAI height={"auto"} className={cn("flex p-[3px] rounded w-[24px] h-[24px] text-primary")}/> <div className={cn(`flex h-auto w-auto leading-none `)}>Open AI</div></div>);
+          }
+        }
         return ( <Input extraCharWidth={0} placeholder={placeholder} readOnly className={cn(className, `p-0 cursor-text bg-transparent border-transparent text-primary/80 ring-transparent hover:border-transparent hover:bg-transparent hover:cursor-text hover:text-primary/80 hover:ring-transparent focus:border-transparent focus:bg-transparent focus:cursor-text focus:text-primary/80 focus:ring-transparent`)} {...field} />);
     }
   }, [item, field, schema, className, min, max, step, readOnly, placeholder, form]);
 
+  const Label = useMemo(() => {
+    // if label is a react fucntional component, call it to render
+    if (typeof label === 'function') {
+      return <div className="flex w-auto justify-start items-center">{label()}:</div>;
+    } else if (typeof label === 'string') {
+      return `${label}:`;
+    }
+    return label;
+  }, [label]);
+
   return (
-    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-end p-1 gap-px`, isObject && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
+    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-end p-1 gap-px`, isObject && 'col-span-2', isModel && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
       {(description || !isObject) && (<div className={cn("flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start")}>
-        {!isObject && (<FormLabel className="text-xs">{label}:</FormLabel>)}
+        {!isObject && (<FormLabel className="text-xs">{Label}</FormLabel>)}
         {description && (<FormDescription>{description}</FormDescription>)}
       </div>)}
       <div className={cn("flex-col flex w-full h-auto justify-center items-center px-1.5", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end')}>

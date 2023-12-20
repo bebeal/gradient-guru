@@ -182,9 +182,13 @@ SelectItem.displayName = SelectPrimitive.Item.displayName;
 export interface SelectTriggerProps extends SelectPrimitive.SelectTriggerProps {
   radius?: Radius;
   placeholder?: string;
+  items?: SelectItemProps[];
 }
 export const SelectTrigger = forwardRef<any, SelectTriggerProps>((props, ref) => {
-  const { className = '', placeholder = '', radius = 'medium', value, ...rest } = props;
+  const { className = '', placeholder = '', radius = 'medium', value, items, ...rest } = props;
+  const children = useMemo(() => {
+    return items?.find((v) => v.value === value)?.children || value;
+  }, [items, value]);
   return (
     <SelectPrimitive.Trigger
       ref={ref}
@@ -200,7 +204,7 @@ export const SelectTrigger = forwardRef<any, SelectTriggerProps>((props, ref) =>
       {...rest}
     >
       <div className="flex w-full h-full items-center justify-center justify-self-center text-center">
-        <SelectPrimitive.Value>{value}</SelectPrimitive.Value>
+        <SelectPrimitive.Value>{children}</SelectPrimitive.Value>
       </div>
       <SelectPrimitive.Icon asChild className={cn(`opacity-80 text-current`)}>
         <CaretSortIcon />
@@ -285,7 +289,7 @@ export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) =>
       required={required}
       {...rest}
     >
-      <SelectTrigger value={value} ref={ref} className={cn(className)} placeholder={placeholder} />
+      <SelectTrigger value={value} items={items} ref={ref} className={cn(className)} placeholder={placeholder} />
       <SelectContent selectedIndex={items.findIndex((v) => v.value === value)} items={items} virtualize={virtualize} readOnly={readOnly} />
     </SelectPrimitive.Root>
   );

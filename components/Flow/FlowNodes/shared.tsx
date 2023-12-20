@@ -1,9 +1,10 @@
 'use client'
 import * as yup from 'yup';
-import { DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, GeoShapeGeoStyle, TLShape } from "@tldraw/editor";
+import { DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, Editor, GeoShapeGeoStyle, TLShape } from "@tldraw/editor";
 import { DefaultLabelColorStyle } from "@tldraw/tlschema/src/styles/TLColorStyle";
 import { FONT_FAMILIES } from "@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants";
 import { cn } from '@/utils';
+import { PreviewNode } from './PreviewNode';
 
 export const KeysToMakereadOnly: string[] = ['type'] as const;
 export const KeysToIgnore: string[] = ['index', 'typeName'] as const;
@@ -72,3 +73,17 @@ export const getNodeNameComponent = (node: TLShape, className: string = '') => {
     </div>
   );
 };
+
+
+export const makeEmptyResponseShape = (editor: Editor, resposneShapeId: any, dataUrl?: string) => {
+	const selectionBounds = editor.getSelectionPageBounds()
+	if (!selectionBounds) throw new Error('No selection bounds')
+  const { maxX, midY }: any = editor.getSelectionPageBounds()
+  editor.createShape<PreviewNode>({
+		id: resposneShapeId,
+		type: 'preview',
+		x: maxX + 60, // to the right of the selection
+		y: midY - (540 * 2) / 3 / 2, // half the height of the preview's initial shape
+		props: { html: '', source: dataUrl as string },
+	})
+}

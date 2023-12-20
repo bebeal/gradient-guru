@@ -8,7 +8,9 @@ const config: Config = {
     ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`, `h-[${i+100}px]`, `w-[${i+100}px]`,  `h-[${i+200}px]`, `w-[${i+200}px]`, `grid-cols-${i}`, `grid-rows-${i}`]),
     `radix-state-open:rounded-t-lg radix-state-closed:rounded-lg rounded-b-lg rounded-t-lg`,
     `radix-state-open:rounded-t-xl radix-state-closed:rounded-xl rounded-b-xl rounded-t-xl`,
-    `text-accent-500 text-accent-400`
+    `text-accent-500 text-accent-400`,
+    'text-red text-ruby text-crimson text-pink text-plum text-purple text-violet text-iris text-indigo text-blue text-cyan text-teal text-jade text-green text-grass text-brown text-orange text-sky text-mint text-lime text-yellow text-amber text-gold text-bronze text-gray',
+    'bg-red bg-ruby bg-crimson bg-pink bg-plum bg-purple bg-violet bg-iris bg-indigo bg-blue bg-cyan bg-teal bg-jade bg-green bg-grass bg-brown bg-orange bg-sky bg-mint bg-lime bg-yellow bg-amber bg-gold bg-bronze bg-gray'
   ],
   darkMode: ['class'],
   content: [
@@ -304,7 +306,17 @@ const config: Config = {
           "100%": {
             'box-shadow': "0 0 5px #FFFFFF, 0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF, 0 0 40px #FFFFFF",
           }
-        }
+        },
+        // Avatar
+        "ripple": {
+          '0%': { transform: 'scale(0.8)', opacity: '1' },
+          '100%': { transform: 'scale(2.4)', opacity: '0' },
+        },
+        "ripple-pause": {
+          '0%': { transform: 'scale(2.4)', opacity: '0' },
+          '25%': { transform: 'scale(0.8)', opacity: '1' },
+          '100%': { transform: 'scale(2.4)', opacity: '0' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.3s ease-in-out both",
@@ -328,6 +340,8 @@ const config: Config = {
         "bigger-text-glow": "bigger-text-glow 1.5s infinite alternate",
         "ramp-up-spin": "ramp-up-spin 2s linear infinite reverse",
         "pulsate": "pulsate 2s infinite",
+        "ripple": 'ripple 1.2s infinite ease-in-out',
+        "ripple-pause": 'ripple-pause 2s backwards infinite ease-in-out',
       }
     },
   },

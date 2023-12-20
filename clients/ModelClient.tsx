@@ -19,6 +19,7 @@ export interface ModelConfig {
   context_window?: string | number;
   training_data_end_date?: string | Date;
   api_endpoint?: string;
+  client_name: 'Open AI' | 'Backend'
 }
 
 export type ModelInput<T = any> = T;
@@ -80,8 +81,8 @@ export class BaseModelClient<Config extends ModelConfig, Input = ModelInput, Out
     this.config.messages?.push({ role: 'assistant' as API.ChatCompletionRole, content });
   }
 
-  updateConfig(configOverride: Partial<Config>): void {
-    this.config = { ...this.config, ...configOverride };
+  updateConfig(configOverride: Partial<Config> = {}): void {
+    this.config = { ...this?.config, ...configOverride };
   }
 
   // Identity function for mocking, override in subclasses

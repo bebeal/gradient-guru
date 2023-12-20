@@ -263,7 +263,7 @@ export const TestExtractionButton = () => {
   }, [extractAll, toast]);
 
   return (
-    <Button type={'normal'} className={cn(`w-auto h-auto`)} onClick={onClick}>
+    <Button type={'normal'} className={cn(`w-auto h-auto tlui-button tlui-button__menu`)} onClick={onClick}>
       Test Extraction
     </Button>
   );

@@ -123,12 +123,9 @@ export const ExtractionTab = () => {
     );
   }, [imageExtractorConfig, imageExtractionTabSide, getImageExtractorSchema, editor, getNodesToExcludeSchema, imagePreview, onFlip, setExtractorConfig]);
 
-  const onNodesFormSubmit = useCallback(
-    (nodePropertiesToExtract: any) => {
+  const onNodesFormSubmit = useCallback((nodePropertiesToExtract: any) => {
       setExtractorConfig('nodesExtractorConfig', { nodePropertiesToExtract });
-    },
-    [setExtractorConfig]
-  );
+  }, [setExtractorConfig]);
 
   const NodesExtraction = useMemo(() => {
     const { enabled, nodePropertiesToExtract } = nodesExtractorConfig;

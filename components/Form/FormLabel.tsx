@@ -17,10 +17,7 @@ export const FormLabel = forwardRef<HTMLLabelElement, FormLabelProps>((props, re
       id={labelId}
       htmlFor={id}
       {...rest}
-    >
-      {fieldState.error && <span className="text-error align-top">*</span>}
-      <span className={cn(fieldState.error && "underline decoration-error")}>{typeof children === 'string' ? children.split('.').pop() : children}</span>
-    </Label>
+    >{fieldState.error && <div className="text-error align-top">*</div>}<div className={cn(fieldState.error && "underline decoration-error")}>{typeof children === 'string' ? children?.split('.').pop() : children}</div></Label>
   )
 })
 FormLabel.displayName = "FormLabel"

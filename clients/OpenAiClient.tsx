@@ -1,5 +1,5 @@
 import API from 'openai';
-import { ApiKeyError, BaseModelClient, ModelConfig } from '@/clients';
+import { ApiKeyError, BaseModelClient, DataModality, ModelConfig } from '@/clients';
 import { isDevEnv } from '@/utils';
 
 export const getContentFromChatCompletion = (response: API.ChatCompletion): string => response?.choices?.[0]?.message?.content || '';
@@ -35,6 +35,7 @@ export interface OpenAIModelConfig extends ModelConfig {
   presence_penalty?: number; // Penalizes new tokens based on their presence in the text
   logit_bias?: { [key: string]: number }; // Bias for or against specific tokens
   stop?: string[] | string; // Sequences where the API will stop generating tokens
+  modalities?: DataModality[];
 }
 
 export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAIModelInput, OpenAIModelOutput> {
