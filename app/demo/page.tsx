@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import GradientGuruSVG from '@/assets/icons/GradientGuru.svg';
 import { Separator } from '@/components';
 import { cn } from '@/utils';
-import GradientGuruSVG from '@/assets/icons/GradientGuru.svg';
 
 type DemoProps = {
   preview: React.ReactNode;
@@ -13,31 +13,35 @@ type DemoProps = {
   credits?: string;
 };
 
-const AttentionGrabberPreview = (props: { hovered?: boolean; children: React.ReactNode, className?: string  }) => {
-  const {
-    hovered=false,
-    children,
-    className,
-  } = props;
+const AttentionGrabberPreview = (props: { hovered?: boolean; children: React.ReactNode; className?: string }) => {
+  const { hovered = false, children, className } = props;
   return (
-    <div className={cn(`flex justify-center items-center w-full h-auto pointer-events-none [transform-style:preserve-3d] [transform:perspective(500px)_translateZ(0px)_rotateX(0deg)_rotateY(0deg)] [filter:drop-shadow(0px_4px_20px_rgba(0,0,0,0.3))] [transition:transform_0.5s_ease-out,filter_0.5s_ease-out]`, hovered && `[transform:perspective(500px)_translateZ(25px)] [filter:drop-shadow(0px_4px_10px_rgba(0,0,0,0.8))]`, className)}>
+    <div
+      className={cn(
+        `flex justify-center items-center w-full h-auto pointer-events-none [transform-style:preserve-3d] [transform:perspective(500px)_translateZ(0px)_rotateX(0deg)_rotateY(0deg)] [filter:drop-shadow(0px_4px_20px_rgba(0,0,0,0.3))] [transition:transform_0.5s_ease-out,filter_0.5s_ease-out]`,
+        hovered && `[transform:perspective(500px)_translateZ(25px)] [filter:drop-shadow(0px_4px_10px_rgba(0,0,0,0.8))]`,
+        className
+      )}
+    >
       {children}
     </div>
-  )
+  );
 };
 
-const AttentionGrabberTitle = (props: { hovered?: boolean; children: React.ReactNode, className?: string }) => {
-  const {
-    hovered=false,
-    children,
-    className,
-  } = props;
+const AttentionGrabberTitle = (props: { hovered?: boolean; children: React.ReactNode; className?: string }) => {
+  const { hovered = false, children, className } = props;
 
   return (
-    <div className={cn(`flex flex-wrap justify-center items-center w-full h-auto break-words pointer-events-none [transform-style:preserve-3d] [transform:perspective(500px)_translateZ(0px)_rotateX(0deg)_rotateY(0deg)] [transition:transform_0.5s_ease-out]`, hovered && `[transform:perspective(500px)_translateZ(25px)] [text-shadow:2px_2px_3px_rgba(0,0,0,0.3),0_0_25px_rgba(0,0,0,0.3),0_0_10px_rgba(0,0,0,0.3)]`, className)}>
+    <div
+      className={cn(
+        `flex flex-wrap justify-center items-center w-full h-auto break-words pointer-events-none [transform-style:preserve-3d] [transform:perspective(500px)_translateZ(0px)_rotateX(0deg)_rotateY(0deg)] [transition:transform_0.5s_ease-out]`,
+        hovered && `[transform:perspective(500px)_translateZ(25px)] [text-shadow:2px_2px_3px_rgba(0,0,0,0.3),0_0_25px_rgba(0,0,0,0.3),0_0_10px_rgba(0,0,0,0.3)]`,
+        className
+      )}
+    >
       {children}
     </div>
-  )
+  );
 };
 
 const DemoApp = (props: DemoProps) => {
@@ -46,10 +50,7 @@ const DemoApp = (props: DemoProps) => {
   return (
     <a
       href={link}
-      className={cn(
-        "group flex flex-col items-center justify-center w-[350px] h-auto overflow-hidden rounded-lg py-1 border bg-primary border-secondary transition-all duration-300 no-underline",
-        hovered && "border-accent"
-      )}
+      className={cn('group flex flex-col items-center justify-center w-[350px] h-auto overflow-hidden rounded-lg py-1 border bg-primary border-secondary transition-all anim-duration-300 no-underline', hovered && 'border-accent')}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -59,7 +60,7 @@ const DemoApp = (props: DemoProps) => {
       </AttentionGrabberTitle>
 
       {/* Separator */}
-      <Separator className='w-full' />
+      <Separator className="w-full" />
 
       {/* Preview */}
       <AttentionGrabberPreview hovered={hovered} className="p-2">

@@ -2,6 +2,7 @@
 
 import { useQuery } from 'react-query';
 import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
 import { useContentExtractor } from '@/hooks';
 import { BaseModelClient, DefaultModelConfig, ModelConfig, OpenAIModelClient } from '@/clients';
 import { PROMPT_LIBRARY, encodeBlobAsBase64 } from '@/utils';
@@ -19,8 +20,8 @@ export const useModelClientStore = create<ModelState>((set, get) => ({
 }));
 
 export const useModel = () => {
-  const modelClient = useModelClientStore((state) => state.modelClient);
-  const setModelClient = useModelClientStore((state) => state.setModelClient);
+  const modelClient = useModelClientStore(useShallow((state) => state.modelClient));
+  const setModelClient = useModelClientStore(useShallow((state) => state.setModelClient));
   const editor = useEditor();
   const contentExtractor = useContentExtractor();
 

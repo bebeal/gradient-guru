@@ -121,7 +121,6 @@
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.7",
     "tailwindcss": "^3.3.5",
-    "tailwindcss-animate": "^1.0.7",
     "tailwindcss-radix": "^2.8.0",
     "typescript": "^5.3.3"
   },

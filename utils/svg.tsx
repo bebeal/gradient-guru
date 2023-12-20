@@ -1,10 +1,9 @@
 'use client'
 
-import React, { ReactElement, isValidElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, isValidElement } from 'react';
 import ReactDOMServer from 'react-dom/server';
-import ReactDOM from "react-dom/client";
+// import ReactDOM from "react-dom/client";
 
-import styled from "styled-components";
 import { cn } from "./utils";
 
 // Check if a react element is an svg in various ways
@@ -78,66 +77,66 @@ export const fourCornerGradientBackground = (topLeft: string = "#38C9EA", topRig
 };
 
 // Animate a single path of an svg as if it were being drawn
-export const AnimatedLinePath = styled.path<any>`
-  stroke-linecap: round;
-  stroke-linejoin: round;
+// export const AnimatedLinePath = styled.path<any>`
+//   stroke-linecap: round;
+//   stroke-linejoin: round;
 
-  stroke-dasharray: ${props => props.pathLength};
-  stroke-dashoffset: ${props => props.pathLength};
-  animation: dash-stroke 2s linear alternate infinite;
-  @keyframes dash-stroke {
-    to {
-      stroke-dashoffset: ${props => props.pathLength / 2};
-    }
-  }
-`;
+//   stroke-dasharray: ${props => props.pathLength};
+//   stroke-dashoffset: ${props => props.pathLength};
+//   animation: dash-stroke 2s linear alternate infinite;
+//   @keyframes dash-stroke {
+//     to {
+//       stroke-dashoffset: ${props => props.pathLength / 2};
+//     }
+//   }
+// `;
 // Given an svg as a react functional component, animate the stroke of the svg as if it were being drawn
-export const AnimatedLineSVG = (props: any) => {
-  const{
-    children,
-    className,
-    ...rest
-  } = props;
-  const [paths, setPaths] = useState<any>([]);
-  const [pathLengths, setPathLengths] = useState<any>([]);
-  const hiddenRef = useRef<any>();
+// export const AnimatedLineSVG = (props: any) => {
+//   const{
+//     children,
+//     className,
+//     ...rest
+//   } = props;
+//   const [paths, setPaths] = useState<any>([]);
+//   const [pathLengths, setPathLengths] = useState<any>([]);
+//   const hiddenRef = useRef<any>();
 
-  useEffect(() => {
-    if (hiddenRef?.current) {
-      const svg = hiddenRef.current;
-      const pathRefs = Array.from(svg.querySelectorAll('path'));
-      const calculatedPathDs = pathRefs.map((pathRef: any) => pathRef.getAttribute('d') || '');
-      setPaths(calculatedPathDs);
-      const calculatedPathLengths = pathRefs.map((pathRef: any) => {
-        return pathRef.getTotalLength();
-      });
-      setPathLengths(calculatedPathLengths);
-    }
-  }, []);
+//   useEffect(() => {
+//     if (hiddenRef?.current) {
+//       const svg = hiddenRef.current;
+//       const pathRefs = Array.from(svg.querySelectorAll('path'));
+//       const calculatedPathDs = pathRefs.map((pathRef: any) => pathRef.getAttribute('d') || '');
+//       setPaths(calculatedPathDs);
+//       const calculatedPathLengths = pathRefs.map((pathRef: any) => {
+//         return pathRef.getTotalLength();
+//       });
+//       setPathLengths(calculatedPathLengths);
+//     }
+//   }, []);
 
-  return (
-    <>
-    <div ref={hiddenRef} className={cn(`hidden`)}>{children}</div>
-    <svg
-      width={'1em'}
-      height={'1em'}
-      fill={'transparent'}
-      stroke={'currentColor'}
-      viewBox="0 0 32 32"
-      className={cn(`w-full h-full`, className)}
-      {...rest}
-    >
-      {paths.map((path: any, index: number) => {
-        return (
-          <AnimatedLinePath
-            d={path}
-            key={index}
-            strokeWidth={2}
-            pathLength={pathLengths[index]}
-          />
-        );
-      })}
-    </svg>
-    </>
-  );
-};
+//   return (
+//     <>
+//     <div ref={hiddenRef} className={cn(`hidden`)}>{children}</div>
+//     <svg
+//       width={'1em'}
+//       height={'1em'}
+//       fill={'transparent'}
+//       stroke={'currentColor'}
+//       viewBox="0 0 32 32"
+//       className={cn(`w-full h-full`, className)}
+//       {...rest}
+//     >
+//       {paths.map((path: any, index: number) => {
+//         return (
+//           <AnimatedLinePath
+//             d={path}
+//             key={index}
+//             strokeWidth={2}
+//             pathLength={pathLengths[index]}
+//           />
+//         );
+//       })}
+//     </svg>
+//     </>
+//   );
+// };

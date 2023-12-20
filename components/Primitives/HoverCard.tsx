@@ -1,29 +1,20 @@
-'use client'
+'use client';
 
-import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 import { cn } from '@/utils';
-
 
 export interface HoverCardProps extends HoverCardPrimitive.HoverCardProps {
   content: React.ReactNode;
-  ringColor?: string;
   link?: boolean;
   clickToDismiss?: boolean;
   portal?: boolean;
+  sideOffset?: number;
+  side?: 'top' | 'right' | 'bottom' | 'left';
 }
 
 export const HoverCard = (props: HoverCardProps) => {
-  const { 
-    children, 
-    content, 
-    ringColor='accent',
-    openDelay=0,
-    closeDelay=200,
-    link=false,
-    clickToDismiss=false,
-    portal=true,
-  } = props;
+  const { children, content, openDelay = 0, closeDelay = 200, link = false, clickToDismiss = false, sideOffset = 4, side = 'top' } = props;
   const [open, setOpen] = useState(false);
   const timeUpRef = useRef<any>(null);
   const timeDownRef = useRef<any>(null);
@@ -71,58 +62,41 @@ export const HoverCard = (props: HoverCardProps) => {
     setTimeout(handleClick, 0);
   }, [handleClick]);
 
-  const handleDoubleClick = (event: React.MouseEvent) => {
+  const handleDoubleClick = useCallback((event: React.MouseEvent) => {
     event.preventDefault();
-  };
-
-  const HoverCardContent = useCallback(() => {
-    const hoverCardContent = (
-      <HoverCardPrimitive.Content
-      onMouseDown={handleMouseDown}
-      onDoubleClick={handleDoubleClick}
-      onMouseUp={handleMouseUp}
-      onMouseEnter={openCard}
-      onMouseLeave={closeCard}
-      align="center"
-      sideOffset={4}
-      className={cn(
-        "radix-side-top:animate-slide-up-fade radix-side-bottom:animate-slide-down-fade",
-        link || clickToDismiss ? 'cursor-pointer' : 'cursor-auto',
-        "rounded-lg p-2 drop-shadow-xl",
-        "bg-primary",
-        `focus:outline-none focus-visible:ring focus-visible:ring-${ringColor} focus-visible:ring-opacity-75`,
-        `text-xs`,
-      )}
-    >
-      <HoverCardPrimitive.Arrow className="fill-primary" />
-      {content}
-      </HoverCardPrimitive.Content>
-    )
-    if (portal) {
-      return (
-        <HoverCardPrimitive.Portal>
-          {hoverCardContent}
-        </HoverCardPrimitive.Portal>
-      )
-    }
-    return hoverCardContent;
-  }, [content, link, clickToDismiss, portal, ringColor, closeCard, openCard, handleMouseDown, handleMouseUp]);
+  }, []);
 
   return (
     <HoverCardPrimitive.Root openDelay={openDelay} closeDelay={closeDelay} open={open}>
       <HoverCardPrimitive.Trigger asChild onMouseEnter={openCard} onMouseLeave={closeCard}>
-        <div
+        <div className={cn('flex h-auto w-auto items-center justify-center leading-none', link || clickToDismiss ? 'cursor-pointer' : 'cursor-auto')}>{children}</div>
+      </HoverCardPrimitive.Trigger>
+      <HoverCardPrimitive.Portal>
+        <HoverCardPrimitive.Content
+          onMouseDown={handleMouseDown}
+          onDoubleClick={handleDoubleClick}
+          onMouseUp={handleMouseUp}
+          onMouseEnter={openCard}
+          onMouseLeave={closeCard}
+          sideOffset={sideOffset}
+          side={side}
           className={cn(
-            "flex h-auto w-auto items-center justify-center rounded-full",
-            link || clickToDismiss ? 'cursor-pointer' : 'cursor-auto',
+            'radix-side-top:animate-slide-down-fade',
+            'radix-side-right:animate-slide-left-fade',
+            'radix-side-bottom:animate-slide-up-fade',
+            'radix-side-left:animate-slide-right-fade',
+            'drop-shadow-xl',
+            'fade-in-0 zoom-in-95',
+            'rounded-md border bg-secondary px-3 py-1.5 text-sm text-secondary shadow-md',
+            link || clickToDismiss ? 'cursor-pointer' : 'cursor-auto'
           )}
         >
-          {children}
-        </div>
-      </HoverCardPrimitive.Trigger>
-      <HoverCardContent />
+          <HoverCardPrimitive.Arrow className={cn('fill-current text-primary')} />
+          <div className="block text-xs leading-none text-primary">{content}</div>
+        </HoverCardPrimitive.Content>
+      </HoverCardPrimitive.Portal>
     </HoverCardPrimitive.Root>
-  )
+  );
 };
 
 HoverCard.displayName = 'HoverCard';

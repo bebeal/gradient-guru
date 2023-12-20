@@ -2,6 +2,7 @@
 
 import { TLUiEventHandler } from "@tldraw/tldraw";
 import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
 import { TLRecord } from '@tldraw/tlschema';
 import { RecordsDiff } from '@tldraw/store';
 import { TLEventInfo, TLStoreEventInfo, UiEvent, useEditor } from "@tldraw/editor";
@@ -66,13 +67,13 @@ export const useContentRecorderStore = create<ContentRecorderState>((set, get) =
 export const useContentRecorder = () => {
   const historyRecordsBufferSize = 10000;
   const editor = useEditor();
-  const canvasState = useContentRecorderStore((state) => state.canvasState);
-  const setCanvasState = useContentRecorderStore((state) => state.setCanvasState);
-  const uiState = useContentRecorderStore((state) => state.uiState);
-  const setUiState = useContentRecorderStore((state) => state.setUiState);
-  const historyRecords = useContentRecorderStore((state) => state.historyRecords);
-  const readableRecords = useContentRecorderStore((state) => state.readableRecords);
-  const addHistoryRecord = useContentRecorderStore((state) => state.addHistoryRecord);
+  const canvasState = useContentRecorderStore(useShallow((state) => state.canvasState));
+  const setCanvasState = useContentRecorderStore(useShallow((state) => state.setCanvasState));
+  const uiState = useContentRecorderStore(useShallow((state) => state.uiState));
+  const setUiState = useContentRecorderStore(useShallow((state) => state.setUiState));
+  const historyRecords = useContentRecorderStore(useShallow((state) => state.historyRecords));
+  const readableRecords = useContentRecorderStore(useShallow((state) => state.readableRecords));
+  const addHistoryRecord = useContentRecorderStore(useShallow((state) => state.addHistoryRecord));
   
   const onCanvasEvent = useCallback((newCanvasEvent: any) => {    
     setCanvasState(Object.keys(newCanvasEvent).sort().reduce((obj: any, key: any) => {

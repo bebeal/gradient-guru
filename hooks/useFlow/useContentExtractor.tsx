@@ -3,8 +3,9 @@
 import * as yup from 'yup';
 import { useCallback, useEffect, useState } from 'react';
 import { create } from 'zustand'
+import { useShallow } from 'zustand/react/shallow';
 import { Box2d, SVG_PADDING, TLEventInfo, TLShape, TLShapeId, useEditor } from '@tldraw/tldraw';
-import { getExportedImageBlob, getSVGAsBlob, getSvgPreview } from '@/utils';
+import { encodeBlobAsBase64, getExportedImageBlob, getSVGAsBlob, getSvgPreview } from '@/utils';
 import { UiState, useContentRecorder } from './useContentRecorder';
 import { getNodeName } from '@/components';
 
@@ -111,19 +112,19 @@ export const useContentExtractorStore = create<ContentExtractorConfig>((set) => 
   textExtractorConfig: defaultTextExtractorConfig,
   canvasExtractorConfig: defaultCanvasExtractorConfig,
   uiExtractorConfig: defaultUiExtractorConfig,
-  setExtractorConfig: (type, config) => set(state => ({...state, [type]: {...state[type], ...config}})),
+  setExtractorConfig: (type, config) => set((state) => ({ [type]: { ...state[type], ...config } })),
 }));
 
 export const useContentExtractor = () => {
   const [mounted, setMounted] = useState(false);
   const editor = useEditor();
   const { canvasState, uiState, onUiEvent } = useContentRecorder();
-  const imageExtractorConfig = useContentExtractorStore(state => state.imageExtractorConfig);
-  const jsonExtractorConfig = useContentExtractorStore(state => state.jsonExtractorConfig);
-  const textExtractorConfig = useContentExtractorStore(state => state.textExtractorConfig);
-  const canvasExtractorConfig = useContentExtractorStore(state => state.canvasExtractorConfig);
-  const uiExtractorConfig = useContentExtractorStore(state => state.uiExtractorConfig);
-  const setExtractorConfig = useContentExtractorStore(state => state.setExtractorConfig);
+  const imageExtractorConfig = useContentExtractorStore(useShallow((state) => state.imageExtractorConfig));
+  const jsonExtractorConfig = useContentExtractorStore(useShallow((state) => state.jsonExtractorConfig));
+  const textExtractorConfig = useContentExtractorStore(useShallow((state) => state.textExtractorConfig));
+  const canvasExtractorConfig = useContentExtractorStore(useShallow((state) => state.canvasExtractorConfig));
+  const uiExtractorConfig = useContentExtractorStore(useShallow((state) => state.uiExtractorConfig));
+  const setExtractorConfig = useContentExtractorStore(useShallow((state) => state.setExtractorConfig));
 
   const updateJSONExtractorConfig = useCallback(() => {
     useContentExtractorStore.setState((prevState) => {
@@ -169,9 +170,11 @@ export const useContentExtractor = () => {
       return nodes.filter((node) => !nodesToExclude.includes((node.id).replace('shape:', '') as TLShapeId));
   }, [editor]);
 
-  const extractImage = useCallback(async (): Promise<Blob | null> => {
+  const extractImage = useCallback(async (): Promise<string | null> => {
     const nodesInImage: TLShapeId[] = getNodeIds(imageExtractorConfig.nodesToExclude);
-    return await getExportedImageBlob(editor, nodesInImage, imageExtractorConfig);
+    const blob = await getExportedImageBlob(editor, nodesInImage, imageExtractorConfig);
+    // return URL.createObjectURL(blob!);
+    return await encodeBlobAsBase64(blob!);
   }, [editor, getNodeIds, imageExtractorConfig]);
 
   const getImagePreview = useCallback(async (): Promise<string | null> => {
@@ -273,9 +276,13 @@ export const useContentExtractor = () => {
   }, [canvasExtractorConfig.canvasPropertiesToExtract, canvasState]);
   
   const getCanvasStateExtractorSchema = useCallback(() => {
-    return yup.object().shape({
-    });
-  }, []);
+    // for each canvas key add a boolean schema
+    const canvasPrperties = Object.keys(canvasState).reduce((acc: any, key) => {
+      acc[key] = yup.boolean().default(true).meta({ item: 'checkbox', label: key });
+      return acc;
+    }, {});
+    return yup.object().shape(canvasPrperties).meta({ item: 'object' });
+  }, [canvasState]);
 
   const extractUiState = useCallback((): UiState => {
     return uiExtractorConfig.uiPropertiesToExtract?.reduce((acc, key) => {
@@ -285,9 +292,12 @@ export const useContentExtractor = () => {
   }, [uiExtractorConfig.uiPropertiesToExtract, uiState]);
 
   const getUiStateExtractorSchema = useCallback(() => {
-    return yup.object().shape({
-    });
-  }, []);
+    const uiProperties = Object.keys(uiState).reduce((acc: any, key) => {
+      acc[key] = yup.boolean().default(true).meta({ item: 'checkbox', label: key });
+      return acc;
+    }, {});
+    return yup.object().shape(uiProperties).meta({ item: 'object' });
+  }, [uiState]);
 
   const getNodesToExcludeSchema = useCallback(() => {
     const nodes = editor.getCurrentPageShapesSorted();
@@ -298,12 +308,13 @@ export const useContentExtractor = () => {
     return yup.object().shape(nodeSchema).meta({ item: 'from-array' });
   }, [editor]);
 
-  const extractAll = useCallback(async (): Promise<{ json: TLShape[] | null, image: Blob | null, text: string[] | null, canvasState: TLEventInfo | null, uiState: UiState | null }> => {
+  const extractAll = useCallback(async (): Promise<{ json: TLShape[] | null, image: string | null, text: string[] | null, canvasState: TLEventInfo | null, uiState: UiState | null }> => {
     const json = jsonExtractorConfig.enabled ? await extractJSON() : null;
     const image = imageExtractorConfig.enabled ? await extractImage() : null;
     const text = textExtractorConfig.enabled ? extractText() : null;
     const canvasState = canvasExtractorConfig.enabled ? extractCanvasState() : null;
     const uiState = uiExtractorConfig.enabled ? extractUiState() : null;
+    // console.log('json', json, 'image', image, 'text', text, 'canvasState', canvasState, 'uiState', uiState);
     return { json, image, text, canvasState, uiState };
   }, [jsonExtractorConfig.enabled, extractJSON, imageExtractorConfig.enabled, extractImage, textExtractorConfig.enabled, extractText, canvasExtractorConfig.enabled, extractCanvasState, uiExtractorConfig.enabled, extractUiState]);
 

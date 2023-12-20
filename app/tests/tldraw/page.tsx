@@ -1,16 +1,13 @@
 'use client'
 
-import { Tldraw } from '@tldraw/tldraw'
-import { TimelineScrubber } from '@/components';
+import { Tldraw } from '@tldraw/tldraw';
+// import { useToasts } from '@tldraw/tldraw/src/lib/ui/hooks/useToastsProvider';
 import '@tldraw/tldraw/tldraw.css'
 
 const TldrawPage = () => {
 	return (
 		<div className="tldraw__editor w-full h-full flex flex-col overflow-hidden">
-			<Tldraw autoFocus>
-        <div className="absolute top-20 left-0 w-auto h-auto z-[501]">
-				<TimelineScrubber />
-        </div>
+			<Tldraw autoFocus >
 			</Tldraw>
 		</div>
 	)

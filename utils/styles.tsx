@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
-import styled from 'styled-components';
 import { IconSetCache } from '@/components';
+import styled from 'styled-components';
 import { getEncodedSVGUrl, isSVG } from './svg';
 import { cn } from './utils';
 

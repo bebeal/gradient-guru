@@ -35,11 +35,11 @@ export const getBrowserCanvasMaxSize = () => {
 
 export const getSvgDimensions = (svg: SVGElement): { width: number; height: number } => {
   return {width: +svg.getAttribute('width')!, height: +svg.getAttribute('height')!}
-}
+};
 
 export const scaleDimensions = (width: number, height: number, scale: number): { width: number; height: number } => {
   return {width: width * scale, height: height * scale}
-}
+};
 
 export const adjustSizeForCanvasLimits = async (
   scaledWidth: number, 
@@ -66,7 +66,7 @@ export const adjustSizeForCanvasLimits = async (
 	scaledHeight = Math.floor(scaledHeight)
 	const effectiveScale = scaledWidth / width;
   return { width: scaledWidth, height: scaledHeight, scale: effectiveScale }
-}
+};
 
 // Gets an exported SVG from the editor for the given nodes
 export const getSvgElement: any = async (editor: Editor, ids: TLShapeId[], imageConfig?: ImageExtractorConfig) => {
@@ -84,14 +84,13 @@ export const encodeSVGElementAsBase64 = (svg: SVGElement): string => {
   const svgStr = new XMLSerializer().serializeToString(svg);
   const base64SVG = btoa(decodeURIComponent(encodeURIComponent(svgStr)));
   return `data:image/svg+xml;base64,${base64SVG}`
-}
+};
 
 // Encodes the given blob as a base64 string
 export const encodeBlobAsBase64 = (blob: Blob): Promise<string> => {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve, _) => {
 		const reader = new FileReader()
 		reader.onloadend = () => resolve(reader.result as string)
-    reader.onerror = () => reject(reader.error)
 		reader.readAsDataURL(blob)
 	})
 };
@@ -111,7 +110,7 @@ export const base64EncodeEmbedImages = async (imgs: SVGImageElement[]): Promise<
           img.setAttribute('xlink:href', base64)
       }
   }
-}
+};
 
 export const encodeSVGAsBase64 = async (svg: SVGElement, encodeEmbedImages = true): Promise<string> => {
   // clone svg so we don't mutate the original
@@ -126,7 +125,7 @@ export const encodeSVGAsBase64 = async (svg: SVGElement, encodeEmbedImages = tru
 
   // encode svg as base64
   return encodeSVGElementAsBase64(svgElement);
-}
+};
 
 export const getSVGAsBlob = async (svg: SVGElement, encodeEmbedImages = true): Promise<string | null> => {
   // Clone svg so we don't mutate the original
@@ -195,7 +194,7 @@ export const createBlobFromCanvas = (canvas: HTMLCanvasElement, type: string, qu
     'image/' + type,
     quality
 	));
-}
+};
 
 export const getSvgAsCanvas = async (svg: SVGElement, options: ImageExtractorConfig, encodeEmbedImages = true) => {
   const { scale=1 } = options;
@@ -229,11 +228,12 @@ export const getSvgAsImage = async (svg: SVGElement, options: ImageExtractorConf
 
 export const getExportedCanvas = async (editor: Editor, ids: TLShapeId[], options: ImageExtractorConfig) => {
   return await getSvgAsCanvas(await getSvgElement(editor, ids, options), options);
-}
+};
 
 export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], options: ImageExtractorConfig) => {
-	return await getSvgAsImage(await getSvgElement(editor, ids, options), options);
-}
+  const svg = await getSvgElement(editor, ids, options);
+	return await getSvgAsImage(svg, options);
+};
 
 
 /**

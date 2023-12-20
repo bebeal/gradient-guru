@@ -7,7 +7,6 @@ import StatusPartialFail from '@/assets/icons/Carbon/StatusPartialFail.svg';
 import { cn } from '@/utils';
 import { ThreeFanGpu } from '../CustomIcons/ThreeFanGpu';
 
-
 export interface SpinnerProps extends React.ComponentProps<'svg'> {
   active?: boolean;
   r?: number;
@@ -19,66 +18,69 @@ export interface SpinnerProps extends React.ComponentProps<'svg'> {
   id?: string;
 }
 
-export const Spinner = ({ active=true, r=40, strokeWidth=10, color="accent", backgroundColor="muted", percentage=33, strokeLinecap='round', className, id=`spinner-${color}`, ...props }: SpinnerProps) => {
+export const Spinner = ({ active = true, r = 40, strokeWidth = 10, color = 'accent', backgroundColor = 'muted', percentage = 33, strokeLinecap = 'round', className, id = `spinner-${color}`, ...props }: SpinnerProps) => {
   const circumference = 2 * Math.PI * r;
 
   return (
-    <svg
-      id={id}
-      aria-live={active ? 'assertive' : 'off'}
-      viewBox="0 0 100 100"
-      fill="transparent"
-      stroke="transparent"
-      className={cn('transition-all text-transparent', className)}
-      {...props}
-    >
+    <svg id={id} aria-live={active ? 'assertive' : 'off'} viewBox="0 0 100 100" fill="transparent" stroke="transparent" className={cn('transition-all text-transparent', className)} {...props}>
       <defs>
         <linearGradient id={`gradientStroke-${id}`} gradientUnits="userSpaceOnUse" x1="100%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" className={cn(`text-${color}-500`)} stopColor={"currentColor"} stopOpacity="100%" />
-          <stop offset="100%" className={cn(`text-${color}-400`)} stopColor={"currentColor"} stopOpacity="70%" />
+          <stop offset="0%" className={cn(`text-${color}-500`)} stopColor={'currentColor'} stopOpacity="100%" />
+          <stop offset="100%" className={cn(`text-${color}-400`)} stopColor={'currentColor'} stopOpacity="70%" />
         </linearGradient>
         <linearGradient id={`backgroundStroke-${id}`} gradientUnits="userSpaceOnUse" x1="100%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" className={cn(`text-${backgroundColor}`)} stopColor={"currentColor"} stopOpacity="100%" />
-          <stop offset="100%" className={cn(`text-${backgroundColor}`)} stopColor={"currentColor"} stopOpacity="100%" />
+          <stop offset="0%" className={cn(`text-${backgroundColor}`)} stopColor={'currentColor'} stopOpacity="100%" />
+          <stop offset="100%" className={cn(`text-${backgroundColor}`)} stopColor={'currentColor'} stopOpacity="100%" />
         </linearGradient>
       </defs>
-      {
-        backgroundColor && backgroundColor !== 'transparent' && backgroundColor.length > 0 && (
-        <path
-          d={`M 50,10 A ${r},${r} 0 1 1 49.99,10`}
-          stroke={`url(#backgroundStroke-${id})`}
-          strokeWidth={strokeWidth}
-          strokeLinecap={strokeLinecap}
-          strokeDasharray={`${circumference}`}
-        />
-        )
-      }
+      {backgroundColor && backgroundColor !== 'transparent' && backgroundColor.length > 0 && (
+        <path d={`M 50,10 A ${r},${r} 0 1 1 49.99,10`} stroke={`url(#backgroundStroke-${id})`} strokeWidth={strokeWidth} strokeLinecap={strokeLinecap} strokeDasharray={`${circumference}`} />
+      )}
       <path
         d={`M 50,10 A ${r},${r} 0 1 1 49.99,10`}
         stroke={`url(#gradientStroke-${id})`}
         strokeWidth={strokeWidth}
         strokeLinecap={strokeLinecap}
         strokeDasharray={`${circumference} ${circumference}`}
-        strokeDashoffset={`${circumference - percentage / 100 * circumference}`}
+        strokeDashoffset={`${circumference - (percentage / 100) * circumference}`}
       />
     </svg>
-  )
+  );
 };
 
 export const Loader = forwardRef((props?: any, ref?: any) => {
-  const { className='', ...rest } = props;
-  return (
-    <Spinner ref={ref} className={cn("animate-spin", className)} {...rest} />
-  )
+  const { className = '', ...rest } = props;
+  return <Spinner ref={ref} className={cn('animate-spin', className)} {...rest} />;
 });
 
 export const DotDotDot = forwardRef((props: any, ref: any) => {
-  const { className='', vertical=false, bounce=false, ...rest } = props;
+  const { className = '', vertical = false, bounce = false, ...rest } = props;
   return (
-    <div ref={ref} className={cn("flex gap-[0.5px] w-auto h-auto justify-center items-center", vertical ? "flex-col" : "flex-row", className)}>
-      <DotMark width={'1em'} fill={'currentColor'} stroke={'currentColor'} strokeWidth={'1'} viewBox="0 0 32 32" className={cn("currentColor rounded-full flex w-auto h-auto", bounce && "animate-bigger-bounce duration-1000 delay-300")} />
-      <DotMark width={'1em'} fill={'currentColor'} stroke={'currentColor'} strokeWidth={'1'} viewBox="0 0 32 32" className={cn("currentColor rounded-full flex w-auto h-auto", bounce && "animate-bigger-bounce duration-1000 delay-500")} />
-      <DotMark width={'1em'} fill={'currentColor'} stroke={'currentColor'} strokeWidth={'1'} viewBox="0 0 32 32" className={cn("currentColor rounded-full flex w-auto h-auto", bounce && "animate-bigger-bounce duration-1000 delay-700")} />
+    <div ref={ref} className={cn('flex gap-[0.5px] w-auto h-auto justify-center items-center', vertical ? 'flex-col' : 'flex-row', className)}>
+      <DotMark
+        width={'1em'}
+        fill={'currentColor'}
+        stroke={'currentColor'}
+        strokeWidth={'1'}
+        viewBox="0 0 32 32"
+        className={cn('currentColor rounded-full flex w-auto h-auto', bounce && 'animate-bigger-bounce anim-duration-1000 anim-delay-300')}
+      />
+      <DotMark
+        width={'1em'}
+        fill={'currentColor'}
+        stroke={'currentColor'}
+        strokeWidth={'1'}
+        viewBox="0 0 32 32"
+        className={cn('currentColor rounded-full flex w-auto h-auto', bounce && 'animate-bigger-bounce anim-duration-1000 anim-delay-500')}
+      />
+      <DotMark
+        width={'1em'}
+        fill={'currentColor'}
+        stroke={'currentColor'}
+        strokeWidth={'1'}
+        viewBox="0 0 32 32"
+        className={cn('currentColor rounded-full flex w-auto h-auto', bounce && 'animate-bigger-bounce anim-duration-1000 anim-delay-700')}
+      />
     </div>
   );
 });

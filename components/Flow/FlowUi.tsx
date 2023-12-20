@@ -1,33 +1,40 @@
 'use client'
 
-import React, { useCallback, useEffect, useState } from 'react'
-import { Button, TLUiEventHandler, TldrawUiContextProvider, TldrawUiProps, useActions, useBreakpoint, useKeyboardShortcuts, useNativeClipboardEvents, useTranslation } from '@tldraw/tldraw';
-import { TLAnyShapeUtilConstructor, TLShape, setUserPreferences, useEditor, useValue } from '@tldraw/editor'
-import { useEditorEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useEditorEvents';
-import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
-import { NavigationZone } from '@tldraw/tldraw/src/lib/ui/components/NavigationZone/NavigationZone';
-import { Toolbar } from '@tldraw/tldraw/src/lib/ui/components/Toolbar/Toolbar';
-import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu';
-import { Dialogs } from '@tldraw/tldraw/src/lib/ui/components/Dialogs';
-import { Toasts } from '@tldraw/tldraw/src/lib/ui/components/Toasts';
-import { FollowingIndicator } from '@tldraw/tldraw/src/lib/ui/components/FollowingIndicator';
-import { BackToContent } from '@tldraw/tldraw/src/lib/ui/components/BackToContent';
-import { StopFollowing } from '@tldraw/tldraw/src/lib/ui/components/StopFollowing';
-import { StylePanel } from '@tldraw/tldraw/src/lib/ui/components/StylePanel/StylePanel';
-import { DebugPanel } from '@tldraw/tldraw/src/lib/ui/components/DebugPanel';
-import { ExitPenMode } from '@tldraw/tldraw/src/lib/ui/components/PenModeToggle';
-import { ToastProvider, ToastViewport } from '@radix-ui/react-toast'
-import { cn } from '@/utils';
-import { FlowTabs } from '@/components';
-import { useContentRecorder } from '@/hooks';
+import { TldrawUiProps } from '@tldraw/tldraw';
+import { TLAnyShapeUtilConstructor, TLShape, setUserPreferences, useEditor, useValue } from '@tldraw/editor';
+import { TldrawUiContextProvider } from '@tldraw/tldraw/src/lib/ui/TldrawUiContextProvider';
+import { BackToContent } from '@tldraw/tldraw/src/lib/ui/components/BackToContent'
+import { DebugPanel } from '@tldraw/tldraw/src/lib/ui/components/DebugPanel'
+import { Dialogs } from '@tldraw/tldraw/src/lib/ui/components/Dialogs'
+import { FollowingIndicator } from '@tldraw/tldraw/src/lib/ui/components/FollowingIndicator'
+import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu'
+import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone'
+import { NavigationZone } from '@tldraw/tldraw/src/lib/ui/components/NavigationZone/NavigationZone'
+import { ExitPenMode } from '@tldraw/tldraw/src/lib/ui/components/PenModeToggle'
+import { StopFollowing } from '@tldraw/tldraw/src/lib/ui/components/StopFollowing'
+import { StylePanel } from '@tldraw/tldraw/src/lib/ui/components/StylePanel/StylePanel'
+import { Toolbar } from '@tldraw/tldraw/src/lib/ui/components/Toolbar/Toolbar'
+import { Button } from '@tldraw/tldraw/src/lib/ui/components/primitives/Button'
+import { useActions } from '@tldraw/tldraw/src/lib/ui/hooks/useActions'
+import { useBreakpoint } from '@tldraw/tldraw/src/lib/ui/hooks/useBreakpoint'
+import { useNativeClipboardEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useClipboardEvents'
+import { useEditorEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useEditorEvents'
+import { useKeyboardShortcuts } from '@tldraw/tldraw/src/lib/ui/hooks/useKeyboardShortcuts'
+import { useTranslation } from '@tldraw/tldraw/src/lib/ui/hooks/useTranslation/useTranslation'
+import { memo, useCallback, useEffect, useState } from 'react';
+import { FlowTabs } from './FlowTabs';
 import { ScratchPanel } from './FlowExtensions';
+import { cn } from '@/utils';
+import { Toasts, ToastViewport } from '@/components';
+import { ToastProvider } from '@radix-ui/react-toast';
+import { useContentRecorder, ToastsProvider } from '@/hooks';
 
 export type FlowUiProps = TldrawUiProps & {
   initialShapes?: TLShape[];
   scratchNodeUtils?: TLAnyShapeUtilConstructor[];
 };
 
-export const FlowUi = (props: FlowUiProps) => {
+export const FlowUi = memo((props: FlowUiProps) => {
   const {
     children,
     hideUi=false,
@@ -38,13 +45,14 @@ export const FlowUi = (props: FlowUiProps) => {
   } = props;
   const { onUiEvent: recordUiEvent } = useContentRecorder();
 
-  const onUiEvent = useCallback<TLUiEventHandler>((name, data) => {
+  const onUiEvent = useCallback<any>((name: any, data: any) => {
     recordUiEvent?.(name, data);
     onUiEventCallback?.(name, data);
   }, [onUiEventCallback, recordUiEvent]);
 
 	return (
 		<TldrawUiContextProvider onUiEvent={onUiEvent} {...rest}>
+      <ToastsProvider>
       <FlowUiInner
         initialShapes={initialShapes}
         hideUi={hideUi}
@@ -53,11 +61,12 @@ export const FlowUi = (props: FlowUiProps) => {
       >
         {children}
       </FlowUiInner>
+      </ToastsProvider>
 		</TldrawUiContextProvider>
 	)
-};
+});
 
-const FlowUiInner = (props: FlowUiProps) => {
+const FlowUiInner = memo((props: FlowUiProps) => {
   const {
     children,
     hideUi,
@@ -74,9 +83,9 @@ const FlowUiInner = (props: FlowUiProps) => {
 			{hideUi ? null : <FlowUiContent initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils} {...rest} />}
 		</>
 	)
-};
+});
 
-const FlowUiContent = (props: FlowUiProps) => {
+const FlowUiContent = memo((props: FlowUiProps) => {
   const {
     initialShapes,
     scratchNodeUtils,
@@ -172,7 +181,7 @@ const FlowUiContent = (props: FlowUiProps) => {
 				<ToastViewport />
 				<FollowingIndicator />
 			</div>
-		</ToastProvider>
+    </ToastProvider>
 	)
-};
+});
 

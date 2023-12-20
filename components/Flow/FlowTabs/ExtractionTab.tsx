@@ -1,10 +1,11 @@
 'use client';
 
-import { Accordion, BulletedList, FlipCard, FlowTab, Form, ToggleTitle } from '@/components';
-import { useContentExtractor, useContentRecorder } from '@/hooks';
-import { TLShapeId, useEditor } from '@tldraw/tldraw';
-import { cn } from '@/utils';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Accordion, FlipCard, FlowTab, Form, ToggleTitle, Button, Separator, IconSetCache, CopyButton } from '@/components';
+import { useContentExtractor, useContentRecorder } from '@/hooks';
+import { TLShapeId, uniqueId, useEditor } from '@tldraw/tldraw';
+import { useToasts } from '@/hooks';
+import { cn } from '@/utils';
 
 const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
   const imgRef = useRef<HTMLImageElement>(null);
@@ -73,23 +74,22 @@ export const ExtractionTab = () => {
   const {
     imageExtractorConfig, getImageExtractorSchema, getImagePreview,
     jsonExtractorConfig, extractJSON, getJSONExtractorSchema,
-    textExtractorConfig, extractText, getTextExtractorSchema,
     canvasExtractorConfig, extractCanvasState, getCanvasStateExtractorSchema,
     uiExtractorConfig, extractUiState, getUiStateExtractorSchema,
-    getNodesToExcludeSchema, setExtractorConfig
+    getNodesToExcludeSchema, setExtractorConfig, extractAll
   } = useContentExtractor();
   const [imageExtractionTabSide, setImageExtractionTabSide] = useState<'Image Extraction Config' | 'Image Extraction Preview'>('Image Extraction Config');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [jsonExtractionTabSide, setJsonExtractionTabSide] = useState<'JSON Extraction Config' | 'JSON Extraction Preview'>('JSON Extraction Config');
   const [jsonPreview, setJsonPreview] = useState<any | null>(null);
-  const [textExtractionTabSide, setTextExtractionTabSide] = useState<'Text Extraction Config' | 'Text Extraction Preview'>('Text Extraction Config');
-  const [textPreview, setTextPreview] = useState<string[] | null>(null);
   const [canvasExtractionTabSide, setCanvasExtractionTabSide] = useState<'Canvas State Extraction Config' | 'Canvas State Extraction Preview'>('Canvas State Extraction Config');
   const [uiExtractionTabSide, setUiExtractionTabSide] = useState<'UI State Extraction Config' | 'UI State Extraction Preview'>('UI State Extraction Config');
   const { canvasState, uiState, historyRecords } = useContentRecorder();
   const previousLength = useRef(historyRecords.length);
   const [mounted, setMounted] = useState(false);
   const editor = useEditor();
+
+  const toast = useToasts();
 
   const onFlip = useCallback((tabSide: any, setTabSide: any) => {
     if (tabSide.includes('Config')) {
@@ -118,9 +118,6 @@ export const ExtractionTab = () => {
     });
   }, [extractJSON]);
 
-  const fetchText = useCallback(() => {
-    setTextPreview(extractText()); 
-  }, [extractText]);
 
   // refetch image when config changes
   useEffect(() => {
@@ -130,11 +127,6 @@ export const ExtractionTab = () => {
   useEffect(() => {
     fetchJSON();
   }, [fetchJSON, jsonExtractorConfig]);
-
-  // refetch text when config changes
-  useEffect(() => {
-    fetchText();
-  }, [fetchText, textExtractorConfig]);
 
   // refetch image when history changes, indicating shape was updated/added/removed
   useEffect(() => {
@@ -149,10 +141,9 @@ export const ExtractionTab = () => {
     if (!mounted) {
       fetchImage();
       fetchJSON();
-      fetchText();
       setMounted(true);
     }
-  }, [fetchImage, fetchJSON, fetchText, mounted]);
+  }, [fetchImage, fetchJSON, mounted]);
 
   const ImageExtraction = useMemo(() => {
     return (
@@ -198,6 +189,7 @@ export const ExtractionTab = () => {
         className={cn(jsonExtractorConfig.enabled && `border-accent`)}
         title={<ToggleTitle name={jsonExtractionTabSide} pressed={enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('jsonExtractorConfig', { enabled })} />}
         front={{
+          className: 'max-h-[260px]',
           children: (
             <div className={cn(`flex flex-col gap-1 w-full`)}>
               <Form object={nodePropertiesToExtract} schema={getJSONExtractorSchema()} onSubmit={onJSONFormSubmit} />
@@ -205,43 +197,12 @@ export const ExtractionTab = () => {
           )
         }}
         back={{
-          children: jsonPreview ? (<pre className="overflow-auto p-1"> <code>{JSON.stringify(jsonPreview, null, 2)}</code> </pre>) : (<div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No JSON</div>)
+          className: 'max-h-[260px]',
+          children: jsonPreview ? (<pre className="overflow-auto p-1 w-auto flex justify-center items-center"> <code>{JSON.stringify(jsonPreview, null, 2)}</code> </pre>) : (<div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No JSON</div>)
         }}
       />
     );
   }, [getJSONExtractorSchema, jsonExtractionTabSide, jsonExtractorConfig, jsonPreview, onFlip, onJSONFormSubmit, setExtractorConfig]);
-
-  const TextExtraction = useMemo(() => {
-    return (
-      <FlipCard
-        onFlip={() => onFlip(textExtractionTabSide, setTextExtractionTabSide)}
-        className={cn(textExtractorConfig.enabled && `border-accent`)}
-        title={<ToggleTitle name={textExtractionTabSide} pressed={textExtractorConfig.enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('textExtractorConfig', { enabled })} />}
-        front={{
-          children: (
-            <div className={cn(`flex flex-col gap-1 w-full`)}>
-              <Form object={textExtractorConfig} schema={getTextExtractorSchema()} onSubmit={(newTextConfig: any) => setExtractorConfig('textExtractorConfig', newTextConfig)} />
-              <Accordion
-                className='px-2'
-                items={[
-                  {
-                    name: 'Filter Out Nodes',
-                    content: <Form object={Array.from(editor.getCurrentPageShapeIds() || {}).reduce((obj, item) => ({ ...obj, [item]: textExtractorConfig.nodesToExclude?.includes(item) }), {})} schema={getNodesToExcludeSchema()} onSubmit={(newNodesToExclude: any) => {
-                      const nodesToExclude = Object.keys(newNodesToExclude || {}).filter((nodeId: any) => newNodesToExclude[nodeId]) as TLShapeId[];
-                      setExtractorConfig('textExtractorConfig', { ...textExtractorConfig, nodesToExclude });
-                    }} />
-                  }
-                ]}
-              />
-            </div>
-          )
-        }}
-        back={{
-          children: textPreview && textPreview.length > 0 ? <BulletedList items={textPreview} /> : <div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No Text</div>
-        }}
-      />
-    )
-  }, [editor, getNodesToExcludeSchema, getTextExtractorSchema, onFlip, setExtractorConfig, textExtractionTabSide, textExtractorConfig, textPreview]);
 
   const CanvasStateExtraction = useMemo(() => {
     return (
@@ -283,12 +244,104 @@ export const ExtractionTab = () => {
     );
   }, [getUiStateExtractorSchema, onFlip, setExtractorConfig, uiExtractorConfig, uiState, uiExtractionTabSide]);
 
+  const TransformedMessage: React.FC<any> = ({ message }) => {
+
+    const openImageInNewTab = () => {
+      const image = message.image;
+      const newTab: Window | null = window.open();
+      if (newTab === null) {
+        console.error('Unable to open new tab');
+        return;
+      }      
+      const styles = `
+      <style>
+        html, body {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          background-color: #212529;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+      </style>
+    `;
+    newTab.document.head.innerHTML = styles;
+    newTab.document.body.innerHTML = `<iframe src="${image}" frameborder="0" allowfullscreen></iframe>`;
+    }
+
+    return (
+      <div className="relative flex flex-col gap-2 w-full pointer-events-auto overflow-visible">
+        <Separator className="w-full bg-muted" />
+        <div className="text-primary font-bold text-xs">Image:</div>
+        {!message?.image && (<div className="text-primary/80 w-full flex justify-center items-center">No Image</div>)}
+        {message?.image && (
+        <div className="flex flex-row w-auto h-auto justify-around items-center">
+          <a
+            href={message.image}
+            target="_blank"
+            rel="no-referrer"
+            download={`image-preview-${new Date().toISOString().split('T')[0]}.png`}
+            className="text-primary underline flex flex-nowrap h-full w-auto"
+          >
+            <div className="flex flex-row items-center gap-1">
+              <span className="text-primary">Download</span>
+              <IconSetCache.Carbon.Download height="100%" className="flex w-auto h-full text-primary" />
+            </div>
+          </a>
+          <a
+            href={'#'}
+            onClick={openImageInNewTab}
+            className="text-primary underline flex flex-nowrap h-full w-auto visited:[&>svg]:text-[#8E24AA]"
+          >Link <IconSetCache.Custom.ExternalLink height="12" /></a>
+          <CopyButton value={message.image} />
+        </div>)}
+        {message?.image && <img src={message.image} height="100px" width="auto" alt="Image Extracted" className="object-cover w-full h-auto" />}
+        <Separator className="w-full bg-muted" />
+        <div className="text-primary font-bold text-xs">JSON:</div>
+        {!message?.json && (<div className="text-primary/80 w-full flex justify-center items-center">No JSON</div>)}
+        {message?.json && (<pre className="overflow-auto p-1 w-auto flex justify-center items-center"> <code>{JSON.stringify(message.json, null, 2)}</code> </pre>)}
+        <Separator className="w-full bg-muted" />
+        <div className="text-primary font-bold text-xs">Canvas State:</div>
+        {!message?.canvasState && (<div className="text-primary/80 w-full flex justify-center items-center">No Canvas Event</div>)}
+        {message?.canvasState && (<pre className="overflow-auto p-1 w-auto flex justify-center items-center"> <code>{JSON.stringify(message.canvasState, null, 2)}</code> </pre>)}
+        <Separator className="w-full bg-muted" />
+        <div className="text-primary font-bold text-xs">UI State:</div>
+        {!message?.uiState && (<div className="text-primary/80 w-full flex justify-center items-center">No UI State</div>)}
+        {message?.uiState && (<pre className="overflow-auto p-1 w-auto flex justify-center items-center"> <code>{JSON.stringify(message.uiState, null, 2)}</code> </pre>)}
+        <Separator className="w-full bg-muted" />
+      </div>
+    );
+  };
+
+  const onClick = useCallback(() => {
+    extractAll().then((message: any) => {
+      toast?.addToast({
+        id: `extract-all-${uniqueId()}`,
+        title: 'Extract All Results',
+        description: <TransformedMessage message={message} />
+      });
+    });
+  }, [extractAll, toast]);
+
   return (
     <FlowTab title="Extraction">
+      <Button
+        variant="solid"
+        className={cn(`w-full mb-4`)}
+        onClick={onClick}
+      >
+        Extract All
+      </Button>
       <div className="flex flex-col justify-center gap-4 w-full">
         {ImageExtraction}
         {JSONExtraction}
-        {TextExtraction}
         {CanvasStateExtraction}
         {uiStateExtraction}
       </div>

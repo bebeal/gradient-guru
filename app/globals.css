@@ -24,10 +24,6 @@
   a:hover {
     @apply no-underline;
   }
-
-  a:visited svg {
-    @apply text-[#8E24AA];
-  }
 }
 
 /* Reference from tailwind context via `text-primary`, `bg-secondary` */

@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
+import AnimationPlugin from './utils/animate-tailwind';
+
 
 const config: Config = {
   safelist: [
@@ -147,11 +149,11 @@ const config: Config = {
       },
       fontFamily: {
         mono: ['Berkeley Mono', 'monospace'],
-        argon: ['Argon', 'Berkeley Mono', 'monospace'],
-        krypton: ['Krypton', 'Berkeley Mono', 'monospace'],
-        neon: ['Neon', 'Berkeley Mono', 'monospace'],
-        radon: ['Radon', 'Berkeley Mono', 'monospace'],
-        xenon: ['Xenon', 'Berkeley Mono', 'monospace']
+        argon: ['Argon', 'monospace'],
+        krypton: ['Krypton', 'monospace'],
+        neon: ['Neon', 'monospace'],
+        radon: ['Radon', 'monospace'],
+        xenon: ['Xenon', 'monospace']
       },
       boxShadow: {
         'kbd': 'inset 0 0.05em hsla(0,0%,100%,.372),inset 0 0.25em 0.5em rgba(121,121,250,.031),inset 0 0 rgba(0,0,0,.875),inset 0 0 0 0.075em rgba(222,243,255,.334),inset 0 0.08em 0.17em rgba(0,0,0,.875)',
@@ -330,9 +332,9 @@ const config: Config = {
     },
   },
   plugins: [
-    require('tailwindcss-animate'),
+    AnimationPlugin,
     require('@tailwindcss/typography'),
-    require('tailwindcss-radix')
+    require('tailwindcss-radix'),
   ],
 }
 export default config

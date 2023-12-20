@@ -16,3 +16,4 @@ export * from './TextArea';
 export * from './Menubar';
 export * from './Toolbar';
 export * from './FlipCard';
+export * from './Toast';

@@ -10,3 +10,4 @@ export * from './useModel';
 export * from './useFlow';
 export * from './useRippleEffect';
 export * from './usePlotly';
+export * from './useToasts';

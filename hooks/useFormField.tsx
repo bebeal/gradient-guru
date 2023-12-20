@@ -6,23 +6,22 @@ import { ControllerFieldState, ControllerRenderProps, FieldPath, FieldValues, Us
 // ***********************
 //    FormFieldContext
 // ***********************
-export type FormFieldContextValue<
+export type FormFieldState<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = {
   schema?: any,
   field: ControllerRenderProps<TFieldValues, TName>;
-  formState: UseFormStateReturn<TFieldValues>;
+  formState?: UseFormStateReturn<TFieldValues>;
   fieldState: ControllerFieldState;
   label?: React.ReactNode,
   description?: React.ReactNode,
   placeholder?: React.ReactNode,
   readOnly?: boolean,
 };
-export const FormFieldContext = createContext<FormFieldContextValue>({} as FormFieldContextValue);
+export const FormFieldContext = createContext<FormFieldState>({} as FormFieldState);
 
 export const useFormField = () => {
-  // unpack everything
   const context = useContext(FormFieldContext);
   const {
     schema,
