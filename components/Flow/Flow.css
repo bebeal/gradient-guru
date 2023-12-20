@@ -54,6 +54,7 @@
   border-top: solid 1px transparent !important;
 }
 
+/**
 .tl-tabs {
   --space-1: calc(4px * var(--scaling));
   --space-2: calc(8px * var(--scaling));
@@ -65,3 +66,4 @@
   --space-8: calc(48px * var(--scaling));
   --space-9: calc(64px * var(--scaling));
 }
+*/

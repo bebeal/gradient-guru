@@ -4,7 +4,6 @@ import { CopyButton, Form, IconSetCache, Label, Separator, Switch } from '@/comp
 import { useContentExtractor, useToasts } from '@/hooks';
 import { cn, isEmptyObject } from '@/utils';
 
-
 export const TabClasses = `w-full h-full flex flex-col p-2 gap-2`;
 
 export const TabTitle = ({ title, children, className }: { title?: string; children?: any; className?: string }) => {
@@ -73,7 +72,7 @@ export const ToggleTitle = ({ pressed, onPressedChange, name }: any) => {
 export const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
   const imgRef = useRef<HTMLImageElement>(null);
   type Size = { width: number; height: number };
-  const [size, setSize] = useState<{natural: Size, offset: Size}>({ natural: { width: 0, height: 0 }, offset: { width: 0, height: 0 } });
+  const [size, setSize] = useState<{ natural: Size; offset: Size }>({ natural: { width: 0, height: 0 }, offset: { width: 0, height: 0 } });
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const updateSize = useCallback(() => {
@@ -81,16 +80,16 @@ export const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
       setSize({
         natural: {
           width: imgRef.current.naturalWidth,
-          height: imgRef.current.naturalHeight
+          height: imgRef.current.naturalHeight,
         },
         offset: {
           width: imgRef.current.offsetWidth,
-          height: imgRef.current.offsetHeight
-        }
+          height: imgRef.current.offsetHeight,
+        },
       });
       setPosition({
         x: imgRef.current.offsetLeft,
-        y: imgRef.current.offsetTop
+        y: imgRef.current.offsetTop,
       });
     }
   }, []);
@@ -103,29 +102,25 @@ export const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
 
   return (
     <div className="flex items-center justify-center w-full h-full bg-secondary p-2 rounded border border-primary">
-      <div className={cn(`relative flex items-center justify-center w-auto h-auto overflow-hidden`)} style={{padding: `${24}px ${44}px`}}>
+      <div className={cn(`relative flex items-center justify-center w-auto h-auto overflow-hidden`)} style={{ padding: `${24}px ${44}px` }}>
         {/* Horizontal Size Indicator */}
-        <div className={cn("absolute flex flex-col items-center")} style={{width: `${size?.offset?.width}px`, height: `${24}px`, top: 0, left: `${position?.x}px`}}>
-          <span className="text-white text-xs flex justify-center">
-            {size?.natural?.width}px
-          </span>
+        <div className={cn('absolute flex flex-col items-center')} style={{ width: `${size?.offset?.width}px`, height: `${24}px`, top: 0, left: `${position?.x}px` }}>
+          <span className="text-white text-xs flex justify-center">{size?.natural?.width}px</span>
           <div className="flex flex-row w-full items-center mt-px">
             <div className="h-[8px] w-[1px] bg-white" />
-            <div className="h-[1px] bg-white" style={{width: 'calc(100% - 2px)'}} />
+            <div className="h-[1px] bg-white" style={{ width: 'calc(100% - 2px)' }} />
             <div className="h-[8px] w-[1px] bg-white" />
           </div>
         </div>
         <img ref={imgRef} src={src} onLoad={updateSize} className="object-cover object-center w-auto h-auto border border-primary" alt="Preview of Image Extraction" />
         {/* Vertical Size Indicator */}
-        <div className={cn("absolute flex flex-row justify-center items-start")} style={{height: `${size?.offset?.height}px`, width: `${48}px`, top: `${position?.y}px`, left: `${position?.x + size?.offset?.width - 1}px`}}>
+        <div className={cn('absolute flex flex-row justify-center items-start')} style={{ height: `${size?.offset?.height}px`, width: `${48}px`, top: `${position?.y}px`, left: `${position?.x + size?.offset?.width - 1}px` }}>
           <div className="flex flex-col w-auto h-full items-center mr-px">
             <div className="w-[8px] h-[1px] bg-white" />
-            <div className="w-[1px] bg-white" style={{height: 'calc(100% - 2px)'}} />
+            <div className="w-[1px] bg-white" style={{ height: 'calc(100% - 2px)' }} />
             <div className="w-[8px] h-[1px] bg-white" />
           </div>
-          <span className="text-white text-xs h-full flex items-center justify-center">
-            {size?.natural?.height}px
-          </span>
+          <span className="text-white text-xs h-full flex items-center justify-center">{size?.natural?.height}px</span>
         </div>
       </div>
     </div>
@@ -186,13 +181,13 @@ export const ExtractAllToast: React.FC<any> = ({ message }) => {
     );
   };
 
-  const JSONSection = () => {
+  const NodesSection = () => {
     return (
       <>
-        {!message?.json && <div className="text-primary/80 w-full flex justify-center items-center">No JSON</div>}
-        {message?.json && (
+        {!message?.nodes && <div className="text-primary/80 w-full flex justify-center items-center">No Nodes</div>}
+        {message?.nodes && (
           <pre className="p-1 w-auto h-full flex justify-center items-center">
-            <code>{JSON.stringify(message.json, null, 2)}</code>
+            <code>{JSON.stringify(message.nodes, null, 2)}</code>
           </pre>
         )}
       </>
@@ -222,7 +217,7 @@ export const ExtractAllToast: React.FC<any> = ({ message }) => {
           </pre>
         )}
       </>
-    )
+    );
   };
 
   return (
@@ -233,9 +228,9 @@ export const ExtractAllToast: React.FC<any> = ({ message }) => {
         <ImageSection />
       </div>
       <Separator className="w-full bg-muted" />
-      <div className="text-primary font-bold text-xs">JSON:</div>
+      <div className="text-primary font-bold text-xs">Nodes:</div>
       <div className="flex flex-row w-full overflow-y-auto max-h-[100px]">
-        <JSONSection />
+        <NodesSection />
       </div>
       <Separator className="w-full bg-muted" />
       <div className="text-primary font-bold text-xs">Canvas State:</div>
@@ -268,12 +263,8 @@ export const TestExtractionButton = () => {
   }, [extractAll, toast]);
 
   return (
-    <Button
-      type={'normal'}
-      className={cn(`w-auto h-auto`)}
-      onClick={onClick}
-    >
+    <Button type={'normal'} className={cn(`w-auto h-auto`)} onClick={onClick}>
       Test Extraction
     </Button>
-  )
+  );
 };

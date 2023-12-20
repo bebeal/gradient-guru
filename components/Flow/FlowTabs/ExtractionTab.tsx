@@ -1,23 +1,30 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Accordion, FlipCard, FlowTab, Form, ToggleTitle, ImageWithSizeIndicator } from '@/components';
-import { useContentExtractor, useContentRecorder } from '@/hooks';
 import { TLShapeId, useEditor } from '@tldraw/tldraw';
+import { Accordion, FlipCard, FlowTab, Form, ImageWithSizeIndicator, ToggleTitle } from '@/components';
+import { useContentExtractor, useContentRecorder } from '@/hooks';
 import { cn } from '@/utils';
 
 export const ExtractionTab = () => {
   const {
-    imageExtractorConfig, getImageExtractorSchema, getImagePreview,
-    jsonExtractorConfig, extractJSON, getJSONExtractorSchema,
-    canvasExtractorConfig, getCanvasStateExtractorSchema,
-    uiExtractorConfig, getUiStateExtractorSchema,
-    getNodesToExcludeSchema, setExtractorConfig
+    imageExtractorConfig,
+    getImageExtractorSchema,
+    getImagePreview,
+    nodesExtractorConfig,
+    extractNodes,
+    getNodesExtractorSchema,
+    canvasExtractorConfig,
+    getCanvasStateExtractorSchema,
+    uiExtractorConfig,
+    getUiStateExtractorSchema,
+    getNodesToExcludeSchema,
+    setExtractorConfig,
   } = useContentExtractor();
   const [imageExtractionTabSide, setImageExtractionTabSide] = useState<'Image Extraction Config' | 'Image Extraction Preview'>('Image Extraction Config');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [jsonExtractionTabSide, setJsonExtractionTabSide] = useState<'JSON Extraction Config' | 'JSON Extraction Preview'>('JSON Extraction Config');
-  const [jsonPreview, setJsonPreview] = useState<any | null>(null);
+  const [nodesExtractionTabSide, setJsonExtractionTabSide] = useState<'Nodes Extraction Config' | 'Nodes Extraction Preview'>('Nodes Extraction Config');
+  const [nodesPreview, setJsonPreview] = useState<any | null>(null);
   const [canvasExtractionTabSide, setCanvasExtractionTabSide] = useState<'Canvas State Extraction Config' | 'Canvas State Extraction Preview'>('Canvas State Extraction Config');
   const [uiExtractionTabSide, setUiExtractionTabSide] = useState<'UI State Extraction Config' | 'UI State Extraction Preview'>('UI State Extraction Config');
   const { canvasState, uiState, historyRecords } = useContentRecorder();
@@ -46,12 +53,11 @@ export const ExtractionTab = () => {
     });
   }, [getImagePreview]);
 
-  const fetchJSON = useCallback(() => {
-    extractJSON().then((value: any) => {
+  const fetchNodes = useCallback(() => {
+    extractNodes().then((value: any) => {
       setJsonPreview(value);
     });
-  }, [extractJSON]);
-
+  }, [extractNodes]);
 
   // refetch image when config changes
   useEffect(() => {
@@ -59,8 +65,8 @@ export const ExtractionTab = () => {
   }, [fetchImage, imageExtractorConfig]);
 
   useEffect(() => {
-    fetchJSON();
-  }, [fetchJSON, jsonExtractorConfig]);
+    fetchNodes();
+  }, [fetchNodes, nodesExtractorConfig]);
 
   // refetch image when history changes, indicating shape was updated/added/removed
   useEffect(() => {
@@ -74,10 +80,10 @@ export const ExtractionTab = () => {
   useEffect(() => {
     if (!mounted) {
       fetchImage();
-      fetchJSON();
+      fetchNodes();
       setMounted(true);
     }
-  }, [fetchImage, fetchJSON, mounted]);
+  }, [fetchImage, fetchNodes, mounted]);
 
   const ImageExtraction = useMemo(() => {
     return (
@@ -90,53 +96,68 @@ export const ExtractionTab = () => {
             <div className={cn(`flex flex-col gap-1 w-full`)}>
               <Form object={imageExtractorConfig} schema={getImageExtractorSchema()} onSubmit={(newImageConfig: any) => setExtractorConfig('imageExtractorConfig', newImageConfig)} />
               <Accordion
-                className='px-2'
+                className="px-2"
                 items={[
                   {
                     name: 'Filter Out Nodes',
-                    content: <Form object={Array.from(editor.getCurrentPageShapeIds() || {}).reduce((obj, item) => ({ ...obj, [item]: imageExtractorConfig.nodesToExclude?.includes(item) }), {})} schema={getNodesToExcludeSchema()} onSubmit={(newNodesToExclude: any) => {
-                      const nodesToExclude = Object.keys(newNodesToExclude || {}).filter((nodeId: any) => newNodesToExclude[nodeId]) as TLShapeId[];
-                      setExtractorConfig('imageExtractorConfig', { ...imageExtractorConfig, nodesToExclude });
-                    }} />
-                  }
+                    content: (
+                      <Form
+                        object={Array.from(editor.getCurrentPageShapeIds() || {}).reduce((obj, item) => ({ ...obj, [item]: imageExtractorConfig.nodesToExclude?.includes(item) }), {})}
+                        schema={getNodesToExcludeSchema()}
+                        onSubmit={(newNodesToExclude: any) => {
+                          const nodesToExclude = Object.keys(newNodesToExclude || {}).filter((nodeId: any) => newNodesToExclude[nodeId]) as TLShapeId[];
+                          setExtractorConfig('imageExtractorConfig', { ...imageExtractorConfig, nodesToExclude });
+                        }}
+                      />
+                    ),
+                  },
                 ]}
               />
             </div>
-          )
+          ),
         }}
         back={{
-          children: imagePreview ? <ImageWithSizeIndicator src={imagePreview} /> :  <div className="text-primary/80 px-2 py-4 w-full h-full flex justify-center items-center">No Image</div>
+          children: imagePreview ? <ImageWithSizeIndicator src={imagePreview} /> : <div className="text-primary/80 px-2 py-4 w-full h-full flex justify-center items-center">No Image</div>,
         }}
       />
-    )
+    );
   }, [imageExtractorConfig, imageExtractionTabSide, getImageExtractorSchema, editor, getNodesToExcludeSchema, imagePreview, onFlip, setExtractorConfig]);
 
-  const onJSONFormSubmit = useCallback((nodePropertiesToExtract: any) => {
-    setExtractorConfig('jsonExtractorConfig', { nodePropertiesToExtract });
-  }, [setExtractorConfig]);
+  const onNodesFormSubmit = useCallback(
+    (nodePropertiesToExtract: any) => {
+      setExtractorConfig('nodesExtractorConfig', { nodePropertiesToExtract });
+    },
+    [setExtractorConfig]
+  );
 
-  const JSONExtraction = useMemo(() => {
-    const {enabled, nodePropertiesToExtract } = jsonExtractorConfig;
+  const NodesExtraction = useMemo(() => {
+    const { enabled, nodePropertiesToExtract } = nodesExtractorConfig;
     return (
       <FlipCard
-        onFlip={() => onFlip(jsonExtractionTabSide, setJsonExtractionTabSide)}
-        className={cn(jsonExtractorConfig.enabled && `border-accent`)}
-        title={<ToggleTitle name={jsonExtractionTabSide} pressed={enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('jsonExtractorConfig', { enabled })} />}
+        onFlip={() => onFlip(nodesExtractionTabSide, setJsonExtractionTabSide)}
+        className={cn(nodesExtractorConfig.enabled && `border-accent`)}
+        title={<ToggleTitle name={nodesExtractionTabSide} pressed={enabled} onPressedChange={(enabled: boolean) => setExtractorConfig('nodesExtractorConfig', { enabled })} />}
         front={{
           className: 'max-h-[260px]',
           children: (
             <div className={cn(`flex flex-col gap-1 w-full`)}>
-              <Form object={nodePropertiesToExtract} schema={getJSONExtractorSchema()} onSubmit={onJSONFormSubmit} />
+              <Form object={nodePropertiesToExtract} schema={getNodesExtractorSchema()} onSubmit={onNodesFormSubmit} />
             </div>
-          )
+          ),
         }}
         back={{
           className: 'max-h-[260px]',
-          children: jsonPreview ? (<pre className="overflow-auto p-1 w-auto flex justify-center items-center"> <code>{JSON.stringify(jsonPreview, null, 2)}</code> </pre>) : (<div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No JSON</div>)
+          children: nodesPreview ? (
+            <pre className="overflow-auto p-1 w-auto flex justify-center items-center">
+              <code>{JSON.stringify(nodesPreview, null, 2)}</code>
+            </pre>
+          ) : (
+            <div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No Nodes</div>
+          ),
         }}
       />
     );
-  }, [getJSONExtractorSchema, jsonExtractionTabSide, jsonExtractorConfig, jsonPreview, onFlip, onJSONFormSubmit, setExtractorConfig]);
+  }, [getNodesExtractorSchema, nodesExtractionTabSide, nodesExtractorConfig, nodesPreview, onFlip, onNodesFormSubmit, setExtractorConfig]);
 
   const CanvasStateExtraction = useMemo(() => {
     return (
@@ -149,10 +170,10 @@ export const ExtractionTab = () => {
             <div className={cn(`flex flex-col gap-1 w-full`)}>
               <Form object={canvasExtractorConfig} schema={getCanvasStateExtractorSchema()} onSubmit={(newCanvasConfig: any) => setExtractorConfig('canvasExtractorConfig', newCanvasConfig)} />
             </div>
-          )
+          ),
         }}
         back={{
-          children: Object.keys(canvasState).length > 0 ? <Form object={canvasState} readOnly={true} /> : <div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No Canvas Event</div>
+          children: Object.keys(canvasState).length > 0 ? <Form object={canvasState} readOnly={true} /> : <div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No Canvas Event</div>,
         }}
       />
     );
@@ -169,20 +190,20 @@ export const ExtractionTab = () => {
             <div className={cn(`flex flex-col gap-1 w-full`)}>
               <Form object={uiExtractorConfig} schema={getUiStateExtractorSchema()} onSubmit={(newUiConfig: any) => setExtractorConfig('uiExtractorConfig', newUiConfig)} />
             </div>
-          )
+          ),
         }}
         back={{
-          children: Object.keys(uiState).length > 0 ? <Form object={uiState} readOnly={true} /> : <div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No UI State</div>
+          children: Object.keys(uiState).length > 0 ? <Form object={uiState} readOnly={true} /> : <div className="text-primary/80 px-2 py-4 w-full flex justify-center items-center">No UI State</div>,
         }}
       />
     );
   }, [getUiStateExtractorSchema, onFlip, setExtractorConfig, uiExtractorConfig, uiState, uiExtractionTabSide]);
 
   return (
-    <FlowTab title="Extraction" className='gap-2'>
+    <FlowTab title="Extraction" className="gap-2">
       <div className="flex flex-col justify-center gap-4 w-full">
         {ImageExtraction}
-        {JSONExtraction}
+        {NodesExtraction}
         {CanvasStateExtraction}
         {uiStateExtraction}
       </div>

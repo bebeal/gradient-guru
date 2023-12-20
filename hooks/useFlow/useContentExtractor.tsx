@@ -1,13 +1,13 @@
 'use client';
 
-import * as yup from 'yup';
-import { useCallback, useEffect, useState } from 'react';
-import { create } from 'zustand'
-import { useShallow } from 'zustand/react/shallow';
-import { Box2d, SVG_PADDING, TLEventInfo, TLShape, TLShapeId, useEditor } from '@tldraw/tldraw';
-import { encodeBlobAsBase64, getExportedImageBlob, getSVGAsBlob, getSvgPreview } from '@/utils';
-import { UiState, useContentRecorder } from './useContentRecorder';
 import { getNodeName } from '@/components';
+import { encodeBlobAsBase64, getExportedImageBlob, getSVGAsBlob, getSvgPreview } from '@/utils';
+import { Box2d, SVG_PADDING, TLEventInfo, TLShape, TLShapeId, useEditor } from '@tldraw/tldraw';
+import { useCallback, useEffect, useState } from 'react';
+import * as yup from 'yup';
+import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
+import { UiState, useContentRecorder } from './useContentRecorder';
 
 export type BaseExtractorConfig = {
   enabled: boolean;
@@ -26,8 +26,8 @@ export type ImageExtractorConfig = BaseExtractorConfig & {
   nodesToExclude: TLShapeId[];
 };
 
-type NodeProperties = { enabled: boolean, properties: Record<keyof TLShape, boolean> };
-export type JSONExtractorConfig = BaseExtractorConfig & {
+type NodeProperties = { enabled: boolean; properties: Record<keyof TLShape, boolean> };
+export type NodesExtractorConfig = BaseExtractorConfig & {
   nodePropertiesToExtract: Record<TLShapeId, NodeProperties>;
 };
 
@@ -42,7 +42,6 @@ export type CanvasStateExtractorConfig = BaseExtractorConfig & {
 export type UiStateExtractorConfig = BaseExtractorConfig & {
   uiPropertiesToExtract?: Record<string, boolean>;
 };
-
 
 export const ImageSchemaFields = {
   enabled: yup.boolean().meta({ item: 'switch' }),
@@ -70,7 +69,7 @@ export const defaultImageExtractorConfig: ImageExtractorConfig = {
 };
 
 export const defaultNodePropertiesToIgnore: (keyof TLShape)[] = ['typeName', 'index', 'meta', 'isLocked'];
-export const defaultJSONExtractorConfig: JSONExtractorConfig = {
+export const defaultNodesExtractorConfig: NodesExtractorConfig = {
   enabled: false,
   nodePropertiesToExtract: {},
 };
@@ -92,7 +91,7 @@ export const defaultUiExtractorConfig: UiStateExtractorConfig = {
 
 export type ExtractorConfigs = {
   imageExtractorConfig: ImageExtractorConfig;
-  jsonExtractorConfig: JSONExtractorConfig;
+  nodesExtractorConfig: NodesExtractorConfig;
   textExtractorConfig: TextExtractorConfig;
   canvasExtractorConfig: CanvasStateExtractorConfig;
   uiExtractorConfig: UiStateExtractorConfig;
@@ -104,7 +103,7 @@ export type ContentExtractorConfig = ExtractorConfigs & {
 
 export const useContentExtractorStore = create<ContentExtractorConfig>((set) => ({
   imageExtractorConfig: defaultImageExtractorConfig,
-  jsonExtractorConfig: defaultJSONExtractorConfig,
+  nodesExtractorConfig: defaultNodesExtractorConfig,
   textExtractorConfig: defaultTextExtractorConfig,
   canvasExtractorConfig: defaultCanvasExtractorConfig,
   uiExtractorConfig: defaultUiExtractorConfig,
@@ -116,36 +115,36 @@ export const useContentExtractor = () => {
   const editor = useEditor();
   const { canvasState, uiState, onUiEvent } = useContentRecorder();
   const imageExtractorConfig = useContentExtractorStore(useShallow((state) => state.imageExtractorConfig));
-  const jsonExtractorConfig = useContentExtractorStore(useShallow((state) => state.jsonExtractorConfig));
+  const nodesExtractorConfig = useContentExtractorStore(useShallow((state) => state.nodesExtractorConfig));
   const textExtractorConfig = useContentExtractorStore(useShallow((state) => state.textExtractorConfig));
   const canvasExtractorConfig = useContentExtractorStore(useShallow((state) => state.canvasExtractorConfig));
   const uiExtractorConfig = useContentExtractorStore(useShallow((state) => state.uiExtractorConfig));
   const setExtractorConfig = useContentExtractorStore(useShallow((state) => state.setExtractorConfig));
 
-  const updateJSONExtractorConfig = useCallback(() => {
+  const updateNodesExtractorConfig = useCallback(() => {
     useContentExtractorStore.setState((prevState) => {
       const nodes = editor.getCurrentPageShapesSorted();
       const nodePropertiesToExtract = nodes.reduce((propertiesToExtract: any, node: any) => {
         const nodeKey = node.id.replace('shape:', '');
         const keys = Object.keys(node).filter((key) => !defaultNodePropertiesToIgnore.includes(key as keyof TLShape)) as (keyof TLShape)[];
-        const properties = prevState.jsonExtractorConfig.nodePropertiesToExtract[nodeKey]?.properties || (
+        const properties =
+          prevState.nodesExtractorConfig.nodePropertiesToExtract[nodeKey]?.properties ||
           keys?.reduce((nodeProperties: any, key) => {
             nodeProperties[key] = true;
             return nodeProperties;
-          }, {})
-        );
-        const enabled = prevState.jsonExtractorConfig.nodePropertiesToExtract[nodeKey]?.enabled || false;
+          }, {});
+        const enabled = prevState.nodesExtractorConfig.nodePropertiesToExtract[nodeKey]?.enabled || false;
         propertiesToExtract[nodeKey] = { enabled, properties };
         return propertiesToExtract;
       }, {});
 
       return {
         ...prevState,
-        jsonExtractorConfig: {
-          ...prevState.jsonExtractorConfig,
+        nodesExtractorConfig: {
+          ...prevState.nodesExtractorConfig,
           nodePropertiesToExtract,
         },
-      }
+      };
     });
   }, [editor]);
 
@@ -162,7 +161,7 @@ export const useContentExtractor = () => {
           ...prevState.canvasExtractorConfig,
           canvasPropertiesToExtract,
         },
-      }
+      };
     });
   }, [canvasState]);
 
@@ -179,28 +178,34 @@ export const useContentExtractor = () => {
           ...prevState.uiExtractorConfig,
           uiPropertiesToExtract,
         },
-      }
+      };
     });
   }, [uiState]);
 
   useEffect(() => {
     if (!mounted) {
-      updateJSONExtractorConfig();
+      updateNodesExtractorConfig();
       updateCanvasExtractorConfig();
       updateUiExtractorConfig();
       setMounted(true);
     }
-  }, [mounted, updateCanvasExtractorConfig, updateJSONExtractorConfig, updateUiExtractorConfig]);
+  }, [mounted, updateCanvasExtractorConfig, updateNodesExtractorConfig, updateUiExtractorConfig]);
 
-  const getNodeIds = useCallback((nodesToExclude: TLShapeId[] = []): TLShapeId[] => {
+  const getNodeIds = useCallback(
+    (nodesToExclude: TLShapeId[] = []): TLShapeId[] => {
       const nodeIds = Array.from(editor.getCurrentPageShapeIds());
-      return nodeIds.filter((id) => !nodesToExclude.includes((id).replace('shape:', '') as TLShapeId));
-  }, [editor]);
+      return nodeIds.filter((id) => !nodesToExclude.includes(id.replace('shape:', '') as TLShapeId));
+    },
+    [editor]
+  );
 
-  const getNodes = useCallback((nodesToExclude: TLShapeId[] = []): TLShape[] => {
+  const getNodes = useCallback(
+    (nodesToExclude: TLShapeId[] = []): TLShape[] => {
       const nodes = editor.getCurrentPageShapesSorted();
-      return nodes.filter((node) => !nodesToExclude.includes((node.id).replace('shape:', '') as TLShapeId));
-  }, [editor]);
+      return nodes.filter((node) => !nodesToExclude.includes(node.id.replace('shape:', '') as TLShapeId));
+    },
+    [editor]
+  );
 
   const extractImage = useCallback(async (): Promise<string | null> => {
     const nodesInImage: TLShapeId[] = getNodeIds(imageExtractorConfig.nodesToExclude);
@@ -227,12 +232,12 @@ export const useContentExtractor = () => {
     });
   }, []);
 
-  const extractJSON = useCallback(async (): Promise<TLShape[] | null> => {
-    const nodesToExclude = (Object.keys(jsonExtractorConfig.nodePropertiesToExtract).filter((nodeId) => !jsonExtractorConfig.nodePropertiesToExtract[nodeId as TLShapeId].enabled) || []) as TLShapeId[];
+  const extractNodes = useCallback(async (): Promise<TLShape[] | null> => {
+    const nodesToExclude = (Object.keys(nodesExtractorConfig.nodePropertiesToExtract).filter((nodeId) => !nodesExtractorConfig.nodePropertiesToExtract[nodeId as TLShapeId].enabled) || []) as TLShapeId[];
     const nodes = getNodes(nodesToExclude);
-    const json = nodes.map((node) => {
+    const nodeExtraction = nodes.map((node) => {
       const nodeKey = node.id.replace('shape:', '') as TLShapeId;
-      const properties = jsonExtractorConfig.nodePropertiesToExtract[nodeKey]?.properties || {};
+      const properties = nodesExtractorConfig.nodePropertiesToExtract[nodeKey]?.properties || {};
       const nodeProperties = Object.entries(node).reduce((acc: any, [key, value]) => {
         if (properties?.[key as keyof TLShape]) {
           if (key === 'id') {
@@ -243,39 +248,51 @@ export const useContentExtractor = () => {
         }
         return acc;
       }, {});
-  
+
       return nodeProperties;
     });
 
-    return json;
-  }, [getNodes, jsonExtractorConfig.nodePropertiesToExtract]);
+    return nodeExtraction;
+  }, [getNodes, nodesExtractorConfig.nodePropertiesToExtract]);
 
-  const getJSONExtractorSchema = useCallback(() => {
+  const getNodesExtractorSchema = useCallback(() => {
     const nodes = editor.getCurrentPageShapesSorted();
     const nodeSchema = nodes.reduce((acc: any, node: any) => {
       const nodeKey = node.id.replace('shape:', '');
-      const keys = Object.keys(node).filter((key) => !defaultNodePropertiesToIgnore.includes(key as keyof TLShape)) as (keyof TLShape)[] || [];
-      
+      const keys = (Object.keys(node).filter((key) => !defaultNodePropertiesToIgnore.includes(key as keyof TLShape)) as (keyof TLShape)[]) || [];
+
       // key -> yup boolean schema
       const properties = keys?.reduce((acc: any, key) => {
         acc[key] = yup.boolean().default(true).meta({ item: 'checkbox', label: key });
         return acc;
       }, {});
-    
+
       // nodeKey -> yup object schema
       //    enabled: yup boolean schema
       //    properties: yup boolean schema for each key
-      acc[nodeKey] = yup.object().shape({
-        enabled: yup.boolean().default(false).meta({ item: 'checkbox', label: getNodeName(node) }),
-        properties: yup.object().shape(properties).meta({ item: 'object', label: `${nodeKey} Properties` }),
-      }).meta({ item: 'node-schema' });
-    
+      acc[nodeKey] = yup
+        .object()
+        .shape({
+          enabled: yup
+            .boolean()
+            .default(false)
+            .meta({ item: 'checkbox', label: getNodeName(node) }),
+          properties: yup
+            .object()
+            .shape(properties)
+            .meta({ item: 'object', label: `${nodeKey} Properties` }),
+        })
+        .meta({ item: 'node-schema' });
+
       return acc;
     }, {});
-  
-    return yup.object().shape({
-      ...nodeSchema,
-    }).meta({ item: 'object' });
+
+    return yup
+      .object()
+      .shape({
+        ...nodeSchema,
+      })
+      .meta({ item: 'object' });
   }, [editor]);
 
   const extractText = useCallback((): string[] => {
@@ -296,8 +313,7 @@ export const useContentExtractor = () => {
   }, [editor, getNodeIds, textExtractorConfig.nodesToExclude]);
 
   const getTextExtractorSchema = useCallback(() => {
-    return yup.object().shape({
-    });
+    return yup.object().shape({});
   }, []);
 
   const extractCanvasState = useCallback((): Partial<TLEventInfo> => {
@@ -344,14 +360,14 @@ export const useContentExtractor = () => {
     return yup.object().shape(nodeSchema).meta({ item: 'from-array' });
   }, [editor]);
 
-  const extractAll = useCallback(async (): Promise<{ json: TLShape[] | null, image: string | null, text: string[] | null, canvasState: Partial<TLEventInfo> | null, uiState: Partial<UiState> | null }> => {
-    const json = jsonExtractorConfig.enabled ? await extractJSON() : null;
+  const extractAll = useCallback(async (): Promise<{ nodes: TLShape[] | null; image: string | null; text: string[] | null; canvasState: Partial<TLEventInfo> | null; uiState: Partial<UiState> | null }> => {
+    const nodes = nodesExtractorConfig.enabled ? await extractNodes() : null;
     const image = imageExtractorConfig.enabled ? await extractImage() : null;
     const text = textExtractorConfig.enabled ? extractText() : null;
     const canvasState = canvasExtractorConfig.enabled ? extractCanvasState() : null;
     const uiState = uiExtractorConfig.enabled ? extractUiState() : null;
-    return { json, text, image, canvasState, uiState };
-  }, [jsonExtractorConfig.enabled, extractJSON, imageExtractorConfig.enabled, extractImage, textExtractorConfig.enabled, extractText, canvasExtractorConfig.enabled, extractCanvasState, uiExtractorConfig.enabled, extractUiState]);
+    return { nodes, text, image, canvasState, uiState };
+  }, [nodesExtractorConfig.enabled, extractNodes, imageExtractorConfig.enabled, extractImage, textExtractorConfig.enabled, extractText, canvasExtractorConfig.enabled, extractCanvasState, uiExtractorConfig.enabled, extractUiState]);
 
   return {
     imageExtractorConfig,
@@ -359,9 +375,9 @@ export const useContentExtractor = () => {
     getImagePreview,
     getImageExtractorSchema,
 
-    jsonExtractorConfig,
-    extractJSON,
-    getJSONExtractorSchema,
+    nodesExtractorConfig,
+    extractNodes,
+    getNodesExtractorSchema,
 
     textExtractorConfig,
     extractText,
@@ -378,7 +394,5 @@ export const useContentExtractor = () => {
     getNodesToExcludeSchema,
     setExtractorConfig,
     extractAll,
-  }
+  };
 };
-
-
