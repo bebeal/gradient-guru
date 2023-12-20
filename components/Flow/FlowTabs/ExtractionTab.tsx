@@ -244,7 +244,7 @@ export const ExtractionTab = () => {
     );
   }, [getUiStateExtractorSchema, onFlip, setExtractorConfig, uiExtractorConfig, uiState, uiExtractionTabSide]);
 
-  const TransformedMessage: React.FC<any> = ({ message }) => {
+  const ExtractAllToast: React.FC<any> = ({ message }) => {
 
     const openImageInNewTab = () => {
       const image = message.image;
@@ -325,7 +325,7 @@ export const ExtractionTab = () => {
       toast?.addToast({
         id: `extract-all-${uniqueId()}`,
         title: 'Extract All Results',
-        description: <TransformedMessage message={message} />
+        description: <ExtractAllToast message={message} />
       });
     });
   }, [extractAll, toast]);

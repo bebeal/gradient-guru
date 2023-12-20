@@ -18,7 +18,7 @@ export const FlowTab = memo(({ title, children, className }: { title?: string; c
   return (
     <div className={cn(TabClasses)}>
       <TabTitle title={title} />
-      <div className={cn('p-2 flex flex-col w-full h-auto items-center gap-1', className)}>{children}</div>
+      <div className={cn('p-2 pt-0 flex flex-col w-full h-auto items-center gap-1', className)}>{children}</div>
     </div>
   );
 });
