@@ -22,7 +22,7 @@ import { useEditorEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useEditorEvents
 import { useKeyboardShortcuts } from '@tldraw/tldraw/src/lib/ui/hooks/useKeyboardShortcuts'
 import { useTranslation } from '@tldraw/tldraw/src/lib/ui/hooks/useTranslation/useTranslation'
 import { memo, useCallback, useEffect, useState } from 'react';
-import { FlowTabs } from './FlowTabs';
+import { FlowTabs, TestExtractionButton } from './FlowTabs';
 import { ScratchPanel } from './FlowExtensions';
 import { cn } from '@/utils';
 import { Toasts, ToastViewport } from '@/components';
@@ -172,7 +172,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
 								<Toolbar />
 								{breakpoint >= 4 && <HelpMenu />}
 							</div>
-							{isDebugMode && <DebugPanel renderDebugMenuItems={null} />}
+							{isDebugMode && <DebugPanel renderDebugMenuItems={() => <TestExtractionButton />} />}
 						</div>
 					</>
 				)}

@@ -36,17 +36,13 @@ export type TextExtractorConfig = BaseExtractorConfig & {
 };
 
 export type CanvasStateExtractorConfig = BaseExtractorConfig & {
-  canvasPropertiesToExtract?: (keyof TLEventInfo)[];
+  canvasPropertiesToExtract?: Record<string, boolean>;
 };
 
 export type UiStateExtractorConfig = BaseExtractorConfig & {
-  uiPropertiesToExtract?: (keyof UiState)[];
+  uiPropertiesToExtract?: Record<string, boolean>;
 };
 
-// Initialize default configs for each extractor
-export const defaultBaseConfig: BaseExtractorConfig = {
-  enabled: false,
-};
 
 export const ImageSchemaFields = {
   enabled: yup.boolean().meta({ item: 'switch' }),
@@ -60,7 +56,7 @@ export const ImageSchemaFields = {
 };
 
 export const defaultImageExtractorConfig: ImageExtractorConfig = {
-  ...defaultBaseConfig,
+  enabled: true,
   nodesToExclude: [],
   type: 'png',
   quality: 1,
@@ -75,23 +71,23 @@ export const defaultImageExtractorConfig: ImageExtractorConfig = {
 
 export const defaultNodePropertiesToIgnore: (keyof TLShape)[] = ['typeName', 'index', 'meta', 'isLocked'];
 export const defaultJSONExtractorConfig: JSONExtractorConfig = {
-  ...defaultBaseConfig,
+  enabled: false,
   nodePropertiesToExtract: {},
 };
 
 export const defaultTextExtractorConfig: TextExtractorConfig = {
-  ...defaultBaseConfig,
+  enabled: true,
   nodesToExclude: [],
 };
 
 export const defaultCanvasExtractorConfig: CanvasStateExtractorConfig = {
-  ...defaultBaseConfig,
-  canvasPropertiesToExtract: [],
+  enabled: false,
+  canvasPropertiesToExtract: {} as Record<keyof TLEventInfo, boolean>,
 };
 
 export const defaultUiExtractorConfig: UiStateExtractorConfig = {
-  ...defaultBaseConfig,
-  uiPropertiesToExtract: [],
+  enabled: false,
+  uiPropertiesToExtract: {} as Record<keyof UiState, boolean>,
 };
 
 export type ExtractorConfigs = {
@@ -153,12 +149,48 @@ export const useContentExtractor = () => {
     });
   }, [editor]);
 
+  const updateCanvasExtractorConfig = useCallback(() => {
+    useContentExtractorStore.setState((prevState) => {
+      const canvasPropertiesToExtract = Object.keys(canvasState).reduce((propertiesToExtract: any, key) => {
+        propertiesToExtract[key] = true;
+        return propertiesToExtract;
+      }, {});
+
+      return {
+        ...prevState,
+        canvasExtractorConfig: {
+          ...prevState.canvasExtractorConfig,
+          canvasPropertiesToExtract,
+        },
+      }
+    });
+  }, [canvasState]);
+
+  const updateUiExtractorConfig = useCallback(() => {
+    useContentExtractorStore.setState((prevState) => {
+      const uiPropertiesToExtract = Object.keys(uiState).reduce((propertiesToExtract: any, key) => {
+        propertiesToExtract[key] = true;
+        return propertiesToExtract;
+      }, {});
+
+      return {
+        ...prevState,
+        uiExtractorConfig: {
+          ...prevState.uiExtractorConfig,
+          uiPropertiesToExtract,
+        },
+      }
+    });
+  }, [uiState]);
+
   useEffect(() => {
     if (!mounted) {
       updateJSONExtractorConfig();
+      updateCanvasExtractorConfig();
+      updateUiExtractorConfig();
       setMounted(true);
     }
-  }, [mounted, updateJSONExtractorConfig]);
+  }, [mounted, updateCanvasExtractorConfig, updateJSONExtractorConfig, updateUiExtractorConfig]);
 
   const getNodeIds = useCallback((nodesToExclude: TLShapeId[] = []): TLShapeId[] => {
       const nodeIds = Array.from(editor.getCurrentPageShapeIds());
@@ -268,13 +300,15 @@ export const useContentExtractor = () => {
     });
   }, []);
 
-  const extractCanvasState = useCallback((): TLEventInfo => {
-    return canvasExtractorConfig.canvasPropertiesToExtract?.reduce((acc, key) => {
-      acc[key] = canvasState[key];
+  const extractCanvasState = useCallback((): Partial<TLEventInfo> => {
+    if (!canvasExtractorConfig.canvasPropertiesToExtract) return {};
+    const propertiesToExtract = Object.keys(canvasExtractorConfig.canvasPropertiesToExtract).filter((key: any) => canvasExtractorConfig.canvasPropertiesToExtract?.[key] === true);
+    return propertiesToExtract.reduce((acc: any, key) => {
+      acc[key] = canvasState?.[key as keyof TLEventInfo];
       return acc;
-    }, {} as any);
+    }, {});
   }, [canvasExtractorConfig.canvasPropertiesToExtract, canvasState]);
-  
+
   const getCanvasStateExtractorSchema = useCallback(() => {
     // for each canvas key add a boolean schema
     const canvasPrperties = Object.keys(canvasState).reduce((acc: any, key) => {
@@ -284,11 +318,13 @@ export const useContentExtractor = () => {
     return yup.object().shape(canvasPrperties).meta({ item: 'object' });
   }, [canvasState]);
 
-  const extractUiState = useCallback((): UiState => {
-    return uiExtractorConfig.uiPropertiesToExtract?.reduce((acc, key) => {
-      acc[key] = uiState[key];
+  const extractUiState = useCallback((): Partial<UiState> => {
+    if (!uiExtractorConfig.uiPropertiesToExtract) return {};
+    const propertiesToExtract = Object.keys(uiExtractorConfig.uiPropertiesToExtract).filter((key: any) => uiExtractorConfig.uiPropertiesToExtract?.[key] === true);
+    return propertiesToExtract.reduce((acc: any, key) => {
+      acc[key] = uiState?.[key as keyof UiState];
       return acc;
-    }, {} as any);
+    }, {});
   }, [uiExtractorConfig.uiPropertiesToExtract, uiState]);
 
   const getUiStateExtractorSchema = useCallback(() => {
@@ -308,14 +344,13 @@ export const useContentExtractor = () => {
     return yup.object().shape(nodeSchema).meta({ item: 'from-array' });
   }, [editor]);
 
-  const extractAll = useCallback(async (): Promise<{ json: TLShape[] | null, image: string | null, text: string[] | null, canvasState: TLEventInfo | null, uiState: UiState | null }> => {
+  const extractAll = useCallback(async (): Promise<{ json: TLShape[] | null, image: string | null, text: string[] | null, canvasState: Partial<TLEventInfo> | null, uiState: Partial<UiState> | null }> => {
     const json = jsonExtractorConfig.enabled ? await extractJSON() : null;
     const image = imageExtractorConfig.enabled ? await extractImage() : null;
     const text = textExtractorConfig.enabled ? extractText() : null;
     const canvasState = canvasExtractorConfig.enabled ? extractCanvasState() : null;
     const uiState = uiExtractorConfig.enabled ? extractUiState() : null;
-    // console.log('json', json, 'image', image, 'text', text, 'canvasState', canvasState, 'uiState', uiState);
-    return { json, image, text, canvasState, uiState };
+    return { json, text, image, canvasState, uiState };
   }, [jsonExtractorConfig.enabled, extractJSON, imageExtractorConfig.enabled, extractImage, textExtractorConfig.enabled, extractText, canvasExtractorConfig.enabled, extractCanvasState, uiExtractorConfig.enabled, extractUiState]);
 
   return {

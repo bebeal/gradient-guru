@@ -19,7 +19,7 @@ export interface FlipCardProps {
 export const Side = (props: CardSideProps) => {
   const { className = '', children } = props;
 
-  return <div className={cn(`flex flex-col gap-2 w-full h-full overflow-auto`, className)}>{children}</div>;
+  return <div className={cn(`flex flex-col gap-2 w-full h-full overflow-hidden`, className)}>{children}</div>;
 };
 
 export const FlipCard = (props: FlipCardProps) => {

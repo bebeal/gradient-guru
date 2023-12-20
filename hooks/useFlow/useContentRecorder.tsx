@@ -115,11 +115,19 @@ export const useContentRecorder = () => {
     editor.on('change', onStoreEvent);
     editor.on('event', onCanvasEvent);
 
+    // TODO: fix later. idk why initial UI event isn't getting picked up, just ignoring it for now
+    const fakeUiState = {
+      id: 'select',
+      name: 'select-tool',
+      source: 'toolbar'
+    };
+    setUiState(fakeUiState as any);
+
     return () => {
       editor.off('change');
       editor.off('event');
     };
-  }, [editor, onCanvasEvent, onStoreEvent]);
+  }, [editor, onCanvasEvent, onStoreEvent, setUiState]);
 
   return {
     canvasState,

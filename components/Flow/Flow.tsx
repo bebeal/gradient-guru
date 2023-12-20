@@ -32,7 +32,7 @@ import { usePreloadAssets } from '@tldraw/tldraw/src/lib/ui/hooks/usePreloadAsse
 import { TLExternalContentProps, registerDefaultExternalContentHandlers } from '@tldraw/tldraw/src/lib/defaultExternalContentHandlers';
 import { TLEditorAssetUrls, useDefaultEditorAssetsWithOverrides } from '@tldraw/tldraw/src/lib/utils/static-assets/assetUrls';
 import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 'react'
-import { BuyMeComputeButton, DropWrapper, FlowUi, FlowUiProps } from '@/components';
+import { DropWrapper, FlowUi, FlowUiProps } from '@/components';
 import { Erroring, Loading, cn } from '@/utils';
 
 import { IconNodeUtil, PreviewNodeUtil } from './FlowNodes';
@@ -131,9 +131,6 @@ export const Flow = (props: FlowProps) => {
         />
         {children}
       </FlowUi>
-      <div className="absolute top-5 right-[185px] w-auto h-auto z-[501]">
-        <BuyMeComputeButton />
-      </div>
 		</TldrawEditor>
 	)
 }

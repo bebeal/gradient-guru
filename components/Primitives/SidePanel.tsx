@@ -139,15 +139,10 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
           {tabs.map((tab, index) => {
             const tabValue = `${tab?.name}`;
             const tabIsActive = activeTabIndex === index;
-            // type of forceMount is true not boolean so doing this hack
-            const extraProps: any = {};
-            if (activeTabIndex !== undefined && animate) {
-              extraProps['forceMount'] = true;
-            }
             return (
               <Tabs.Content
                 key={tabValue}
-                {...extraProps}
+                forceMount
                 value={tabValue}
                 data-state={'active'}
                 data-orientation={'horizontal'}
