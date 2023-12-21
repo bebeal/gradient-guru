@@ -69,7 +69,7 @@ export const FlowFormItem = forwardRef<any, any>((props, ref) => {
         return { 
           value: model,
           children: (
-            <div className="flex flex-row justify-start items-center text-center text-primary gap-2 w-auto h-full p-2"><IconSetCache.Logos.OpenAI height={"auto"} width={"100%"} className={cn("flex p-[3px] rounded w-[24px] h-[24px]", model.includes('gpt-3') && 'bg-[#19c37d]', model.includes('gpt-4') && 'bg-[#ab68ff]' )}/> <div className={cn(`flex h-full w-auto leading-none items-center`)}>{model}{DataModalitiesBadges}</div></div>
+            <div className="flex flex-row justify-start items-center text-xs text-center text-primary gap-2 w-auto h-full p-2"><IconSetCache.Logos.OpenAI height={"auto"} width={"100%"} className={cn("flex p-[3px] rounded w-[24px] h-[24px]", model.includes('gpt-3') && 'bg-[#19c37d]', model.includes('gpt-4') && 'bg-[#ab68ff]' )}/> <div className={cn(`flex h-full w-auto leading-none items-center`)}>{model}{DataModalitiesBadges}</div></div>
           ),
           className: 'justify-start'
         }

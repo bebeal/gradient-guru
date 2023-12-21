@@ -130,7 +130,7 @@ export const createPresenceStateDerivation: ($user: Signal<{
 }>, instanceId?: TLInstancePresence['id']) => (store: TLStore) => Signal<null | TLInstancePresence>;
 
 // @public (undocumented)
-export function createShapeId(id?: string, size?: number): TLShapeId;
+export function createShapeId(id?: string): TLShapeId;
 
 // @public (undocumented)
 export function createShapeValidator<Type extends string, Props extends JsonObject, Meta extends JsonObject>(type: Type, props?: {

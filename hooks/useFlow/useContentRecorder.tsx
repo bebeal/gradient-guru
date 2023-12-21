@@ -8,6 +8,35 @@ import { RecordsDiff } from '@tldraw/store';
 import { TLEventInfo, TLStoreEventInfo, UiEvent, useEditor } from "@tldraw/editor";
 import { useCallback, useEffect } from "react";
 
+// lower fidelity but more interprettable version of historyRecords
+const convertToReadableRecords = (historyRecords: RecordsDiff<TLRecord>[]) => {
+  console.log(historyRecords);
+  const events: string[] = [];
+  historyRecords.forEach((diff: any) => {
+    const { added, updated, removed } = diff;
+    for (const record of Object.values(added) as any) {
+      if (record.typeName === 'shape') {
+        events.push(`user created shape [${record.type}] - ${(record.id).replace('shape:', '')}`)
+      }
+    }
+    for (const [from, to] of Object.values(updated) as any) {
+      if ( from.typeName === 'shape' || to.typeName === 'shape') {
+        // collpase when pushing this event only if its different from last event in arary
+        if (events.length > 0 && !events[events.length - 1].includes(`user updated shape [${to.type}] - ${(to.id).replace('shape:', '')}`)) {
+          events.push(`user updated shape [${to.type}] - ${(to.id).replace('shape:', '')}`);
+        }
+      }
+    }
+    for (const record of Object.values(removed) as any) {
+      if (record.typeName === 'shape') {
+        events.push(`user deleted shape [${record.type}] - ${(record.id).replace('shape:', '')}`)
+      }
+    }
+  });
+  console.log(events);
+  return events;
+};
+
 export type UiState = UiEvent & {
   name: string;
 };
@@ -30,20 +59,11 @@ export const useContentRecorderStore = create<ContentRecorderState>((set, get) =
   setUiState: (newUiState: UiEvent) => set({ uiState: newUiState }),
   historyRecords: [] as RecordsDiff<TLRecord>[],
   readableRecords: [] as string[],
-  addHistoryRecord: (newHistoryRecord: RecordsDiff<TLRecord>, historyRecordsBufferSize = 1000) => {
-    set((state: any) => {
-      // console.log('newHistoryRecord', newHistoryRecord);
-      let newHistoryRecords = [...state.historyRecords, newHistoryRecord];
-
-        // If the buffer size is exceeded, remove the oldest record
-        if (newHistoryRecords.length > historyRecordsBufferSize) {
-          newHistoryRecords = newHistoryRecords.slice(1);
-        }
-
-        return newHistoryRecords as any;
-    }
-    );
-  },
+  addHistoryRecord: (newHistoryRecord: RecordsDiff<TLRecord>, historyRecordsBufferSize=10000) => {
+    const readableRecords = convertToReadableRecords([newHistoryRecord]);
+    const historyRecords = [...get().historyRecords, newHistoryRecord].slice(-historyRecordsBufferSize);
+    set({ historyRecords, readableRecords });
+  }
 }));
 
 export const useContentRecorder = () => {
@@ -112,26 +132,18 @@ export const useContentRecorder = () => {
     });
   }, []);
 
-  // lower fidelity event logging for store events
   const onStoreEvent = useCallback((event: TLStoreEventInfo) => {
     if (event.source === 'user' && isShapeEvent(event)) {
       addHistoryRecord(event.changes, historyRecordsBufferSize);
-      addReadableRecord(event.changes);
     }
-  }, [addHistoryRecord, addReadableRecord, isShapeEvent]);
+  }, [addHistoryRecord, historyRecordsBufferSize, isShapeEvent]);
 
   useEffect(() => {
     if (!editor) return;
 
-  editor.on('event', onCanvasEvent);
-  editor.on('change', onStoreEvent);
-  return () => {
-    editor.off('event');
-    editor.off('change');
-  };
-  }, [editor, onCanvasEvent, onStoreEvent]);
+    editor.on('change', onStoreEvent);
+    editor.on('event', onCanvasEvent);
 
-  useEffect(() => {
     // TODO: fix later. idk why initial UI event isn't getting picked up, just ignoring it for now
     const fakeUiState = {
       id: 'select',
@@ -139,7 +151,12 @@ export const useContentRecorder = () => {
       source: 'toolbar'
     };
     setUiState(fakeUiState as any);
-  }, [setUiState]);
+
+    return () => {
+      editor.off('change');
+      editor.off('event');
+    };
+  }, [editor, onCanvasEvent, onStoreEvent, setUiState]);
 
   return {
     canvasState,

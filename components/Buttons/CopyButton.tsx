@@ -1,10 +1,10 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Button, HoverCard, IconSetCache } from "@/components";
+import { Button, ButtonProps, HoverCard, IconSetCache } from "@/components";
 import { cn } from "@/utils";
 
-interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+interface CopyButtonProps extends ButtonProps {
   value: string;
   tooltip?: string;
   tooltipSuccess?: string;

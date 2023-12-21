@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components";
+import { Button, ButtonProps } from "@/components";
 import { Radius, cn } from "@/utils";
 import * as ToolbarPrimitive from "@radix-ui/react-toolbar";
 import { ElementRef, forwardRef, useCallback, useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { ElementRef, forwardRef, useCallback, useEffect, useState } from "react"
 // --------------------------------------------------
 // ToolbarButton
 // --------------------------------------------------
-export interface ToolbarButtonProps extends ToolbarPrimitive.ToolbarButtonProps {
+export interface ToolbarButtonProps extends ButtonProps {
   icon?: any;
   label?: string;
   shortcut?: string;

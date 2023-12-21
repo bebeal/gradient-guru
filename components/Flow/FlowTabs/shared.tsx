@@ -61,7 +61,7 @@ export const BulletedList = ({ items, className }: { items: any[]; className?: s
 export const ToggleTitle = ({ pressed, onPressedChange, name }: any) => {
   return (
     <div className={cn(`pointer-events-auto relative flex h-full w-full gap-1 justify-center items-center`)}>
-      <Switch pressed={pressed} onPressedChange={onPressedChange} className="absolute left-0">
+      <Switch pressed={pressed} onPressedChange={onPressedChange} className="absolute left-1">
         <div />
       </Switch>
       <div className="font-bold justify-self-center text-sm ml-10 mr-6">{name}</div>

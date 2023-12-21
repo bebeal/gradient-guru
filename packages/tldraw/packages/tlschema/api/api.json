@@ -1030,14 +1030,6 @@
             },
             {
               "kind": "Content",
-              "text": ", size?: "
-            },
-            {
-              "kind": "Content",
-              "text": "number"
-            },
-            {
-              "kind": "Content",
               "text": "): "
             },
             {
@@ -1052,8 +1044,8 @@
           ],
           "fileUrlPath": "packages/tlschema/src/records/TLShape.ts",
           "returnTypeTokenRange": {
-            "startIndex": 5,
-            "endIndex": 6
+            "startIndex": 3,
+            "endIndex": 4
           },
           "releaseTag": "Public",
           "overloadIndex": 1,
@@ -1063,14 +1055,6 @@
               "parameterTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
-              },
-              "isOptional": true
-            },
-            {
-              "parameterName": "size",
-              "parameterTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
               },
               "isOptional": true
             }

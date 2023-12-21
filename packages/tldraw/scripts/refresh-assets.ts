@@ -2,12 +2,12 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from 'fs'
 import { join } from 'path'
 import { optimize } from 'svgo'
 import {
-	BUBLIC_ROOT,
-	readJsonIfExists,
-	writeCodeFile,
-	writeFile,
-	writeJsonFile,
-	writeStringFile,
+  BUBLIC_ROOT,
+  readJsonIfExists,
+  writeCodeFile,
+  writeFile,
+  writeJsonFile,
+  writeStringFile,
 } from './lib/file'
 import { nicelog } from './lib/nicelog'
 

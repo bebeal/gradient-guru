@@ -16,7 +16,7 @@
   "private": true,
   "scripts": {
     "build": "yarn build:tldraw && next build",
-    "build:tldraw": "mv node_modules _node_modules && mv postcss.config.js _postcss.config.js && cd packages/tldraw && yarn && yarn build && cd ../.. && mv _postcss.config.js postcss.config.js && mv _node_modules node_modules",
+    "build:tldraw": "./build-tldraw.sh",
     "clean": "rm -rf yarn.lock && rm -rf node_modules && rm -rf .next",
     "dev": "PORT=3407 next dev",
     "generate-iconsets": "cd ./scripts && ./download-iconsets.sh",
