@@ -3025,10 +3025,7 @@ export class Editor extends EventEmitter<TLEventMap> {
 		}
 	}
 
-  /**
-   * 
-   * @public
-   */
+	/** @public */
 	getUnorderedRenderingShapes(
 		// The rendering state. We use this method both for rendering, which
 		// is based on other state, and for computing order for SVG export,
