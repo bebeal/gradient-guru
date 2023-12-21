@@ -4,27 +4,26 @@ import * as FormPrimitive from "@radix-ui/react-form";
 import { Control, FieldPath, FieldValues, useController } from "react-hook-form";
 import { FormFieldContext, useFormField } from "@/hooks";
 import { Schema } from "./Form";
-import { FormControl } from "./FormControl";
-import { FormDescription } from "./FormDescription";
-import { FormLabel } from "./FormLabel";
 import { cn } from "@/utils";
-import { FormMessage } from "./FormMessage";
-import { Accordion, Checkbox, IconSetCache, Input, Select, Slider, Switch } from '@/components';
-import { FormFields, DataModalityBadge } from "./shared";
-import { Models } from "@/clients";
+import { Accordion, Checkbox, Input, Select, Slider, Switch, FormFields, FormMessage, FormLabel, FormDescription, FormControl } from '@/components';
 
-export type FormItemProps = {
-  className?: string;
+const basicFormItems = ['object', 'select', 'slider', 'boolean', 'text', 'readOnly'] as const;
+export type BasicFormItem = typeof basicFormItems[number];
+
+const basicItems = ['array', 'object', 'from-array', 'select', 'slider', 'boolean', 'checkbox', 'switch', 'number', 'input', 'readOnly'];
+export type BasicItem = typeof basicItems[number];
+
+export const FormItemToItemMap: Record<BasicFormItem, BasicItem[]> = {
+  'object':  ['array', 'object', 'from-array'],
+  'select': ['select'],
+  'slider': ['slider'],
+  'boolean': ['boolean', 'checkbox', 'switch'],
+  'text': ['number', 'input'],
+  'readOnly': ['readOnly']
 };
-export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
-  const { className: classNameFromProps = '' } = props;
-  const { field, fieldState, formState, schema, label, description, placeholder, readOnly, form, item } = useFormField();
-  const isBoolean = item === 'boolean' || item === 'checkbox' || item === 'switch';
-  const isObject = item === 'object' || item === 'from-array' || item === 'node-schema';
-  const isModel = item === 'model';
-  const isModelConfig = item === 'model' || item === 'client';
-  const className=cn('text-xs w-full placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error',  
-                     classNameFromProps)
+
+export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
+  const { field, schema, placeholder, readOnly, form, item, className = '' } = props;
   const hasMin = schema?.exclusiveTests?.min;
   const hasMax = schema?.exclusiveTests?.max;
   let min = Infinity;
@@ -35,147 +34,98 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   if (hasMax) {
     max = schema?.tests?.find((test: any) => test.OPTIONS.name === 'max').OPTIONS?.params?.max;
   }
-  const step = schema?.spec?.meta?.step;
-  if (typeof field.value === 'number') {
-    if (step) {
-      // match the same precision as the step
-      const decimalPlaces = (step.toString().split('.')[1] || '').length;
-      field.value = parseFloat(field.value.toFixed(decimalPlaces));
-    } else {
-      field.value = parseFloat(field.value.toFixed(2));
-    }
-  }
-  // if step is 1 then we can assume it's an integer
-  if (step === 1) {
-    field.value = parseInt(field.value);
-  }
 
-  const Item = useMemo(() => {
-    switch (item) {
-      case 'node-schema':
-        return (
-          <div className="w-full h-full grid grid-cols-1 col-span-2 gap-1 overflow-auto rounded items-center"><FormFields form={form} schema={schema} prefix={`${field?.name}.`} readOnly={readOnly} /></div>
-        );
-      case 'from-array':
-      case 'object':
-      case 'array':
-        if (item === 'array' || Array.isArray(field.value)) {
-          return (
-            <div className="flex flex-row w-full flex-wrap items-center gap-1">
-              {field.value?.map((nestedItem: any, index: any) => (
-                <div key={index} className="flex flex-row items-center">
-                  <Input
-                    {...field}
-                    value={nestedItem}
-                    className={className}
-                    onChange={(e) => {
-                      const newArray = [...field.value];
-                      newArray[index] = e.target.value;
-                      field?.onChange(newArray);
-                    }}
-                  />
-                  {index < field.value?.length - 1 && (
-                    <div className="flex items-center justify-center mx-1 text-primary/80">,</div>
-                  )}
-                </div>
-              ))}
-            </div>
-          );
-        } else {
-          const content = <div className="w-auto h-full grid grid-cols-2 col-span-2 gap-1 p-2 overflow-auto rounded items-center"><FormFields form={form} schema={schema} prefix={`${field?.name}.`} readOnly={readOnly} /></div>;
-          return (
-            <Accordion 
-              highlightActive={false}
-              className="text-xs w-full"
-              triggerClassName="px-2 py-1 font-semibold text-xs text-primary"
-              items={[ 
-                {name: field?.label || field?.name, open: true, content: content} 
-              ]} 
+  if (!item) {
+    return null;
+  }
+  if (item === 'array' || Array.isArray(field.value)) {
+    return (
+      <div ref={ref} className="flex flex-row w-full flex-wrap items-center gap-1">
+        {field.value?.map((nestedItem: any, index: any) => (
+          <div key={index} className="flex flex-row items-center">
+            <Input
+              {...field}
+              value={nestedItem}
+              className={className}
+              onChange={(e) => {
+                const newArray = [...field.value];
+                newArray[index] = e.target.value;
+                field?.onChange(newArray);
+              }}
             />
-          );
-        }
-      case 'select':
-      case 'model':
-        const items: string[] = Array.from(schema?._whitelist)
-        if (item === 'model') {
-          const values = form.getValues();
-          const client_name = values?.client_name;
-          if (client_name === 'Open AI') {
-            // iterate through array of strings nad replace with { value: string, children: custom component with client logo }
-            const betterItems = items.map((model: string) => {
-              const modelFromMap = Models[model as any];
-              const modalities = modelFromMap?.modalities || [];
-              const DataModalitiesBadges = (<div className="grid grid-cols-2 grid-rows-2 gap-3 ml-2">
-              {modalities?.map((modality: any) => {
-                return (<DataModalityBadge key={modality} modality={modality as any} compact={true} />);
-              })}
-            </div>);
-              return { 
-                value: model,
-                children: (
-                  <div className="flex flex-row justify-start items-center text-center text-primary gap-2 w-auto h-full p-3"><IconSetCache.Logos.OpenAI height={"auto"} width={"100%"} className={cn("flex p-[3px] rounded w-[24px] h-[24px]", model.includes('gpt-3') && 'bg-[#19c37d]', model.includes('gpt-4') && 'bg-[#ab68ff]' )}/> <div className={cn(`flex h-full w-auto leading-none items-center`)}>{model}{DataModalitiesBadges}</div></div>
-                ),
-                className: 'justify-start'
-              }
-            });
-            return (<Select className={className} items={betterItems} {...field} readOnly={readOnly} />);
-          }
-        }
-        return (<Select className={className} items={items} {...field} readOnly={readOnly} />);
-      case 'slider':
-        return (<Slider thumbSize={10} showValue="value" className={className} min={min} max={max} step={step} {...field} />);
-      case 'boolean':
-      case 'checkbox':
-      case 'switch':
-        const value: boolean = field?.value;
-        return (item === 'switch') ? (
-          <Switch className={className} {...field} pressed={value} readOnly={readOnly} />
-        ) : (
-          <Checkbox className={className} {...field} checked={value} readOnly={readOnly} />
-        );
-      case 'number':
-      case 'input':
-        return (<Input placeholder={placeholder} className={className} extraCharWidth={0} {...field} readOnly={readOnly} />);
-      case 'readOnly':
-      case 'client':
-      case 'modality':
-      default:
-        if (item === 'modality') {
-          const values = form.getValues();
-          const modalities = values?.modalities;
-          // for the content I want compact versions for teh trigger I want the full version
-          const compact = schema?.spec?.meta?.compact || false;
-          // console.log('compact', compact, '\nmodalities', modalities);
-          if (compact) {
-            // 4x4 GRID
-            return (
-              <div className="grid grid-cols-2 grid-rows-2 gap-1 w-auto h-auto p-1">
-                {modalities?.map((modality: any) => {
-                  return (<DataModalityBadge key={modality} modality={modality as any} compact={true} />);
-                })}
-              </div>
-            )
-          } else {
-            // 2x2 GRID
-            return (
-              <div className="grid grid-cols-2 grid-rows-2 gap-1 w-auto h-auto p-1">
-                {modalities?.map((modality: any) => {
-                  return (<DataModalityBadge key={modality} modality={modality as any} />);
-                })}
-              </div>
-            )
-          }
-        }
-        if (item === 'client') {
-          const values = form.getValues();
-          const client_name = values?.client_name;
-          if (client_name === 'Open AI') {
-            return (<div className="flex flex-row items-center justify-center text-primary gap-1 w-full h-full p-3"><IconSetCache.Logos.OpenAI height={"auto"} className={cn("flex p-[3px] rounded w-[24px] h-[24px] text-primary")}/> <div className={cn(`flex h-auto w-auto leading-none `)}>Open AI</div></div>);
-          }
-        }
-        return ( <Input extraCharWidth={0} placeholder={placeholder} readOnly className={cn(className, `p-0 cursor-text bg-transparent border-transparent text-primary/80 ring-transparent hover:border-transparent hover:bg-transparent hover:cursor-text hover:text-primary/80 hover:ring-transparent focus:border-transparent focus:bg-transparent focus:cursor-text focus:text-primary/80 focus:ring-transparent`)} {...field} />);
+            {index < field.value?.length - 1 && (
+              <div className="flex items-center justify-center mx-1 text-primary/80">,</div>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  } else if (FormItemToItemMap['object'].includes(item)) {
+    return (
+      <Accordion
+        highlightActive={false}
+        className="text-xs w-full"
+        triggerClassName="px-2 py-1 font-semibold text-xs text-primary"
+        items={[ 
+          {name: field?.label || field?.name, open: true, content: (
+            <div ref={ref} className="w-auto h-full grid grid-cols-2 col-span-2 gap-1 p-2 overflow-auto rounded items-center">
+              <FormFields form={form} schema={schema} prefix={`${field?.name}.`} readOnly={readOnly} />
+            </div>
+          )} 
+        ]} 
+      />
+    );
+  } else if (item === 'slider') {
+    const step = schema?.spec?.meta?.step;
+    if (typeof field.value === 'number') {
+      if (step) {
+        // match the same precision as the step
+        const decimalPlaces = (step.toString().split('.')[1] || '').length;
+        field.value = parseFloat(field.value.toFixed(decimalPlaces));
+      } else {
+        field.value = parseFloat(field.value.toFixed(2));
+      }
     }
-  }, [item, field, schema, className, min, max, step, readOnly, placeholder, form]);
+    // if step is 1 then we can assume it's an integer
+    if (step === 1) {
+      field.value = parseInt(field.value);
+    }
+    return (
+      <Slider ref={ref} thumbSize={10} showValue="value" className={className} min={min} max={max} step={step} {...field} />
+    )
+  } else if (item === 'select') {
+    return (
+      <Select ref={ref} className={className} items={Array.from(schema?._whitelist)} {...field} readOnly={readOnly} />
+    )
+  } else if (FormItemToItemMap['boolean'].includes(item)) {
+    const value: boolean = field?.value;
+    return (item === 'switch') ? (
+      <Switch ref={ref} className={className} {...field} pressed={value} readOnly={readOnly} />
+    ) : (
+      <Checkbox ref={ref} className={className} {...field} checked={value} readOnly={readOnly} />
+    );
+  } else if (FormItemToItemMap['text'].includes(item)) {
+    if (item === 'input' || item === 'number') {
+      return ( <Input ref={ref} placeholder={placeholder} className={className} extraCharWidth={0} {...field} readOnly={readOnly} /> );
+    }
+  } else {
+    // default readOnly
+    return (<Input ref={ref} extraCharWidth={0} placeholder={placeholder} readOnly className={cn(className, `p-0 cursor-text bg-transparent border-transparent text-primary/80 ring-transparent hover:border-transparent hover:bg-transparent hover:cursor-text hover:text-primary/80 hover:ring-transparent focus:border-transparent focus:bg-transparent focus:cursor-text focus:text-primary/80 focus:ring-transparent`)} {...field} />);
+  }
+});
+DefaultFormItem.displayName = 'DefaultFormItem';
+
+export type FormItemProps = {
+  className?: string;
+  ItemRenderer: React.ComponentType<any>;
+};
+export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
+  const { className, ItemRenderer=DefaultFormItem } = props;
+  const useForm = useFormField();
+  const { fieldState, label, description, item } = useForm;
+  const isModel = item === 'model';
+  const isBoolean = item === 'boolean' || item === 'checkbox' || item === 'switch';
+  const isObject = item === 'object' || item === 'from-array' || item === 'node-schema';
 
   const Label = useMemo(() => {
     // if label is a react fucntional component, call it to render
@@ -195,7 +145,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
       </div>)}
       <div className={cn("flex-col flex w-full h-auto justify-center items-center px-1.5", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end')}>
         <FormControl>
-          {Item}
+          <ItemRenderer className={cn(className, 'text-xs w-full placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error' )} {...props} {...useForm} />
         </FormControl>
         {!isObject && (<FormMessage />)}
       </div>
@@ -217,6 +167,7 @@ TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
   placeholder?: ReactNode;
   readOnly?: boolean;
   className?: string;
+  ItemRenderer: React.ComponentType<any>;
 }
 
 export const FormField = forwardRef<any, FormFieldProps<FieldValues, FieldPath<FieldValues>>>((props, ref) => {
@@ -229,6 +180,7 @@ export const FormField = forwardRef<any, FormFieldProps<FieldValues, FieldPath<F
     placeholder,
     readOnly=false,
     className='',
+    ItemRenderer,
     ...rest
   } = props;
   const {
@@ -240,7 +192,7 @@ export const FormField = forwardRef<any, FormFieldProps<FieldValues, FieldPath<F
   return (
     <FormFieldContext.Provider value={{ schema, field, fieldState, formState, label, description, placeholder, readOnly }}>
       <FormPrimitive.Field name={name} asChild>
-        <FormItem {...rest} className={className} />
+        <FormItem {...rest} ItemRenderer={ItemRenderer} className={className} />
       </FormPrimitive.Field>
     </FormFieldContext.Provider>
   );

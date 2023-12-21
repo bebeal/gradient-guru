@@ -8,33 +8,6 @@ import { RecordsDiff } from '@tldraw/store';
 import { TLEventInfo, TLStoreEventInfo, UiEvent, useEditor } from "@tldraw/editor";
 import { useCallback, useEffect } from "react";
 
-// lower fidelity but more interprettable version of historyRecords
-const convertToReadableRecords = (historyRecords: RecordsDiff<TLRecord>[]) => {
-  const events: string[] = [];
-  historyRecords.forEach((diff: any) => {
-    const { added, updated, removed } = diff;
-    for (const record of Object.values(added) as any) {
-      if (record.typeName === 'shape') {
-        events.push(`user created shape [${record.type}] - ${(record.id).replace('shape:', '')}`)
-      }
-    }
-    for (const [from, to] of Object.values(updated) as any) {
-      if ( from.typeName === 'shape' || to.typeName === 'shape') {
-        // collpase when pushing this event only if its different from last event in arary
-        if (events.length > 0 && !events[events.length - 1].includes(`user updated shape [${to.type}] - ${(to.id).replace('shape:', '')}`)) {
-          events.push(`user updated shape [${to.type}] - ${(to.id).replace('shape:', '')}`);
-        }
-      }
-    }
-    for (const record of Object.values(removed) as any) {
-      if (record.typeName === 'shape') {
-        events.push(`user deleted shape [${record.type}] - ${(record.id).replace('shape:', '')}`)
-      }
-    }
-  });
-  return events;
-};
-
 export type UiState = UiEvent & {
   name: string;
 };
@@ -55,17 +28,26 @@ export const useContentRecorderStore = create<ContentRecorderState>((set, get) =
   uiState: {} as UiState,
   onUiEvent: (name: string, data: any) => {},
   setUiState: (newUiState: UiEvent) => set({ uiState: newUiState }),
-  historyRecords: [],
-  readableRecords: [],
-  addHistoryRecord: (newHistoryRecord: RecordsDiff<TLRecord>, historyRecordsBufferSize=10000) => {
-    const readableRecords = convertToReadableRecords([newHistoryRecord]);
-    const historyRecords = [...get().historyRecords, newHistoryRecord].slice(-historyRecordsBufferSize);
-    set({ historyRecords, readableRecords });
-  }
+  historyRecords: [] as RecordsDiff<TLRecord>[],
+  readableRecords: [] as string[],
+  addHistoryRecord: (newHistoryRecord: RecordsDiff<TLRecord>, historyRecordsBufferSize = 1000) => {
+    set((state: any) => {
+      // console.log('newHistoryRecord', newHistoryRecord);
+      let newHistoryRecords = [...state.historyRecords, newHistoryRecord];
+
+        // If the buffer size is exceeded, remove the oldest record
+        if (newHistoryRecords.length > historyRecordsBufferSize) {
+          newHistoryRecords = newHistoryRecords.slice(1);
+        }
+
+        return newHistoryRecords as any;
+    }
+    );
+  },
 }));
 
 export const useContentRecorder = () => {
-  const historyRecordsBufferSize = 10000;
+  const historyRecordsBufferSize = 1000;
   const editor = useEditor();
   const canvasState = useContentRecorderStore(useShallow((state) => state.canvasState));
   const setCanvasState = useContentRecorderStore(useShallow((state) => state.setCanvasState));
@@ -86,35 +68,70 @@ export const useContentRecorder = () => {
     setUiState({name, ...data} as any);
   }, [setUiState]);
 
-  const isShapeEvent = useCallback((event: TLStoreEventInfo) => {
-    const checkRecords = (records: any) => {
-      for (const record of Object.values(records) as any) {
-        if (record.typeName === 'shape') {
-          return true;
-        }
+  const checkRecords = useCallback((records: any) => {
+    for (const record of Object.values(records) as any) {
+      if (record.typeName === 'shape') {
+        return true;
       }
-      return false;
-    };
-  
-    const { added, removed, updated } = event.changes;
-  
-    return checkRecords(added) || checkRecords(removed) || Object.values(updated).some(([from, to]: any) => from.typeName === 'shape' && to.typeName === 'shape');
+    }
+    return false;
   }, []);
 
+  const isShapeEvent = useCallback((event: TLStoreEventInfo) => {
+    const { added, removed, updated } = event.changes;
+    return checkRecords(added) || checkRecords(removed) || Object.values(updated).some(([from, to]: any) => from.typeName === 'shape' && to.typeName === 'shape');
+  }, [checkRecords]);
+
+  // TODO: fix this, the incoming data stream broke, eventInfo has many items in updated every time this icalled, and its never called with added or removed
+  const addReadableRecord = useCallback((eventInfo: RecordsDiff<TLRecord>) => {
+    const events: string[] = [];
+    const { added, updated, removed } = eventInfo;
+    for (const record of Object.values(added) as any) {
+      if (record.typeName === 'shape') {
+        events.push(`user created shape [${record.type}] - ${(record.id).replace('shape:', '')}`)
+      }
+    }
+    for (const [from, to] of Object.values(updated) as any) {
+      if ( from.typeName === 'shape' || to.typeName === 'shape') {
+        // collpase when pushing this event only if its different from last event in arary
+        if (events.length > 0 && !events[events.length - 1].includes(`user updated shape [${to.type}] - ${(to.id).replace('shape:', '')}`)) {
+          events.push(`user updated shape [${to.type}] - ${(to.id).replace('shape:', '')}`);
+        }
+      }
+    }
+    for (const record of Object.values(removed) as any) {
+      if (record.typeName === 'shape') {
+        events.push(`user deleted shape [${record.type}] - ${(record.id).replace('shape:', '')}`)
+      }
+    }
+    useContentRecorderStore.setState((state: any) => {
+      return [
+        ...state.readableRecords,
+        events.join('\n'),
+      ] as any;
+    });
+  }, []);
 
   // lower fidelity event logging for store events
   const onStoreEvent = useCallback((event: TLStoreEventInfo) => {
     if (event.source === 'user' && isShapeEvent(event)) {
       addHistoryRecord(event.changes, historyRecordsBufferSize);
+      addReadableRecord(event.changes);
     }
-  }, [addHistoryRecord, historyRecordsBufferSize, isShapeEvent]);
+  }, [addHistoryRecord, addReadableRecord, isShapeEvent]);
 
   useEffect(() => {
     if (!editor) return;
 
-    editor.on('change', onStoreEvent);
-    editor.on('event', onCanvasEvent);
+  editor.on('event', onCanvasEvent);
+  editor.on('change', onStoreEvent);
+  return () => {
+    editor.off('event');
+    editor.off('change');
+  };
+  }, [editor, onCanvasEvent, onStoreEvent]);
 
+  useEffect(() => {
     // TODO: fix later. idk why initial UI event isn't getting picked up, just ignoring it for now
     const fakeUiState = {
       id: 'select',
@@ -122,12 +139,7 @@ export const useContentRecorder = () => {
       source: 'toolbar'
     };
     setUiState(fakeUiState as any);
-
-    return () => {
-      editor.off('change');
-      editor.off('event');
-    };
-  }, [editor, onCanvasEvent, onStoreEvent, setUiState]);
+  }, [setUiState]);
 
   return {
     canvasState,

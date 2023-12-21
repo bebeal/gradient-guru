@@ -112,7 +112,7 @@ export const base64EncodeEmbedImages = async (imgs: SVGImageElement[]): Promise<
   }
 };
 
-export const encodeSVGAsBase64 = async (svg: SVGElement, encodeEmbedImages = true): Promise<string> => {
+export const encodeSVGAsBase64 = async (svg: SVGElement, encodeEmbedImages = false): Promise<string> => {
   // clone svg so we don't mutate the original
 	const svgElement = svg.cloneNode(true) as SVGGraphicsElement
 	svgElement.setAttribute('encoding', 'utf-8"')
@@ -127,7 +127,7 @@ export const encodeSVGAsBase64 = async (svg: SVGElement, encodeEmbedImages = tru
   return encodeSVGElementAsBase64(svgElement);
 };
 
-export const getSVGAsBlob = async (svg: SVGElement, encodeEmbedImages = true): Promise<string | null> => {
+export const getSVGAsBlob = async (svg: SVGElement, encodeEmbedImages = false): Promise<string | null> => {
   // Clone svg so we don't mutate the original
   const svgElement = svg.cloneNode(true) as SVGGraphicsElement;
   svgElement.setAttribute('encoding', 'utf-8');

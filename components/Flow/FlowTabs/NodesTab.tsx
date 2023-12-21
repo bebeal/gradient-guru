@@ -65,7 +65,7 @@ export const NodesTab = () => {
         name: getNodeNameComponent(node, selected ? `text-accent`: ``),
         content: (
           <div className={cn(`w-full h-full flex flex-col justify-stretch items-center p-1`)}>
-            <Form object={{...node}} schema={nodeSchemas[node.id]} onSubmit={onNodeChange} />
+            <Form object={node} schema={nodeSchemas[node.id]} onSubmit={onNodeChange} />
           </div>
         ),
       };

@@ -14,6 +14,7 @@ export interface ButtonProps {
   colors?: string[];
   radius?: Radius;
   ripple?: boolean;
+  color?: "ruby" | "tomato" | "red" | "crimson" | "pink" | "plum" | "purple" | "violet" | "iris" | "indigo" | "blue" | "cyan" | "teal" | "jade" | "green" | "grass" | "brown" | "orange" | "sky" | "mint" | "lime" | "yellow" | "amber" | "gold" | "bronze" | "gray" | undefined;
   type?: any;
 }
 
@@ -24,6 +25,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
     onClick: onClickCallback=noop,
     disabled=false,
     variant='none',
+    color,
     colors= ['#7F00DE', '#C81BBD', '#FF007E', '#FF1834', '#FF0000', '#FFDA16', '#7FDC4D', '#00E0D9', '#00CDAC', '#02AAB0', '#0074E0'],
     radius='medium',
     ripple=true,
@@ -42,9 +44,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
   }, [createRippleEffect, onClickCallback, ripple, variant]);
 
   return isDefaultVariant(variant) ? (
-    <ThemedButton ref={ref} className={cn(`pointer-events-all !cursor-pointer`, disabled && DisabledClasses, RadiusClasses(radius), className)} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
+    <ThemedButton ref={ref} className={cn(`pointer-events-all !cursor-pointer`, disabled && DisabledClasses, RadiusClasses(radius), className)} color={color} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
   ) : (
-    <div className="flex w-auto h-auto relative">
+    <div className="relative">
       <button
         ref={ref}
         type={type}

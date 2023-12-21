@@ -5,8 +5,9 @@ import * as FormPrimitive from '@radix-ui/react-form';
 import { FormProvider, UseFormProps, UseFormReturn, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { inferSchema, FormFields } from "./shared";
+import { inferSchema } from "./shared";
 import { arrayToObject, cn, noop } from "@/utils";
+import { FormFields } from "./FormFields";
 
 // Custom meta properties I'm defining for each field to specify how it should be rendered
 export type SchemaMeta = {
@@ -24,6 +25,7 @@ export interface FormProps extends UseFormProps {
   onError?: any;
   labels?: Record<string, ReactNode | string>;
   className?: string;
+  ItemRenderer?: any;
 }
 
 export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
@@ -36,6 +38,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
     mode = 'onChange',
     labels={},
     className = '',
+    ItemRenderer,
     ...rest
   } = props;
   const [initialized, setInitialized] = useState(false);
@@ -76,7 +79,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
         onChange={form.handleSubmit(onSubmit, onError)}
       >
         <div className={cn("w-full h-full grid gap-px rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`)}>
-          <FormFields form={form} schema={schema} labels={labels} readOnly={readOnly} />
+          <FormFields ItemRenderer={ItemRenderer} form={form} schema={schema} labels={labels} readOnly={readOnly} />
         </div>
       </FormPrimitive.Root>
     </FormProvider>

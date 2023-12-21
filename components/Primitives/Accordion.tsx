@@ -45,14 +45,14 @@ export const Accordion = (props: AccordionProps) => {
   //   setValue(type === 'single' ? getValues(items)?.[0] : getValues(items));
   // }, [getValues, items, type]);
 
-  const onValueChange = (event: any, newValue: string | string[]) => {
+  const onValueChange = useCallback((event: any, newValue: string | string[]) => {
     ripple && createRippleEffect?.(event);
     if (type === 'single') {
       value === newValue ? setValue('') : setValue(newValue);
     } else {
       value.includes(newValue as any) ? setValue((value as any).filter((v: string) => v !== newValue)) : setValue([...(value as any), newValue]);
     }
-  };
+  }, [createRippleEffect, ripple, type, value]);
 
   return (
     <AccordionPrimitive.Root type={type} className={cn(`space-y-[${spaceBetween}px] w-full h-auto`, className)} defaultValue={getValues(items)} value={value as any}>

@@ -60,7 +60,7 @@ export const Flow = (props: FlowProps) => {
 		onMount,
 		...rest
 	} = props;
-  const assets: TLEditorAssetUrls = useDefaultEditorAssetsWithOverrides(rest.assetUrls);
+  const assets: TLEditorAssetUrls = useDefaultEditorAssetsWithOverrides(rest?.assetUrls);
   const { done: preloadingComplete, error: preloadingError } = usePreloadAssets(assets);
   const customShapeUtils: TLAnyShapeUtilConstructor[] = useMemo(() => [IconNodeUtil, PlotlyNodeUtil, PreviewNodeUtil], []);
   const scratchNodeUtils = useMemo(() => [IconNodeUtil, PlotlyNodeUtil], []);

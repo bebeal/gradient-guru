@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { TLShapeId, useEditor } from '@tldraw/tldraw';
-import { Accordion, FlipCard, FlowTab, Form, ImageWithSizeIndicator, ToggleTitle } from '@/components';
+import { Accordion, FlipCard, FlowFormItem, FlowTab, Form, ImageWithSizeIndicator, ToggleTitle } from '@/components';
 import { useContentExtractor, useContentRecorder } from '@/hooks';
 import { cn } from '@/utils';
 
@@ -138,7 +138,7 @@ export const ExtractionTab = () => {
           className: 'max-h-[260px]',
           children: (
             <div className={cn(`flex flex-col gap-1 w-full`)}>
-              <Form object={nodePropertiesToExtract} schema={getNodesExtractorSchema()} onSubmit={onNodesFormSubmit} />
+              <Form object={nodePropertiesToExtract} schema={getNodesExtractorSchema()} onSubmit={onNodesFormSubmit} ItemRenderer={FlowFormItem} />
             </div>
           ),
         }}
