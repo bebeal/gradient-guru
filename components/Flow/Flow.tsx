@@ -40,6 +40,7 @@ import { IconNodeUtil, PreviewNodeUtil } from './FlowNodes';
 import '@tldraw/tldraw/tldraw.css';
 import './Flow.css';
 import { PlotlyNodeUtil } from './FlowNodes/PlotlyNodeUil';
+import { ContentRecorderProvider } from '@/hooks';
 
 export type FlowProps = TldrawProps & FlowUiProps & {
   shapeUtils?: TLAnyShapeUtilConstructor[];
@@ -116,6 +117,7 @@ export const Flow = (props: FlowProps) => {
 	if (!preloadingComplete) { return <LoadingScreen><div className="flex w-full h-auto justify-center items-center"><Loading dots={true} spinner={false}>Loading assets</Loading></div></LoadingScreen> }
 	return (
 		<TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)} >
+      <ContentRecorderProvider>
       <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} {...withDefaults}>
         <ContextMenu>
           <DropWrapper>
@@ -131,6 +133,7 @@ export const Flow = (props: FlowProps) => {
         />
         {children}
       </FlowUi>
+      </ContentRecorderProvider>
 		</TldrawEditor>
 	)
 }

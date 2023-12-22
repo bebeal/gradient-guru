@@ -33,7 +33,7 @@ export const FlipCard = (props: FlipCardProps) => {
 
   const FlipButton = useCallback(() => {
     return (
-      <Button variant={'none'} onClick={flip} className={cn(`rounded bg-transparent text-secondary hover:bg-muted hover:text-primary self-center absolute right-0 p-1`)}>
+      <Button variant={'none'} onClick={flip} className={cn(`rounded bg-transparent text-secondary hover:bg-muted hover:text-primary h-full absolute right-0 p-1`)}>
         <IconSetCache.Carbon.Undo className="h-auto w-auto" />
       </Button>
     );
@@ -48,7 +48,7 @@ export const FlipCard = (props: FlipCardProps) => {
       )}
     >
       <div className={cn(`flex flex-col w-full h-auto gap-1 border-inherit border-b pb-1`)}>
-        <div className={cn(`relative pointer-events-auto flex flex-row w-full h-auto justify-center p-2`, flipped && `[transform:rotateY(-180deg)]`)}>
+        <div className={cn(`relative pointer-events-auto flex w-full h-full justify-center p-2`, flipped && `[transform:rotateY(-180deg)]`)}>
           <div className={cn(`font-bold text-base text-center w-full h-auto self-center break-words`)}>{title}</div>
           {flipped ? front && <FlipButton /> : back && <FlipButton />}
         </div>

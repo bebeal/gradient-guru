@@ -24,7 +24,7 @@ export const ExtractionTab = () => {
   const [imageExtractionTabSide, setImageExtractionTabSide] = useState<'Image Extraction Config' | 'Image Extraction Preview'>('Image Extraction Config');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [nodesExtractionTabSide, setJsonExtractionTabSide] = useState<'Nodes Extraction Config' | 'Nodes Extraction Preview'>('Nodes Extraction Config');
-  const [nodesPreview, setJsonPreview] = useState<any | null>(null);
+  const [nodesPreview, setNodesPreview] = useState<any | null>(null);
   const [canvasExtractionTabSide, setCanvasExtractionTabSide] = useState<'Canvas State Extraction Config' | 'Canvas State Extraction Preview'>('Canvas State Extraction Config');
   const [uiExtractionTabSide, setUiExtractionTabSide] = useState<'UI State Extraction Config' | 'UI State Extraction Preview'>('UI State Extraction Config');
   const { canvasState, uiState, historyRecords } = useContentRecorder();
@@ -55,7 +55,7 @@ export const ExtractionTab = () => {
 
   const fetchNodes = useCallback(() => {
     extractNodes().then((value: any) => {
-      setJsonPreview(value);
+      setNodesPreview(value);
     });
   }, [extractNodes]);
 
@@ -123,10 +123,6 @@ export const ExtractionTab = () => {
     );
   }, [imageExtractorConfig, imageExtractionTabSide, getImageExtractorSchema, editor, getNodesToExcludeSchema, imagePreview, onFlip, setExtractorConfig]);
 
-  const onNodesFormSubmit = useCallback((nodePropertiesToExtract: any) => {
-      setExtractorConfig('nodesExtractorConfig', { nodePropertiesToExtract });
-  }, [setExtractorConfig]);
-
   const NodesExtraction = useMemo(() => {
     const { enabled, nodePropertiesToExtract } = nodesExtractorConfig;
     return (
@@ -138,7 +134,7 @@ export const ExtractionTab = () => {
           className: 'max-h-[260px]',
           children: (
             <div className={cn(`flex flex-col gap-1 w-full`)}>
-              <Form object={nodePropertiesToExtract} schema={getNodesExtractorSchema()} onSubmit={onNodesFormSubmit} ItemRenderer={FlowFormItem} />
+              <Form object={nodePropertiesToExtract} schema={getNodesExtractorSchema()} onSubmit={(nodePropertiesToExtract: any) => setExtractorConfig('nodesExtractorConfig', { nodePropertiesToExtract })} ItemRenderer={FlowFormItem} />
             </div>
           ),
         }}
@@ -154,7 +150,7 @@ export const ExtractionTab = () => {
         }}
       />
     );
-  }, [getNodesExtractorSchema, nodesExtractionTabSide, nodesExtractorConfig, nodesPreview, onFlip, onNodesFormSubmit, setExtractorConfig]);
+  }, [getNodesExtractorSchema, nodesExtractionTabSide, nodesExtractorConfig, nodesPreview, onFlip, setExtractorConfig]);
 
   const CanvasStateExtraction = useMemo(() => {
     return (

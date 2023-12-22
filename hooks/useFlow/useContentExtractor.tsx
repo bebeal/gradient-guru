@@ -113,7 +113,7 @@ export const useContentExtractorStore = create<ContentExtractorConfig>((set) => 
 export const useContentExtractor = () => {
   const [mounted, setMounted] = useState(false);
   const editor = useEditor();
-  const { canvasState, uiState, onUiEvent } = useContentRecorder();
+  const { canvasState, uiState } = useContentRecorder();
   const imageExtractorConfig = useContentExtractorStore(useShallow((state) => state.imageExtractorConfig));
   const nodesExtractorConfig = useContentExtractorStore(useShallow((state) => state.nodesExtractorConfig));
   const textExtractorConfig = useContentExtractorStore(useShallow((state) => state.textExtractorConfig));
