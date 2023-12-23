@@ -20,7 +20,7 @@ export const FlowFormItem = forwardRef<any, any>((props, ref) => {
     if (compact) {
       // 4x4 GRID
       return (
-        <div className="grid grid-cols-2 grid-rows-2 gap-1 w-auto h-auto p-1">
+        <div className={cn("grid grid-cols-2 gap-1 w-auto h-full px-1 justify-center items-center", modalities.length > 2 && `grid-rows-2` )}>
           {modalities?.map((modality: any) => {
             return (<DataModalityBadge key={modality} modality={modality as any} compact={true} />);
           })}
@@ -29,7 +29,7 @@ export const FlowFormItem = forwardRef<any, any>((props, ref) => {
     } else {
       // 2x2 GRID
       return (
-        <div className="grid grid-cols-2 grid-rows-2 gap-1 w-auto h-auto p-1">
+        <div className={cn("grid grid-cols-2 gap-1 w-auto h-full px-1 justify-center items-center", modalities.length > 2 && `grid-rows-2`)}>
           {modalities?.map((modality: any) => {
             return (<DataModalityBadge key={modality} modality={modality as any} />);
           })}
@@ -41,12 +41,12 @@ export const FlowFormItem = forwardRef<any, any>((props, ref) => {
     const client_name = values?.client_name;
     let icon = <></>;
     if (client_name === 'Open AI') {
-      icon = <IconSetCache.Logos.OpenAI height={"auto"} className={cn("flex p-[3px] rounded w-[24px] h-[24px] text-primary")}/>;
+      icon = <IconSetCache.Logos.OpenAI height={"auto"} className={cn("flex rounded w-auto h-[16px] text-primary")}/>;
     }
     return (
-      <div className="flex flex-row items-center justify-center text-primary gap-1 w-full h-full p-3">
+      <div className="flex flex-row items-center justify-center text-primary gap-1 w-full h-auto px-2">
         {icon}
-        <div className={cn(`flex h-auto w-auto leading-none `)}>Open AI</div>
+        <div className={cn(`flex  w-auto leading-none h-full`)}>Open AI</div>
       </div>
     );
   } else if (item === 'model') {
@@ -59,7 +59,7 @@ export const FlowFormItem = forwardRef<any, any>((props, ref) => {
         const modalities = modelFromMap?.modalities || [];
         
         const DataModalitiesBadges = (
-          <div className="grid grid-cols-2 grid-rows-2 gap-3 ml-2">
+          <div className={cn(`grid grid-cols-2 gap-3 ml-2 h-auto`, modalities.length > 2 && `grid-rows-2`)}>
             {modalities.map((modality: DataModality) => (
               <DataModalityBadge key={modality} modality={modality} compact={true} />
             ))}
@@ -69,7 +69,7 @@ export const FlowFormItem = forwardRef<any, any>((props, ref) => {
         return { 
           value: model,
           children: (
-            <div className="flex flex-row justify-start items-center text-xs text-center text-primary gap-2 w-auto h-full p-2"><IconSetCache.Logos.OpenAI height={"auto"} width={"100%"} className={cn("flex p-[3px] rounded w-[24px] h-[24px]", model.includes('gpt-3') && 'bg-[#19c37d]', model.includes('gpt-4') && 'bg-[#ab68ff]' )}/> <div className={cn(`flex h-full w-auto leading-none items-center`)}>{model}{DataModalitiesBadges}</div></div>
+            <div className="flex flex-row justify-start items-center text-xs text-center text-primary gap-2 w-auto h-full p-2 py-1"><IconSetCache.Logos.OpenAI height={"auto"} width={"100%"} className={cn("flex p-[3px] rounded w-[24px] h-[24px]", model.includes('gpt-3') && 'bg-[#19c37d]', model.includes('gpt-4') && 'bg-[#ab68ff]' )}/> <div className={cn(`flex h-full w-auto leading-none items-center`)}>{model}{DataModalitiesBadges}</div></div>
           ),
           className: 'justify-start'
         }

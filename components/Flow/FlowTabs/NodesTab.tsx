@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useEditor } from '@tldraw/editor';
 import * as yup from 'yup';
 import {
@@ -54,7 +54,7 @@ export const NodesTab = () => {
     return newNodeSchema;
   }, [editor]);
 
-  const items = useCallback(() => {
+  const items = useMemo(() => {
     if (!editor) return [];
     const nodeSchemas = buildNodeSchemas();
     const selectedNodes = editor.getSelectedShapes();
@@ -78,7 +78,7 @@ export const NodesTab = () => {
         spaceBetween={0}
         className="w-full text-xs p-1"
         triggerClassName="w-full flex justify-center items-center"
-        items={items()}
+        items={items}
       />
     </FlowTab>
   );

@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Button, ButtonProps, HoverCard, IconSetCache } from "@/components";
+import { Button, ButtonProps, IconSetCache, Tooltip } from "@/components";
 import { cn } from "@/utils";
 
 interface CopyButtonProps extends ButtonProps {
@@ -66,8 +66,8 @@ export const CopyButton = ({
   }, [animationKey, className, hasCopied, onClick, rest]);
 
   return tooltip ? (
-    <HoverCard content={tooltipMessage}>
+    <Tooltip content={tooltipMessage}>
       {CopyButton}
-    </HoverCard>
+    </Tooltip>
   ) : CopyButton;
 };

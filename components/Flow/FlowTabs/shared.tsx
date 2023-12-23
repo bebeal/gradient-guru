@@ -1,6 +1,6 @@
 import { memo, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { Button, uniqueId } from '@tldraw/tldraw';
-import { CopyButton, Form, IconSetCache, Label, Separator, Switch } from '@/components';
+import { CopyButton, DownloadButton, Form, IconSetCache, Label, Separator, Switch } from '@/components';
 import { useContentExtractor, useToasts } from '@/hooks';
 import { cn, isEmptyObject } from '@/utils';
 
@@ -166,8 +166,7 @@ export const ExtractAllToast: React.FC<any> = ({ message }) => {
           <div className="flex flex-row w-auto h-auto justify-around items-center !text-xs">
             <a href={message.image} target="_blank" rel="no-referrer" download={`image-preview-${new Date().toISOString().split('T')[0]}.png`} className="text-primary underline flex flex-nowrap h-full w-auto">
               <div className="flex flex-row items-center gap-1">
-                <span className="text-primary">Download</span>
-                <IconSetCache.Carbon.Download height="100%" className="flex w-auto h-full text-primary" />
+                <DownloadButton simDownload tooltip />
               </div>
             </a>
             <a href={'#'} onClick={openImageInNewTab} className="text-primary underline flex flex-nowrap h-full w-auto visited:[&>svg]:text-[#8E24AA]">

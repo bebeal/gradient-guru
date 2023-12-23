@@ -2,7 +2,7 @@
 
 import { PlotlyProps } from '@/components';
 import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 const defaultBg = 'rgb(22, 26, 29)';
 const defaultFontColor = 'rgb(160, 170, 186)';
@@ -17,8 +17,9 @@ export const usePlotly = (props: PlotlyProps) => {
     ...rest
   } = props;
 
-  const dataQuery = useQuery<Plotly.Data[], Error>(['plotlyData', initialData],
-    async () => { 
+  const dataQuery = useQuery<Plotly.Data[], Error>({
+    queryKey: ['plotlyData', initialData],
+    queryFn: async () => { 
       if (typeof initialData === 'string') {
         const res = await fetch(initialData);
         const jsonData = await res.json();
@@ -35,8 +36,8 @@ export const usePlotly = (props: PlotlyProps) => {
         return initialData;
       }
     },
-    { enabled: false }
-  );
+    enabled: false,
+  });
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [bg, setBg] = useState(defaultBg);
   const [fontColor, setFontColor] = useState(defaultFontColor);

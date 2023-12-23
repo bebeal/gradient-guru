@@ -86,7 +86,7 @@ export const Accordion = (props: AccordionProps) => {
                 )}
               >
                 <div className={cn('flex w-full h-auto items-center px-2 py-1 pointer-events-none', triggerClassName)}>
-                  <div className="font-bold text-sm flex-grow text-center items-center w-full">{item.name}</div>
+                  <div className="font-bold text-xs flex-grow text-center items-center w-full">{item.name}</div>
                   <IconSetCache.Carbon.ChevronDown className={cn('ml-auto shrink-0', 'group-radix-state-open:rotate-180', 'transition-transform anim-duration-200 ease-in-out')} />
                 </div>
               </AccordionPrimitive.Trigger>

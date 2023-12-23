@@ -18,6 +18,4 @@ export abstract class FlowNodeUtil<Shape extends TLBaseBoxShape> extends BaseBox
   panelPreview(node: Shape) {
     return this.component(node);
   }
-
-
 }

@@ -8,7 +8,6 @@ export interface TooltipProps extends TooltipPrimitive.TooltipProps {
   content?: any;
   sideOffset?: number;
   className?: string;
-  open?: boolean;
 }
 
 export const Tooltip = (props: TooltipProps) => {
@@ -18,44 +17,39 @@ export const Tooltip = (props: TooltipProps) => {
     delayDuration = 10,
     sideOffset = 4,
     className='',
-    open,
     ...rest
  } = props;
+ const [tooltipContent, setTooltipContent] = useState<any>(content);
  const triggerRef = useRef<HTMLButtonElement>(null);
- const [isOpen, setIsOpen] = useState(open || false);
 
  useEffect(() => {
-    setIsOpen(open || false);
-  }, [open]);
- 
- const onOpenChange = useCallback((newOpen: boolean) => {
-   setIsOpen(newOpen);
- }, []);
+   setTooltipContent(content);
+ }, [content]);
+
+ const onPointerDownOutside = useCallback((event: any) => {
+    if (event.target === triggerRef.current) event.preventDefault();
+  }, []);
+
+  const onPointerDown = useCallback((event: any) => {
+    event.preventDefault();
+  }, []);
 
   return (
     <TooltipPrimitive.Provider delayDuration={delayDuration}>
-      <TooltipPrimitive.Root open={isOpen} onOpenChange={onOpenChange} {...rest}>
-        <TooltipPrimitive.Trigger ref={triggerRef} asChild className={className} onPointerDown={(e) => e.preventDefault()}>
+      <TooltipPrimitive.Root {...rest}>
+        <TooltipPrimitive.Trigger ref={triggerRef} asChild className={className} onPointerDown={onPointerDown}>
           {children}
         </TooltipPrimitive.Trigger>
         <TooltipPrimitive.Portal>
           <TooltipPrimitive.Content
-            onPointerDownOutside={(event) => {
-              if (event.target === triggerRef.current) event.preventDefault();
-            }}
+            onPointerDownOutside={onPointerDownOutside}
             sideOffset={sideOffset}
-            className={cn(
-              "radix-side-top:animate-slide-down-fade",
-              "radix-side-right:animate-slide-left-fade",
-              "radix-side-bottom:animate-slide-up-fade",
-              "radix-side-left:animate-slide-right-fade",
-              "fade-in-0 zoom-in-95",
-              "overflow-hidden rounded-md border bg-secondary px-3 py-1.5 text-sm text-secondary shadow-md"
-            )}
+            sticky='always'
+            className={cn('w-auto h-auto flex-1 radix-side-top:animate-slide-down-fade', 'radix-side-right:animate-slide-left-fade', 'radix-side-bottom:animate-slide-up-fade', 'radix-side-left:animate-slide-right-fade', 'drop-shadow-xl', 'fade-in-0 zoom-in-95', 'rounded-md border bg-secondary px-3 py-1.5 text-sm text-secondary shadow-md', 'pointer-events-auto cursor-default')}
           >
             <TooltipPrimitive.Arrow className={cn("fill-current text-primary")}  />
             <div className="block text-xs leading-none text-primary">
-              {content}
+              {tooltipContent}
             </div>
           </TooltipPrimitive.Content>
         </TooltipPrimitive.Portal>

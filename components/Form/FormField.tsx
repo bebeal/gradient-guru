@@ -95,7 +95,7 @@ export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
     )
   } else if (item === 'select') {
     return (
-      <Select ref={ref} className={className} items={Array.from(schema?._whitelist)} {...field} readOnly={readOnly} />
+      <Select ref={ref} className={cn(`text-xs`, className)} items={Array.from(schema?._whitelist)} {...field} readOnly={readOnly} />
     )
   } else if (FormItemToItemMap['boolean'].includes(item)) {
     const value: boolean = field?.value;
@@ -138,7 +138,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   }, [label]);
 
   return (
-    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-end p-1 gap-px`, isObject && 'col-span-2', isModel && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
+    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-center p-1 gap-px`, isObject && 'col-span-2', isModel && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
       {(description || !isObject) && (<div className={cn("flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start")}>
         {!isObject && (<FormLabel className="text-xs">{Label}</FormLabel>)}
         {description && (<FormDescription>{description}</FormDescription>)}

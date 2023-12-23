@@ -8,9 +8,11 @@ const config: Config = {
     ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`, `h-[${i+100}px]`, `w-[${i+100}px]`,  `h-[${i+200}px]`, `w-[${i+200}px]`, `grid-cols-${i}`, `grid-rows-${i}`]),
     `radix-state-open:rounded-t-lg radix-state-closed:rounded-lg rounded-b-lg rounded-t-lg`,
     `radix-state-open:rounded-t-xl radix-state-closed:rounded-xl rounded-b-xl rounded-t-xl`,
-    `text-accent-500 text-accent-400`,
+    `text-accent-500 text-accent-400`, `!rounded !rounded-full !rounded-sm !rounded-md !rounded-lg !rounded-xl`,
     'text-red text-ruby text-crimson text-pink text-plum text-purple text-violet text-iris text-indigo text-blue text-cyan text-teal text-jade text-green text-grass text-brown text-orange text-sky text-mint text-lime text-yellow text-amber text-gold text-bronze text-gray',
-    'bg-red bg-ruby bg-crimson bg-pink bg-plum bg-purple bg-violet bg-iris bg-indigo bg-blue bg-cyan bg-teal bg-jade bg-green bg-grass bg-brown bg-orange bg-sky bg-mint bg-lime bg-yellow bg-amber bg-gold bg-bronze bg-gray'
+    'bg-red bg-ruby bg-crimson bg-pink bg-plum bg-purple bg-violet bg-iris bg-indigo bg-blue bg-cyan bg-teal bg-jade bg-green bg-grass bg-brown bg-orange bg-sky bg-mint bg-lime bg-yellow bg-amber bg-gold bg-bronze bg-gray',
+    `text-red-500 text-error-500 text-green-500 text-success-500 text-primary-500 text-accent-500`,
+    `bg-red-500 bg-error-500 bg-green-500 bg-success-500 bg-primary-500 bg-accent-500`
   ],
   darkMode: ['class'],
   content: [
@@ -327,10 +329,10 @@ const config: Config = {
         "focus-chat": "focus-chat 3s infinite cubic-bezier(0.8, 0, 1, 1)",
         "banner-pulse": "banner-pulse 5s infinite linear",
         "scale-up": "scale-up 0.5s linear",
-        "slide-up-fade": "slide-up-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-        "slide-right-fade": "slide-right-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-        "slide-down-fade": "slide-down-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-        "slide-left-fade": "slide-left-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        "slide-up-fade": "slide-up-fade 0.3s ease-in-out",
+        "slide-right-fade": "slide-right-fade 0.3s ease-in-out",
+        "slide-down-fade": "slide-down-fade 0.3s ease-in-out",
+        "slide-left-fade": "slide-left-fade 0.3s ease-in-out",
         "move-background": "move-background 1s linear infinite",
         "rotate-clockwise": "full-rotation 2s linear infinite forwards",
         "rotate-counter-clockwise": "full-rotation 2s linear infinite reverse",

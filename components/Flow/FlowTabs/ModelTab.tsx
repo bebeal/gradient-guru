@@ -2,20 +2,20 @@
 
 import { useModel } from '@/hooks';
 import { FlowTab } from './shared';
-import { Button, FlipCard, Form, FlowFormItem } from '@/components';
+import { Button, FlipCard, Form, FlowFormItem, HoverCard } from '@/components';
 import * as yup from 'yup';
 import { ModelConfig, ModelConfigLabels, ModelConfigSchemas, Models } from '@/clients';
-import { useCallback, useMemo, useState } from 'react';
-import { PROMPT_LIBRARY, cn } from '@/utils';
+import { useCallback, useMemo } from 'react';
+import { Prompts, PromptName, getSystemPrompt, cn, formattedPromptNames } from '@/utils';
 
 export const ModelTab = () => {
   const {
     modelClient,
     setModelClient,
     queryModel,
+    systemPrompt,
+    setSystemPrompt,
   } = useModel();
-  const [promptSelected, setPromptSelected] = useState<string>('make_real');
-
   const onSubmit = useCallback((newConfig: ModelConfig) => {
     // update data modalities
     const model = newConfig.model;
@@ -44,25 +44,34 @@ export const ModelTab = () => {
         title="System Prompt"
         front={{
           children: (
-            <div className="flex flex-col items-center justify-center h-auto w-auto p-10">
-        <div className="flex flex-row justify-around items-center">
-          {Object.keys(PROMPT_LIBRARY).map((key, index) => {
+            <div className="flex flex-col items-center justify-center h-auto w-auto p-2">
+        <div className="flex flex-col gap-2 justify-around items-center">
+          {Object.keys(Prompts).map((key: string, index: number) => {
+            const prompt: any = Prompts[key as PromptName];
+            const systemPrompt = getSystemPrompt(key as PromptName);
             const color = ["red", "sky"]?.[index] as any;
-            const prettierNameMap: any = {
-              'make_real': 'Make Real',
-              'nodeBasedAgent': 'Node Based Agent',
-            }
+            
             return (
-              <Button
-                variant="surface"
-                color={color}
-                key={key}
-                onClick={() => {
-                  setPromptSelected(key);
+              <HoverCard key={key} content={systemPrompt} className='leading-tight whitespace-pre-wrap w-full subpixel-antialiased' contentStyle={{
+                  width: 'max(600px, var(--radix-hover-card-trigger-width))',
+                  maxHeight: 'var(--radix-hover-card-content-available-height)',
+                  wordSpacing: '0.5px',
+                  textAlign: 'left',
                 }}
-                className={cn(`p-2`, promptSelected === key ? `font-bold ring-${color}-500` : `ring-0 opacity-50`)}
-              >{prettierNameMap[key]}
-              </Button>
+                side="right"
+              >
+                <Button
+                  variant="surface"
+                  size={"4"}
+                  radius={"medium"}
+                  color={color}
+                  key={key}
+                  onClick={() => {
+                    setSystemPrompt(key);
+                  }}
+                  className={cn(`!text-sm p-2 h-auto w-full`, systemPrompt === key ? `font-bold ring-${color}-500` : `ring-0 opacity-50`)}
+                >{formattedPromptNames[key as PromptName]}</Button>
+              </HoverCard>
             )
           })}
         </div>
@@ -75,7 +84,7 @@ export const ModelTab = () => {
         front={{
           children: (
             <div className="relative w-auto h-auto px-20 py-4 overflow-hidden justify-center items-center">
-            <Button variant="gradient" onClick={() => queryModel.refetch()} className="w-full">Run</Button>
+            <Button variant="gradient" onClick={() => queryModel.mutate()} className="w-full">Run</Button>
             </div>
           )
         }}

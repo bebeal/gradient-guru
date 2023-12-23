@@ -1,9 +1,11 @@
-'use client'
+'use client';
 
 // import { AcademiconsIconSet, CarbonIconSet, CustomIconSet, DevIconSet, EntypoPlusIconSet, EntypoSocialIconSet, FlagIconSet, FontAudioIconSet, FontAwesomeRegularIconSet, FontGISIconSet, GameIconSet, GeoglyphsIconSet, HeroiconsSolidIconSet, LogosIconSet, LucideIconSet, MapIconSet, MedicalIconSet, MuiLineIconSet, RadixIconSet, SkillIconSet, SpinnerIconSet, TldrawIconSet, VSCodeIconSet } from './IconSets';
-import { CarbonIconSet, CustomIconSet, LogosIconSet, LucideIconSet, RadixIconSet, TldrawIconSet } from './IconSets';
+
 import { MapCache } from "@/utils";
-import { IconWrapper } from './IconWrapper';
+import { CarbonIconSet, CodeLanguagesIconSet, CustomIconSet, LogosIconSet, LucideIconSet, RadixIconSet, TldrawIconSet } from './IconSets';
+import { Icon } from './Icon';
+
 
 export interface IconSet {
   [iconName: string]: any;
@@ -16,6 +18,7 @@ export interface IconSetMap {
 export const IconSets: IconSetMap = {
   'Carbon': {Icons: CarbonIconSet},
   'Tldraw': {Icons: TldrawIconSet, overrideDefaultProps: {stroke: 'black'}},
+  'CodeLanguages': {Icons: CodeLanguagesIconSet},
   'Logos': {Icons: LogosIconSet},
   'Custom': {Icons: CustomIconSet},
   'Lucide': {Icons: LucideIconSet, overrideDefaultProps: {stroke: 'currentColor', fill: 'none'}},
@@ -31,7 +34,7 @@ export const IconSetCache: IconSetMap = IconSetNames.reduce((iconSetsMap: any, I
   const { Icons, overrideDefaultProps} = IconSets[IconSetName];
   iconSetsMap[IconSetName] = Object.keys(Icons).reduce((iconSetMap: any, IconName: string) => {
     const iconDisplayName = `IconSetCache.${IconSetName}.${IconName}`;
-    iconSetMap[IconName] = IconCache.get({iconName: iconDisplayName}, () => IconWrapper(Icons[IconName], iconDisplayName, overrideDefaultProps));
+    iconSetMap[IconName] = IconCache.get({iconName: iconDisplayName}, () => Icon(Icons[IconName], iconDisplayName, overrideDefaultProps));
     iconSetMap[IconName].displayName = iconDisplayName;
     return iconSetMap;
   }, {} as IconSet);

@@ -265,6 +265,7 @@ export const Indeterminate = forwardRef((props?: any, ref?: any) => {
 });
 
 export const CustomIconSet = {
+  Spinner,
   Loader,
   HorizontalDots,
   VerticalDots,
