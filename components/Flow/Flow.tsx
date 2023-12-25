@@ -35,7 +35,7 @@ import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 're
 import { DropWrapper, FlowUi, FlowUiProps } from '@/components';
 import { Erroring, Loading, cn } from '@/utils';
 
-import { IconNodeUtil, PreviewNodeUtil } from './FlowNodes';
+import { IconNodeUtil, PreviewNodeUtil, TerminalNodeUtil } from './FlowNodes';
 
 import '@tldraw/tldraw/tldraw.css';
 import './Flow.css';
@@ -63,8 +63,8 @@ export const Flow = (props: FlowProps) => {
 	} = props;
   const assets: TLEditorAssetUrls = useDefaultEditorAssetsWithOverrides(rest?.assetUrls);
   const { done: preloadingComplete, error: preloadingError } = usePreloadAssets(assets);
-  const customShapeUtils: TLAnyShapeUtilConstructor[] = useMemo(() => [IconNodeUtil, PlotlyNodeUtil, PreviewNodeUtil], []);
-  const scratchNodeUtils = useMemo(() => [IconNodeUtil, PlotlyNodeUtil], []);
+  const customShapeUtils: TLAnyShapeUtilConstructor[] = useMemo(() => [IconNodeUtil, PlotlyNodeUtil, TerminalNodeUtil, PreviewNodeUtil], []);
+  const scratchNodeUtils = useMemo(() => [IconNodeUtil, PlotlyNodeUtil, TerminalNodeUtil], []);
 
   const overrides: TLUiOverrides = useMemo(() => ({
     tools(editor, tools) {

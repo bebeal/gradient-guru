@@ -40,7 +40,7 @@ const RootLayout = ({
 }) => {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning className="p-0 m-0 h-screen w-screen min-h-[-webkit-fill-available] touch-none overscroll-none leading-none antialiased">
+      <body suppressHydrationWarning className="p-0 m-0 h-screen w-screen min-h-[-webkit-fill-available] touch-none overscroll-none leading-none antialiased overflow-hidden">
         <Providers>
           <main suppressHydrationWarning className="h-full w-full overflow-auto relative">
             {children}

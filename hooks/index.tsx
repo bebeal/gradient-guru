@@ -13,3 +13,4 @@ export * from './usePlotly';
 export * from './useToasts';
 export * from './useViewport';
 export * from './useDownloader';
+export * from './useTipTap';

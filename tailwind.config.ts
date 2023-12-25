@@ -12,7 +12,8 @@ const config: Config = {
     'text-red text-ruby text-crimson text-pink text-plum text-purple text-violet text-iris text-indigo text-blue text-cyan text-teal text-jade text-green text-grass text-brown text-orange text-sky text-mint text-lime text-yellow text-amber text-gold text-bronze text-gray',
     'bg-red bg-ruby bg-crimson bg-pink bg-plum bg-purple bg-violet bg-iris bg-indigo bg-blue bg-cyan bg-teal bg-jade bg-green bg-grass bg-brown bg-orange bg-sky bg-mint bg-lime bg-yellow bg-amber bg-gold bg-bronze bg-gray',
     `text-red-500 text-error-500 text-green-500 text-success-500 text-primary-500 text-accent-500`,
-    `bg-red-500 bg-error-500 bg-green-500 bg-success-500 bg-primary-500 bg-accent-500`
+    `bg-red-500 bg-error-500 bg-green-500 bg-success-500 bg-primary-500 bg-accent-500`,
+    'prose prose-sm prose-base prose-slate dark:prose-invert focus:outline-none',
   ],
   darkMode: ['class'],
   content: [

@@ -1,20 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { DirectionProvider } from '@radix-ui/react-direction';
-import * as Toast from '@radix-ui/react-toast';
+import { ToastProvider } from '@radix-ui/react-toast';
 import { Theme, ThemePanel } from '@radix-ui/themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'next-themes';
 import { DebugPanelContext, ThemePanelContext } from '@/hooks';
-import { cn, isDevEnv } from '@/utils';
+import { Loading, isDevEnv } from '@/utils';
+// import { Button } from '@/components';
 import StyledComponentsRegistry from './registry';
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
 import '@/assets/fonts/Monaspace/Monaspace.css';
-import '@radix-ui/themes/styles.css';
 import '@/app/globals.css';
-
+import '@radix-ui/themes/styles.css';
 
 const makeQueryClient = (overrideOptions?: any) => {
   return new QueryClient({
@@ -27,11 +26,39 @@ const makeQueryClient = (overrideOptions?: any) => {
   });
 };
 
+const ReactQueryDevtoolsProduction = lazy(() =>
+  import('@tanstack/react-query-devtools/build/modern/production.js').then(
+    (d) => ({
+      default: d.ReactQueryDevtools,
+    }),
+  ),
+)
+
 const Providers = ({ children }: any) => {
   const [queryClient] = useState(makeQueryClient());
-
   const [themePanelEnabled, setThemePanelEnabled] = useState<boolean>(false);
   const [debugMode, setDebug] = useState<number>(isDevEnv ? 1 : 0);
+  const [debugPanel, setDebugPanel] = useState<boolean>(false);
+
+  // I don't wanna use the devtools standard button so this is a hack to get custom button to toggle the devtools
+  const togglePanel = useCallback(() => {
+    setDebugPanel((prev) => {
+      const newValue = !prev;
+      window.localStorage.setItem('TanstackQueryDevtools.open', String(newValue));
+      return newValue;
+    }); 
+  }, []);
+
+  useEffect(() => {
+     // look for button with class tsqd-minimize-btn this is the close button for react-query-devtools
+    const btn = document.querySelector(`.tsqd-minimize-btn`);
+    if (btn) {
+      btn.addEventListener('click', togglePanel);
+      return () => {
+        btn.removeEventListener('click', togglePanel);
+      }
+    }
+  }, [togglePanel]);
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -41,22 +68,27 @@ const Providers = ({ children }: any) => {
             <DirectionProvider dir="ltr">
               <DebugPanelContext.Provider value={{ debugMode, setDebug }}>
                 <QueryClientProvider client={queryClient}>
-                  <Toast.Provider>
+                  <ToastProvider>
                     <div className="flex flex-col h-screen w-full overflow-hidden">
                       {children}
                       {debugMode === 1 && (
-                        <div className="absolute z-[99999] bg-primary">
-                          <ReactQueryDevtools
-                            
-                            initialIsOpen={false}
-                            position="top"
-                            buttonPosition="bottom-left"
-                          />
+                        <div className="absolute z-[99999] bg-primary h-full">
+                          {/* <div className="absolute bottom-0 left-0 right-0 w-auto h-full">
+                            <Button variant="ghost" onClick={togglePanel}>Toggle</Button>
+                          </div> */}
+                          <Suspense fallback={<Loading />}>
+                            <ReactQueryDevtoolsProduction
+                              key={debugPanel ? 'open' : 'closed'} // hack to force re-render on toggle
+                              initialIsOpen={false}
+                              position="top"
+                              buttonPosition="bottom-left"
+                            />
+                          </Suspense>
                         </div>
                       )}
                     </div>
                     {themePanelEnabled && <ThemePanel />}
-                  </Toast.Provider>
+                  </ToastProvider>
                 </QueryClientProvider>
               </DebugPanelContext.Provider>
             </DirectionProvider>

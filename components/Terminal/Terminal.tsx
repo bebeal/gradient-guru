@@ -5,15 +5,15 @@ import { SyntaxHighlighter, SyntaxStyle, CodeLanguageProperties, CodeLanguageAli
 
 export interface TerminalProps {
   value?: any;
-  code: string;
+  code?: string;
   language?: string;
   style?: SyntaxStyle;
 }
 
 export const Terminal = (props: TerminalProps) => {
-  const { value, code='', language='jsx', style='custom', ...rest } = props;
+  const { value, code='', language, style='custom', ...rest } = props;
   const id = `terminal-${language}`;
-  const codeLanguage: CodeLanguageProperties = CodeLanguageAliases[language];
+  const codeLanguage: CodeLanguageProperties = CodeLanguageAliases[language||'jsx'];
 
   const downloadAsFile = () => {
     if (typeof window === 'undefined') {
@@ -41,10 +41,10 @@ export const Terminal = (props: TerminalProps) => {
   }
 
   return (
-    <section id={id} className="flex flex-col h-auto w-auto rounded-lg gap-0 max-w-prose">
+    <section id={id} className="flex flex-col h-auto w-full rounded-lg gap-0">
       <div className="bg-[#28282b] w-full h-auto leading-4 rounded-t-lg grid grid-cols-3 items-center px-4 py-[0.5px] pointer-events-auto overflow-hidden">
         <div className="flex w-auto gap-1 items-center justify-self-start">
-          <IconLink Ico={codeLanguage?.icon} href={codeLanguage?.href} label={codeLanguage?.name} />
+          {codeLanguage?.icon && codeLanguage?.href && codeLanguage?.name && <IconLink Ico={codeLanguage?.icon} href={codeLanguage?.href} label={codeLanguage?.name} />}
         </div>
         <div className="text-primary font-bold text-sm justify-self-center">
           Terminal.<span className="text-muted text-xs">{codeLanguage?.extensions?.[0] || 'jsx'}</span>

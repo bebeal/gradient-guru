@@ -83,3 +83,15 @@
 
   --kbd-foreground: 161 161 170;
 }
+
+/** Hide React Query Devtools Button */
+.go3489369143 div svg {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+.go3489369143 button {
+  display: none !important;
+  pointer-events: none !important;
+  
+}

@@ -7,4 +7,4 @@ export * from './Primitives';
 export * from './Plotly';
 export * from './SyntaxHighlighter';
 export * from './Terminal';
-export * from './Markdown';
+export * from './TipTap';

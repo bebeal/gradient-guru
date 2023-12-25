@@ -26,7 +26,6 @@ import { FlowTabs, TestExtractionButton } from './FlowTabs';
 import { ScratchPanel } from './FlowExtensions';
 import { cn } from '@/utils';
 import { Toasts, ToastViewport } from '@/components';
-import { ToastProvider } from '@radix-ui/react-toast';
 import { useContentRecorder, ToastsProvider } from '@/hooks';
 
 export type FlowUiProps = TldrawUiProps & {
@@ -127,7 +126,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
   }, [editor, initialShapes, mounted]);
 
 	return (
-		<ToastProvider>
+		<>
       <FlowTabs className="tl-tabs" />
 			<div
 				className={cn('tlui-layout', {
@@ -181,7 +180,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
 				<ToastViewport />
 				<FollowingIndicator />
 			</div>
-    </ToastProvider>
+    </>
 	)
 });
 
