@@ -9,6 +9,7 @@ export interface TipTapProps {
   children?: any;
   content?: string;
   className?: string;
+  extensions?: any[];
 }
 
 export const TipTap = (props: TipTapProps) => {

@@ -3,7 +3,7 @@
 import { cn, nanoid } from '@/utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useEditor } from '@tiptap/react';
-import { AllExtensions } from '@/components';
+import { MarkdownTipTapExtensions } from '@/components/TipTap/Extensions';
 
 interface Comment {
   id: string
@@ -25,12 +25,14 @@ export interface useTipTapProps {
   children?: any;
   content?: any;
   className?: string;
+  extensions?: any;
 }
 export const useTipTap = (props: useTipTapProps) => {
   const {
     children,
     content='',
     className,
+    extensions=MarkdownTipTapExtensions,
   } = props;
   const [items, setItems] = useState<any[]>([]);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -39,14 +41,13 @@ export const useTipTap = (props: useTipTapProps) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [replaceTerm, setReplaceTerm] = useState<string>("");
 
-
   const editor = useEditor({
     editorProps: {
       attributes: {
         class: cn("prose prose-sm prose-zinc dark:prose-invert focus:outline-none", className),
       }
     },
-    extensions: Object.values(AllExtensions),
+    extensions,
     content: children || content,
     autofocus: false,
   });

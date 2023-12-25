@@ -61,10 +61,10 @@ import { Snippets } from './Snippets';
 import { TextReplacements } from './TextReplacements';
 import { Video } from './Video';
 import { TerminalBlock } from './TerminalBlock';
+import KatexExtension from './Katex';
 
 import 'katex/dist/katex.min.css';
 import 'tiptap-extension-upload-image/dist/upload-image.min.css';
-import KatexExtension from './Katex';
 
 // import { EmojiList } from './EmojiList';
 // import { Comments } from './Comments';
@@ -142,12 +142,12 @@ const ProExtensions = {
     },
     allowedMimeTypes: undefined
   }),
-  // InvisibleCharacters: InvisibleCharacters.configure({
-  //   visible: true,                                 // Define default visibility.
-  //   builders: [new HardBreakNode()],               // An array of invisible characters – by default it contains: spaces, hard breaks and paragraphs.
-  //   injectCSS: true,                               // By default, the extension injects some CSS. With injectCSS you can disable that.
-  //   injectNonce: undefined,                        // When you use a Content-Security-Policy with nonce, you can specify a nonce to be added to dynamically created elements.
-  // }),
+  InvisibleCharacters: InvisibleCharacters.configure({
+    visible: true,                                 // Define default visibility.
+    builders: [new HardBreakNode()],               // An array of invisible characters – by default it contains: spaces, hard breaks and paragraphs.
+    injectCSS: true,                               // By default, the extension injects some CSS. With injectCSS you can disable that.
+    injectNonce: undefined,                        // When you use a Content-Security-Policy with nonce, you can specify a nonce to be added to dynamically created elements.
+  }),
   KatexExtension: KatexExtension.configure({
     katexOptions: undefined,                       // For the math typesetting the extension uses the third party library KaTeX. To adjust its behaviour, you can pass KaTeX options to it. Find all of them https://katex.org/docs/options.html.
   }),
@@ -200,11 +200,6 @@ const NodeExtensions = {
     keepMarks: true,                               // Decides whether to keep the marks from a previous line after toggling the list either using inputRule or using the button
     keepAttributes: false,                         // Decides whether to keep the attributes from a previous line after toggling the list either using inputRule or using the button
   }),
-  // CodeBlock: CodeBlock.configure({
-  //   languageClassPrefix: "language-",              // Adds a prefix to language classes that are applied to code tags.
-  //   exitOnTripleEnter: true,                       // Define whether the node should be exited on triple enter.
-  //   exitOnArrowDown: true,                         // Define whether the node should be exited on arrow down if there is no node after it.
-  // }),
   Document: Document,
   HardBreak: HardBreak.configure({
     keepMarks: false,                              // Decides whether to keep marks after a line break. Based on the keepOnSplit option for marks.
@@ -444,3 +439,78 @@ export const AllExtensions: any = {
   ...MarkExtensions,
   ...FunctionalityExtensions
 };
+
+export const StarterKitExtensions = [
+  // Nodes
+  'Blockquote',
+  'BulletList',
+  'TerminalBlock', // replacement for code block
+  'Document', // required doc
+  'HardBreak',
+  'Heading',
+  'HorizontalRule',
+  'ListItem',
+  'OrderedList',
+  'Paragraph',
+  'Text',
+  'Link',
+  // Marks
+  'Bold',
+  'Code',
+  'Italic',
+  'Strike',
+  // Extensions
+  'Markdown',
+  'DropCursor',
+  'Gapcursor',
+  'History',
+  'TextAlign',
+  'Typography',
+];
+
+export const BaseMarkdownExtensions = [
+  ...StarterKitExtensions,
+  // Nodes
+  'Image',
+  'Table',
+  'TableCell',
+  'TableHeader',
+  'TableRow',
+  'Youtube',
+  'TaskItem',
+  'TaskList',
+  // Marks
+  'TextStyle',
+  'Highlight',
+  'Subscript',
+  'Superscript',
+  'Underline',
+  // Extensions
+  'BubbleMenu',
+  'CharacterCount',
+  'Focus',
+  'FontFamily',
+  'ListKeymap',
+  'Placeholder',
+  'FileHandler',
+
+];
+
+export const GfmExtensions = [
+  ...BaseMarkdownExtensions,
+  'KatexExtension',
+  'Emoji',
+  'Mention',
+  'TextReplacements',
+  'ColorChips',
+  
+];
+
+export const EditorMarkdownExtensions = [
+  ...GfmExtensions,
+  'BubbleMenu',
+  'CharacterCount',
+  'Focus',
+];
+
+export const MarkdownTipTapExtensions = EditorMarkdownExtensions.map((extension) => AllExtensions[extension]);

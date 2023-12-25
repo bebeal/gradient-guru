@@ -11,4 +11,4 @@ export * from './TOC';
 export * from './TextReplacements';
 export * from './TerminalBlock';
 export * from './Video';
-
+export * from './Katex';

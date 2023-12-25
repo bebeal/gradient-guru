@@ -17,7 +17,7 @@ const renderKatex = (editor: any, node: any, match: any, pos: number, katexOptio
     decorations.push(ProseMirrorDecoration.widget(start, (() => {
       const element = document.createElement("span");
       element.classList.add(...KatexEditorClasses);
-      editor.isEditable && element.classList.add("rounded", "hover:bg-[#eee]", displayMode ? "block" : "inline-block");
+      editor.isEditable && element.classList.add("rounded", displayMode ? "block" : "inline-block");
       try {
           katex.render(expression, element, { ...katexOptions, displayMode });
       } catch (e) {
