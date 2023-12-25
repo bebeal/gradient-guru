@@ -1,10 +1,12 @@
+// refactored editor from https://github.com/tldraw/tldraw/blob/main/packages/tldraw/src/lib/utils/export/export.ts
 'use client'
 
-// refactored editor from https://github.com/tldraw/tldraw/blob/main/packages/tldraw/src/lib/utils/export/export.ts
 import { ImageExtractorConfig } from '@/hooks';
-import { Editor, PngHelpers, SVG_PADDING, SvgExportContext, SvgExportDef, TLFrameShape, TLGroupShape, TLShape, TLShapeId, TLSvgOptions, uniqueId } from '@tldraw/editor';
 import canvasSize from 'canvas-size';
 import { isSafari } from './device';
+import { PngHelpers } from './png';
+import { Editor, SVG_PADDING, SvgExportContext, SvgExportDef, TLFrameShape, TLGroupShape, TLShape, TLShapeId, TLSvgOptions, uniqueId } from '@tldraw/editor';
+
 
 export type CanvasMaxSize = {
 	maxWidth: number;

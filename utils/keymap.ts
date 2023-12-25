@@ -1,5 +1,5 @@
 'use client'
-import { isAppleDevice } from "@/utils";
+import { isAppleDevice } from "./device";
 
 export const SPACE = '␣';
 export const SHIFT = '⇧';

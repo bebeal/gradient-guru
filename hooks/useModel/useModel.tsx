@@ -5,7 +5,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { useContentExtractor } from '@/hooks';
 import { BaseModelClient, DefaultModelConfig, ModelConfig, OpenAIModelClient } from '@/clients';
 import { useEditor } from '@tldraw/tldraw';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 export type ModelState = {
   modelClient: BaseModelClient<ModelConfig, any, any>;
@@ -32,20 +32,20 @@ export const useModel = () => {
   const queryModel = useMutation({
     mutationKey: ['model-query'], 
     mutationFn: async () => {
-    return await contentExtractor.extractAll().then(async (flows) => {
-      console.log('flows', flows);
-      const text = (flows?.text || []).join('\n');
-      
-      return {};
-    });
-  },
-  onSuccess: (response: any) => {
-    console.log('onSuccess Response:', response);
-  },
-  onError: (error: any) => {
-    console.log('onError Response:', error);
-  },
-  retry: false,
+      return await contentExtractor.extractAll().then(async (flows) => {
+        console.log('flows', flows);
+        const text = (flows?.text || []).join('\n');
+        
+        return {};
+      });
+    },
+    onSuccess: (response: any) => {
+      console.log('onSuccess Response:', response);
+    },
+    onError: (error: any) => {
+      console.log('onError Response:', error);
+    },
+    retry: false,
   });
 
   return {

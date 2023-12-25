@@ -11,3 +11,4 @@ export * from './utils';
 export * from './styles';
 export * from './math';
 export * from './prompts';
+export * from './colors';

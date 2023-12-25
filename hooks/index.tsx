@@ -14,3 +14,4 @@ export * from './useToasts';
 export * from './useViewport';
 export * from './useDownloader';
 export * from './useTipTap';
+export * from './useChat';

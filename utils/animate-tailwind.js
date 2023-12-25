@@ -7,7 +7,7 @@ function filterDefault(values) {
 	)
 }
 
-export default plugin(
+export const AnimationPlugin = plugin(
 	({ addUtilities, matchUtilities, theme }) => {
 		matchUtilities(
 			{

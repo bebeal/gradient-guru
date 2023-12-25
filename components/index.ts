@@ -8,3 +8,5 @@ export * from './Plotly';
 export * from './SyntaxHighlighter';
 export * from './Terminal';
 export * from './TipTap';
+export * from './Chat';
+export * from './Fun';

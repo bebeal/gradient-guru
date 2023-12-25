@@ -1,9 +1,9 @@
 'use client'
 
-import React, {forwardRef} from 'react'
+import { TextareaHTMLAttributes, forwardRef } from 'react'
 import { Radius, RadiusClasses, cn } from '@/utils';
 
-export interface TextAreaProps {
+export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   className?: string;
   children?: React.ReactNode;
   value?: string;
@@ -32,6 +32,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>((props: T
           'hover:bg-secondary hover:text-primary hover:ring-accent/50',
           'focus:bg-secondary focus:text-primary focus:ring-accent focus:caret-accent',
           'focus-within:bg-secondary focus-within:text-primary focus-within:ring-accent focus-within:caret-accent',
+          '[form-sizing:auto]',
           RadiusClasses(radius),
           className,
         )}

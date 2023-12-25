@@ -2,7 +2,7 @@
 import { clsx, type ClassValue } from 'clsx'
 import { customAlphabet } from 'nanoid'
 import { twMerge } from 'tailwind-merge';
-import { ALPHANUMERIC } from "@/utils";
+import { ALPHANUMERIC } from "./constants";
 
 // noop function to use as defaults
 export const noop = (...params: any): any => {};
@@ -64,4 +64,25 @@ export const toCamelCase = (snakeStr: string): string => {
 
 export const toSnakeCase = (camelStr: string): string => {
   return camelStr.split('').map(c => c === c.toUpperCase() ? `_${c.toLowerCase()}` : c).join('').trimStart();
+};
+
+// Get initials from name, e.g. John Doe => JD
+export const getInitials = (name: string): string => {
+  return name.split(" ").map((word) => word[0]?.toUpperCase() || "").join("");
+};
+
+// Format the given date (uses current one if not provided) to YYYY-MM-DD
+export const formatDate = (date?: Date | number): string => {
+  if (typeof date === 'number') {
+    date = new Date(date);
+  }
+  return (date || new Date()).toISOString().slice(0, 10) || '';
+};
+
+// Format the given date (uses current one if not provided) to YYYY-MM-DD HH:MM:SS
+export const formatTime = (date?: Date | number): string => {
+  if (typeof date === 'number') {
+    date = new Date(date);
+  }
+  return (date || new Date()).toISOString().slice(0, 19).replace("T", " ") || '';
 };
