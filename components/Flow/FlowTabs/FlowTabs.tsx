@@ -1,6 +1,7 @@
 'use client';
 
-import { IconSetCache, ModelTab, NodesTab, SidePanel, HistoryTab, ExtractionTab } from '@/components';
+import { IconSetCache, ModelTab, NodesTab, SidePanel, HistoryTab, ExtractionTab, Loading } from '@/components';
+import { useMounted } from '@/hooks';
 import { useMemo } from 'react';
 
 export interface FlowTabsProps {
@@ -8,37 +9,38 @@ export interface FlowTabsProps {
 }
 export const FlowTabs = (props: FlowTabsProps) => {
   const { className = '' } = props;
+  const mounted = useMounted();
 
   const FlowNodesTab = useMemo(() => {
     return {
       icon: <IconSetCache.Carbon.DataCategorical height={'100%'} width={'100%'} />,
       name: 'Nodes',
-      content: <NodesTab />,
+      content: mounted ? <NodesTab /> : <Loading />,
     }
-  }, []);
+  }, [mounted]);
 
   const FlowHistoryTab = useMemo(() => {
     return {
     icon: <IconSetCache.Carbon.RecentlyViewed height={'100%'} width={'100%'} />,
     name: 'History',
-    content: <HistoryTab />,
+    content: mounted ? <HistoryTab /> : <Loading />,
   };
-}, []);
+}, [mounted]);
   const FlowExtractionTab = useMemo(() => {
     return {
     icon: <IconSetCache.Carbon.Downstream height={'100%'} width={'100%'} />,
     name: 'Extraction',
-    content: <ExtractionTab />,
+    content: mounted ? <ExtractionTab /> : <Loading />,
   };
-}, []);
+}, [mounted]);
 
   const FlowModelTab = useMemo(() => {
     return {
     icon: <IconSetCache.Carbon.MachineLearningModel height={'100%'} width={'100%'} />,
     name: 'Model',
-    content: <ModelTab />,
+    content: mounted ? <ModelTab /> : <Loading />,
   };
-}, []);
+}, [mounted]);
 
   return <SidePanel className={className} tabs={[
     FlowNodesTab,

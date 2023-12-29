@@ -58,6 +58,7 @@ export const NodesTab = () => {
     if (!editor) return [];
     const nodeSchemas = buildNodeSchemas();
     const selectedNodes = editor.getSelectedShapes();
+    console.log(`nodeSchemas`, nodeSchemas, `\ncurrentPageShapesSorted`, editor?.getCurrentPageShapesSorted());
     return editor?.getCurrentPageShapesSorted().map((node: any, index: number) => {
       // check if node is selected
       const selected = selectedNodes.includes(node);
