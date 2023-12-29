@@ -1,7 +1,8 @@
 'use client';
 
 import { forwardRef, ReactNode, Suspense } from 'react';
-import { cn, Loading } from '@/utils';
+import { Loading } from '@/components';
+import { cn } from '@/utils';
 
 
 export const Icon = (Ico: any, label: string = '', defaultProps: any) => {

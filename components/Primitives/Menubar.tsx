@@ -4,10 +4,11 @@
 import {
   IconSetCache,
   Kbd,
-} from '@/components'
-import { Radius, RadiusClasses, cn } from '@/utils'
-import * as MenubarPrimitive from '@radix-ui/react-menubar'
-import React, { forwardRef, useCallback } from 'react'
+} from '@/components';
+import { cn } from '@/utils';
+import { Radius, RadiusClasses } from '@/components';
+import * as MenubarPrimitive from '@radix-ui/react-menubar';
+import React, { forwardRef, useCallback } from 'react';
 
 // --------------------------------------------------
 // MenubarShortcut

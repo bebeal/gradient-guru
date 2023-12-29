@@ -32,8 +32,8 @@ import { usePreloadAssets } from '@tldraw/tldraw/src/lib/ui/hooks/usePreloadAsse
 import { TLExternalContentProps, registerDefaultExternalContentHandlers } from '@tldraw/tldraw/src/lib/defaultExternalContentHandlers';
 import { TLEditorAssetUrls, useDefaultEditorAssetsWithOverrides } from '@tldraw/tldraw/src/lib/utils/static-assets/assetUrls';
 import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 'react'
-import { DropWrapper, FlowUi, FlowUiProps } from '@/components';
-import { Erroring, Loading, cn } from '@/utils';
+import { DropWrapper, FlowUi, FlowUiProps, Erroring, Loading } from '@/components';
+import { cn } from '@/utils';
 
 import { IconNodeUtil, PreviewNodeUtil, TerminalNodeUtil } from './FlowNodes';
 
@@ -141,7 +141,7 @@ export const Flow = (props: FlowProps) => {
 // We put these hooks into a component here so that they can run inside of the context provided by TldrawEditor.
 const InsideOfEditorContext = ({
 	maxImageDimension = 1000,
-	maxAssetSize = 10 * 1024 * 1024, // 10mb
+	maxAssetSize = (10 * 1024 * 1024) * 10, // 100mb
 	acceptedImageMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'],
 	acceptedVideoMimeTypes = ['video/mp4', 'video/quicktime'],
 	onMount,

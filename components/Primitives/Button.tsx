@@ -1,7 +1,8 @@
 'use client'
 
 import { Button as ThemedButton } from "@radix-ui/themes";
-import { Variant, noop, cn, GradientDiv, isDefaultVariant, Radius, RadiusClasses, VariantClasses, isCustomVariant, DisabledClasses } from "@/utils";
+import { Variant, GradientDiv, isDefaultVariant, Radius, RadiusClasses, VariantClasses, isCustomVariant, DisabledClasses } from "@/components";
+import { noop, cn } from "@/utils";
 import { useRippleEffect } from '@/hooks'
 import { forwardRef, useCallback, useRef, useState } from "react";
 

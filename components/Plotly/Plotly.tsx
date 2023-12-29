@@ -1,7 +1,7 @@
 'use client'
 
 import { usePlotly } from '@/hooks';
-import { Erroring } from '@/utils';
+import { Erroring } from '@/components';
 import dynamic from 'next/dynamic';
 import { PlotParams } from 'react-plotly.js';
 

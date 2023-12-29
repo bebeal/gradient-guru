@@ -1,7 +1,8 @@
 'use client'
 
 import React, { InputHTMLAttributes, forwardRef, useCallback, useEffect, useState } from 'react';
-import { Radius, RadiusClasses, cn, noop } from '@/utils';
+import { cn, noop } from '@/utils';
+import { Radius, RadiusClasses } from '@/components';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   type?: string;

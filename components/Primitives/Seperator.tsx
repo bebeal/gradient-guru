@@ -1,7 +1,7 @@
 import React, {forwardRef} from 'react'
 import * as SeparatorPrimitive from '@radix-ui/react-separator'
-
-import { Orientation, OrientationClasses, cn } from '@/utils';
+import { Orientation, OrientationClasses } from '@/components'
+import { cn } from '@/utils';
 
 export interface SeparatorProps extends SeparatorPrimitive.SeparatorProps {
   decorative?: boolean;

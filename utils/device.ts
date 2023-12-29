@@ -1,8 +1,5 @@
 'use client'
 
-// Environment check
-export const isDevEnv: boolean = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_NODE_ENV === 'development';
-
 // Browser Window check
 export const isWindow: boolean = typeof window !== 'undefined';
 

@@ -13,6 +13,21 @@
     overflow: hidden;
   }
 
+  -webkit-scrollbar {
+    height: 8px;
+    width: 4px;
+    background: transparent;
+  }
+
+  -webkit-scrollbar-thumb {
+    background: hsl(0 0% 40%);
+    border-radius: 999px;
+  }
+
+  -webkit-scrollbar-track {
+    background: transparent;
+  }
+
   * {
     @apply box-border font-mono;
   }

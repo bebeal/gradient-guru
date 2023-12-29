@@ -1,3 +1,5 @@
+'use client'
+
 import { Node, nodeInputRule } from '@tiptap/react'
 import { Plugin, PluginKey } from 'prosemirror-state'
 

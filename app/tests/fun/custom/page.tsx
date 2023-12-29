@@ -1,9 +1,8 @@
-
 'use client'
 
 import { Demo } from "@/components";
 
-export const DemoCardDemo = () => {
+const DemoCardDemo = () => {
   return (
     <Demo
       title="Demo Title"
@@ -14,7 +13,7 @@ export const DemoCardDemo = () => {
   )
 };
 
-export const Demos: any = {
+const Demos: any = {
   DemoCardDemo,
 }
 

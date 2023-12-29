@@ -1,17 +1,21 @@
 'use client'
+
 /* eslint-disable react-hooks/rules-of-hooks */
+import { LINK_HOST, PROTOCOL } from '@/utils'
 import {
-	TLBaseShape,
 	BaseBoxShapeUtil,
-	useIsEditing,
-	HTMLContainer,
-	toDomPrecision,
-	Icon,
-	useToasts,
 	DefaultSpinner,
-	stopEventPropagation,
+	HTMLContainer,
+	SvgExportContext,
+	TLBaseShape,
 	Vec2d,
+	toDomPrecision,
+	useIsEditing,
+	useToasts,
+	useValue,
 } from '@tldraw/tldraw'
+import { formatNodeId } from './shared'
+import { useApi } from '@/hooks'
 
 export type PreviewNode = TLBaseShape<
 	'preview',
@@ -20,6 +24,9 @@ export type PreviewNode = TLBaseShape<
 		source: string
 		w: number
 		h: number
+		linkUploadVersion?: number
+		uploadedNodeId?: string
+		dateCreated?: number
 	}
 >
 
@@ -32,47 +39,64 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
 			source: '',
 			w: (960 * 2) / 3,
 			h: (540 * 2) / 3,
+			dateCreated: Date.now(),
 		}
 	}
 
 	override canEdit = () => true
-	override isAspectRatioLocked = (_shape: PreviewNode) => false
-	override canResize = (_shape: PreviewNode) => true
-	override canBind = (_shape: PreviewNode) => false
+	override isAspectRatioLocked = (node: PreviewNode) => false
+	override canResize = (node: PreviewNode) => true
+	override canBind = (node: PreviewNode) => false
 	override canUnmount = () => false
 
-	override component(shape: PreviewNode) {
-		const isEditing = useIsEditing(shape.id)
-		const toast = useToasts()
+	override component(node: PreviewNode) {
+		const isEditing = useIsEditing(node.id);
+		const toast = useToasts();
+    const api = useApi();
 
-		const pageRotation = this.editor.getShapePageTransform(shape)!.rotation()
-		const boxShadow = getRotatedBoxShadow(pageRotation)
+		const boxShadow = useValue(
+			'box shadow',
+			() => {
+				const rotation = this.editor.getShapePageTransform(node)!.rotation()
+				return getRotatedBoxShadow(rotation)
+			},
+			[this.editor]
+		)
 
-		// Kind of a hack—we're preventing user's from pinching-zooming into the iframe
-		const htmlToUse = shape.props.html
-			? shape.props.html.replace(
-					`</body>`,
-					`<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
-</body>`
-			)
-			: null
+		const { html, linkUploadVersion, uploadedNodeId } = node.props
+
+		// upload the html if we haven't already:
+		// useEffect(() => {
+		// 	let isCancelled = false
+		// 	if (html && html.length > 0 && (linkUploadVersion === undefined || uploadedNodeId !== node.id)) {
+		// 		(async () => {
+    // //       const body = { id: formatNodeId(node.id), html };
+    // //       await api.putS3(body);
+    
+		// 			if (isCancelled) return
+
+		// 			this.editor.updateShape<PreviewNode>({
+		// 				id: node.id,
+		// 				type: 'preview',
+		// 				props: {
+		// 					linkUploadVersion: 1,
+		// 					uploadedNodeId: formatNodeId(node.id),
+		// 				},
+		// 			})
+		// 		})()
+		// 	}
+		// 	return () => {
+		// 		isCancelled = true
+		// 	}
+		// }, [node.id, html, linkUploadVersion, uploadedNodeId, api]);
+
+		const isLoading = linkUploadVersion === undefined || uploadedNodeId !== node.id
+
+		const uploadUrl = [PROTOCOL, LINK_HOST, '/', formatNodeId(node.id)].join('')
 
 		return (
-			<HTMLContainer className="tl-embed-container" id={shape.id}>
-				{htmlToUse ? (
-					<iframe
-						srcDoc={htmlToUse}
-						width={toDomPrecision(shape.props.w)}
-						height={toDomPrecision(shape.props.h)}
-						draggable={false}
-						style={{
-							pointerEvents: isEditing ? 'auto' : 'none',
-							boxShadow,
-							border: '1px solid var(--color-panel-contrast)',
-							borderRadius: 'var(--radius-2)',
-						}}
-					/>
-				) : (
+			<HTMLContainer className="tl-embed-container" id={node.id}>
+				{isLoading ? (
 					<div
 						style={{
 							width: '100%',
@@ -88,76 +112,114 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
 					>
 						<DefaultSpinner />
 					</div>
-				)}
-				{htmlToUse && (
-					<button
-						style={{
-							all: 'unset',
-							position: 'absolute',
-							top: 0,
-							right: -40,
-							height: 40,
-							width: 40,
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							cursor: 'pointer',
-							pointerEvents: 'all',
-						}}
-						onClick={() => {
-							if (navigator && navigator.clipboard) {
-								navigator.clipboard.writeText(shape.props.html)
-								toast.addToast({
-									icon: 'code',
-									title: 'Copied to clipboard',
-								})
-							}
-						}}
-						onPointerDown={stopEventPropagation}
-						title="Copy code to clipboard"
-					>
-						<Icon icon="code" />
-					</button>
-				)}
-				{htmlToUse && (
-					<div
-						style={{
-							textAlign: 'center',
-							position: 'absolute',
-							bottom: isEditing ? -40 : 0,
-							padding: 4,
-							fontFamily: 'inherit',
-							fontSize: 12,
-							left: 0,
-							width: '100%',
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							pointerEvents: 'none',
-						}}
-					>
-						<span
+				) : (
+					<>
+						<iframe
+							id={`iframe-1-${node.id}`}
+							src={`${uploadUrl}?preview=1&v=${linkUploadVersion}`}
+							width={toDomPrecision(node.props.w)}
+							height={toDomPrecision(node.props.h)}
+							draggable={false}
 							style={{
-								background: 'var(--color-panel)',
-								padding: '4px 12px',
-								borderRadius: 99,
-								border: '1px solid var(--color-muted-1)',
+								pointerEvents: isEditing ? 'auto' : 'none',
+								boxShadow,
+								border: '1px solid var(--color-panel-contrast)',
+								borderRadius: 'var(--radius-2)',
+							}}
+						/>
+						<div
+							style={{
+								all: 'unset',
+								position: 'absolute',
+								top: -3,
+								right: -45,
+								height: 40,
+								width: 40,
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								cursor: 'pointer',
+								pointerEvents: 'all',
 							}}
 						>
-							{isEditing ? 'Click the canvas to exit' : 'Double click to interact'}
-						</span>
-					</div>
+							{/* <Dropdown boxShadow={boxShadow} html={shape.props.html} uploadUrl={uploadUrl}>
+								<button className="bg-white rounded p-2" style={{ boxShadow }}>
+									<Icon icon="dots-vertical" />
+								</button>
+							</Dropdown> */}
+						</div>
+						<div
+							style={{
+								textAlign: 'center',
+								position: 'absolute',
+								bottom: isEditing ? -40 : 0,
+								padding: 4,
+								fontFamily: 'inherit',
+								fontSize: 12,
+								left: 0,
+								width: '100%',
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								pointerEvents: 'none',
+							}}
+						>
+							<span
+								style={{
+									background: 'var(--color-panel)',
+									padding: '4px 12px',
+									borderRadius: 99,
+									border: '1px solid var(--color-muted-1)',
+								}}
+							>
+								{isEditing ? 'Click the canvas to exit' : 'Double click to interact'}
+							</span>
+						</div>
+					</>
 				)}
 			</HTMLContainer>
 		)
+	}
+
+	override toSvg(shape: PreviewNode, _ctx: SvgExportContext): SVGElement | Promise<SVGElement> {
+		const g = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+		// while screenshot is the same as the old one, keep waiting for a new one
+		return new Promise((resolve, _) => {
+			if (window === undefined) return resolve(g)
+			const windowListener = (event: MessageEvent) => {
+				if (event.data.screenshot && event.data?.shapeid === shape.id) {
+					const image = document.createElementNS('http://www.w3.org/2000/svg', 'image')
+					image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', event.data.screenshot)
+					image.setAttribute('width', shape.props.w.toString())
+					image.setAttribute('height', shape.props.h.toString())
+					g.appendChild(image)
+					window.removeEventListener('message', windowListener)
+					clearTimeout(timeOut)
+					resolve(g)
+				}
+			}
+			const timeOut = setTimeout(() => {
+				resolve(g)
+				window.removeEventListener('message', windowListener)
+			}, 2000)
+			window.addEventListener('message', windowListener)
+			//request new screenshot
+			const firstLevelIframe = document.getElementById(`iframe-1-${shape.id}`) as HTMLIFrameElement
+			if (firstLevelIframe) {
+				firstLevelIframe?.contentWindow?.postMessage(
+					{ action: 'take-screenshot', shapeid: shape.id },
+					'*'
+				)
+			} else {
+				console.log('first level iframe not found or not accessible')
+			}
+		})
 	}
 
 	indicator(shape: PreviewNode) {
 		return <rect width={shape.props.w} height={shape.props.h} />
 	}
 }
-
-// todo: export these from tldraw
 
 const ROTATING_BOX_SHADOWS = [
 	{
@@ -174,9 +236,9 @@ const ROTATING_BOX_SHADOWS = [
 		spread: -2,
 		color: '#0000001f',
 	},
-]
+];
 
-function getRotatedBoxShadow(rotation: number) {
+const getRotatedBoxShadow = (rotation: number) => {
 	const cssStrings = ROTATING_BOX_SHADOWS.map((shadow) => {
 		const { offsetX, offsetY, blur, spread, color } = shadow
 		const vec = new Vec2d(offsetX, offsetY)
@@ -184,4 +246,4 @@ function getRotatedBoxShadow(rotation: number) {
 		return `${x}px ${y}px ${blur}px ${spread}px ${color}`
 	})
 	return cssStrings.join(', ')
-}
+};

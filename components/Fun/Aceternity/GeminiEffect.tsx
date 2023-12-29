@@ -1,6 +1,6 @@
+"use client"
 // https://ui.aceternity.com/components/google-gemini-effect
 
-"use client";
 import { cn } from "@/utils";
 import { motion, MotionValue } from "framer-motion";
 import React from "react";

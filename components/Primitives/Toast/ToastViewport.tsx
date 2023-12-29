@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from "react";
 import * as T from "@radix-ui/react-toast";
 import { useToasts } from "@/hooks";

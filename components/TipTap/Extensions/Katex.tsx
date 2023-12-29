@@ -1,3 +1,6 @@
+'use client'
+
+import { blockMath, inlineMath } from "@/utils";
 import { Extension as TiptapExtension } from "@tiptap/core";
 import { Plugin as ProseMirrorPlugin, PluginKey as ProseMirrorPluginKey } from "@tiptap/pm/state";
 import { DecorationSet as ProseMirrorDecorationSet, Decoration as ProseMirrorDecoration } from "@tiptap/pm/view";
@@ -5,8 +8,6 @@ import katex from "katex";
 
 export const KatexEditorClasses = ["text-primary", "px-2", "py-[0.2rem]", "font-mono", "bg-[#202020]"];
 export const KatexRenderClasses = ["cursor-pointer", "transition-[background]", "duration-[0.2s]", "px-1", "py-0"];
-export const inlineMatch = /\$(.+?)\$/g;
-export const blockMatch = /\$\$(.+?)\$\$/g;
 
 const renderKatex = (editor: any, node: any, match: any, pos: number, katexOptions: any, displayMode: boolean) => {
   const start = match.index + pos;
@@ -51,15 +52,13 @@ const createKatexPlugin = (options: any) => {
         let match;
 
         let matched = false;
-        while ((match = blockMatch.exec(text)) !== null) {
-          // console.log("blockMatch", match);
+        while ((match = blockMath.exec(text)) !== null) {
           decorations.push(...renderKatex(editor, node, match, pos, katexOptions, true));
           matched = true;
         }
 
         if (!matched) {
-          while ((match = inlineMatch.exec(text)) !== null) {
-            // console.log("inlineMatch", match);
+          while ((match = inlineMath.exec(text)) !== null) {
             decorations.push(...renderKatex(editor, node, match, pos, katexOptions, false));
             matched = true;
           }

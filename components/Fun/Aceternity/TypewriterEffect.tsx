@@ -1,6 +1,5 @@
+"use client"
 // https://ui.aceternity.com/components/typewriter-effect
-
-"use client";
 
 import { cn } from "@/utils";
 import { motion, stagger, useAnimate } from "framer-motion";

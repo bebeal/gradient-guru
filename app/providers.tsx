@@ -7,9 +7,8 @@ import { Theme, ThemePanel } from '@radix-ui/themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { DebugPanelContext, ThemePanelContext } from '@/hooks';
-import { Loading, isDevEnv } from '@/utils';
-// import { Button } from '@/components';
-import StyledComponentsRegistry from './registry';
+import { isDevEnv, StyledComponentsRegistry } from '@/utils';
+import { Loading } from '@/components';
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
 import '@/assets/fonts/Monaspace/Monaspace.css';
 import '@/app/globals.css';
@@ -32,7 +31,7 @@ const ReactQueryDevtoolsProduction = lazy(() =>
       default: d.ReactQueryDevtools,
     }),
   ),
-)
+);
 
 const Providers = ({ children }: any) => {
   const [queryClient] = useState(makeQueryClient());
@@ -61,41 +60,41 @@ const Providers = ({ children }: any) => {
   }, [togglePanel]);
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <Theme asChild={false} hasBackground={true} appearance="dark" accentColor="indigo" grayColor="auto" panelBackground="translucent" radius="medium" scaling="100%">
-        <StyledComponentsRegistry>
-          <ThemePanelContext.Provider value={{ themePanelEnabled, setThemePanelEnabled }}>
-            <DirectionProvider dir="ltr">
-              <DebugPanelContext.Provider value={{ debugMode, setDebug }}>
-                <QueryClientProvider client={queryClient}>
-                  <ToastProvider>
-                    <div className="flex flex-col h-screen w-full overflow-hidden">
-                      {children}
-                      {debugMode === 1 && (
-                        <div className="absolute z-[99999] bg-primary h-full">
-                          {/* <div className="absolute bottom-0 left-0 right-0 w-auto h-full">
-                            <Button variant="ghost" onClick={togglePanel}>Toggle</Button>
-                          </div> */}
-                          <Suspense fallback={<Loading />}>
-                            <ReactQueryDevtoolsProduction
-                              key={debugPanel ? 'open' : 'closed'} // hack to force re-render on toggle
-                              initialIsOpen={false}
-                              position="top"
-                              buttonPosition="bottom-left"
-                            />
-                          </Suspense>
+    <StyledComponentsRegistry>
+      <DebugPanelContext.Provider value={{ debugMode, setDebug }}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Theme asChild={false} hasBackground={true} appearance="dark" accentColor="indigo" grayColor="auto" panelBackground="translucent" radius="medium" scaling="100%">
+              <ThemePanelContext.Provider value={{ themePanelEnabled, setThemePanelEnabled }}>
+                <DirectionProvider dir="ltr">
+                    <QueryClientProvider client={queryClient}>
+                      <ToastProvider>
+                        <div className="flex flex-col h-screen w-full overflow-hidden">
+                          {children}
+                          {debugMode === 1 && (
+                            <div className="absolute z-[99999] bg-primary h-full">
+                              {/* <div className="absolute bottom-0 left-0 right-0 w-auto h-full">
+                                <Button variant="ghost" onClick={togglePanel}>Toggle</Button>
+                              </div> */}
+                              <Suspense fallback={<Loading />}>
+                                <ReactQueryDevtoolsProduction
+                                  key={debugPanel ? 'open' : 'closed'} // hack to force re-render on toggle
+                                  initialIsOpen={false}
+                                  position="top"
+                                  buttonPosition="bottom-left"
+                                />
+                              </Suspense>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                    {themePanelEnabled && <ThemePanel />}
-                  </ToastProvider>
-                </QueryClientProvider>
-              </DebugPanelContext.Provider>
-            </DirectionProvider>
-          </ThemePanelContext.Provider>
-        </StyledComponentsRegistry>
-      </Theme>
-    </ThemeProvider>
+                        {themePanelEnabled && <ThemePanel />}
+                      </ToastProvider>
+                    </QueryClientProvider>
+                </DirectionProvider>
+              </ThemePanelContext.Provider>
+          </Theme>
+        </ThemeProvider>
+      </DebugPanelContext.Provider>
+    </StyledComponentsRegistry>
   );
 };
 

@@ -1,10 +1,11 @@
-'use client'
+'use client';
 
+import { Badge } from '@radix-ui/themes';
 import * as yup from 'yup';
+import { DataModality } from '@/clients/Models';
 import { cn, sortObject } from '@/utils';
 import { Schema, SchemaMeta } from './Form';
-import { DataModality } from '@/clients';
-import { Badge } from '@radix-ui/themes';
+
 
 // infer yup schema from object types
 export const inferSchema = (object: Record<string, any>): Schema => {

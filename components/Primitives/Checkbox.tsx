@@ -2,7 +2,8 @@
 
 import React, { ForwardedRef, forwardRef, useCallback, useEffect, useState } from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { DisabledClasses, Radius, RadiusClasses, cn, noop } from "@/utils";
+import { DisabledClasses, Radius, RadiusClasses } from "@/components";
+import { cn, noop } from "@/utils";
 import { IconSetCache } from "..";
 
 // export interface CheckboxProps extends CheckboxPrimitive.CheckboxProps {

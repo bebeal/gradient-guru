@@ -4,9 +4,13 @@
 import { ImageExtractorConfig } from '@/hooks';
 import canvasSize from 'canvas-size';
 import { isSafari } from './device';
-import { PngHelpers } from './png';
-import { Editor, SVG_PADDING, SvgExportContext, SvgExportDef, TLFrameShape, TLGroupShape, TLShape, TLShapeId, TLSvgOptions, uniqueId } from '@tldraw/editor';
+import { PNG } from './png';
+import { Editor, SVG_PADDING, SvgExportContext, SvgExportDef, TLFrameShape, TLGroupShape, TLShape, TLShapeId, uniqueId } from '@tldraw/editor';
+import { addGridToSvg } from './svg';
 
+const btoa = (text: string): string => {
+  return Buffer.from(text, 'binary').toString('base64');
+};
 
 export type CanvasMaxSize = {
 	maxWidth: number;
@@ -74,11 +78,10 @@ export const adjustSizeForCanvasLimits = async (
 export const getSvgElement: any = async (editor: Editor, ids: TLShapeId[], imageConfig?: ImageExtractorConfig) => {
 	const svg = await editor.getSvg(ids, imageConfig);
 	if (!svg) throw new Error('Could not construct SVG.');
+  if (imageConfig?.grid?.enabled) {
+    addGridToSvg(svg, {...imageConfig.grid});
+  }
 	return svg;
-};
-
-const btoa = (text: string): string => {
-  return Buffer.from(text, 'binary').toString('base64');
 };
 
 // Encodes the given svg element as a base64 string
@@ -223,7 +226,7 @@ export const getSvgAsImage = async (svg: SVGElement, options: ImageExtractorConf
   if (!blob) return null;
 
   const view = new DataView(await blob.arrayBuffer());
-  return PngHelpers.setPhysChunk(view, dimensions.scale, {
+  return PNG.setPhysChunk(view, dimensions.scale, {
     type: 'image/' + type,
   });
 };
@@ -248,7 +251,7 @@ export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], opt
  *
  * @public
  */
-export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShape[], opts = {} as Partial<TLSvgOptions>): Promise<SVGSVGElement | undefined> => {
+export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShape[], opts = {} as Partial<ImageExtractorConfig>): Promise<SVGSVGElement | undefined> => {
   const ids =
     typeof shapes[0] === 'string'
       ? (shapes as TLShapeId[])
@@ -262,6 +265,7 @@ export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShap
     background = false,
     padding = SVG_PADDING,
     preserveAspectRatio = false,
+    grid
   } = opts
 
   // ---Figure out which shapes we need to include
@@ -458,6 +462,10 @@ export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShap
 
   for (const { element } of unorderedShapeElements.sort((a, b) => a.zIndex - b.zIndex)) {
     svg.appendChild(element)
+  }
+
+  if (grid?.enabled) {
+    addGridToSvg(svg, {...grid});
   }
 
   return svg

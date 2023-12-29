@@ -1,5 +1,5 @@
+'use client'
 // https://ui.aceternity.com/components/evervault-card
-'use client';
 
 import { useMotionValue } from "framer-motion";
 import React, { useState, useEffect } from "react";

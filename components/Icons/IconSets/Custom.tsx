@@ -6,6 +6,7 @@ import DotMark from '@/assets/icons/Carbon/DotMark.svg';
 import StatusPartialFail from '@/assets/icons/Carbon/StatusPartialFail.svg';
 import { cn } from '@/utils';
 import { ThreeFanGpu } from '../CustomIcons/ThreeFanGpu';
+import GradientGuru from '@/assets/icons/GradientGuru.svg';
 
 export interface SpinnerProps extends React.ComponentProps<'svg'> {
   active?: boolean;
@@ -287,5 +288,6 @@ export const CustomIconSet = {
   Folder,
   OpenFolder,
   Indeterminate,
-  ThreeFanGpu
+  ThreeFanGpu,
+  GradientGuru
 };

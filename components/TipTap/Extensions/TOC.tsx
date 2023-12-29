@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@/utils'
 import { TextSelection } from '@tiptap/pm/state'
 

@@ -1,3 +1,5 @@
+'use client'
+
 // https://github.com/ueberdosis/tiptap/blob/a706df78c2df8235b6b1825a71fccf8539fe9700/packages/extension-code-block/src/code-block.ts
 import { Node, mergeAttributes, textblockTypeInputRule } from '@tiptap/core';
 import { NodeViewWrapper, ReactNodeViewRenderer } from '@tiptap/react';

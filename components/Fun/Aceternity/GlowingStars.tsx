@@ -1,5 +1,5 @@
+"use client"
 // https://ui.aceternity.com/components/glowing-stars-effect
-"use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";

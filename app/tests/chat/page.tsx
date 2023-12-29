@@ -4,7 +4,7 @@ import { Chat, ChatList, ChatMessage, ChatMessageProps, ChatStatus, IconSetCache
 import { ChatStatusEnum, Message, User } from "@/hooks";
 
 
-export const exampleUser: User = {
+const exampleUser: User = {
   id: 'Noah',
   name: 'Noah',
   theme: 'primary',
@@ -12,7 +12,7 @@ export const exampleUser: User = {
   type: 'user',
 };
 
-export const exampleBot: User = {
+const exampleBot: User = {
   id: 'Bot',
   name: 'Bot',
   icon: <IconSetCache.Logos.OpenAI />,
@@ -23,27 +23,27 @@ export const exampleBot: User = {
 
 const exampleDate = new Date(7, 29, 1997);
 
-export const exampleUserMessage: Message = {
+const exampleUserMessage: Message = {
   content: 'I am become God. Creator of Life.',
   timestamp: exampleDate,
 };
 
-export const exampleBotMessage: Message = {
+const exampleBotMessage: Message = {
   content: "I'm sorry, Dave. I'm afraid I can't do that.\nI'm sorry, Dave. I'm afraid I can't do that.\nI'm sorry, Dave. I'm afraid I can't do that.",
   timestamp: exampleDate,
 };
 
-export const userMessageProps: ChatMessageProps = {
+const userMessageProps: ChatMessageProps = {
   user: exampleUser,
   message: exampleUserMessage,
 };
 
-export const botMessageProps: ChatMessageProps = {
+const botMessageProps: ChatMessageProps = {
   user: exampleBot,
   message: exampleBotMessage,
 };
 
-export const ChatStatusTest = () => {
+const ChatStatusTest = () => {
   return (
     <div className="flex flex-col gap-2 h-auto w-auto text-primary text-lg">
       {Object.values(ChatStatusEnum).map(status => (
@@ -52,7 +52,7 @@ export const ChatStatusTest = () => {
     </div>
   )
 };
-export const ChatMessageTest = () => {
+const ChatMessageTest = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="w-[700px]">
@@ -62,7 +62,7 @@ export const ChatMessageTest = () => {
     </div>
   )
 };
-export const ChatListTest = () => {
+const ChatListTest = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="w-[700px]">
@@ -77,7 +77,7 @@ export const ChatListTest = () => {
     </div>
   );
 };
-export const ChatTest = () => {
+const ChatTest = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="w-[700px]">
@@ -93,7 +93,7 @@ export const ChatTest = () => {
   )
 };
 
-export const Test = ({title, test}: any) => {
+const Test = ({title, test}: any) => {
   return (
     <div className="flex flex-col items-center justify-center w-auto h-full overflow-hidden bg-primary text-primary gap-2 border border-primary p-2 rounded">
       <div className="flex flex-col items-center justify-center h-auto w-auto text-primary text-lg p-1">
@@ -106,7 +106,7 @@ export const Test = ({title, test}: any) => {
   );
 };
 
-export const ChatPage = () => {
+const ChatPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-auto bg-primary text-primary">
       <div className="flex flex-col gap-10 w-full justify-center items-center">

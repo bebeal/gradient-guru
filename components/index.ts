@@ -1,4 +1,4 @@
-
+export * from './shared';
 export * from './Buttons';
 export * from './Icons';
 export * from './Flow';
@@ -9,4 +9,5 @@ export * from './SyntaxHighlighter';
 export * from './Terminal';
 export * from './TipTap';
 export * from './Chat';
+export * from './PageLink';
 export * from './Fun';

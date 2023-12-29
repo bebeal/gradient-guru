@@ -1,3 +1,5 @@
+'use client'
+
 import { Extension } from '@tiptap/core'
 import { Plugin } from '@tiptap/pm/state'
 import { Node } from '@tiptap/pm/model'

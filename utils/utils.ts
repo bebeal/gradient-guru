@@ -16,9 +16,19 @@ export const cn = (...inputs: ClassValue[]): string => {
 export const nanoid: (size?: number | undefined) => string = customAlphabet(ALPHANUMERIC, 7);
 
 // filter out keys from object
-export const filterObject = (obj: any, keys: string[] = []) => {
+export const filterObject = (obj: Record<any, any>, keys: any[] = []) => {
   return Object.keys(obj).reduce((acc: any, key: any) => {
     if (!keys.includes(key)) {
+      acc[key] = obj[key];
+    }
+    return acc;
+  }, {});
+};
+
+// filter obj to only include keys
+export const filterObjectByKeys = (obj: Record<any, any>, keys: any[] = []) => {
+  return Object.keys(obj).reduce((acc: any, key: any) => {
+    if (keys.includes(key)) {
       acc[key] = obj[key];
     }
     return acc;

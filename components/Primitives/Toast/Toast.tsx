@@ -1,3 +1,5 @@
+'use client'
+
 import { Button, Icon, TLUiIconType, useToasts, useTranslation, TLUiToastAction } from "@tldraw/tldraw";
 import * as T from '@radix-ui/react-toast'
 import { ReactNode } from "react";

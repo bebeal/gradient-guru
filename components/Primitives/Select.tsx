@@ -4,7 +4,8 @@ import React, { ForwardedRef, forwardRef, useCallback, useMemo } from 'react';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import { CaretSortIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { cn, noop, Radius, RadiusClasses } from '@/utils';
+import { cn, noop } from '@/utils';
+import { Radius, RadiusClasses } from '@/components';
 
 // ***********************
 //       Separator

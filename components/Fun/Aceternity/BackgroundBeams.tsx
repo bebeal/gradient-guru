@@ -1,5 +1,5 @@
+"use client"
 // https://ui.aceternity.com/components/background-beams
-"use client";
 
 import React from "react";
 import { motion } from "framer-motion";

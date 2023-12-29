@@ -104,7 +104,7 @@ const Pattern = ({
                   transition: { duration: distance * 0.2 },
                 });
               }
-            }, [clickedCell]);
+            }, [colIdx, controls]);
 
             return (
               <div

@@ -1,7 +1,7 @@
 'use client';
 
 import { getNodeName } from '@/components';
-import { encodeBlobAsBase64, getExportedImageBlob, getSVGAsBlob, getSvgPreview } from '@/utils';
+import { encodeBlobAsBase64, getSvgAsImage, getSVGAsBlob, getSvgElement, getSvgPreview } from '@/utils';
 import { Box2d, SVG_PADDING, TLEventInfo, TLShape, TLShapeId, useEditor } from '@tldraw/tldraw';
 import { useCallback, useEffect, useState } from 'react';
 import * as yup from 'yup';
@@ -24,6 +24,12 @@ export type ImageExtractorConfig = BaseExtractorConfig & {
   preserveAspectRatio?: React.SVGAttributes<SVGSVGElement>['preserveAspectRatio'];
   bounds?: Box2d;
   nodesToExclude: TLShapeId[];
+  grid?: {
+    enabled: boolean;
+    size: number;
+    color: string;
+    labels: boolean;
+  }
 };
 
 type NodeProperties = { enabled: boolean; properties: Record<keyof TLShape, boolean> };
@@ -52,6 +58,12 @@ export const ImageSchemaFields = {
   imageSmoothingEnabled: yup.boolean().meta({ item: 'checkbox', label: 'Image Smoothing' }),
   imageSmoothingQuality: yup.string().oneOf(['low', 'medium', 'high']).meta({ item: 'select', label: 'Image Smoothing Quality' }),
   padding: yup.number().min(0).max(100).meta({ item: 'slider', step: 1 }),
+  grid: yup.object().shape({
+    enabled: yup.boolean().meta({ item: 'switch', label: 'Grid' }),
+    size: yup.number().min(0).max(100).meta({ item: 'slider', step: 1 }),
+    color: yup.string().meta({ item: 'color' }),
+    labels: yup.boolean().meta({ item: 'checkbox', label: 'Grid Labels' }),
+  }).meta({ item: 'object' }),
 };
 
 export const defaultImageExtractorConfig: ImageExtractorConfig = {
@@ -66,11 +78,17 @@ export const defaultImageExtractorConfig: ImageExtractorConfig = {
   padding: SVG_PADDING,
   preserveAspectRatio: 'none',
   bounds: undefined,
+  grid: {
+    enabled: true,
+    size: 100,
+    color: 'red',
+    labels: true,
+  },
 };
 
 export const defaultNodePropertiesToIgnore: (keyof TLShape)[] = ['typeName', 'index', 'meta', 'isLocked'];
 export const defaultNodesExtractorConfig: NodesExtractorConfig = {
-  enabled: false,
+  enabled: true,
   nodePropertiesToExtract: {},
 };
 
@@ -80,12 +98,12 @@ export const defaultTextExtractorConfig: TextExtractorConfig = {
 };
 
 export const defaultCanvasExtractorConfig: CanvasStateExtractorConfig = {
-  enabled: false,
+  enabled: true,
   canvasPropertiesToExtract: {} as Record<keyof TLEventInfo, boolean>,
 };
 
 export const defaultUiExtractorConfig: UiStateExtractorConfig = {
-  enabled: false,
+  enabled: true,
   uiPropertiesToExtract: {} as Record<keyof UiState, boolean>,
 };
 
@@ -95,6 +113,17 @@ export type ExtractorConfigs = {
   textExtractorConfig: TextExtractorConfig;
   canvasExtractorConfig: CanvasStateExtractorConfig;
   uiExtractorConfig: UiStateExtractorConfig;
+};
+
+export type ExtractedState = ExtractorConfigs & {
+  nodes: TLShape[] | null;
+  svg: SVGSVGElement | null;
+  blob: Blob | null;
+  dataUrl: string | Blob | null;
+  text: string[] | null;
+  canvasState: Partial<TLEventInfo> | null;
+  uiState: Partial<UiState> | null
+  theme?: 'dark' | 'light';
 };
 
 export type ContentExtractorConfig = ExtractorConfigs & {
@@ -124,7 +153,7 @@ export const useContentExtractor = () => {
   const updateNodesExtractorConfig = useCallback(() => {
     useContentExtractorStore.setState((prevState) => {
       const nodes = editor.getCurrentPageShapesSorted();
-      const nodePropertiesToExtract = nodes.reduce((propertiesToExtract: any, node: any) => {
+      const nodePropertiesToExtract = nodes.reduce((propertiesToExtract: any, node: any, index: number) => {
         const nodeKey = node.id.replace('shape:', '');
         const keys = Object.keys(node).filter((key) => !defaultNodePropertiesToIgnore.includes(key as keyof TLShape)) as (keyof TLShape)[];
         const properties =
@@ -133,7 +162,7 @@ export const useContentExtractor = () => {
             nodeProperties[key] = true;
             return nodeProperties;
           }, {});
-        const enabled = prevState.nodesExtractorConfig.nodePropertiesToExtract[nodeKey]?.enabled || false;
+        const enabled = prevState.nodesExtractorConfig.nodePropertiesToExtract[nodeKey]?.enabled || index === 0 ? true : false;
         propertiesToExtract[nodeKey] = { enabled, properties };
         return propertiesToExtract;
       }, {});
@@ -207,11 +236,16 @@ export const useContentExtractor = () => {
     [editor]
   );
 
-  const extractImage = useCallback(async (): Promise<string | null> => {
-    const nodesInImage: TLShapeId[] = getNodeIds(imageExtractorConfig.nodesToExclude);
-    const blob = await getExportedImageBlob(editor, nodesInImage, imageExtractorConfig);
-    // return URL.createObjectURL(blob!);
-    return await encodeBlobAsBase64(blob!);
+  const extractImage = useCallback(async (): Promise<{ svg: SVGSVGElement; blob: Blob | null; dataUrl: string | null } | null> => {
+    const nodesToInclude = getNodeIds(imageExtractorConfig.nodesToExclude);
+    const svg = await getSvgElement(editor, nodesToInclude, imageExtractorConfig);
+    const blob = await getSvgAsImage(svg, imageExtractorConfig);
+    const dataUrl = blob ? await encodeBlobAsBase64(blob) : null;
+    return {
+      svg,
+      blob,
+      dataUrl,
+    }
   }, [editor, getNodeIds, imageExtractorConfig]);
 
   const getImagePreview = useCallback(async (): Promise<string | null> => {
@@ -229,6 +263,7 @@ export const useContentExtractor = () => {
       imageSmoothingEnabled: ImageSchemaFields['imageSmoothingEnabled'],
       imageSmoothingQuality: ImageSchemaFields['imageSmoothingQuality'],
       background: ImageSchemaFields['background'],
+      grid: ImageSchemaFields['grid'],
     });
   }, []);
 
@@ -360,14 +395,16 @@ export const useContentExtractor = () => {
     return yup.object().shape(nodeSchema).meta({ item: 'from-array' });
   }, [editor]);
 
-  const extractAll = useCallback(async (): Promise<{ nodes: TLShape[] | null; image: string | null; text: string[] | null; canvasState: Partial<TLEventInfo> | null; uiState: Partial<UiState> | null }> => {
+  const extractAll = useCallback(async (): Promise<ExtractedState> => {
     const nodes = nodesExtractorConfig.enabled ? await extractNodes() : null;
     const image = imageExtractorConfig.enabled ? await extractImage() : null;
+    const { svg, blob, dataUrl } = image || { svg: null, blob: null, dataUrl: null };
     const text = textExtractorConfig.enabled ? extractText() : null;
     const canvasState = canvasExtractorConfig.enabled ? extractCanvasState() : null;
     const uiState = uiExtractorConfig.enabled ? extractUiState() : null;
-    return { nodes, text, image, canvasState, uiState };
-  }, [nodesExtractorConfig.enabled, extractNodes, imageExtractorConfig.enabled, extractImage, textExtractorConfig.enabled, extractText, canvasExtractorConfig.enabled, extractCanvasState, uiExtractorConfig.enabled, extractUiState]);
+    const theme = editor?.user.getUserPreferences().isDarkMode ? 'dark' : 'light';
+    return { nodes, text, svg, blob, dataUrl, canvasState, uiState, theme, ...useContentExtractorStore.getState() };
+  }, [nodesExtractorConfig.enabled, extractNodes, imageExtractorConfig.enabled, extractImage, textExtractorConfig.enabled, extractText, canvasExtractorConfig.enabled, extractCanvasState, uiExtractorConfig.enabled, extractUiState, editor?.user]);
 
   return {
     imageExtractorConfig,
@@ -391,6 +428,8 @@ export const useContentExtractor = () => {
     extractUiState,
     getUiStateExtractorSchema,
 
+    getNodeIds,
+    getNodes,
     getNodesToExcludeSchema,
     setExtractorConfig,
     extractAll,

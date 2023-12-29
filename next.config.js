@@ -5,7 +5,21 @@ module.exports = {
   compiler: {
     styledComponents: true
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
+    // // https://stackoverflow.com/questions/76005377/module-not-found-cant-resolve-fs-nextjs-nextauth
+    if (!isServer) {
+      config.resolve = {
+        ...config.resolve,
+        fallback: {
+          net: false,
+          dns: false,
+          tls: false,
+          fs: false,
+          request: false,
+        },
+      };
+    }
+    // https://github.com/vercel/next.js/discussions/30870
     config.infrastructureLogging = {
         level: "error",
     };
@@ -89,7 +103,7 @@ module.exports = {
   output: process.env.NEXT_PRIVATE_STANDALONE ? 'standalone' : undefined,
   modularizeImports: undefined,
   experimental: {
-    // enable in nextjs 14: webpackBuildWorker: true,
+    // webpackBuildWorker: true,
     serverMinification: true,
     serverSourceMaps: false,
     caseSensitiveRoutes: false,

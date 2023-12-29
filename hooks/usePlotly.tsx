@@ -2,7 +2,7 @@
 
 import { PlotlyProps } from '@/components';
 import { useEffect, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 const defaultBg = 'rgb(22, 26, 29)';
 const defaultFontColor = 'rgb(160, 170, 186)';

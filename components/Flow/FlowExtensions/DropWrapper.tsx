@@ -1,3 +1,5 @@
+'use client'
+
 import { TLShape, createShapeId, useEditor } from "@tldraw/tldraw";
 import React, { useCallback } from "react";
 import styled from "styled-components";

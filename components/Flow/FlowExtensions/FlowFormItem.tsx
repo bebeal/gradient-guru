@@ -1,9 +1,10 @@
-'use client'
+'use client';
 
-import { DataModality, Models } from "@/clients";
+import { forwardRef } from 'react';
+import { DataModality, Models } from '@/clients/Models';
 import { DataModalityBadge, DefaultFormItem, FormFields, IconSetCache, Select } from "@/components";
 import { cn } from "@/utils";
-import { forwardRef } from "react";
+
 
 export const FlowFormItem = forwardRef<any, any>((props, ref) => {
   const { field, schema, placeholder, readOnly, form, item, className='' } = props;

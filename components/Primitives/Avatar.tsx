@@ -1,6 +1,7 @@
 'use client'
 
-import { Radius, RadiusClasses, Variant, cn } from "@/utils";
+import { Radius, RadiusClasses, Variant } from "@/components";
+import { cn } from "@/utils";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 
 import React, { ReactElement } from "react";

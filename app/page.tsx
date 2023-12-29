@@ -1,8 +1,7 @@
 'use client'
 
-import { Flow, IconSetCache } from "@/components";
+import { Flow } from "@/components";
 import { TLShape, createShapeId } from "@tldraw/tldraw";
-import ReactDOMServer from "react-dom/server";
 
 const box_1: any = {
   id: createShapeId(`box-1`),
@@ -58,8 +57,8 @@ const icon_node: any = {
   props: {
     w: 36,
     h: 36,
-    iconSet: 'Carbon',
-    icon: 'MachineLearningModel',
+    iconSet: 'Custom',
+    icon: 'GradientGuru',
   }
 };
 
@@ -93,14 +92,7 @@ const initialShapes: TLShape[] = [
   text_node
 ];
 
-const ApplicationWeb = <IconSetCache.Carbon.ApplicationWeb stroke="white" fill="white" width="32" height="32" />;
-
 const FlowPage = () => {
-  const customIcons = {
-    icons: {
-      'ApplicationWeb': `data:image/svg+xml,${encodeURIComponent(ReactDOMServer.renderToStaticMarkup(ApplicationWeb))}`,
-    }
-  };
   return (
     <div className="w-full h-full overflow-hidden">
       <Flow initialShapes={initialShapes} />

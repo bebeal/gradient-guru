@@ -78,12 +78,12 @@ export const ExtractionTab = () => {
 
   // fetch content on mount
   useEffect(() => {
-    if (!mounted) {
-      fetchImage();
+    if (!mounted && editor) {
       fetchNodes();
+      fetchImage();
       setMounted(true);
     }
-  }, [fetchImage, fetchNodes, mounted]);
+  }, [editor, fetchImage, fetchNodes, mounted]);
 
   const ImageExtraction = useMemo(() => {
     return (

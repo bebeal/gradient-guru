@@ -1,5 +1,5 @@
-// https://ui.aceternity.com/components/text-reveal-card
 'use client'
+// https://ui.aceternity.com/components/text-reveal-card
 
 import React, { useEffect, useRef, useState, memo } from "react";
 import { motion } from "framer-motion";

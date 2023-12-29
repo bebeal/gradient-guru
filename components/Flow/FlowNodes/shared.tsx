@@ -1,6 +1,8 @@
 'use client'
+
 import * as yup from 'yup';
-import { DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, Editor, GeoShapeGeoStyle, TLShape } from "@tldraw/editor";
+import { Editor, GeoShapeGeoStyle, TLShape } from '@tldraw/tldraw';
+import { DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, createShapeId } from "@tldraw/editor";
 import { DefaultLabelColorStyle } from "@tldraw/tlschema/src/styles/TLColorStyle";
 import { FONT_FAMILIES } from "@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants";
 import { cn } from '@/utils';
@@ -60,8 +62,16 @@ export const inferSchemaField = (key: any, value: any) => {
   }
 };
 
+export const formatNodeId = (id: string) => {
+  return id.replace(/^shape:/, '');
+}
+
+export const getNodeId = (node: TLShape) => {
+  return formatNodeId(node.id);
+}
+
 export const getNodeName = (node: TLShape) => {
-  return `[${node.type}] - ${node.id.replace('shape:', '')}`;
+  return `[${node.type}] - ${getNodeId(node)}`;
 };
 
 export const getNodeNameComponent = (node: TLShape, className: string = '') => {
@@ -69,21 +79,25 @@ export const getNodeNameComponent = (node: TLShape, className: string = '') => {
     <div className={cn("flex justify-between items-center w-full gap-2", className)}>
       <div className="text-right flex-1">[{node.type}]</div>
       <div className="text-center w-auto">-</div>
-      <div className="text-left flex-1">{node.id.replace('shape:', '')}</div>
+      <div className="text-left flex-1">{getNodeId(node)}</div>
     </div>
   );
 };
 
 
-export const makeEmptyResponseShape = (editor: Editor, resposneShapeId: any, dataUrl?: string) => {
-	const selectionBounds = editor.getSelectionPageBounds()
-	if (!selectionBounds) throw new Error('No selection bounds')
-  const { maxX, midY }: any = editor.getSelectionPageBounds()
+export const makeEmptyResponseShape = (editor: Editor) => {
+  // Create the preview shape
+  const { maxX = 0, midY = 0 }: any = editor.getCurrentPageBounds();
+  const newShapeId = createShapeId()
   editor.createShape<PreviewNode>({
-		id: resposneShapeId,
-		type: 'preview',
-		x: maxX + 60, // to the right of the selection
-		y: midY - (540 * 2) / 3 / 2, // half the height of the preview's initial shape
-		props: { html: '', source: dataUrl as string },
-	})
-}
+    id: newShapeId,
+    type: 'preview',
+    x: maxX + 60, // to the right of the selection
+    y: midY - (540 * 2) / 3 / 2, // half the height of the preview's initial shape
+    props: { html: '', source: '' },
+  });
+  setTimeout(() => {
+    editor.zoomToFit();
+  }, 0);
+  return newShapeId;
+};

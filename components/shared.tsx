@@ -1,8 +1,10 @@
+'use client'
+
 import React, { Suspense } from 'react';
-import { IconSetCache } from '@/components';
 import styled from 'styled-components';
-import { getEncodedSVGUrl, isSVG } from './svg';
-import { cn } from './utils';
+import { IconSetCache } from '@/components';
+import { getEncodedSVGUrl, isSVG } from '../utils/svg';
+import { cn } from '../utils/utils';
 
 export const DisabledClasses = cn(`disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none`);
 
@@ -202,9 +204,10 @@ export type ErrorMessage = { message?: string; stack?: string };
 export interface ErroringProps {
   children?: any;
   error?: ErrorMessage | string;
+  className?: string;
 }
 export const Erroring = (props: ErroringProps) => {
-  const { children, error = { message: 'Something went wrong', stack: 'Error: Something went wrong' } } = props;
+  const { children, error = { message: 'Something went wrong', stack: 'Error: Something went wrong' }, className, } = props;
   const content = children ? (
     children
   ) : (
@@ -214,8 +217,8 @@ export const Erroring = (props: ErroringProps) => {
   );
 
   return (
-    <div className="w-full h-full flex items-center justify-center text-xl text-error gap-2">
-      <IconSetCache.Carbon.StatusPartialFail className={'flex items-center justify-center h-6 w-6 text-base'} />
+    <div className={cn("w-full h-full flex items-center justify-center text-error gap-2 text-xl", className)}>
+      <IconSetCache.Carbon.StatusPartialFail className={'flex items-center justify-center h-full w-auto'} />
       {content}
     </div>
   );

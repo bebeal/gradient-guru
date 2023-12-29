@@ -1,7 +1,9 @@
+'use client'
+
 import { memo, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { Button, uniqueId } from '@tldraw/tldraw';
 import { CopyButton, DownloadButton, Form, IconSetCache, Label, Separator, Switch } from '@/components';
-import { useContentExtractor, useToasts } from '@/hooks';
+import { useContentExtractor, useModel, useToasts } from '@/hooks';
 import { cn, isEmptyObject } from '@/utils';
 
 export const TabClasses = `w-full h-full flex flex-col p-2 gap-2`;
@@ -129,7 +131,7 @@ export const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
 
 export const ExtractAllToast: React.FC<any> = ({ message }) => {
   const openImageInNewTab = () => {
-    const image = message.image;
+    const image = message.dataUrl;
     const newTab: Window | null = window.open();
     if (newTab === null) {
       console.error('Unable to open new tab');
@@ -161,10 +163,10 @@ export const ExtractAllToast: React.FC<any> = ({ message }) => {
   const ImageSection = () => {
     return (
       <>
-        {!message?.image && <div className="text-primary/80 w-full flex justify-center items-center">No Image</div>}
-        {message?.image && (
+        {!message?.dataUrl && <div className="text-primary/80 w-full flex justify-center items-center">No Image</div>}
+        {message?.dataUrl && (
           <div className="flex flex-row w-auto h-auto justify-around items-center !text-xs">
-            <a href={message.image} target="_blank" rel="no-referrer" download={`image-preview-${new Date().toISOString().split('T')[0]}.png`} className="text-primary underline flex flex-nowrap h-full w-auto">
+            <a href={message.dataUrl} target="_blank" rel="no-referrer" download={`image-preview-${new Date().toISOString().split('T')[0]}.png`} className="text-primary underline flex flex-nowrap h-full w-auto">
               <div className="flex flex-row items-center gap-1">
                 <DownloadButton simDownload tooltip />
               </div>
@@ -172,10 +174,10 @@ export const ExtractAllToast: React.FC<any> = ({ message }) => {
             <a href={'#'} onClick={openImageInNewTab} className="text-primary underline flex flex-nowrap h-full w-auto visited:[&>svg]:text-[#8E24AA]">
               Link <IconSetCache.Custom.ExternalLink height="12" />
             </a>
-            <CopyButton value={message.image} />
+            <CopyButton value={message.dataUrl} />
           </div>
         )}
-        {message?.image && <img src={message.image} height="100px" width="auto" alt="Image Extracted" className="object-cover w-full h-full" />}
+        {message?.dataUrl && <img src={message.dataUrl} height="100px" width="auto" alt="Image Extracted" className="object-cover w-full h-full" />}
       </>
     );
   };
@@ -262,8 +264,44 @@ export const TestExtractionButton = () => {
   }, [extractAll, toast]);
 
   return (
-    <Button type={'normal'} className={cn(`w-auto h-auto tlui-button tlui-button__menu`)} onClick={onClick}>
+    <Button type={'normal'} className={cn(`tlui-button tlui-button__menu !w-full !h-auto !items-center !justify-start`)} onClick={onClick}>
       Test Extraction
+    </Button>
+  );
+};
+
+export const TestModelButton = () => {
+  const {
+    modelClient,
+    setModelClient,
+    modelQueryMutation,
+    systemPromptName,
+    setSystemPromptName,
+  } = useModel();
+  const toast = useToasts();
+
+  const onClick = useCallback(async () => {
+    // Use mutateAsync instead of mutate
+   modelQueryMutation.mutateAsync().then((message: any) => {
+      console.log('Model Query Results:', message);
+      toast?.addToast({
+        id: `model-query-${uniqueId()}`,
+        title: 'Model Query Results',
+        description: (
+          <pre className="w-auto max-h-[500px] overflow-auto rounded p-1">
+            <code className="whitespace-pre-wrap break-words rounded leading-none">
+              {JSON.stringify(message, null, 2)}
+            </code>
+          </pre>
+        ),
+        keepOpen: true,
+      });
+    });
+  }, [modelQueryMutation, toast]);
+
+  return (
+    <Button type={'normal'} className={cn(`tlui-button tlui-button__menu !w-full !h-auto !items-center !justify-start`)} onClick={onClick}>
+      Test Model
     </Button>
   );
 };

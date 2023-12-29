@@ -1,49 +1,102 @@
 'use client'
 
+import { useCallback } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { useEditor } from '@tldraw/editor';
 import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
-import { useContentExtractor } from '@/hooks';
-import { BaseModelClient, DefaultModelConfig, ModelConfig, OpenAIModelClient } from '@/clients';
-import { useEditor } from '@tldraw/tldraw';
-import { useMutation } from '@tanstack/react-query';
+import { BaseModelClient, DefaultModelConfig, ModelConfig, OpenAIModelClient } from '@/clients/Models';
+import { formatNodeId, makeEmptyResponseShape, PreviewNode } from '@/components';
+import { ExtractedState, useApi, useContentExtractor } from '@/hooks';
+import { PromptName, Prompts } from '@/utils';
+import { getHTMLFromOpenAIResponse } from './shared';
+
+const LinkUploadVersion = 1;
 
 export type ModelState = {
   modelClient: BaseModelClient<ModelConfig, any, any>;
   setModelClient: (client: BaseModelClient<ModelConfig, any, any>) => void;
-  systemPrompt: string;
-  setSystemPrompt: (newSystemPrompt: string) => void;
+  systemPromptName: PromptName;
+  setSystemPromptName: (newSystemPromptName: PromptName) => void;
 };
 
 export const useModelClientStore = create<ModelState>((set) => ({
   modelClient: new OpenAIModelClient(DefaultModelConfig),
   setModelClient: (newModelClient: BaseModelClient<ModelConfig, any, any>) => set({ modelClient: newModelClient }),
-  systemPrompt: 'make_real',
-  setSystemPrompt: (newSystemPrompt: string) => set({ systemPrompt: newSystemPrompt }),
+  systemPromptName: 'makeReal',
+  setSystemPromptName: (newSystemPromptName: PromptName) => set({ systemPromptName: newSystemPromptName }),
 }));
 
 export const useModel = () => {
-  const systemPrompt = useModelClientStore(useShallow((state) => state.systemPrompt));
-  const setSystemPrompt = useModelClientStore(useShallow((state) => state.setSystemPrompt));
   const modelClient = useModelClientStore(useShallow((state) => state.modelClient));
   const setModelClient = useModelClientStore(useShallow((state) => state.setModelClient));
+  const systemPromptName = useModelClientStore(useShallow((state) => state.systemPromptName));
+  const setSystemPromptName = useModelClientStore(useShallow((state) => state.setSystemPromptName));
   const editor = useEditor();
-  const contentExtractor = useContentExtractor();
+  const api = useApi();
+  const { imageExtractorConfig, extractAll, getNodeIds } = useContentExtractor();
 
-  const queryModel = useMutation({
-    mutationKey: ['model-query'], 
-    mutationFn: async () => {
-      return await contentExtractor.extractAll().then(async (flows) => {
-        console.log('flows', flows);
-        const text = (flows?.text || []).join('\n');
-        
-        return {};
+  const getPrompt = useCallback(
+    (extracted: ExtractedState, key: PromptName) => {
+      const prompt = Prompts[key]({ extracted, config: modelClient.config });
+      return prompt;
+    },
+    [modelClient.config]
+  );
+
+  const handleMakeRealPrompt = async (extracted: ExtractedState) => {
+    // make response preview shape to hold the response html
+    const responseNodeId = makeEmptyResponseShape(editor);
+    try {
+      // use extracted content to make prompt
+      // messages object
+      const prompt = getPrompt(extracted, systemPromptName);
+      // make model query
+      // return await modelClient.callApi(prompt).then((response: any) => {
+      return await modelClient.mockApi(prompt).then((response: any) => {
+        const html = getHTMLFromOpenAIResponse(response);
+        // No HTML? Something went wrong
+        if (html.length < 100) {
+          console.warn(response.choices[0].message.contentx);
+          throw Error('Could not generate a design from those wireframes.');
+        }
+        // Upload the HTML to S3
+        const body = { id: formatNodeId(responseNodeId), html, source: extracted?.dataUrl as string, linkUploadVersion: LinkUploadVersion };
+        api.putS3(body);
+        // Update the shape with the new props
+        editor.updateShape<PreviewNode>({
+          id: responseNodeId,
+          type: 'preview',
+          props: {
+            html,
+            source: extracted?.dataUrl as string,
+            linkUploadVersion: LinkUploadVersion,
+            uploadedNodeId: responseNodeId,
+          },
+        });
+        return response;
       });
-    },
-    onSuccess: (response: any) => {
-      console.log('onSuccess Response:', response);
-    },
-    onError: (error: any) => {
-      console.log('onError Response:', error);
+    } catch (error) {
+      // If anything went wrong, delete the shape.
+      editor.deleteShape(responseNodeId);
+      throw error;
+    }
+  };
+
+  const handleNodeControlPrompt = async (extracted: ExtractedState) => {
+    return Prompts['nodeControl']({ extracted, config: modelClient.config });
+  };
+
+  const modelQueryMutation = useMutation({
+    mutationKey: ['model-query'],
+    mutationFn: async (): Promise<any> => {
+      return await extractAll().then(async (extracted: ExtractedState) => {
+        if (systemPromptName === 'makeReal') {
+          return await handleMakeRealPrompt(extracted);
+        } else {
+          return await handleNodeControlPrompt(extracted);
+        }
+      });
     },
     retry: false,
   });
@@ -51,8 +104,10 @@ export const useModel = () => {
   return {
     modelClient,
     setModelClient,
-    queryModel,
-    systemPrompt,
-    setSystemPrompt,
+    modelQueryMutation,
+    handleMakeRealPrompt,
+    systemPromptName,
+    setSystemPromptName,
+    getPrompt,
   };
 };

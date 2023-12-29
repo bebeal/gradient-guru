@@ -34,7 +34,7 @@ export const ScratchPanelProvider = ({ children }: { children: React.ReactNode }
       if (imageBlob) {
         const objectURL = URL.createObjectURL(imageBlob);
         const nodeToAdd: ScratchNode = {
-          panelPreview: <img src={objectURL} alt="shape" />,
+          panelPreview: <img src={objectURL} alt="shape" className="w-full h-auto object-contain"  style={{objectFit: 'contain'}}/>,
           nodesToAdd,
         };
         setScratchNodes((prevScratchNodes) => [...prevScratchNodes, nodeToAdd]);

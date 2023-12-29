@@ -1,6 +1,7 @@
 "use client";
 
-import { Loading, cn } from "@/utils";
+import { cn } from "@/utils";
+import { Loading } from '@/components';
 import { Editor } from "@tiptap/react";
 import { IconSetCache, Toolbar } from "@/components";
 

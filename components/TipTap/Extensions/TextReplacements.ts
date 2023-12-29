@@ -1,3 +1,5 @@
+'use client'
+
 import { Extension, textInputRule } from '@tiptap/core'
 
 export const TextReplacements = Extension.create({

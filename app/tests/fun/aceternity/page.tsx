@@ -8,7 +8,7 @@ import { cn } from "@/utils";
 import Image from 'next/image';
 import { BackgroundCellAnimation } from "@/components/Fun/Aceternity/BackgroundRipple";
 
-export const PinDemo = () => {
+const PinDemo = () => {
   return (
     <PinContainer
         title={'3D Pin Title'}
@@ -29,7 +29,7 @@ export const PinDemo = () => {
   )
 };
 
-export const BackgroundBeamsDemo = () => {
+const BackgroundBeamsDemo = () => {
   return (
     <div className="h-[400px] w-full bg-neutral-950 relative flex flex-col items-center justify-center antialiased">
     <div className="max-w-2xl mx-auto p-4">
@@ -43,14 +43,14 @@ export const BackgroundBeamsDemo = () => {
   );
 };
 
-export const BackgroundRippleDemo = () => {
+const BackgroundRippleDemo = () => {
   return (
     <BackgroundCellAnimation />
   );
 };
 
 
-export const EvervaultCardDemo = () => {
+const EvervaultCardDemo = () => {
   return (
     <div className="border border-black/[0.2] dark:border-white/[0.2] flex flex-col items-start max-w-sm mx-auto p-4 relative h-auto overflow-hidden">
       <EvervaultSvg className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
@@ -71,7 +71,7 @@ export const EvervaultCardDemo = () => {
   );
 };
 
-export const GoogleGeminiEffectDemo = () => {
+const GoogleGeminiEffectDemo = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -102,7 +102,7 @@ export const GoogleGeminiEffectDemo = () => {
   );
 };
 
-export const GlowingStarsDemo = () => {
+const GlowingStarsDemo = () => {
   return (
     <div className="flex py-20 items-center justify-center antialiased">
       <GlowingStarsBackgroundCard>
@@ -140,7 +140,7 @@ const GlowingStarIcon = () => {
 };
 
 
-export const LampDemo = () => {
+const LampDemo = () => {
   return (
     <LampContainer>
       <motion.h1
@@ -158,7 +158,7 @@ export const LampDemo = () => {
   );
 };
 
-export const PulseBeamsDemo = () => {
+const PulseBeamsDemo = () => {
   return (
     <div className="h-auto w-full relative flex flex-col items-center justify-center antialiased">
       <PulseBeams />
@@ -166,7 +166,7 @@ export const PulseBeamsDemo = () => {
   );
 };
 
-export const SparklesDemo = () => {
+const SparklesDemo = () => {
   return (
     <div className="h-auto w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md">
     <h1 className="font-bold text-center text-white relative z-20">
@@ -196,7 +196,7 @@ export const SparklesDemo = () => {
   )
 };
 
-export const TextRevealDemo = () => {
+const TextRevealDemo = () => {
   return (
     <div className="flex items-center justify-center bg-[#0E0E10] h-auto rounded-2xl w-full p-4">
     <TextRevealCard
@@ -215,7 +215,7 @@ export const TextRevealDemo = () => {
   )
 };
 
-export const TracingBeamDemo = () => {
+const TracingBeamDemo = () => {
   return (
     <div className="flex h-auto w-full relative items-center justify-center antialiased bg-slate-950">
     <TracingBeam className="">
@@ -250,7 +250,7 @@ export const TracingBeamDemo = () => {
   );
 };
 
-export const TypewriterEffectDemo = () => {
+const TypewriterEffectDemo = () => {
     const words = [
       {
         text: "Build",
@@ -287,7 +287,7 @@ export const TypewriterEffectDemo = () => {
     );
 };
 
-export const Demos: any = {
+const Demos: any = {
   PinDemo,
   TypewriterEffectDemo,
   TracingBeamDemo,

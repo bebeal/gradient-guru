@@ -1,13 +1,15 @@
-import API from 'openai';
+'use client'
+
+import { defaultHtml } from '@/components';
+import OpenAI from 'openai';
 
 // Lightweight generic client for interacting with models
-// Using classes to leverage inheritance for making it extensible/modular
 
 export type DataModality = 'text' | 'image' | 'audio' | 'video';
 export type ModelState = 'idle' | 'inference' | 'error';
 
 export type Message = {
-  role: API.ChatCompletionRole;
+  role: OpenAI.ChatCompletionRole;
   content: any;
   name?: string;
 };
@@ -78,7 +80,7 @@ export class BaseModelClient<Config extends ModelConfig, Input = ModelInput, Out
   }
 
   updateMessages(content: any): void {
-    this.config.messages?.push({ role: 'assistant' as API.ChatCompletionRole, content });
+    this.config.messages?.push({ role: 'assistant' as OpenAI.ChatCompletionRole, content });
   }
 
   updateConfig(configOverride: Partial<Config> = {}): void {
@@ -86,9 +88,28 @@ export class BaseModelClient<Config extends ModelConfig, Input = ModelInput, Out
   }
 
   // Identity function for mocking, override in subclasses
-  callApi(input: Input): Promise<Output> {
-    return new Promise((resolve, reject) => {
+  async callApi(input: Input): Promise<Output> {
+    return await new Promise((resolve, reject) => {
       resolve(input as unknown as Output);
     });
   }
+
+  async mockApi(input: Input): Promise<Output> {
+    // mock response ChatCompletion 
+    return await new Promise((resolve, reject) => {
+      resolve({
+        choices: [
+          {
+            finish_reason: 'stop',
+            index: 0,
+            logprobs: null,
+            message: {
+              content: defaultHtml,
+            },
+          },
+        ],
+      } as any);
+    });
+  }
 }
+

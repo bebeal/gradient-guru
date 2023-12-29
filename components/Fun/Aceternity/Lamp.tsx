@@ -1,3 +1,4 @@
+'use client'
 // https://ui.aceternity.com/components/lamp-effect
 
 import React from "react";

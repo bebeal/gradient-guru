@@ -1,7 +1,7 @@
 'use client'
 
 import { UserMessage, useChat } from "@/hooks";
-import { Button, ChatList, ChatStatus, IconSetCache, TextArea } from "@/components";
+import { ChatList, TextArea } from "@/components";
 import { cn } from "@/utils";
 
 export interface ChatProps {

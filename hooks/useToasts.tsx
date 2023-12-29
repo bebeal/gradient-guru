@@ -1,3 +1,4 @@
+'use client'
 
 import { TLUiToast } from "@/components";
 import { Editor, uniqueId } from "@tldraw/tldraw";

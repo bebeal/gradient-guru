@@ -163,7 +163,7 @@ export function isShapeId(id?: string): id is TLShapeId {
 }
 
 /** @public */
-export function createShapeId(id?: string, size: number = 4): TLShapeId {
+export function createShapeId(id?: string, size: number = 8): TLShapeId {
 	return `shape:${id ?? nanoid(size)}` as TLShapeId
 }
 

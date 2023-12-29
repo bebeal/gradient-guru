@@ -1,7 +1,8 @@
 "use client";
 
 import { Button, ButtonProps } from "@/components";
-import { Radius, cn } from "@/utils";
+import { cn } from "@/utils";
+import { Radius } from "@/components";
 import * as ToolbarPrimitive from "@radix-ui/react-toolbar";
 import { ElementRef, forwardRef, useCallback, useEffect, useState } from "react";
 

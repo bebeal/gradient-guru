@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactNode, useCallback, useState } from 'react';
 import { Button, IconSetCache } from '@/components';
 import { cn } from '@/utils';

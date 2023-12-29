@@ -1,5 +1,5 @@
+"use client"
 // https://ui.aceternity.com/components/sparkles
-"use client";
 
 import React from "react";
 import { useEffect, useState } from "react";

@@ -15,3 +15,4 @@ export * from './useViewport';
 export * from './useDownloader';
 export * from './useTipTap';
 export * from './useChat';
+export * from './useApi';

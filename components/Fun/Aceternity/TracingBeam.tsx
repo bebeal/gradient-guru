@@ -1,5 +1,5 @@
+"use client"
 //https://ui.aceternity.com/components/tracing-beam
-"use client";
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 

@@ -1,7 +1,6 @@
 'use client'
 
-import { ThreeFanGpu } from "@/components";
-import { UnderConstruction } from "@/utils";
+import { ThreeFanGpu, UnderConstruction } from "@/components";
 
 const ComputePage = () => {
   return (

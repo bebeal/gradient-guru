@@ -1,19 +1,6 @@
-import * as ProgressPrimitive from '@radix-ui/react-progress';
-import { MutationStatus } from '@tanstack/react-query';
+'use client'
 
-const getStatusClasses = (status: MutationStatus) => {
-  switch (status) {
-    case 'success':
-      return 'bg-accent';
-    case 'error':
-      return 'bg-red';
-    case 'pending':
-      return 'bg-accent';
-    case 'idle':
-    default:
-      return 'bg-primary';
-  }
-};
+import * as ProgressPrimitive from '@radix-ui/react-progress';
 
 export interface ProgressProps extends ProgressPrimitive.ProgressProps {
   className?: string;

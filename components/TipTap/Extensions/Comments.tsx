@@ -1,3 +1,5 @@
+'use client'
+
 import { Mark, mergeAttributes, Range } from "@tiptap/core";
 import { Mark as PMMark } from "@tiptap/pm/model";
 

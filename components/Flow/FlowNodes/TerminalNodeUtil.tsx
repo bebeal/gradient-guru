@@ -63,10 +63,10 @@ export class TerminalNodeUtil extends FlowNodeUtil<TerminalNode> {
 
   panelPreview(node: TerminalNode) {
     return (
-      <HTMLContainer className='p-1 flex flex-col gap-1 w-full h-auto justify-center items-center text-primary text-lg'>
-        <div>Terminal</div>
+      <div className='relative p-1 flex flex-col gap-1 w-full h-full justify-center items-center text-primary text-base overflow-hidden'>
+        Terminal
         <IconSetCache.Carbon.Terminal className="h-auto" />
-      </HTMLContainer>
+      </div>
     );
   }
 

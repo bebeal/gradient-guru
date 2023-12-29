@@ -1,7 +1,8 @@
 'use client'
 
 import { useTipTap } from '@/hooks';
-import { Loading, cn } from '@/utils';
+import { Loading } from '@/components';
+import { cn } from '@/utils';
 import { EditorContent } from '@tiptap/react';
 import { Suspense } from 'react';
 
