@@ -3775,6 +3775,13 @@
   resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-details/-/extension-details-2.5.1.tgz#d22076550f17b64782a14bb9c6805a0a2c03c6ae"
   integrity sha512-kK6k/2g5NmDIs6e79SFWvuz8zpANNpxfVK5gp3yP/rOaiqVDviGf4CxPdooefsnhGbbeguxs1qopLL0DQ2b6zw==
 
+"@tiptap-pro/extension-drag-handle@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-drag-handle/-/extension-drag-handle-2.5.1.tgz#8f26f89dac9f4da09c6e3531c7d805fc5c94686b"
+  integrity sha512-v5J8jneez0oofI7Ku51D7gx6ZS8cHiZ0/yT4MGK7TR3p+WhF5RbZRflJhIAZSRyvpXVcHSNgvYf7SQYWUGCadg==
+  dependencies:
+    tippy.js "^6.3.7"
+
 "@tiptap-pro/extension-emoji@^2.3.3":
   version "2.5.1"
   resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-emoji/-/extension-emoji-2.5.1.tgz#6b4b6ba5f2d32bb8f33619550be447cf9c7dc64b"
@@ -3798,6 +3805,11 @@
   version "2.5.1"
   resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-mathematics/-/extension-mathematics-2.5.1.tgz#d70e11d569b125b8a0622e78275bc8f0d5977923"
   integrity sha512-9tAC/xGHyqyp2VP/6U9bdVpuse/SeAwwkHjvgoNFcoEqYr8g7hLy7j4yVKY2lHPYFz9GfrHxnBXgix1nPy3d+w==
+
+"@tiptap-pro/extension-node-range@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.tiptap.dev/@tiptap-pro%2fextension-node-range/-/extension-node-range-2.5.1.tgz#5a51881016992684ab1390a89b59f3d155a069da"
+  integrity sha512-OdQ24xicH834o51P4GCP8ryBeItZIGVSG7QBq2cIfoTySQ0ewIfQ//gnPAdDjX4UqvxCkvlDUQgKVT4x+RmtVw==
 
 "@tiptap-pro/extension-table-of-content@^2.3.3":
   version "2.4.1"
@@ -3859,6 +3871,16 @@
   version "2.1.13"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-code/-/extension-code-2.1.13.tgz#27a5ca5705e59ca97390fad4d6631bf431690480"
   integrity sha512-f5fLYlSgliVVa44vd7lQGvo49+peC+Z2H0Fn84TKNCH7tkNZzouoJsHYn0/enLaQ9Sq+24YPfqulfiwlxyiT8w==
+
+"@tiptap/extension-collaboration-cursor@^2.1.13":
+  version "2.1.13"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-collaboration-cursor/-/extension-collaboration-cursor-2.1.13.tgz#0fa09144c83a106135189430e0da85677cb641a0"
+  integrity sha512-K9HJ75GJ/IRNMHLqcbthJ9AXgVusBi8Q17NKPe41LU2/mD6gk6aKbH4P0q4SIfEsTCzP0P4fnz1D6s+z77aJZg==
+
+"@tiptap/extension-collaboration@^2.1.13":
+  version "2.1.13"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-collaboration/-/extension-collaboration-2.1.13.tgz#f3b84c2e01db59e9a1183a7deaaa11dbf2f65777"
+  integrity sha512-EGzev7lONwOCaz7vWj/LkC9f86WLZIgRmqP7sD0xA7t8R+2qdEaRPeqwwy99EOataHxm9++BEd8hKAdBV8MVdw==
 
 "@tiptap/extension-color@^2.1.11":
   version "2.1.13"

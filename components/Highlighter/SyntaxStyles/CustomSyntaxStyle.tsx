@@ -3,7 +3,7 @@
 export const CustomSyntaxStyle: any = {
   "pre[class*=\"language-\"]": {
     "color": "#d4d4d4",
-    "fontSize": "13px",
+    "fontSize": "12px",
     "textShadow": "none",
     "fontFamily": "\"Berkeley Mono\", Menlo, Monaco, Consolas, \"Andale Mono\", \"Ubuntu Mono\", \"Courier New\", monospace",
     "direction": "ltr",
@@ -27,7 +27,7 @@ export const CustomSyntaxStyle: any = {
   },
   "code[class*=\"language-\"]": {
       "color": "#d4d4d4",
-      "fontSize": "13px",
+      "fontSize": "12px",
       "textShadow": "none",
       "fontFamily": "\"Berkeley Mono\", Menlo, Monaco, Consolas, \"Andale Mono\", \"Ubuntu Mono\", \"Courier New\", monospace",
       "direction": "ltr",

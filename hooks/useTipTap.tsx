@@ -1,28 +1,15 @@
 'use client'
 
-import { cn, nanoid } from '@/utils';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { cn } from '@/utils';
+import { useCallback } from 'react';
 import { useEditor } from '@tiptap/react';
 import { MarkdownTipTapExtensions } from '@/components/TipTap/Extensions';
 import { TipTapProps } from '@/components';
 
-interface Comment {
-  id: string
-  content: string
-  replies: Comment[]
-  createdAt: Date
+export interface useTipTapProps extends Partial<TipTapProps> {
 }
 
-const getNewComment = (content: string): Comment => {
-  return {
-    id: `a${nanoid()}a`,
-    content,
-    replies: [],
-    createdAt: new Date()
-  }
-}
-
-export const useTipTap = (props: TipTapProps) => {
+export const useTipTap = (props: useTipTapProps) => {
   const {
     children,
     content='',
@@ -30,17 +17,10 @@ export const useTipTap = (props: TipTapProps) => {
     extensions=MarkdownTipTapExtensions,
     ...rest
   } = props;
-  const [items, setItems] = useState<any[]>([]);
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [activeCommentId, setActiveCommentId] = useState<string | null>(null);
-  const commentsSectionRef = useRef<HTMLDivElement | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [replaceTerm, setReplaceTerm] = useState<string>("");
-
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class: cn("prose prose-sm prose-zinc dark:prose-invert w-full h-full focus:outline-none", className),
+        class: cn("prose prose-sm prose-zinc dark:prose-invert w-full h-auto p-4 focus:outline-none", className),
       }
     },
     extensions,
@@ -52,44 +32,11 @@ export const useTipTap = (props: TipTapProps) => {
     editor?.commands.setContent(content);
   }, [editor]);
 
-  const updateSearchReplace = useCallback(() => {
-    editor?.commands?.setSearchTerm(searchTerm);
-    editor?.commands?.setReplaceTerm(replaceTerm);
-  }, [editor, searchTerm, replaceTerm]);
-
-  const focusCommentWithActiveId = useCallback((id: string) => {
-    if (!commentsSectionRef.current) return
-    const commentInput = commentsSectionRef.current.querySelector<HTMLInputElement>(`input#${id}`)
-    if (!commentInput) return
-    commentInput.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-      inline: 'center'
-    })
-  }, []);
-
-  const addVideo = (videoUrl: string) => editor?.commands.setVideo(videoUrl);
-
-  const setComment = useCallback(() => {
-    const newComment = getNewComment('')
-
-    setComments([...comments, newComment])
-
-    editor?.commands.setComment(newComment.id)
-
-    setActiveCommentId(newComment.id)
-
-    setTimeout(focusCommentWithActiveId)
-  }, [comments, editor?.commands, focusCommentWithActiveId]);
-
   const setColor = useCallback((color: string = "#FFFFFF") => {
     editor?.commands.setColor(color);
   }, [editor]);
 
-  useEffect(() => {
-    if (!activeCommentId) return;
-    focusCommentWithActiveId(activeCommentId);
-  }, [activeCommentId, focusCommentWithActiveId]);
+  const addVideo = (videoUrl: string) => editor?.commands.setVideo(videoUrl);
 
   const getCounts = useCallback(() => {
     const characters = editor?.storage?.characterCount?.characters();
@@ -127,18 +74,9 @@ export const useTipTap = (props: TipTapProps) => {
 
   return {
     editor,
-    comments,
-    activeCommentId,
-    commentsSectionRef,
-    items,
-    addVideo,
     updateContent,
-    updateSearchReplace,
-    setComment,
-    setComments,
-    setActiveCommentId,
-    setItems,
     setColor,
+    addVideo,
     getCounts,
     getLinkAttributes,
     getText,

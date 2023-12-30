@@ -24,7 +24,7 @@ def mat_mul(m1, m2):
 
 const HighlighterPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-auto bg-primary text-primary">
+    <div className="flex flex-col items-center justify-center h-full bg-primary text-primary">
       <div className="flex flex-col gap-10 w-full justify-center items-center">
         <div className="flex border border-primary rounded-md p-4">
       <Highlighter code={javascriptCode} language={"javascript"} />

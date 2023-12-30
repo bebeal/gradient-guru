@@ -186,11 +186,11 @@ export interface LoadingProps {
   children?: any;
 }
 export const Loading = (props: LoadingProps) => {
-  const { spinner = true, dots = false, children, text = 'Loading' } = props;
+  const { spinner = true, dots = false, children, text } = props;
   const content = children ? children : text;
 
   return (
-    <div className="w-auto h-auto flex items-center justify-center text-xl text-muted gap-1">
+    <div className="w-full h-full flex items-center justify-center text-xl text-muted gap-1">
       <Suspense fallback={'...'}>
         {spinner && <IconSetCache.Custom.Loader className={cn('flex items-center justify-center h-6 w-6 text-base gap-1')} />}
         {content}

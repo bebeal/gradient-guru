@@ -82,7 +82,7 @@ export const Panel = forwardRef((props: PanelProps, ref?: any) => {
             className={cn(
               'group relative overflow-hidden',
               'cursor-pointer text-secondary bg-primary rounded-lg border border-secondary p-2 flex-1 flex items-center justify-center text-lg leading-tight',
-              'radix-state-open:border-accent radix-state-open:text-primary',
+              'radix-state-open:border-accent radix-state-open:text-primary min-w-[36px]',
               baseClasses,
               hovered && 'text-accent bg-secondary border-accent',
               !value.includes('item') && borderClasses

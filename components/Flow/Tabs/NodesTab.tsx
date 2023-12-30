@@ -42,10 +42,12 @@ export const NodesTab = () => {
 
   useEffect(() => {
     if (!mounted) {
-      setNodesSchemas(buildNodeSchemas(editor));
+      const schemas = buildNodeSchemas(editor);
+      setNodesSchemas(schemas);
       setMounted(true);
+
     }
-  }, [editor, mounted]);
+  }, [editor, mounted, nodesSchemas]);
 
   const onNodeChangeError = useCallback(async (error: any, nodeId: string) => {
     setNodesSchemas((oldSchemas: any) => {

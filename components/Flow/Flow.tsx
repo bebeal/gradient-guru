@@ -1,142 +1,138 @@
-'use client'
+'use client';
 
-import { 
+import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 'react';
+import { assert, Canvas, Editor, ErrorScreen, LoadingScreen, TLAnyShapeUtilConstructor, TldrawEditor, TldrawEditorProps, TLOnMountHandler, useEditor } from '@tldraw/editor';
+import {
   ContextMenu,
-  TLUiEventSource,
-  TLUiOverrides,
+  defaultShapeTools,
+  defaultShapeUtils,
+  defaultTools,
   TldrawHandles,
   TldrawHoveredShapeIndicator,
   TldrawProps,
   TldrawScribble,
   TldrawSelectionBackground,
   TldrawSelectionForeground,
-  defaultShapeTools,
-  defaultShapeUtils,
-  defaultTools,
-  toolbarItem
+  TLUiEventSource,
+  TLUiOverrides,
+  toolbarItem,
 } from '@tldraw/tldraw';
-import {
-	Canvas,
-	Editor,
-	ErrorScreen,
-	LoadingScreen,
-	TLAnyShapeUtilConstructor,
-	TLOnMountHandler,
-	TldrawEditor,
-	TldrawEditorProps,
-	assert,
-	useEditor,
-} from '@tldraw/editor'
+import { registerDefaultExternalContentHandlers, TLExternalContentProps } from '@tldraw/tldraw/src/lib/defaultExternalContentHandlers';
 import { registerDefaultSideEffects } from '@tldraw/tldraw/src/lib/defaultSideEffects';
 import { usePreloadAssets } from '@tldraw/tldraw/src/lib/ui/hooks/usePreloadAssets';
-import { TLExternalContentProps, registerDefaultExternalContentHandlers } from '@tldraw/tldraw/src/lib/defaultExternalContentHandlers';
 import { TLEditorAssetUrls, useDefaultEditorAssetsWithOverrides } from '@tldraw/tldraw/src/lib/utils/static-assets/assetUrls';
-import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 'react'
-import { DropWrapper, FlowUi, FlowUiProps, Erroring, Loading } from '@/components';
+import { DropWrapper, Erroring, FlowUi, FlowUiProps, Loading } from '@/components';
+import { ContentRecorderProvider, useMounted } from '@/hooks';
 import { cn } from '@/utils';
-
-import { IconNodeUtil, PreviewNodeUtil, TerminalNodeUtil, TipTapNodeUtil } from './FlowNodes';
-
+import { IconNodeUtil, PreviewNodeUtil, TerminalNodeUtil, TipTapNodeUtil } from './Nodes';
 import '@tldraw/tldraw/tldraw.css';
 import './Flow.css';
-import { PlotlyNodeUtil } from './FlowNodes/PlotlyNodeUil';
-import { ContentRecorderProvider } from '@/hooks';
+import { PlotlyNodeUtil } from './Nodes/PlotlyNodeUil';
 
-export type FlowProps = TldrawProps & FlowUiProps & {
-  shapeUtils?: TLAnyShapeUtilConstructor[];
-}
+export type FlowProps = TldrawProps &
+  FlowUiProps & {
+    shapeUtils?: TLAnyShapeUtilConstructor[];
+  };
 
 export const Flow = (props: FlowProps) => {
-	const {
+  const {
     // Custom props
-    initialShapes=[],
-    shapeUtils=[],
-    tools=[],
+    initialShapes = [],
+    shapeUtils = [],
+    tools = [],
     // Default props
-		children,
-		maxImageDimension,
-		maxAssetSize,
-		acceptedImageMimeTypes,
-		acceptedVideoMimeTypes,
-		onMount,
-		...rest
-	} = props;
+    children,
+    maxImageDimension,
+    maxAssetSize,
+    acceptedImageMimeTypes,
+    acceptedVideoMimeTypes,
+    onMount,
+    ...rest
+  } = props;
+  const mounted = useMounted();
   const assets: TLEditorAssetUrls = useDefaultEditorAssetsWithOverrides(rest?.assetUrls);
   const { done: preloadingComplete, error: preloadingError } = usePreloadAssets(assets);
   const customShapeUtils: TLAnyShapeUtilConstructor[] = useMemo(() => [IconNodeUtil, PlotlyNodeUtil, TerminalNodeUtil, TipTapNodeUtil, PreviewNodeUtil], []);
   const scratchNodeUtils = useMemo(() => [IconNodeUtil, PlotlyNodeUtil, TerminalNodeUtil, TipTapNodeUtil], []);
 
-  const overrides: TLUiOverrides = useMemo(() => ({
-    tools(editor, tools) {
-      // Create a tool item in the ui's context.
-      tools.icon = {
-        id: 'icon',
-        label: 'tool.icon' as any,
-        readonlyOk: false,
-        icon: 'ApplicationWeb',
-        kbd: 'c',
-        onSelect: (source: TLUiEventSource) => {
-          editor.setCurrentTool('icon')
-          // trackEvent('select-tool', { source, id: 'icon' })
-        },
-      }
-      return tools
-    },
-    toolbar(_app, toolbar, { tools }) {
-      toolbar.push(toolbarItem(tools.icon))
-      return toolbar
-    },
-  }), []);
-  
-  const withDefaults: TldrawEditorProps = {
-		initialState: 'select',
-		...rest,
-		components: useMemo(
-			() => ({
-				Scribble: TldrawScribble,
-				CollaboratorScribble: TldrawScribble,
-				SelectionForeground: TldrawSelectionForeground,
-				SelectionBackground: TldrawSelectionBackground,
-				Handles: TldrawHandles,
-				HoveredShapeIndicator: TldrawHoveredShapeIndicator,
-				...rest.components,
-			}),
-			[rest.components]
-		),
-		shapeUtils: useMemo(
-			() => [...defaultShapeUtils, ...customShapeUtils, ...(shapeUtils ?? [])],
-			[customShapeUtils, shapeUtils]
-		),
-		tools: useMemo(
-			() => [...defaultTools, ...defaultShapeTools, ...(tools ?? [])],
-			[tools]
-		),
-	};
+  const overrides: TLUiOverrides = useMemo(
+    () => ({
+      tools(editor, tools) {
+        // Create a tool item in the ui's context.
+        tools.icon = {
+          id: 'icon',
+          label: 'tool.icon' as any,
+          readonlyOk: false,
+          icon: 'ApplicationWeb',
+          kbd: 'c',
+          onSelect: (source: TLUiEventSource) => {
+            editor.setCurrentTool('icon');
+            // trackEvent('select-tool', { source, id: 'icon' })
+          },
+        };
+        return tools;
+      },
+      toolbar(_app, toolbar, { tools }) {
+        toolbar.push(toolbarItem(tools.icon));
+        return toolbar;
+      },
+    }),
+    []
+  );
 
-	if (preloadingError) { return <ErrorScreen><Erroring>Could not load assets. Please refresh the page.</Erroring></ErrorScreen>; }
-	if (!preloadingComplete) { return <LoadingScreen><div className="flex w-full h-auto justify-center items-center"><Loading dots={true} spinner={false}>Loading assets</Loading></div></LoadingScreen> }
-	return (
-		<TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)} >
+  const withDefaults: TldrawEditorProps = {
+    initialState: 'select',
+    ...rest,
+    components: useMemo(
+      () => ({
+        Scribble: TldrawScribble,
+        CollaboratorScribble: TldrawScribble,
+        SelectionForeground: TldrawSelectionForeground,
+        SelectionBackground: TldrawSelectionBackground,
+        Handles: TldrawHandles,
+        HoveredShapeIndicator: TldrawHoveredShapeIndicator,
+        ...rest.components,
+      }),
+      [rest.components]
+    ),
+    shapeUtils: useMemo(() => [...defaultShapeUtils, ...customShapeUtils, ...(shapeUtils ?? [])], [customShapeUtils, shapeUtils]),
+    tools: useMemo(() => [...defaultTools, ...defaultShapeTools, ...(tools ?? [])], [tools]),
+  };
+
+  if (preloadingError) {
+    return (
+      <ErrorScreen>
+        <Erroring>Could not load assets. Please refresh the page.</Erroring>
+      </ErrorScreen>
+    );
+  }
+  if (!preloadingComplete || !mounted) {
+    return (
+      <LoadingScreen>
+        <div className="flex w-full h-auto justify-center items-center">
+          <Loading dots={true} spinner={false}>
+            Loading assets
+          </Loading>
+        </div>
+      </LoadingScreen>
+    );
+  }
+  return (
+    <TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)}>
       <ContentRecorderProvider>
-      <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} {...withDefaults}>
-        <ContextMenu>
-          <DropWrapper>
-            <Canvas />
-          </DropWrapper>
-        </ContextMenu>
-        <InsideOfEditorContext
-          maxImageDimension={maxImageDimension}
-          maxAssetSize={maxAssetSize}
-          acceptedImageMimeTypes={acceptedImageMimeTypes}
-          acceptedVideoMimeTypes={acceptedVideoMimeTypes}
-          onMount={onMount}
-        />
-        {children}
-      </FlowUi>
+        <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} {...withDefaults}>
+          <ContextMenu>
+            <DropWrapper>
+              <Canvas />
+            </DropWrapper>
+          </ContextMenu>
+          <InsideOfEditorContext maxImageDimension={maxImageDimension} maxAssetSize={maxAssetSize} acceptedImageMimeTypes={acceptedImageMimeTypes} acceptedVideoMimeTypes={acceptedVideoMimeTypes} onMount={onMount} />
+          {children}
+        </FlowUi>
       </ContentRecorderProvider>
-		</TldrawEditor>
-	)
-}
+    </TldrawEditor>
+  );
+};
 
 // We put these hooks into a component here so that they can run inside of the context provided by TldrawEditor.
 const InsideOfEditorContext = ({

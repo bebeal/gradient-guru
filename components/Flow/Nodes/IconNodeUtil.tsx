@@ -24,11 +24,6 @@ export type IconNode = TLBaseShape<
 
 export class IconNodeUtil extends FlowNodeUtil<IconNode> {
   static override type = 'icon' as const;
-	override canEdit = () => true
-	override isAspectRatioLocked = (node: IconNode) => false
-	override canResize = (node: IconNode) => true
-	override canBind = (node: IconNode) => false
-	override canUnmount = () => false
 
   getDefaultProps(): IconNode['props'] {
     return {

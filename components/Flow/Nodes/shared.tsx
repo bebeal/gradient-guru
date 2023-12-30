@@ -2,7 +2,7 @@
 
 import * as yup from 'yup';
 import { Editor, GeoShapeGeoStyle, TLShape } from '@tldraw/tldraw';
-import { DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, createShapeId } from "@tldraw/editor";
+import { Box2d, DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, EASINGS, compact, createShapeId } from "@tldraw/editor";
 import { DefaultLabelColorStyle } from "@tldraw/tlschema/src/styles/TLColorStyle";
 import { FONT_FAMILIES } from "@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants";
 import { cn } from '@/utils';
@@ -74,11 +74,18 @@ export const makeEmptyResponseShape = (editor: Editor) => {
     y: midY - (540 * 2) / 3 / 2, // half the height of the preview's initial shape
     props: { html: '', source: '' },
   });
-  setTimeout(() => {
-    editor.zoomToFit();
-    const zoom = editor.getZoomLevel();
-    // zoom out a bit more
-    editor.setCamera({ ...editor.getCamera(), z: zoom * 0.75 });
-  }, 0);
   return newShapeId;
+};
+
+export const zoomToFitNewNode = (editor: Editor, animation: any = { duration: 200, easing: EASINGS.easeInOutQuad }) => {
+  if (!editor.getInstanceState().canMoveCamera) return this;
+
+  const ids = [...editor.getCurrentPageShapeIds()];
+  if (ids.length <= 0) return this;
+
+  const pageBounds = Box2d.Common(compact(ids.map((id) => editor.getShapePageBounds(id))));
+  const currentBounds = editor.getCurrentPageBounds();
+  if (pageBounds.w < (currentBounds?.w || 0) && pageBounds.h < (currentBounds?.h || 0)) return this;
+  
+  editor.zoomToBounds(pageBounds, undefined, animation)
 };

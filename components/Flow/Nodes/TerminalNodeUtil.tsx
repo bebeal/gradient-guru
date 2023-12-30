@@ -1,4 +1,3 @@
-
 'use client'
 /* eslint-disable react-hooks/rules-of-hooks */
 import {
@@ -8,41 +7,42 @@ import {
   useIsEditing,
 } from '@tldraw/tldraw';
 import * as yup from 'yup';
-import { IconSetCache, TipTap } from '@/components';
+import { CodeLanguage, IconSetCache, Terminal, codeLanguages } from '@/components';
 import { FlowNodeUtil } from './FlowNodeUtil';
 import { filterObjectByKeys } from '@/utils';
-import { markdownString } from '@/app/tests/tiptap/markdown';
 
-export type TipTapNode = TLBaseShape<
-  'tiptap',
+export type TerminalNode = TLBaseShape<
+  'terminal',
   {
     w: number;
     h: number;
+    language: CodeLanguage;
     text: string;
+    wrapLongLines?: boolean;
+    showLineNumbers?: boolean;
   }
 >;
 
-export class TipTapNodeUtil extends FlowNodeUtil<TipTapNode> {
-  static override type = 'tiptap' as const;
-	override canEdit = () => true
-	override isAspectRatioLocked = (node: TipTapNode) => false
-	override canResize = (node: TipTapNode) => true
-	override canBind = (node: TipTapNode) => false
-	override canUnmount = () => false
+export class TerminalNodeUtil extends FlowNodeUtil<TerminalNode> {
+  static override type = 'terminal' as const;
+  override canScroll = () => true;
 
-  getDefaultProps(): TipTapNode['props'] {
+  getDefaultProps(): TerminalNode['props'] {
     return {
-      w: 650,
-      h: 550,
-      text: markdownString
+      w: 300,
+      h: 200,
+      language: 'python',
+      text: 'print("Hello World!")',
+      wrapLongLines: true,
+      showLineNumbers: true,
     };
   }
 
-  component(node: TipTapNode) {
+  component(node: TerminalNode) {
     const isEditing = useIsEditing(node.id);
     return (
-      <HTMLContainer id={node.id} className="w-auto h-auto overflow-hidden z-[500] tl-embed-container cursor-auto text-xs" style={{pointerEvents: isEditing ? 'auto' : 'none'}}>
-        <TipTap autofocus={true} content={node.props.text} />
+      <HTMLContainer id={node.id} className="tl-embed-container w-auto h-auto overflow-hidden z-[500] cursor-pointer" style={{pointerEvents: isEditing ? 'auto' : 'none'}}>
+        <Terminal editable showLineNumbers={node.props.showLineNumbers} wrapLongLines={node.props.wrapLongLines} language={node?.props?.language} code={node.props.text} className="h-full w-full" />
         <div
           style={{
             textAlign: 'center',
@@ -74,33 +74,34 @@ export class TipTapNodeUtil extends FlowNodeUtil<TipTapNode> {
     );
   }
 
-  override toSvg = (node: TipTapNode, ctx: SvgExportContext): SVGElement => {
+  override toSvg = (node: TerminalNode, ctx: SvgExportContext): SVGElement => {
     const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svgElement.setAttribute('width', `${node.props.w}`);
     svgElement.setAttribute('height', `${node.props.h}`);
     return svgElement;
   }
 
-  indicator(node: TipTapNode) {
+  indicator(node: TerminalNode) {
     return <rect width={node.props.w} height={node.props.h} />;
   }
 
 
-  panelPreview(node: TipTapNode) {
+  panelPreview(node: TerminalNode) {
     return (
-      <div className='relative p-1 flex flex-col gap-1 w-full h-full justify-center items-center text-primary text-base overflow-hidden'>
-        <IconSetCache.Logos.TipTap className="w-full h-auto px-2" />
+      <div className='relative p-1 flex gap-1 w-full h-full justify-center items-center text-primary text-xs overflow-hidden'>
+        <IconSetCache.Carbon.Terminal className="h-auto" /> Terminal
       </div>
     );
   }
 
-  getSchema(node: TipTapNode) {
+  getSchema(node: TerminalNode) {
     const baseSchema = super.getSchema(node);
     const baseSchemaProps = filterObjectByKeys(baseSchema.props.fields, Object.keys(node.props));
     return {
       ...baseSchema,
       props: yup.object().shape({
         ...baseSchemaProps,
+        language: yup.string().oneOf(codeLanguages, 'Invalid Language').meta({ item: 'select' }),
       }).meta({ item: 'object' }),
     }
   }

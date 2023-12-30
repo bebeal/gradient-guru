@@ -1,12 +1,6 @@
 'use client'
 
 import { nanoid } from '@/utils';
-import { SearchAndReplace } from '@sereneinserenade/tiptap-search-and-replace';
-import Details from '@tiptap-pro/extension-details';
-import DetailsContent from '@tiptap-pro/extension-details-content';
-import DetailsSummary from '@tiptap-pro/extension-details-summary';
-import Emoji, { gitHubEmojis } from '@tiptap-pro/extension-emoji';
-import FileHandler from '@tiptap-pro/extension-file-handler';
 import InvisibleCharacters, { HardBreakNode } from '@tiptap-pro/extension-invisible-characters';
 import { TableOfContent } from '@tiptap-pro/extension-table-of-content';
 import UniqueID from '@tiptap-pro/extension-unique-id';
@@ -32,7 +26,6 @@ import Italic from '@tiptap/extension-italic';
 import Link from '@tiptap/extension-link';
 import ListItem from '@tiptap/extension-list-item';
 import ListKeymap from '@tiptap/extension-list-keymap';
-import Mention from '@tiptap/extension-mention';
 import OrderedList from '@tiptap/extension-ordered-list';
 import Paragraph from '@tiptap/extension-paragraph';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -54,8 +47,6 @@ import Youtube from '@tiptap/extension-youtube';
 import { Node } from '@tiptap/pm/model';
 import { Markdown as MarkdownExtension } from 'tiptap-markdown';
 import { ColorChips } from './ColorChips';
-import { EmojiSuggestion } from './EmojiSuggestion';
-import { MentionListSuggestion } from './MentionListSuggestion';
 import { ReactComponent } from './ReactComponent';
 import { Snippets } from './Snippets';
 import { TextReplacements } from './TextReplacements';
@@ -78,6 +69,7 @@ import 'tiptap-extension-upload-image/dist/upload-image.min.css';
  * - [TextReplacements]: The TextReplacements extension allows you to replace certain characters with others. For example, you can replace three dots with an ellipsis character.
  * - [ColorHighlighter]: Replaces color codes with color chips
  * - [ReactComponent]: The ReactComponent extension allows you to add react components to your editor. It also provides a suggestion dropdown to select a component.
+ * - [TerminalBlock]: The TerminalBlock extension replaces the default codeblock extension.
  */
 const CustomExtensions = {
   TextReplacements,
@@ -91,17 +83,11 @@ const CustomExtensions = {
  *     THIRD PARTY EXTENSIONS
  * =================================
  * THIRD PARTY EXTENSIONS: Third party extensions are extensions that are not directly maintained by tiptap.
- * - [SearchAndReplace]: The SearchAndReplace extension allows you to search and replace text in the editor. It’s a simple search and replace functionality.
  * - [Video]: The Video extension allows you to add videos to your editor. It also provides a suggestion dropdown to select a video.
  * - [Snippets]: The Snippets extension allows you to insert snippets into your editor. It also provides a suggestion dropdown to select a snippet.
  * 
  */
 const ThirdPartyExtensions = {
-  SearchAndReplace: SearchAndReplace.configure({
-    searchResultClass: "search-result",
-    caseSensitive: false,
-    disableRegex: false,
-  }),
   Video,
   Snippets,
 };
@@ -111,37 +97,12 @@ const ThirdPartyExtensions = {
  *          PRO EXTENSIONS
  * =================================
  * PRO EXTENSIONS: To install these extension you need access to tiptaps private registry, set this up first.
- * - [Comments]: The Comments extension allows you to add comments to your editor. It also provides a comment bubble to show the number of comments in the editor.
- * - [Details, DetailsContent, DetailsSummary]: The Details extension enables you to use the <details> HTML tag in the editor. This is great to show and hide content.
- * - [Emoji]: The Emoji extension renders emojis as an inline node. All inserted (typed, pasted, etc.) emojis will be converted to this node. The benefit of this is that unsupported emojis can be rendered with a fallback image. As soon as you copy text out of the editor, they will be converted back to plain text.
- * - [FileHandler]: The FileHandler extension allows you to easily handle file drops and pastes in the editor. You can define custom handlers for both events & manage allowed file types.
  * - [InvisibleCharacters]: This extension adds decorators to show non-printable characters and help you increase accessibility.
  * - [Mathematics]: This extension allows you to write and visualize even complex mathematical formulas or equations in your editor. Please note that the current version is still in a very basic stage.
  * - [TableOfContent]: The TableOfContents extension lets you get a list of anchors from your document and passes on important information about each anchor (for example the depth, the content and a unique ID for each heading but also the active state and scroll states for each anchor). This can be used to render the table of content on your own.
  * - [UniqueID]: The UniqueID extension adds unique IDs to all nodes. The extension keeps track of your nodes, even if you split them, merge them, undo/redo changes, crop content, paste content … It just works. (Also, you can configure which node types get an unique ID, and which not, and you can customize how those IDs are generated).
  */
 const ProExtensions = {
-  Details: Details.configure({
-    persist: true,                                 // Specify if the open status should be saved in the document. Defaults to false.
-    openClassName: 'is-open',                      // Specifies a CSS class that is set when toggling the content. Defaults to is-open.
-  }),
-  DetailsContent,
-  DetailsSummary,
-  Emoji: Emoji.configure({
-    enableEmoticons: true,
-    emojis: gitHubEmojis,
-    forceFallbackImages: false,
-    suggestion: EmojiSuggestion,
-  }),
-  FileHandler: FileHandler.configure({
-    onPaste: (editor: any, files: any, htmlContent: any) => {
-      console.log('Paste not implemented yet', files, htmlContent);
-    },
-    onDrop: (editor: any, files: any, pos: any) => {
-      console.log('Drop not implemented yet', files, pos);
-    },
-    allowedMimeTypes: undefined
-  }),
   InvisibleCharacters: InvisibleCharacters.configure({
     visible: true,                                 // Define default visibility.
     builders: [new HardBreakNode()],               // An array of invisible characters – by default it contains: spaces, hard breaks and paragraphs.
@@ -183,7 +144,6 @@ const ProExtensions = {
  * - [ListItem]: The ListItem extension allows you to use the <li> HTML tag in the editor.
  * - [OrderedList]: The OrderedList extension allows you to use the <ol> HTML tag in the editor.
  * - [Paragraph]: The Paragraph extension allows you to use the <p> HTML tag in the editor.
- * - [Mention]: The Mention extension allows you to insert mentions into your editor. It also provides a suggestion dropdown to select a mention.
  * - [Table]: The Table extension allows you to use the <table> HTML tag in the editor.
  * - [TableCell]: The TableCell extension allows you to use the <td> HTML tag in the editor.
  * - [TableHeader]: The TableHeader extension allows you to use the <th> HTML tag in the editor.
@@ -226,12 +186,6 @@ const NodeExtensions = {
     keepAttributes: false,                         // Decides whether to keep the attributes from a previous line after toggling the list either using inputRule or using the button
   }),
   Paragraph,
-  Mention: Mention.configure({
-    renderLabel({ options, node }) {               // Define how a mention label should be rendered.
-      return `${options.suggestion.char}${node.attrs.label ?? node.attrs.id}`
-    },
-    suggestion: MentionListSuggestion
-  }),
   Table: Table.configure({
     resizable: true,
     handleWidth: 5,
@@ -410,14 +364,14 @@ const FunctionalityExtensions = {
     transformCopiedText: true,   // Copied text is transformed to markdown
   }),
   Placeholder: Placeholder.configure({
-    emptyEditorClass: '',                        // The class that is added to the editor when it’s empty.
-    emptyNodeClass: '',                          // The added CSS class if the node is empty.
+    emptyEditorClass: 'is-editor-empty',                        // The class that is added to the editor when it’s empty.
+    emptyNodeClass: 'is-empty',                          // The added CSS class if the node is empty.
     // Dynamica placeholder
     placeholder: ({ node }) => {
       if (node.type.name === 'heading') {
         return 'Title...'
       }
-      return 'QED'
+      return 'Write something …'
     },
     showOnlyWhenEditable: true,                  // Show decorations only when editor is editable.
     showOnlyCurrent: true,                       // Show decorations only in currently selected node.
@@ -453,19 +407,15 @@ export const StarterKitExtensions = [
   'OrderedList',
   'Paragraph',
   'Text',
-  'Link',
   // Marks
   'Bold',
   'Code',
   'Italic',
   'Strike',
   // Extensions
-  'Markdown',
   'DropCursor',
   'Gapcursor',
   'History',
-  'TextAlign',
-  'Typography',
 ];
 
 export const BaseMarkdownExtensions = [
@@ -479,6 +429,7 @@ export const BaseMarkdownExtensions = [
   'Youtube',
   'TaskItem',
   'TaskList',
+  'Link',
   // Marks
   'TextStyle',
   'Highlight',
@@ -486,31 +437,27 @@ export const BaseMarkdownExtensions = [
   'Superscript',
   'Underline',
   // Extensions
+  'Markdown',
   'BubbleMenu',
   'CharacterCount',
   'Focus',
   'FontFamily',
   'ListKeymap',
   'Placeholder',
-  'FileHandler',
+  'TextAlign',
 
 ];
 
 export const GfmExtensions = [
   ...BaseMarkdownExtensions,
   'KatexExtension',
-  'Emoji',
-  'Mention',
   'TextReplacements',
   'ColorChips',
-  
 ];
 
 export const EditorMarkdownExtensions = [
   ...GfmExtensions,
-  'BubbleMenu',
   'CharacterCount',
-  'Focus',
 ];
 
 export const MarkdownTipTapExtensions = Array.from(new Set(EditorMarkdownExtensions.map((extension) => AllExtensions[extension])));

@@ -28,11 +28,7 @@ export type PlotlyNode = TLBaseShape<
 
 export class PlotlyNodeUtil extends FlowNodeUtil<PlotlyNode> {
   static override type = 'plotly' as const;
-	override canEdit = () => true
-	override isAspectRatioLocked = (node: PlotlyNode) => false
-	override canResize = (node: PlotlyNode) => true
-	override canBind = (node: PlotlyNode) => false
-	override canUnmount = () => false
+	override canScroll = () => true;
 
   getDefaultProps(): PlotlyNode['props'] {
     return {
@@ -48,7 +44,7 @@ export class PlotlyNodeUtil extends FlowNodeUtil<PlotlyNode> {
     // - Isn't responsive to width/height changes, so we need to re-render it when the node is resized, which is why those properties are included in the key
     // - Doesn't respect pointer-events: none of the container, so we need to change the plot to static when not editing
     return (
-      <HTMLContainer id={node.id} className="w-auto h-auto overflow-hidden z-[500]" style={{pointerEvents: isEditing ? 'auto' : 'none'}}>
+      <HTMLContainer id={node.id} className="tl-embed-container w-auto h-auto overflow-hidden z-[500] cursor-auto" style={{pointerEvents: isEditing ? 'auto' : 'none'}}>
         <Plotly key={`${node.props.w}-${node.props.h}-${isEditing ? 'editable' : 'static'}`} data={linePlotData} config={{ staticPlot: !isEditing }} style={{width: node.props.w, height: node.props.h}} />
       </HTMLContainer>
     );
@@ -87,7 +83,7 @@ export class PlotlyNodeUtil extends FlowNodeUtil<PlotlyNode> {
     return {
       ...baseSchema,
       props: yup.object().shape({
-        ...baseSchemaProps
+        ...baseSchemaProps,
       }).meta({ item: 'object' }),
     }
   }

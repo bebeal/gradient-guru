@@ -4,7 +4,7 @@ import { useTipTap } from '@/hooks';
 import { Loading, TipTapToolbar } from '@/components';
 import { cn } from '@/utils';
 import { EditorContent, EditorOptions } from '@tiptap/react';
-import { Suspense } from 'react';
+import { Suspense, useRef } from 'react';
 
 export interface TipTapProps extends Partial<EditorOptions> {
   children?: any;
@@ -18,19 +18,20 @@ export const TipTap = (props: TipTapProps) => {
   const {
     toolbar=true,
   } = props;
+  const ref = useRef<HTMLDivElement>(null);
   const { editor } = useTipTap(props);
 
   if (!editor) {
     return <Loading />;
   }
   return (
-    <div className="relative flex flex-col w-full h-full border border-primary rounded-sm bg-secondary">
-    {toolbar && <TipTapToolbar editor={editor}/>}
-    <div className={cn("relative flex w-auto h-full p-4 overflow-y-auto overflow-x-hidden justify-center")}>
+    <div ref={ref} className="relative flex flex-col w-full h-full border border-primary rounded-sm bg-secondary">
       <Suspense fallback={<Loading />}>
-        <EditorContent editor={editor} />
+        {toolbar && <TipTapToolbar editor={editor}/>}
+        <div id="tiptap-content" className={cn("relative flex w-full h-full overflow-y-auto overflow-x-hidden justify-center")}>
+          <EditorContent editor={editor} />
+        </div>
       </Suspense>
-    </div>
     </div>
   );
 };

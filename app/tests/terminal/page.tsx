@@ -43,10 +43,10 @@ void printVector(const std::vector<int>& vec) {
 
 const TerminalPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-auto bg-primary text-primary">
+    <div className="flex flex-col items-center justify-center h-full bg-primary text-primary">
       <div className="flex flex-col gap-2 w-full h-auto justify-center items-center overflow-auto p-10">
         <Terminal code={javascriptCode} language={"javascript"} />
-        <Terminal code={pythonCode} language={"python"} />
+        <Terminal editable code={pythonCode} language={"python"} />
         <Terminal code={cppCode} language={"cpp"} />
       </div>
     </div>
