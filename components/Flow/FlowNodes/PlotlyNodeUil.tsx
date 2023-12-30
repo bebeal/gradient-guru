@@ -75,9 +75,8 @@ export class PlotlyNodeUtil extends FlowNodeUtil<PlotlyNode> {
 
   panelPreview(node: PlotlyNode) {
     return (
-      <div className='relative p-1 flex flex-col gap-1 w-full h-full justify-center items-center text-primary text-base overflow-hidden'>
-        Plotly
-        <IconSetCache.Logos.Plotly className="h-auto" />
+      <div className='relative p-1 flex gap-1 w-full h-full justify-center items-center text-primary text-base overflow-hidden'>
+        <IconSetCache.Logos.Plotly className="h-auto" /> Plotly
       </div>
     );
   }

@@ -90,9 +90,8 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
   panelPreview(node: IconNode) {
     // const RandomIcon = IconSetCache[node.props.iconSet][Object.keys(IconSetCache?.[node.props.iconSet])[Math.floor(Math.random() * Object.keys(IconSetCache?.[node.props.iconSet]).length)]];
     return (
-      <div className='relative p-1 flex flex-col gap-1 w-full h-full justify-center items-center text-primary text-base overflow-hidden'>
-        Icon
-        <IconSetCache.Carbon.FlowStream className="h-auto" />
+      <div className='relative p-1 flex gap-1 w-full h-full justify-center items-center text-primary text-base overflow-hidden'>
+        <IconSetCache.Carbon.FlowStream className="h-auto" /> Icon
       </div>
     );
   }

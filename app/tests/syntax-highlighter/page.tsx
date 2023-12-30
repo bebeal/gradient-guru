@@ -1,7 +1,7 @@
 
 'use client'
 
-import { SyntaxHighlighter } from "@/components";
+import { Highlighter } from "@/components";
 
 const javascriptCode = `// Fibonacci
 const fib = n => n <= 1 ? n : fib(n-1) + fib(n-2);
@@ -22,19 +22,19 @@ def mat_mul(m1, m2):
     return np.matmul(m1, m2)
 `
 
-const SyntaxHighlighterPage = () => {
+const HighlighterPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-auto bg-primary text-primary">
       <div className="flex flex-col gap-10 w-full justify-center items-center">
         <div className="flex border border-primary rounded-md p-4">
-      <SyntaxHighlighter code={javascriptCode} language={"javascript"} />
+      <Highlighter code={javascriptCode} language={"javascript"} />
         </div>
         <div className="flex border border-primary rounded-md p-4">
-      <SyntaxHighlighter code={pythonCode} language={"python"} />
+      <Highlighter code={pythonCode} language={"python"} />
       </div>
       </div>
     </div>
   );
 };
 
-export default SyntaxHighlighterPage;
+export default HighlighterPage;

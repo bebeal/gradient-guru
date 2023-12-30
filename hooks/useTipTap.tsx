@@ -4,6 +4,7 @@ import { cn, nanoid } from '@/utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useEditor } from '@tiptap/react';
 import { MarkdownTipTapExtensions } from '@/components/TipTap/Extensions';
+import { TipTapProps } from '@/components';
 
 interface Comment {
   id: string
@@ -21,18 +22,13 @@ const getNewComment = (content: string): Comment => {
   }
 }
 
-export interface useTipTapProps {
-  children?: any;
-  content?: any;
-  className?: string;
-  extensions?: any;
-}
-export const useTipTap = (props: useTipTapProps) => {
+export const useTipTap = (props: TipTapProps) => {
   const {
     children,
     content='',
     className,
     extensions=MarkdownTipTapExtensions,
+    ...rest
   } = props;
   const [items, setItems] = useState<any[]>([]);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -44,12 +40,12 @@ export const useTipTap = (props: useTipTapProps) => {
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class: cn("prose prose-sm prose-zinc dark:prose-invert focus:outline-none", className),
+        class: cn("prose prose-sm sm:prose lg:prose-lg xl:prose-2xl prose-zinc dark:prose-invert w-full h-full focus:outline-none", className),
       }
     },
     extensions,
     content: children || content,
-    autofocus: false,
+    ...rest
   });
 
   const updateContent = useCallback((content: string) => {

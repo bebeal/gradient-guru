@@ -138,7 +138,7 @@ export const Toolbar = forwardRef<ElementRef<typeof ToolbarPrimitive.Root>, Tool
     mounted && (
       <ToolbarPrimitive.Root
         ref={ref}
-        className={cn("flex w-auto h-auto items-center justify-center bg-primary text-primary", className)}
+        className={cn("flex w-auto h-auto items-center justify-center bg-primary text-primary", 'flex-col md:flex-row md:flex-wrap', className)}
         {...rest}
       >
         {items.map((toolbarItem, idx) => {

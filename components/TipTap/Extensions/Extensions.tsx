@@ -513,4 +513,4 @@ export const EditorMarkdownExtensions = [
   'Focus',
 ];
 
-export const MarkdownTipTapExtensions = EditorMarkdownExtensions.map((extension) => AllExtensions[extension]);
+export const MarkdownTipTapExtensions = Array.from(new Set(EditorMarkdownExtensions.map((extension) => AllExtensions[extension])));

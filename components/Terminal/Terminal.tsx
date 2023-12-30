@@ -1,17 +1,19 @@
 'use client'
 
-import { SyntaxHighlighter, SyntaxStyle, CodeLanguageProperties, CodeLanguageAliases, CopyButton, IconLink, DownloadButton } from "@/components";
+import { Highlighter, SyntaxStyle, CodeLanguageProperties, CodeLanguageAliases, CopyButton, IconLink, DownloadButton, HighlighterProps } from "@/components";
+import { cn } from "@/utils";
 
 
-export interface TerminalProps {
+export interface TerminalProps extends HighlighterProps {
   value?: any;
-  code?: string;
+  code: string;
   language?: string;
-  style?: SyntaxStyle;
+  syntaxStyle?: SyntaxStyle;
+  className?: string;
 }
 
 export const Terminal = (props: TerminalProps) => {
-  const { value, code='', language, style='custom', ...rest } = props;
+  const { value, code='', language, syntaxStyle='custom', className, ...rest } = props;
   const id = `terminal-${language}`;
   const codeLanguage: CodeLanguageProperties = CodeLanguageAliases[language||'jsx'];
 
@@ -41,12 +43,12 @@ export const Terminal = (props: TerminalProps) => {
   }
 
   return (
-    <section id={id} className="flex flex-col h-auto w-full rounded-lg gap-0">
+    <section id={id} className={cn("flex flex-col h-auto w-auto rounded-lg gap-0", className)}>
       <div className="bg-[#28282b] w-full h-auto leading-4 rounded-t-lg grid grid-cols-3 items-center px-4 py-[0.5px] pointer-events-auto overflow-hidden">
         <div className="flex w-auto gap-1 items-center justify-self-start">
           {codeLanguage?.icon && codeLanguage?.href && codeLanguage?.name && <IconLink Ico={codeLanguage?.icon} href={codeLanguage?.href} label={codeLanguage?.name} />}
         </div>
-        <div className="text-primary font-bold text-sm justify-self-center">
+        <div className="text-primary font-bold text-sm justify-self-center truncate">
           Terminal.<span className="text-muted text-xs">{codeLanguage?.extensions?.[0] || 'jsx'}</span>
         </div>
         <div className="flex w-auto gap-1 items-center justify-self-end">
@@ -54,9 +56,7 @@ export const Terminal = (props: TerminalProps) => {
           <CopyButton value={code} />
         </div>
       </div>
-      <div className="w-full">
-        <SyntaxHighlighter code={code} language={language} style={style} className={'!rounded-t-0 !rounded-b-lg'} {...rest} />
-      </div>
+      <Highlighter code={code} language={language} syntaxStyle={syntaxStyle} className={'!rounded-t-0 !rounded-b-lg h-full'} {...rest} />
     </section>
   );
 };

@@ -310,7 +310,7 @@ export const TipTapToolbar = (props: TipTapToolbarProps) => {
   return (
     <Toolbar
       items={ToolbarItems}
-      className="flex w-auto h-auto items-center gap-1 rounded-sm [background-image:linear-gradient(to_bottom,rgb(var(--background-secondary)/1),rgb(var(--background-secondary)/1))] shadow-2xl shadow-black border-b border-primary"
+      className="flex w-auto h-auto items-center gap-1 rounded-sm [background-image:linear-gradient(to_bottom,rgb(var(--background-secondary)/1),rgb(var(--background-secondary)/1))] p-1 border-b border-primary"
     />
   );
 };
