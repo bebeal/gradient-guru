@@ -11,6 +11,7 @@ import * as yup from 'yup';
 import { IconSetCache, TipTap } from '@/components';
 import { FlowNodeUtil } from './FlowNodeUtil';
 import { filterObjectByKeys } from '@/utils';
+import { markdownString } from '@/app/tests/tiptap/markdown';
 
 export type TipTapNode = TLBaseShape<
   'tiptap',
@@ -31,16 +32,16 @@ export class TipTapNodeUtil extends FlowNodeUtil<TipTapNode> {
 
   getDefaultProps(): TipTapNode['props'] {
     return {
-      w: 300,
-      h: 200,
-      text: 'print("Hello World!")',
+      w: 650,
+      h: 550,
+      text: markdownString
     };
   }
 
   component(node: TipTapNode) {
     const isEditing = useIsEditing(node.id);
     return (
-      <HTMLContainer id={node.id} className="w-full h-auto overflow-hidden z-[500] tl-embed-container cursor-auto" style={{pointerEvents: isEditing ? 'auto' : 'none'}}>
+      <HTMLContainer id={node.id} className="w-auto h-auto overflow-hidden z-[500] tl-embed-container cursor-auto text-xs" style={{pointerEvents: isEditing ? 'auto' : 'none'}}>
         <TipTap autofocus={true} content={node.props.text} />
         <div
           style={{

@@ -40,7 +40,7 @@ export const useTipTap = (props: TipTapProps) => {
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class: cn("prose prose-sm sm:prose lg:prose-lg xl:prose-2xl prose-zinc dark:prose-invert w-full h-full focus:outline-none", className),
+        class: cn("prose prose-sm prose-zinc dark:prose-invert w-full h-full focus:outline-none", className),
       }
     },
     extensions,

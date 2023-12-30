@@ -21,6 +21,12 @@ export const DropWrapper = (props: DropWrapperProps) => {
   const { children } = props;
   const editor = useEditor();
 
+  const zoomOut = useCallback(() => {
+    editor.zoomToFit();
+    const zoom = editor.getZoomLevel();
+    editor.setCamera({ ...editor.getCamera(), z: zoom * 0.75 });
+  }, [editor]);
+
   const dropNode = useCallback((point: any, parsedData: any, defaultProps: any) => {
     const node = {
       ...parsedData,
@@ -29,7 +35,10 @@ export const DropWrapper = (props: DropWrapperProps) => {
       y: point.y - (defaultProps?.h / 2 || 0),
     } as TLShape;
     editor.createShape(node);
-  }, [editor]);
+    setTimeout(() => {
+      zoomOut();
+    }, 0);
+  }, [editor, zoomOut]);
 
   const handleDrop = useCallback((event: any) => {
     event.preventDefault();
