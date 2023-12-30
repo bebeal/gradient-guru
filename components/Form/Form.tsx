@@ -45,7 +45,6 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
     shouldFocusError=false,
     ...rest
   } = props;
-  // hack 
   const [initialized, setInitialized] = useState(false);
   const object = Array.isArray(initialObject) ? arrayToObject(initialObject) : initialObject;
   // if schema is not provided, infer it based on types
@@ -72,20 +71,12 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
     }
   }, [form, initialized]);
 
-  useEffect(() => {
-    form.watch((value) => {
-      form.handleSubmit(onSubmit, onError)()
-    });
-  }, [form, onError, onSubmit]);
-
   return (
     <FormProvider {...rest} {...form}>
       <FormPrimitive.Root
         ref={ref}
         className={cn(`w-full h-auto p-2 overflow-auto rounded items-center`, readOnly && 'bg-primary/90', className)}
-        onChange={(value: any) =>  {
-          form.handleSubmit(onSubmit, onError)();
-        }}
+        onChange={(data: any) => form.handleSubmit((data: any) => onSubmit(data, form), onError)()}
       > 
         <div className={cn("w-full h-auto grid gap-px rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`)}>
           <FormFields ItemRenderer={ItemRenderer} form={form} schema={schema} labels={labels} readOnly={readOnly} />

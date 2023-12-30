@@ -8,27 +8,27 @@ import { cn } from "@/utils";
 export type FormControlProps = React.ComponentPropsWithoutRef<"div"> & {
 };
 
-export const FormControl = React.forwardRef<HTMLDivElement, FormControlProps>((props, ref) => {
+export const FormSlot = React.forwardRef<HTMLDivElement, FormControlProps>((props, ref) => {
   const {
     children,
     className = "",
     ...rest
   } = props;
-  const { fieldState, id, descriptionId, messageId } = useFormField();
+  const { field, id, descriptionId, messageId } = useFormField();
 
   return (
     <Slot
       ref={ref}
       id={id}
       aria-describedby={
-        !fieldState.error
+        !field.error
           ? `${descriptionId}`
           : `${descriptionId} ${messageId}`
       }
-      aria-invalid={!!fieldState.error}
+      aria-invalid={!!field.error}
       className={cn(`flex`, className)}
       {...rest}
     >{children}</Slot>
   )
 })
-FormControl.displayName = "FormControl"
+FormSlot.displayName = "FormSlot"

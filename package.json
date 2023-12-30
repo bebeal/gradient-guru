@@ -163,6 +163,7 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@hookform/devtools": "^4.3.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@next/eslint-plugin-next": "^14.0.2",
     "@svgr/webpack": "^8.1.0",

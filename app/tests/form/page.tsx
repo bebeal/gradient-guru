@@ -81,19 +81,16 @@ const FormTestPage = () => {
     'icon': yup.string().oneOf(Array.from([...Object.keys(IconSetCache?.[object.iconSet])]), `Invalid Icon`).meta({ item: 'select', label: 'Icon' }),
   }).meta({ item: 'object' });
 
-  const onSubmit = (data: any) => {
-    console.log('onSubmit', data);
-    const currentIcon: any = object.icon;
-    const currentIconSet: any = object.iconSet;
-    let icon = currentIcon;
-    if (currentIconSet != data.iconSet) {
-      // update icon if iconSet has changed
-      icon = Object.keys(IconSetCache?.[data.iconSet])[0];
-      console.log('new icon ', icon);
-    }
-    setObject({
-      ...data,
-      icon,
+  const onSubmit = (data: any, form: any) => {
+    setObject((oldObject) => {
+      const currentIcon = oldObject.icon;
+      const currentIconSet = oldObject.iconSet;
+      let icon = currentIcon;
+      if (currentIconSet != data.iconSet) {
+        // update icon if iconSet has changed
+        icon = Object.keys(IconSetCache?.[data.iconSet])[0];
+      }
+      return { ...oldObject, ...data, icon };
     });
   };
 

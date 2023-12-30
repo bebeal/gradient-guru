@@ -1,5 +1,5 @@
 export * from './Form';
-export * from './FormControl';
+export * from './FormSlot';
 export * from './FormField';
 export * from './FormLabel';
 export * from './FormDescription';

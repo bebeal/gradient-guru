@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ForwardedRef, forwardRef, useCallback, useEffect, useMemo } from 'react';
+import React, { ForwardedRef, forwardRef, useCallback, useMemo } from 'react';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import { CaretSortIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import * as SelectPrimitive from '@radix-ui/react-select';
@@ -266,16 +266,19 @@ export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) =>
 
   // radix doesn't expose the actual event so we have to create a synthetic one for it to work with react-hook-form
   const onValueChange = useCallback((newValue: string) => {
-      const event = {
-        target: {
-          value: newValue,
-          name,
-          type: 'button',
-        },
-      };
-      onValueChangeCallback?.(newValue);
-      onChangeCallback?.(event);
-  },[name, onChangeCallback, onValueChangeCallback]);
+    if (!items.some((v) => v.value === newValue)) {
+      return;
+    }
+    const event = {
+      target: {
+        value: newValue,
+        name,
+        type: 'button',
+      },
+    };
+    onValueChangeCallback?.(newValue);
+    onChangeCallback?.(event);
+  }, [items, name, onChangeCallback, onValueChangeCallback]);
 
   return (
     <SelectPrimitive.Root

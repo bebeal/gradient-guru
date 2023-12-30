@@ -6,7 +6,7 @@ import { Control, FieldPath, FieldValues, useController } from "react-hook-form"
 import { FormFieldContext, useFormField } from "@/hooks";
 import { Schema } from "./Form";
 import { cn } from "@/utils";
-import { Accordion, Checkbox, Input, Select, Slider, Switch, FormFields, FormMessage, FormLabel, FormDescription, FormControl } from '@/components';
+import { Accordion, Checkbox, Input, Select, Slider, Switch, FormFields, FormMessage, FormLabel, FormDescription, FormSlot } from '@/components';
 
 const basicFormItems = ['object', 'select', 'slider', 'boolean', 'text', 'readOnly'] as const;
 export type BasicFormItem = typeof basicFormItems[number];
@@ -145,9 +145,9 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
         {description && (<FormDescription>{description}</FormDescription>)}
       </div>)}
       <div className={cn("flex-col flex w-full h-auto justify-center items-center px-1.5", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end')}>
-        <FormControl>
+        <FormSlot>
           <ItemRenderer {...props} {...useForm} className={cn(className, 'text-xs w-full placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error' )} />
-        </FormControl>
+        </FormSlot>
       </div>
       {!isObject && (<FormMessage />)}
     </div>
@@ -193,7 +193,7 @@ export const FormField = forwardRef<any, FormFieldProps<FieldValues, FieldPath<F
   return (
     <FormFieldContext.Provider value={{ schema, field, fieldState, formState, label, description, placeholder, readOnly }}>
       <FormPrimitive.Field name={name} asChild>
-        <FormItem {...rest} ItemRenderer={ItemRenderer} className={className} />
+        <FormItem ItemRenderer={ItemRenderer} className={className} {...rest} />
       </FormPrimitive.Field>
     </FormFieldContext.Provider>
   );
