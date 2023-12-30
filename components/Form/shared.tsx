@@ -7,24 +7,30 @@ import { cn, sortObject } from '@/utils';
 import { Schema, SchemaMeta } from './Form';
 
 
+export const inferSchemaField = (key: string, value: any, SchemaMap: Record<string, any> = {}) => {
+  if (Object.keys(SchemaMap).includes(key)) {
+    return SchemaMap[key];
+  } else if (typeof value === 'string') {
+    return yup.string().meta({ item: 'readOnly' });
+  } else if (typeof value === 'number') {
+    return yup.number().meta({ item: 'readOnly' });
+  } else if (typeof value === 'boolean') {
+    return yup.boolean().meta({ item: 'checkbox' });
+  } else if (Array.isArray(value)) {
+    return yup.array().meta({ item: 'array' });
+  } else if (typeof value === 'object') {
+    return inferSchema(value, SchemaMap[key] || {});
+  }
+  return yup.string().meta({ item: 'readOnly' });
+}
+
 // infer yup schema from object types
-export const inferSchema = (object: Record<string, any>): Schema => {
-  return yup.object().shape(
-    Object.entries(object).reduce((acc: Record<string, yup.AnySchema & { meta: SchemaMeta }>, [key, value]) => {
-      if (typeof value === 'string') {
-        acc[key] = yup.string().meta({ item: 'readOnly' });
-      } else if (typeof value === 'number') {
-        acc[key] = yup.number().meta({ item: 'readOnly' });
-      } else if (typeof value === 'boolean') {
-        acc[key] = yup.boolean().meta({ item: 'checkbox' });
-      } else if (Array.isArray(value)) {
-        acc[key] = yup.array().meta({ item: 'array' });
-      } else if (typeof value === 'object') {
-        acc[key] = inferSchema(value).meta({ item: 'object' });
-      }
-      return acc;
-    }, {})
-  );
+export const inferSchema = (object: Record<string, any>, SchemaMap: Record<string, any> = {}) => {
+  const schemaFields = Object.entries(object).reduce((acc: Record<string, yup.AnySchema & { meta: SchemaMeta }>, [key, value]) => {
+    acc[key] = inferSchemaField(key, value, SchemaMap);
+    return acc;
+  }, {});
+  return yup.object().shape(schemaFields).meta({ item: 'object' });
 };
 
 // extract meta property from schema

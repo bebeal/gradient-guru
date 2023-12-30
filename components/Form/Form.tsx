@@ -26,6 +26,7 @@ export interface FormProps extends UseFormProps {
   labels?: Record<string, ReactNode | string>;
   className?: string;
   ItemRenderer?: any;
+  SchemaMap?: Record<string, any>;
 }
 
 export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
@@ -35,16 +36,20 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
     readOnly = false,
     onSubmit=noop,
     onError=noop,
-    mode = 'onChange',
+    mode = 'onSubmit',
     labels={},
     className = '',
     ItemRenderer,
+    SchemaMap,
+    criteriaMode='all',
+    shouldFocusError=false,
     ...rest
   } = props;
+  // hack 
   const [initialized, setInitialized] = useState(false);
   const object = Array.isArray(initialObject) ? arrayToObject(initialObject) : initialObject;
   // if schema is not provided, infer it based on types
-  const schema = schemaFromProps || inferSchema(object);
+  const schema: any = schemaFromProps || inferSchema(object, SchemaMap);
   const fromArray = schema?.spec?.meta?.item === 'from-array';
   type FormSchema = yup.InferType<typeof schema>;
   const form: UseFormReturn = useForm<FormSchema>({
@@ -52,6 +57,8 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
     // cast initial values to conform to schema
     values: schema.cast(object),
     mode,
+    criteriaMode,
+    shouldFocusError,
     ...rest,
   });
 
@@ -65,20 +72,22 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
     }
   }, [form, initialized]);
 
-    // submit on change
-    useEffect(() => {
-      const subscription = form.watch(() => form.handleSubmit(onSubmit, onError)());
-      return () => subscription.unsubscribe();
-    }, [form, onSubmit, onError]);  
+  useEffect(() => {
+    form.watch((value) => {
+      form.handleSubmit(onSubmit, onError)()
+    });
+  }, [form, onError, onSubmit]);
 
   return (
     <FormProvider {...rest} {...form}>
       <FormPrimitive.Root
         ref={ref}
         className={cn(`w-full h-auto p-2 overflow-auto rounded items-center`, readOnly && 'bg-primary/90', className)}
-        onChange={form.handleSubmit(onSubmit, onError)}
-      >
-        <div className={cn("w-full h-full grid gap-px rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`)}>
+        onChange={(value: any) =>  {
+          form.handleSubmit(onSubmit, onError)();
+        }}
+      > 
+        <div className={cn("w-full h-auto grid gap-px rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`)}>
           <FormFields ItemRenderer={ItemRenderer} form={form} schema={schema} labels={labels} readOnly={readOnly} />
         </div>
       </FormPrimitive.Root>

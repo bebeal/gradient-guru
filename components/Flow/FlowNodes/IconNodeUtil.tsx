@@ -1,4 +1,6 @@
 'use client'
+/* eslint-disable react-hooks/rules-of-hooks */
+
 import {
   HTMLContainer,
   SvgExportContext,
@@ -8,6 +10,7 @@ import * as yup from 'yup';
 import { IconSetCache, SetNames } from '@/components';
 import { FlowNodeUtil } from './FlowNodeUtil';
 import ReactDOMServer from 'react-dom/server';
+import { filterObjectByKeys } from '@/utils';
 
 export type IconNode = TLBaseShape<
   'icon',
@@ -37,11 +40,8 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
   }
 
   component(node: IconNode) {
-    let Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
-    if (!Icon) {
-      node.props.icon = Object.keys(IconSetCache?.[node.props.iconSet])[0];
-      Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
-    }
+    const Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
+
     return (
       <HTMLContainer id={node.id}>
         {Icon && <Icon width="100%" height="100%" />}
@@ -99,12 +99,15 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
 
   getSchema(node: IconNode) {
     const baseSchema = super.getSchema(node);
+    const baseSchemaProps = filterObjectByKeys(baseSchema.props.fields, Object.keys(node.props));
+    const validIcons: readonly string[] = Array.from([...Object.keys(IconSetCache?.[node.props.iconSet])]);
     return {
-      props: yup.object({
-        ...baseSchema.props.fields,
-        'iconSet': yup.string().oneOf(Object.keys(IconSetCache)) .label('Set') .meta({ item: 'select' }),
-        'icon': yup.string().oneOf(Object.keys(IconSetCache?.[node.props.iconSet]), "Invalid Icon").label('Icon').meta({ item: 'select' }),
+      ...baseSchema,
+      props: yup.object().shape({
+        ...baseSchemaProps,
+        'iconSet': yup.string().oneOf(Object.keys(IconSetCache)).meta({ item: 'select', label: 'Set' }),
+        'icon': yup.string().oneOf(validIcons, `Invalid Icon: ${node.props.icon}`).meta({ item: 'select', label: 'Icon' }),
       }).meta({ item: 'object' }),
-    };
+    }
   }
 }

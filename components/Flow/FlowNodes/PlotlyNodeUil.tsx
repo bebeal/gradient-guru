@@ -10,6 +10,7 @@ import * as yup from 'yup';
 import { IconSetCache, Plotly } from '@/components';
 import { FlowNodeUtil } from './FlowNodeUtil';
 import { PlotType } from 'plotly.js';
+import { filterObjectByKeys } from '@/utils';
 
 const linePlotData = [{
   x: [1, 2, 3, 4, 5],
@@ -83,10 +84,12 @@ export class PlotlyNodeUtil extends FlowNodeUtil<PlotlyNode> {
 
   getSchema(node: PlotlyNode) {
     const baseSchema = super.getSchema(node);
+    const baseSchemaProps = filterObjectByKeys(baseSchema.props.fields, Object.keys(node.props));
     return {
-      props: yup.object({
-        ...baseSchema.props.fields,
+      ...baseSchema,
+      props: yup.object().shape({
+        ...baseSchemaProps
       }).meta({ item: 'object' }),
-    };
+    }
   }
 }

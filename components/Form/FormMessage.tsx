@@ -21,7 +21,7 @@ export const FormMessage = forwardRef<HTMLDivElement, FormMessageProps>((props, 
     <FormPrimitive.FormMessage
       ref={ref}
       id={messageId}
-      className={cn("text-xs font-medium text-muted flex flex-wrap overflow-hidden w-full leading-none mt-1 ml-4", fieldState.error && `text-error`, className)}
+      className={cn("text-[10px] font-medium text-muted flex flex-wrap overflow-hidden w-full leading-none mt-1 px-1.5", fieldState.error && `text-error`, className)}
       {...rest}
     >{body}</FormPrimitive.FormMessage>
   );

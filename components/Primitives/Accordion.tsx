@@ -38,7 +38,7 @@ const getRoundedClass = (index: number, total: number, spaceBetween: number, rad
 
 export const Accordion = (props: AccordionProps) => {
   const { items = [], highlightActive = true, type = 'multiple', spaceBetween = 16, radius = 'large', className = '', triggerClassName = '', ripple = true, asChild } = props;
-  const getValues: any = useCallback((items: any) => items?.filter((item: any) => item.open).map((item: any, index: number) => `accordion-item-${index}`), []);
+  const getValues: any = useCallback((values: any) => values?.filter((item: any) => item.open).map((item: any, index: number) => `accordion-item-${index}`), []);
   const [value, setValue] = useState<string | string[]>(type === 'single' ? getValues(items)?.[0] : getValues(items));
   const { createRippleEffect } = useRippleEffect();
 

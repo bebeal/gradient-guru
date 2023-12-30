@@ -1,4 +1,5 @@
 'use client'
+
 import { ReactNode, forwardRef, useMemo } from "react";
 import * as FormPrimitive from "@radix-ui/react-form";
 import { Control, FieldPath, FieldValues, useController } from "react-hook-form";
@@ -145,10 +146,10 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
       </div>)}
       <div className={cn("flex-col flex w-full h-auto justify-center items-center px-1.5", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end')}>
         <FormControl>
-          <ItemRenderer className={cn(className, 'text-xs w-full placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error' )} {...props} {...useForm} />
+          <ItemRenderer {...props} {...useForm} className={cn(className, 'text-xs w-full placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error' )} />
         </FormControl>
-        {!isObject && (<FormMessage />)}
       </div>
+      {!isObject && (<FormMessage />)}
     </div>
   );
 });

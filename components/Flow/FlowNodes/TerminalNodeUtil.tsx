@@ -9,6 +9,7 @@ import {
 import * as yup from 'yup';
 import { CodeLanguage, IconSetCache, Terminal, codeLanguages } from '@/components';
 import { FlowNodeUtil } from './FlowNodeUtil';
+import { filterObjectByKeys } from '@/utils';
 
 export type TerminalNode = TLBaseShape<
   'terminal',
@@ -72,11 +73,13 @@ export class TerminalNodeUtil extends FlowNodeUtil<TerminalNode> {
 
   getSchema(node: TerminalNode) {
     const baseSchema = super.getSchema(node);
+    const baseSchemaProps = filterObjectByKeys(baseSchema.props.fields, Object.keys(node.props));
     return {
-      props: yup.object({
-        ...baseSchema.props.fields,
+      ...baseSchema,
+      props: yup.object().shape({
+        ...baseSchemaProps,
         language: yup.string().oneOf(codeLanguages, 'Invalid Language').meta({ item: 'select' }),
       }).meta({ item: 'object' }),
-    };
+    }
   }
 }
