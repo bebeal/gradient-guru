@@ -36,7 +36,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:P7YgcOPB7_wIQx57MLtgo",
+    "id": "shape:paddle",
     "type": "geo",
     "props": {
         "w": 160,
@@ -65,7 +65,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:YNgvHwKlzuj8XkC4B-7bH",
+    "id": "shape:title",
     "type": "text",
     "props": {
         "color": "black",
@@ -88,7 +88,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:He80G-kG",
+    "id": "shape:notes",
     "type": "text",
     "props": {
         "color": "black",
@@ -111,7 +111,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:FZPvJZ_F",
+    "id": "shape:blue-brick-1",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -140,7 +140,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:YmKUJyvO",
+    "id": "shape:blue-brick-2",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -169,7 +169,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:5-pbmLtt",
+    "id": "shape:blue-brick-3",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -198,7 +198,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:tKTat9j8",
+    "id": "shape:blue-brick-4",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -227,7 +227,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:HOBjUibl",
+    "id": "shape:blue-brick-5",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -256,7 +256,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:adj_SM-g",
+    "id": "shape:blue-brick-6",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -285,7 +285,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:NTR_1SLe",
+    "id": "shape:blue-brick-7",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -314,7 +314,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:wmpnxnCw",
+    "id": "shape:blue-brick-8",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -343,7 +343,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:PEP5FaLN",
+    "id": "shape:red-brick-1",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -372,7 +372,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:1owSNziM",
+    "id": "shape:red-brick-2",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -401,7 +401,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:Yh8FIXjc",
+    "id": "shape:red-brick-3",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -430,7 +430,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:UiuHGZj5",
+    "id": "shape:red-brick-4",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -459,7 +459,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:UN9ZDTBM",
+    "id": "shape:red-brick-5",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -488,7 +488,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:F7ERumnp",
+    "id": "shape:red-brick-6",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -517,7 +517,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:ZIO8hz8J",
+    "id": "shape:red-brick-7",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -546,7 +546,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:k_fo2Kur",
+    "id": "shape:red-brick-8",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -575,7 +575,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:EYx9iSJ5",
+    "id": "shape:green-brick-1",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -604,7 +604,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:H-d48eC7",
+    "id": "shape:green-brick-2",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -633,7 +633,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:Jq65us0J",
+    "id": "shape:green-brick-3",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -662,7 +662,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:dD-Mfr3-",
+    "id": "shape:green-brick-4",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -691,7 +691,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:eYx0_tcV",
+    "id": "shape:green-brick-5",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -720,7 +720,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:N-PtYykR",
+    "id": "shape:green-brick-6",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -749,7 +749,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:qiWhvWpK",
+    "id": "shape:green-brick-7",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -778,7 +778,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:7MjXwoy7",
+    "id": "shape:green-brick-8",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -807,7 +807,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:VvMEKYIl",
+    "id": "shape:blue-brick-9",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -836,7 +836,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:fj62UmCW",
+    "id": "shape:blue-brick-10",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -865,7 +865,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:f4yAoCHj",
+    "id": "shape:blue-brick-11",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -894,7 +894,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:Jna_3a_p",
+    "id": "shape:blue-brick-12",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -923,7 +923,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:TfgFycvp",
+    "id": "shape:blue-brick-13",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -952,7 +952,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:YJAWZefN",
+    "id": "shape:blue-brick-14",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -981,7 +981,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:ZtDVZbRT",
+    "id": "shape:red-brick-9",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -1010,7 +1010,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:VKo0Kk2H",
+    "id": "shape:red-brick-10",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -1039,7 +1039,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:fggULxq_",
+    "id": "shape:red-brick-11",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -1068,7 +1068,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:alyyOJIg",
+    "id": "shape:red-brick-12",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -1097,7 +1097,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:FdJt2Nix",
+    "id": "shape:red-brick-14",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -1126,7 +1126,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:Dv7FMblT",
+    "id": "shape:green-brick-9",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -1155,7 +1155,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:tv1SFoGA",
+    "id": "shape:green-brick-10",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -1184,7 +1184,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:lgJC1wFW",
+    "id": "shape:green-brick-11",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -1213,7 +1213,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:3RYhxVwr",
+    "id": "shape:green-brick-12",
     "type": "geo",
     "props": {
         "w": 43.451704202540206,
@@ -1242,7 +1242,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:1Tcb-JSLFyQrw_AkT5Irv",
+    "id": "shape:ball",
     "type": "geo",
     "props": {
         "w": 20,
@@ -1271,7 +1271,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:YzO3u9pN",
+    "id": "shape:score",
     "type": "text",
     "props": {
         "color": "black",
@@ -1294,7 +1294,7 @@ export const initialNodes = [
     "isLocked": false,
     "opacity": 1,
     "meta": {},
-    "id": "shape:u5Z7tAn5",
+    "id": "shape:make-a-game",
     "type": "preview",
     "props": {
         "html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Breakout Game</title>\n<script src=\"https://cdn.tailwindcss.com\"></script>\n<style>\n  * {\n    box-sizing: border-box;\n  }\n  canvas {\n    display: block;\n    margin: auto;\n    background: #000;\n    border: 2px solid #fff;\n  }\n</style>\n</head>\n<body class=\"bg-gray-900 text-white\">\n\n<canvas id=\"gameCanvas\" width=\"800\" height=\"400\"></canvas>\n<div class=\"text-center mt-4\">\n  <p id=\"score\" class=\"text-lg\">Score: <span id=\"scoreValue\">0</span></p>\n</div>\n\n<script>\n  const canvas = document.getElementById('gameCanvas');\n  const ctx = canvas.getContext('2d');\n\n  let score = 0;\n  const scoreDisplay = document.getElementById('scoreValue');\n\n  const ballRadius = 10;\n  let x = canvas.width / 2;\n  let y = canvas.height - 30;\n  let dx = 2;\n  let dy = -2;\n\n  const paddleHeight = 10;\n  const paddleWidth = 75;\n  let paddleX = (canvas.width - paddleWidth) / 2;\n\n  let rightPressed = false;\n  let leftPressed = false;\n\n  const brickRowCount = 5;\n  const brickColumnCount = 8;\n  const brickWidth = 75;\n  const brickHeight = 20;\n  const brickPadding = 10;\n  const brickOffsetTop = 30;\n  const brickOffsetLeft = 30;\n\n  const bricks = [];\n  for (let c = 0; c < brickColumnCount; c++) {\n    bricks[c] = [];\n    for (let r = 0; r < brickRowCount; r++) {\n      bricks[c][r] = { x: 0, y: 0, status: 1 };\n    }\n  }\n\n  document.addEventListener('keydown', keyDownHandler, false);\n  document.addEventListener('keyup', keyUpHandler, false);\n\n  function keyDownHandler(e) {\n    if (e.key === 'Right' || e.key === 'ArrowRight') {\n      rightPressed = true;\n    } else if (e.key === 'Left' || e.key === 'ArrowLeft') {\n      leftPressed = true;\n    }\n  }\n\n  function keyUpHandler(e) {\n    if (e.key === 'Right' || e.key === 'ArrowRight') {\n      rightPressed = false;\n    } else if (e.key === 'Left' || e.key === 'ArrowLeft') {\n      leftPressed = false;\n    }\n  }\n\n  function collisionDetection() {\n    for (let c = 0; c < brickColumnCount; c++) {\n      for (let r = 0; r < brickRowCount; r++) {\n        const b = bricks[c][r];\n        if (b.status === 1) {\n          if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {\n            dy = -dy;\n            b.status = 0;\n            score++;\n            scoreDisplay.textContent = score;\n          }\n        }\n      }\n    }\n  }\n\n  function drawBall() {\n    ctx.beginPath();\n    ctx.arc(x, y, ballRadius, 0, Math.PI * 2);\n    ctx.fillStyle = '#fff';\n    ctx.fill();\n    ctx.closePath();\n  }\n\n  function drawPaddle() {\n    ctx.beginPath();\n    ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);\n    ctx.fillStyle = '#fff';\n    ctx.fill();\n    ctx.closePath();\n  }\n\n  function drawBricks() {\n    for (let c = 0; c < brickColumnCount; c++) {\n      for (let r = 0; r < brickRowCount; r++) {\n        if (bricks[c][r].status === 1) {\n          const brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;\n          const brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;\n          bricks[c][r].x = brickX;\n          bricks[c][r].y = brickY;\n          ctx.beginPath();\n          ctx.rect(brickX, brickY, brickWidth, brickHeight);\n          ctx.fillStyle = `hsl(${360 / brickRowCount * r}, 100%, 50%)`;\n          ctx.fill();\n          ctx.closePath();\n        }\n      }\n    }\n  }\n\n  function draw() {\n    ctx.clearRect(0, 0, canvas.width, canvas.height);\n    drawBricks();\n    drawBall();\n    drawPaddle();\n    collisionDetection();\n\n    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {\n      dx = -dx;\n    }\n    if (y + dy < ballRadius) {\n      dy = -dy;\n    } else if (y + dy > canvas.height - ballRadius) {\n      if (x > paddleX && x < paddleX + paddleWidth) {\n        dy = -dy;\n      } else {\n        document.location.reload();\n        alert('Game Over');\n      }\n    }\n\n    if (rightPressed && paddleX < canvas.width - paddleWidth) {\n      paddleX += 7;\n    } else if (leftPressed && paddleX > 0) {\n      paddleX -= 7;\n    }\n\n    x += dx;\n    y += dy;\n    requestAnimationFrame(draw);\n  }\n\n  draw();\n</script>\n\n</body>\n</html>",
@@ -1303,7 +1303,7 @@ export const initialNodes = [
         "h": 480,
         "dateCreated": 1704244871282,
         "linkUploadVersion": 1,
-        "uploadedNodeId": "shape:u5Z7tAn5"
+        "uploadedNodeId": "shape:make-a-game"
     },
     "parentId": "page:page",
     "index": "b0I",

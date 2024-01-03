@@ -1,7 +1,7 @@
 'use client'
 
 import { Flow } from "@/components";
-import { initialNodes } from './initialNodes';
+import { initialNodes } from './nodes';
 
 const MakeAGameDemo = () => {
   return (

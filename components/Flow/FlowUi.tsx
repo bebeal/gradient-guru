@@ -87,8 +87,8 @@ const FlowUiContent = memo((props: FlowUiProps) => {
     if (!editor) return;
 
     if (!mounted) {
-      setUserPreferences({ id: editor?.user?.getId(), isDarkMode: true });
-      editor.updateInstanceState({ isReadonly: false, isGridMode: true });
+      setUserPreferences({ id: editor?.user?.getId(), isDarkMode: true, });
+      editor.updateInstanceState({ isReadonly: false, isGridMode: true, isDebugMode: true });
 
       // to get the initial history records to show up
       setTimeout(() => {

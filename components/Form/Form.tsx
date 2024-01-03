@@ -71,9 +71,9 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
 
   useEffect(() => {
     form.watch((values) => {
-      form.handleSubmit(() => onSubmit(values, form), onError)();
+      form.handleSubmit(() => onSubmit(schema.cast(values), form), onError)();
     });
-  }, [form, onSubmit, onError]);
+  }, [form, onSubmit, onError, schema]);
 
   return (
     <FormProvider {...rest} {...form}>
