@@ -87,15 +87,16 @@ export const getSvgElement: any = async (editor: Editor, ids: TLShapeId[], image
 // Encodes the given svg element as a base64 string
 export const encodeSVGElementAsBase64 = (svg: SVGElement): string => {
   const svgStr = new XMLSerializer().serializeToString(svg);
-  const base64SVG = btoa(decodeURIComponent(encodeURIComponent(svgStr)));
+  const base64SVG = btoa(unescape(encodeURIComponent(svgStr)));
   return `data:image/svg+xml;base64,${base64SVG}`
 };
 
 // Encodes the given blob as a base64 string
 export const encodeBlobAsBase64 = (blob: Blob): Promise<string> => {
-	return new Promise((resolve, _) => {
+	return new Promise((resolve, reject) => {
 		const reader = new FileReader()
 		reader.onloadend = () => resolve(reader.result as string)
+    reader.onerror = () => reject(reader.error)
 		reader.readAsDataURL(blob)
 	})
 };
@@ -183,7 +184,10 @@ export const createCanvasFromImage = async (dataUrl: string, width: number, heig
 
 			resolve(canvas);
     }
-    image.onerror = () => resolve(null);
+    image.onerror = (e) => {
+      console.log('Error loading image from dataUrl', e);
+      resolve(null);
+    };
 		image.src = dataUrl;
   }));
 };
@@ -215,20 +219,24 @@ export const getSvgAsCanvas = async (svg: SVGElement, options: ImageExtractorCon
 
   const base64EncodedSvg = await encodeSVGAsBase64(svg, encodeEmbedImages);
   const canvas = await createCanvasFromImage(base64EncodedSvg, effectiveWidth, effectiveHeight, options);
-  return { canvas, dimensions: { width: effectiveWidth, height: effectiveHeight, scale: effectiveScale } };
+  return { canvas, dimensions: { width: effectiveWidth, height: effectiveHeight, scale: effectiveScale }, base64EncodedSvg };
 };
 
-export const getSvgAsImage = async (svg: SVGElement, options: ImageExtractorConfig) => {
+export const getSvgAsImage = async (svg: SVGElement, options: ImageExtractorConfig): Promise<{ blob: Blob | null; base64EncodedSvg: string | null }> => {
   const { type='png', quality=1 } = options;
-  const { canvas, dimensions } = await getSvgAsCanvas(svg, options);
-  if (!canvas) return null;
-  const blob = await createBlobFromCanvas(canvas, type, quality);
-  if (!blob) return null;
-
-  const view = new DataView(await blob.arrayBuffer());
-  return PNG.setPhysChunk(view, dimensions.scale, {
-    type: 'image/' + type,
-  });
+  const { canvas, dimensions, base64EncodedSvg } = await getSvgAsCanvas(svg, options);
+  if (canvas) {
+    const canvasBlob = await createBlobFromCanvas(canvas, type, quality);
+    
+    if (canvasBlob) {
+      const view = new DataView(await canvasBlob.arrayBuffer());
+      const blob = PNG.setPhysChunk(view, dimensions.scale, {
+        type: 'image/' + type,
+      });
+      return { blob, base64EncodedSvg }
+    }
+  }
+  return { blob: null, base64EncodedSvg };
 };
 
 export const getExportedCanvas = async (editor: Editor, ids: TLShapeId[], options: ImageExtractorConfig) => {
@@ -237,7 +245,8 @@ export const getExportedCanvas = async (editor: Editor, ids: TLShapeId[], option
 
 export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], options: ImageExtractorConfig) => {
   const svg = await getSvgElement(editor, ids, options);
-	return await getSvgAsImage(svg, options);
+	const { blob } = await getSvgAsImage(svg, options);
+  return blob;
 };
 
 

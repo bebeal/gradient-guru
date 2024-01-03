@@ -31,7 +31,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
     size,
     colors= ['#7F00DE', '#C81BBD', '#FF007E', '#FF1834', '#FF0000', '#FFDA16', '#7FDC4D', '#00E0D9', '#00CDAC', '#02AAB0', '#0074E0'],
     radius='medium',
-    ripple=true,
+    ripple=variant !== 'normal',
     type='button',
     ...rest
   } = props;
@@ -42,6 +42,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
   const [isHovered, setIsHovered] = useState(false);
 
   const onClick = useCallback((event: any) => {
+    event.preventDefault();
+    event.stopPropagation();
     ripple && isCustomVariant(variant) && createRippleEffect(event);
     onClickCallback?.(event);
   }, [createRippleEffect, onClickCallback, ripple, variant]);
@@ -49,7 +51,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
   return isDefaultVariant(variant) ? (
     <ThemedButton ref={ref} size={size} className={cn(`pointer-events-all !cursor-pointer`, disabled && DisabledClasses, `!${RadiusClasses(radius)}`, className)} color={color} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
   ) : (
-    <div className="relative">
+    <div className="relative w-auto h-auto">
       <button
         ref={ref}
         type={type}
@@ -73,7 +75,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
             <GradientDiv backglow={false} isHovered={isHovered} colors={colors} radius={radius}>{children}</GradientDiv>
           </div>
         ) : (
-          <div className="w-full h-full flex justify-center items-center gap-1">
+          <div className="w-full h-full flex gap-1 items-center">
             {children}
           </div>
         )}

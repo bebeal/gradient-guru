@@ -1,4 +1,3 @@
-export * from './shared';
 export * from './NodesTab';
 export * from './ModelTab';
 export * from './ExtractionTab';

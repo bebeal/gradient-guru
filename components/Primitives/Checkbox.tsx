@@ -8,6 +8,7 @@ import { IconSetCache } from "..";
 
 // export interface CheckboxProps extends CheckboxPrimitive.CheckboxProps {
   export interface CheckboxProps {
+  id?: string;
   checked?: boolean | undefined | 'indeterminate';
   defaultChecked?: boolean | undefined | 'indeterminate';
   radius?: Radius;
@@ -23,6 +24,7 @@ import { IconSetCache } from "..";
 
 export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>) => {
   const {
+    id,
     children=<IconSetCache.Carbon.Checkmark width={"100%"} />,
     checked: externalChecked,
     defaultChecked=false, // 'indeterminate',
@@ -65,6 +67,8 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
 
   return (
     <CheckboxPrimitive.Root
+      id={id}
+      name={id}
       ref={ref}
       disabled={disabled}
       defaultChecked={defaultChecked}

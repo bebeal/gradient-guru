@@ -99,6 +99,23 @@
   --kbd-foreground: 161 161 170;
 }
 
+@keyframes ripple-click-effect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-click-effect 0.5s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}
+
 /** Hide React Query Devtools Button */
 .go3489369143 div svg {
   display: none !important;
@@ -109,13 +126,4 @@
   display: none !important;
   pointer-events: none !important;
   
-}
-
-/** for tip tap placeholder extensions */
-.tiptap p.is-editor-empty:first-child::before {
-  color: #adb5bd;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
 }

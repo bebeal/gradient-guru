@@ -186,7 +186,7 @@ export interface SelectTriggerProps extends SelectPrimitive.SelectTriggerProps {
   items?: SelectItemProps[];
 }
 export const SelectTrigger = forwardRef<any, SelectTriggerProps>((props, ref) => {
-  const { className = '', placeholder = '', radius = 'medium', value, items, ...rest } = props;
+  const { id, className = '', placeholder = '', radius = 'medium', value, items, ...rest } = props;
   const children = useMemo(() => {
     return items?.find((v) => v.value === value)?.children || value;
   }, [items, value]);

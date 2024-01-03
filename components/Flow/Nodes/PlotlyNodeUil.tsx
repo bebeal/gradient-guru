@@ -7,7 +7,7 @@ import {
   useIsEditing,
 } from '@tldraw/tldraw';
 import * as yup from 'yup';
-import { IconSetCache, Plotly } from '@/components';
+import { EditingIndicator, IconSetCache, Plotly } from '@/components';
 import { FlowNodeUtil } from './FlowNodeUtil';
 import { PlotType } from 'plotly.js';
 import { filterObjectByKeys } from '@/utils';
@@ -44,8 +44,9 @@ export class PlotlyNodeUtil extends FlowNodeUtil<PlotlyNode> {
     // - Isn't responsive to width/height changes, so we need to re-render it when the node is resized, which is why those properties are included in the key
     // - Doesn't respect pointer-events: none of the container, so we need to change the plot to static when not editing
     return (
-      <HTMLContainer id={node.id} className="tl-embed-container w-auto h-auto overflow-hidden z-[500] cursor-auto" style={{pointerEvents: isEditing ? 'auto' : 'none'}}>
+      <HTMLContainer id={node.id} className="relative tl-embed-container flex justify-center items-center w-auto h-auto overflow-hidden text-xs cursor-auto" style={{pointerEvents: isEditing ? 'auto' : 'none'}} onPointerDown={(e) => { e.stopPropagation(); }}>
         <Plotly key={`${node.props.w}-${node.props.h}-${isEditing ? 'editable' : 'static'}`} data={linePlotData} config={{ staticPlot: !isEditing }} style={{width: node.props.w, height: node.props.h}} />
+        <EditingIndicator isEditing={isEditing} />
       </HTMLContainer>
     );
   }

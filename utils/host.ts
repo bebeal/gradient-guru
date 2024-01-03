@@ -2,7 +2,7 @@
 export const env = process.env.NODE_ENV || process.env.NEXT_PUBLIC_NODE_ENV || process.env.NEXT_PUBLIC_VERCEL_ENV || 'development';
 export const isDevEnv = env === 'development';
 export const isProdEnv = env === 'production';
-export const PROTOCOL = env === 'development' ? 'https://' : 'https://';
+export const PROTOCOL = isDevEnv ? 'http://' : 'https://';
 export const PORT = '3407';
 
 export const LINK_HOST = {

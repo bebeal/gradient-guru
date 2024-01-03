@@ -4,62 +4,68 @@ import { TLUiEventHandler } from "@tldraw/tldraw";
 import { TLRecord } from '@tldraw/tlschema';
 import { RecordsDiff } from '@tldraw/store';
 import { TLEventInfo, TLStoreEventInfo, UiEvent, useEditor } from "@tldraw/editor";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
+import { create } from "zustand";
+import { useShallow } from "zustand/react/shallow";
+
+const HistoryRecordsBufferSize = 1000;
+
+const checkRecords = (records: any) => {
+  for (const record of Object.values(records) as any) {
+    if (record.typeName === 'shape') {
+      return true;
+    }
+  }
+  return false;
+};
+
+const isShapeEvent = (event: TLStoreEventInfo) => {
+  const { added, removed, updated } = event.changes;
+  return checkRecords(added) || checkRecords(removed) || Object.values(updated).some(([from, to]: any) => from.typeName === 'shape' && to.typeName === 'shape');
+};
 
 export type UiState = UiEvent & {
   name: string;
 };
 
 export type ContentRecorderState = {
+  frameId: number | null;
+  setFrameId: (newFrameId: number | null) => void;
   canvasState: TLEventInfo;
   setCanvasState: (newCanvasEvent: TLEventInfo) => void;
   uiState: UiState;
-  onUiEvent: TLUiEventHandler;
+  // onUiEvent: TLUiEventHandler;
   setUiState: (newUiState: UiEvent) => void;
   historyRecords: RecordsDiff<TLRecord>[];
+  setHistoryRecords?: (newHistoryRecords: RecordsDiff<TLRecord>[]) => void;
+  addHistoryRecord: (newHistoryRecord: RecordsDiff<TLRecord>) => void;
   readableRecords: string[];
-  addHistoryRecord: (newHistoryRecord: RecordsDiff<TLRecord>, historyRecordsBufferSize?: number) => void;
+  setReadableRecords?: (newReadableRecords: string[]) => void;
+  addReadableRecord: (eventInfo: RecordsDiff<TLRecord>) => void;
 };
 
-export const ContentRecorderContext = createContext<ContentRecorderState | undefined>(undefined);
-export const ContentRecorderProvider = (props: any) => {
-  const {
-    historyRecordsBufferSize = 1000,
-    children,
-  } = props;
-  const editor = useEditor();
-  const [canvasState, setCanvasState] = useState<TLEventInfo>({} as TLEventInfo);
-  const [uiState, setUiState] = useState<UiState>({} as UiState);
-  const [historyRecords, setHistoryRecords] = useState<RecordsDiff<TLRecord>[]>([]);
-  const [readableRecords, setReadableRecords] = useState<string[]>([]);
-
-  const onCanvasEvent = useCallback((newCanvasEvent: any) => {    
-    setCanvasState(Object.keys(newCanvasEvent).sort().reduce((obj: any, key: any) => {
-      obj[key] = newCanvasEvent?.[key];
-      return obj;
-    }, {}));
-  }, [setCanvasState]);
-
-  const onUiEvent = useCallback<TLUiEventHandler>((name, data) => {
-    setUiState({name, ...data} as any);
-  }, [setUiState]);
-
-  const checkRecords = useCallback((records: any) => {
-    for (const record of Object.values(records) as any) {
-      if (record.typeName === 'shape') {
-        return true;
-      }
+export const useContentRecorderStore = create<ContentRecorderState>((set, get) => ({
+  frameId: null,
+  setFrameId: (newFrameId: number | null) => set({ frameId: newFrameId }),
+  canvasState: {} as TLEventInfo,
+  uiState: {} as UiState,
+  historyRecords: [],
+  readableRecords: [],
+  setCanvasState: (newCanvasEvent: TLEventInfo) => set({ canvasState: newCanvasEvent }),
+  setUiState: (newUiState: UiEvent) => set({ uiState: newUiState }),
+  setHistoryRecords: (newHistoryRecords: RecordsDiff<TLRecord>[]) => set({ historyRecords: newHistoryRecords }),
+  setReadableRecords: (newReadableRecords: string[]) => set({ readableRecords: newReadableRecords }),
+  addHistoryRecord: (newHistoryRecord: RecordsDiff<TLRecord>) => set((state) => {
+    const newHistoryRecords = [
+      ...state.historyRecords,
+      newHistoryRecord,
+    ];
+    if (HistoryRecordsBufferSize > HistoryRecordsBufferSize) {
+      newHistoryRecords.shift();
     }
-    return false;
-  }, []);
-
-  const isShapeEvent = useCallback((event: TLStoreEventInfo) => {
-    const { added, removed, updated } = event.changes;
-    return checkRecords(added) || checkRecords(removed) || Object.values(updated).some(([from, to]: any) => from.typeName === 'shape' && to.typeName === 'shape');
-  }, [checkRecords]);
-
-  // TODO: fix this, the incoming data stream broke, eventInfo has many items in updated every time this icalled, and its never called with added or removed
-  const addReadableRecord = useCallback((eventInfo: RecordsDiff<TLRecord>) => {
+    return { historyRecords: newHistoryRecords };
+  }),
+  addReadableRecord: (eventInfo: RecordsDiff<TLRecord>) => set((state) => {
     const events: string[] = [];
     const { added, updated, removed } = eventInfo;
     for (const record of Object.values(added) as any) {
@@ -80,38 +86,54 @@ export const ContentRecorderProvider = (props: any) => {
         events.push(`user deleted shape [${record.type}] - ${(record.id).replace('shape:', '')}`)
       }
     }
-    setReadableRecords((prevReadableRecords: any) => {
-      return [
-        ...prevReadableRecords,
-        ...events,
-      ] as any;
-    });
-  }, []);
+    const newReadableRecords = [
+      ...state.readableRecords,
+      ...events,
+    ];
+    return { readableRecords: newReadableRecords };
+  }),
+}));
 
-  const addHistoryRecord = useCallback((newHistoryRecord: RecordsDiff<TLRecord>, historyRecordsBufferSize?: number) => {
-    setHistoryRecords((prevHistoryRecords: any) => {
-      const newHistoryRecords = [
-        ...prevHistoryRecords,
-        newHistoryRecord,
-      ];
-      if (historyRecordsBufferSize && newHistoryRecords.length > historyRecordsBufferSize) {
-        newHistoryRecords.shift();
-      }
-      return newHistoryRecords;
-    });
-  }, []);
+export const useContentRecorder = () => {
+  const editor = useEditor();
+  const frameId = useContentRecorderStore(useShallow((state) => state.frameId));
+  const setFrameId = useContentRecorderStore(useShallow((state) => state.setFrameId));
+  const canvasState = useContentRecorderStore(useShallow((state) => state.canvasState));
+  const uiState = useContentRecorderStore(useShallow((state) => state.uiState));
+  const historyRecords = useContentRecorderStore(useShallow((state) => state.historyRecords));
+  const readableRecords = useContentRecorderStore(useShallow((state) => state.readableRecords));
+  const setCanvasState = useContentRecorderStore(useShallow((state) => state.setCanvasState));
+  const setUiState = useContentRecorderStore(useShallow((state) => state.setUiState));
+  const addHistoryRecord = useContentRecorderStore(useShallow((state) => state.addHistoryRecord));
+  const addReadableRecord = useContentRecorderStore(useShallow((state) => state.addReadableRecord));
+
+  // const requestFrameUpdate = useCallback((callback: () => void) => {
+  //   if (frameId === null) {
+  //     const id = requestAnimationFrame(() => {
+  //       callback();
+  //       setFrameId(null); // Reset frameId after the frame is rendered
+  //     });
+  //     setFrameId(id);
+  //   }
+  // }, [frameId, setFrameId]);
+
+  const onUiEvent = useCallback<TLUiEventHandler>((name, data) => {
+    setUiState({ name, ...data } as any);
+  }, [setUiState]);
+
+  const onCanvasEvent = useCallback((newCanvasEvent: any) => {
+    // requestFrameUpdate(() => setCanvasState(newCanvasEvent));
+    setCanvasState(newCanvasEvent);
+  }, [setCanvasState]);
 
   const onStoreEvent = useCallback((event: TLStoreEventInfo) => {
     if (event.source === 'user' && isShapeEvent(event)) {
-      addHistoryRecord(event.changes, historyRecordsBufferSize);
-      addReadableRecord(event.changes);
+      // requestFrameUpdate(() => {
+        addHistoryRecord(event.changes);
+        addReadableRecord(event.changes);
+      // });
     }
-  }, [addHistoryRecord, addReadableRecord, historyRecordsBufferSize, isShapeEvent]);
-
-  // useEffect(() => {
-  //   console.log('historyRecords', historyRecords);
-  //   console.log('readableRecords', readableRecords);
-  // }, [historyRecords, readableRecords]);
+  }, [addHistoryRecord, addReadableRecord]);
 
   useEffect(() => {
     if (!editor) return;
@@ -119,21 +141,23 @@ export const ContentRecorderProvider = (props: any) => {
     editor.on('change', onStoreEvent);
     editor.on('event', onCanvasEvent);
 
-    // TODO: fix later. idk why initial UI event isn't getting picked up, just ignoring it for now
     const fakeUiState = {
       id: 'select',
       name: 'select-tool',
       source: 'toolbar'
-    };
-    setUiState(fakeUiState as any);
+    } as unknown as UiEvent;
+    setUiState(fakeUiState);
 
     return () => {
+      // if (frameId !== null) {
+      //   cancelAnimationFrame(frameId);
+      // }
       editor.off('change');
       editor.off('event');
     };
-  }, [editor, onCanvasEvent, onStoreEvent, setUiState]);
+  }, [editor, frameId, onCanvasEvent, onStoreEvent, setFrameId, setUiState]);
 
-  const context: ContentRecorderState = {
+  return {
     canvasState,
     setCanvasState,
     uiState,
@@ -143,18 +167,18 @@ export const ContentRecorderProvider = (props: any) => {
     readableRecords,
     addHistoryRecord
   };
-
-  return <ContentRecorderContext.Provider value={context}>{children}</ContentRecorderContext.Provider>
 };
 
-export const useContentRecorder = () => {
-	const flowEventsRecorder = useContext(ContentRecorderContext)
+export const useRecordedContent = () => {
+  const canvasState = useContentRecorderStore(useShallow((state) => state.canvasState));
+  const uiState = useContentRecorderStore(useShallow((state) => state.uiState));
+  const historyRecords = useContentRecorderStore(useShallow((state) => state.historyRecords));
+  const readableRecords = useContentRecorderStore(useShallow((state) => state.readableRecords));
 
-	if (!flowEventsRecorder) {
-		throw new Error('useContentRecorder must be used within a ContentRecorderProvider')
-	}
-
-	return {
-    ...flowEventsRecorder,
+  return {
+    canvasState,
+    uiState,
+    historyRecords,
+    readableRecords,
   };
 };

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import * as yup from 'yup';
-import { TLShapeId, useEditor } from '@tldraw/editor';
+import { useEditor, useValue } from '@tldraw/editor';
 import {
   Accordion,
   FlowTab,
@@ -32,13 +32,15 @@ const buildNodeSchemas = (editor: any) => {
   return newNodeSchema;
 };
 
-
 export interface NodesTabProps {}
 
 export const NodesTab = () => {
   const editor = useEditor();
   const [mounted, setMounted] = useState(false);
   const [nodesSchemas, setNodesSchemas] = useState<any>({});
+	const count = useValue('rendering shapes count', () => editor.getCurrentPageShapesSorted().length + editor.getSelectedShapeIds().length, [
+		editor,
+	]);
 
   useEffect(() => {
     if (!mounted) {
@@ -48,13 +50,6 @@ export const NodesTab = () => {
 
     }
   }, [editor, mounted, nodesSchemas]);
-
-  const onNodeChangeError = useCallback(async (error: any, nodeId: string) => {
-    setNodesSchemas((oldSchemas: any) => {
-      const newNodeSchema = buildNodeSchema(editor, editor.getShape(nodeId as TLShapeId));
-      return {...oldSchemas, [nodeId]: newNodeSchema};
-    });
-  }, [editor]);
 
   const onNodeChange = useCallback((newNodeProperties: any) => {
     if (newNodeProperties.type === 'icon') {
@@ -75,6 +70,7 @@ export const NodesTab = () => {
   return (
     <FlowTab title="Nodes">
       <Accordion
+        key={count}
         spaceBetween={0}
         className="w-full text-xs p-1"
         triggerClassName="w-full flex justify-center items-center"
@@ -86,7 +82,7 @@ export const NodesTab = () => {
               name: getNodeNameComponent(node, selected ? `text-accent`: ``),
               content: (
                 <div className={cn(`w-full h-full flex flex-col justify-stretch items-center p-1`)}>
-                  <Form object={filterObject(node, KeysToIgnore)} schema={nodesSchemas?.[node.id]} SchemaMap={NodeSchemaMappings} onError={(error: any) => onNodeChangeError(error, node.id)} onSubmit={onNodeChange} />
+                  <Form object={filterObject(node, KeysToIgnore)} schema={nodesSchemas?.[node.id]} SchemaMap={NodeSchemaMappings} onSubmit={onNodeChange} />
                 </div>
               ),
             };

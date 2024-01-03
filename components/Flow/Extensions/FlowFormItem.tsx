@@ -11,7 +11,7 @@ export const FlowFormItem = forwardRef<any, any>((props, ref) => {
 
   if (item === 'node-schema') {
     return (
-      <div className={"w-full h-full grid grid-cols-1 col-span-2 gap-1 overflow-auto rounded items-center"}><FormFields form={form} schema={schema} prefix={`${field?.name}.`} readOnly={readOnly} ItemRenderer={FlowFormItem} /></div>
+      <div className={cn("w-full h-full grid grid-cols-1 col-span-2 gap-1 overflow-auto rounded items-center")}><FormFields form={form} schema={schema} prefix={`${field?.name}.`} readOnly={readOnly} ItemRenderer={FlowFormItem} /></div>
     );
   } else if (item === 'modality') {
     const values = form.getValues();

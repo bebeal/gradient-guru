@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback } from "react";
-import './useRippleEffect.css';
 
 export const useRippleEffect = () => {
 

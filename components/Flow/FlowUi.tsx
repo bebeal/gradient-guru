@@ -38,13 +38,10 @@ export const FlowUi = memo((props: FlowUiProps) => {
   const { children, hideUi = false, initialShapes, scratchNodeUtils, onUiEvent: onUiEventCallback, ...rest } = props;
   const { onUiEvent: recordUiEvent } = useContentRecorder();
 
-  const onUiEvent = useCallback<any>(
-    (name: any, data: any) => {
+  const onUiEvent = useCallback<any>((name: any, data: any) => {
       recordUiEvent?.(name, data);
       onUiEventCallback?.(name, data);
-    },
-    [onUiEventCallback, recordUiEvent]
-  );
+   }, [onUiEventCallback, recordUiEvent] );
 
   return (
     <TldrawUiContextProvider onUiEvent={onUiEvent} {...rest}>

@@ -3,9 +3,8 @@
 import { useCallback } from 'react';
 import * as yup from 'yup';
 import { ModelConfig, ModelConfigLabels, ModelConfigSchemas, Models } from '@/clients/Models';
-import { FlipCard, FlowFormItem, Form } from '@/components';
+import { FlipCard, FlowFormItem, FlowTab, Form } from '@/components';
 import { useModel } from '@/hooks';
-import { FlowTab } from './shared';
 
 export const ModelTab = () => {
   const { modelClient, setModelClient, systemPromptName, setSystemPromptName, modelQueryMutation, getPrompt } = useModel();
@@ -27,9 +26,9 @@ export const ModelTab = () => {
   return (
     <FlowTab title="Model" className="h-full flex flex-col justify-between">
       <FlipCard
-        title="Model Config"
         className="h-auto w-full"
         front={{
+          title: 'Model Config',
           children: <Form object={modelClient.config} schema={yup.object().shape({ ...ModelConfigSchemas })} onSubmit={onSubmit} labels={ModelConfigLabels as any} ItemRenderer={FlowFormItem} />,
         }}
       />

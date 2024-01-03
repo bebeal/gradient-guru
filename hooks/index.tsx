@@ -1,4 +1,4 @@
-
+export * from './useRippleEffect';
 export * from './useActionKey';
 export * from './useDebugger';
 export * from './useFormField';
@@ -8,7 +8,6 @@ export * from './usePosition';
 export * from "./useThemePanel";
 export * from './useModel';
 export * from './useFlow';
-export * from './useRippleEffect';
 export * from './usePlotly';
 export * from './useToasts';
 export * from './useViewport';

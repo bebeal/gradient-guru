@@ -1,13 +1,13 @@
 'use client';
 
 import { getNodeName } from '@/components';
-import { encodeBlobAsBase64, getSvgAsImage, getSVGAsBlob, getSvgElement, getSvgPreview } from '@/utils';
+import { encodeBlobAsBase64, getSvgAsImage, getSvgElement } from '@/utils';
 import { Box2d, SVG_PADDING, TLEventInfo, TLShape, TLShapeId, useEditor } from '@tldraw/tldraw';
 import { useCallback, useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
-import { UiState, useContentRecorder } from './useContentRecorder';
+import { UiState, useRecordedContent } from '@/hooks';
 
 export type BaseExtractorConfig = {
   enabled: boolean;
@@ -70,7 +70,7 @@ export const defaultImageExtractorConfig: ImageExtractorConfig = {
   enabled: true,
   nodesToExclude: [],
   type: 'png',
-  quality: 1,
+  quality: 0.8,
   scale: 1,
   background: true,
   imageSmoothingEnabled: true,
@@ -118,6 +118,7 @@ export type ExtractorConfigs = {
 export type ExtractedState = ExtractorConfigs & {
   nodes: TLShape[] | null;
   svg: SVGSVGElement | null;
+  base64EncodedSvg: string | null;
   blob: Blob | null;
   dataUrl: string | Blob | null;
   text: string[] | null;
@@ -142,13 +143,25 @@ export const useContentExtractorStore = create<ContentExtractorConfig>((set) => 
 export const useContentExtractor = () => {
   const [mounted, setMounted] = useState(false);
   const editor = useEditor();
-  const { canvasState, uiState } = useContentRecorder();
+  const { canvasState, uiState } = useRecordedContent();
+  const setExtractorConfig = useContentExtractorStore(useShallow((state) => state.setExtractorConfig));
   const imageExtractorConfig = useContentExtractorStore(useShallow((state) => state.imageExtractorConfig));
+  const updateImageConfig = useCallback((newImageConfig: any) => {
+    setExtractorConfig('imageExtractorConfig', newImageConfig);
+  }, [setExtractorConfig]);
   const nodesExtractorConfig = useContentExtractorStore(useShallow((state) => state.nodesExtractorConfig));
+  const updateNodesConfig = useCallback((newNodesConfig: any) => {
+    setExtractorConfig('nodesExtractorConfig', newNodesConfig);
+  }, [setExtractorConfig]);
   const textExtractorConfig = useContentExtractorStore(useShallow((state) => state.textExtractorConfig));
   const canvasExtractorConfig = useContentExtractorStore(useShallow((state) => state.canvasExtractorConfig));
+  const updateCanvasConfig = useCallback((newCanvasConfig: any) => {
+    setExtractorConfig('canvasExtractorConfig', newCanvasConfig);
+  }, [setExtractorConfig]);
   const uiExtractorConfig = useContentExtractorStore(useShallow((state) => state.uiExtractorConfig));
-  const setExtractorConfig = useContentExtractorStore(useShallow((state) => state.setExtractorConfig));
+  const updateUiConfig = useCallback((newUiConfig: any) => {
+    setExtractorConfig('uiExtractorConfig', newUiConfig);
+  }, [setExtractorConfig]);
 
   const updateNodesExtractorConfig = useCallback(() => {
     useContentExtractorStore.setState((prevState) => {
@@ -236,23 +249,17 @@ export const useContentExtractor = () => {
     [editor]
   );
 
-  const extractImage = useCallback(async (): Promise<{ svg: SVGSVGElement; blob: Blob | null; dataUrl: string | null } | null> => {
+  const extractImage = useCallback(async (): Promise<{ svg: SVGSVGElement; blob: Blob | null; dataUrl: string | null, base64EncodedSvg: string | null }> => {
     const nodesToInclude = getNodeIds(imageExtractorConfig.nodesToExclude);
     const svg = await getSvgElement(editor, nodesToInclude, imageExtractorConfig);
-    const blob = await getSvgAsImage(svg, imageExtractorConfig);
+    const { blob, base64EncodedSvg } = await getSvgAsImage(svg, imageExtractorConfig);
     const dataUrl = blob ? await encodeBlobAsBase64(blob) : null;
     return {
       svg,
       blob,
       dataUrl,
+      base64EncodedSvg,
     }
-  }, [editor, getNodeIds, imageExtractorConfig]);
-
-  const getImagePreview = useCallback(async (): Promise<string | null> => {
-    const nodesInImage: TLShapeId[] = getNodeIds(imageExtractorConfig.nodesToExclude);
-    if (nodesInImage.length === 0) return null;
-    const svgPreview = await getSvgPreview(editor, nodesInImage, imageExtractorConfig);
-    return await getSVGAsBlob(svgPreview!);
   }, [editor, getNodeIds, imageExtractorConfig]);
 
   const getImageExtractorSchema = useCallback(() => {
@@ -292,10 +299,11 @@ export const useContentExtractor = () => {
 
   const getNodesExtractorSchema = useCallback(() => {
     const nodes = editor.getCurrentPageShapesSorted();
+    const selectedNodes = editor.getSelectedShapeIds();
     const nodeSchema = nodes.reduce((acc: any, node: any) => {
       const nodeKey = node.id.replace('shape:', '');
       const keys = (Object.keys(node).filter((key) => !defaultNodePropertiesToIgnore.includes(key as keyof TLShape)) as (keyof TLShape)[]) || [];
-
+      const selected = selectedNodes.includes(node.id);
       // key -> yup boolean schema
       const properties = keys?.reduce((acc: any, key) => {
         acc[key] = yup.boolean().default(true).meta({ item: 'checkbox', label: key });
@@ -311,7 +319,7 @@ export const useContentExtractor = () => {
           enabled: yup
             .boolean()
             .default(false)
-            .meta({ item: 'checkbox', label: getNodeName(node) }),
+            .meta({ item: 'checkbox', label: getNodeName(node), selected }),
           properties: yup
             .object()
             .shape(properties)
@@ -398,23 +406,24 @@ export const useContentExtractor = () => {
   const extractAll = useCallback(async (): Promise<ExtractedState> => {
     const nodes = nodesExtractorConfig.enabled ? await extractNodes() : null;
     const image = imageExtractorConfig.enabled ? await extractImage() : null;
-    const { svg, blob, dataUrl } = image || { svg: null, blob: null, dataUrl: null };
+    const { svg, blob, dataUrl, base64EncodedSvg } = image || { svg: null, blob: null, dataUrl: null, base64EncodedSvg: null };
     const text = textExtractorConfig.enabled ? extractText() : null;
     const canvasState = canvasExtractorConfig.enabled ? extractCanvasState() : null;
     const uiState = uiExtractorConfig.enabled ? extractUiState() : null;
     const theme = editor?.user.getUserPreferences().isDarkMode ? 'dark' : 'light';
-    return { nodes, text, svg, blob, dataUrl, canvasState, uiState, theme, ...useContentExtractorStore.getState() };
+    return { nodes, text, svg, blob, dataUrl, base64EncodedSvg, canvasState, uiState, theme, ...useContentExtractorStore.getState() };
   }, [nodesExtractorConfig.enabled, extractNodes, imageExtractorConfig.enabled, extractImage, textExtractorConfig.enabled, extractText, canvasExtractorConfig.enabled, extractCanvasState, uiExtractorConfig.enabled, extractUiState, editor?.user]);
 
   return {
     imageExtractorConfig,
     extractImage,
-    getImagePreview,
     getImageExtractorSchema,
+    updateImageConfig,
 
     nodesExtractorConfig,
     extractNodes,
     getNodesExtractorSchema,
+    updateNodesConfig,
 
     textExtractorConfig,
     extractText,
@@ -423,10 +432,12 @@ export const useContentExtractor = () => {
     canvasExtractorConfig,
     extractCanvasState,
     getCanvasStateExtractorSchema,
+    updateCanvasConfig,
 
     uiExtractorConfig,
     extractUiState,
     getUiStateExtractorSchema,
+    updateUiConfig,
 
     getNodeIds,
     getNodes,

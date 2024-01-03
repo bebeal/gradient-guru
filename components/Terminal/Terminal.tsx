@@ -2,7 +2,7 @@
 
 import { Highlighter, SyntaxStyle, CodeLanguageProperties, CodeLanguageAliases, CopyButton, IconLink, DownloadButton, HighlighterProps } from "@/components";
 import { cn } from "@/utils";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 
 export interface TerminalProps extends HighlighterProps {
   code: string;
@@ -12,7 +12,7 @@ export interface TerminalProps extends HighlighterProps {
   className?: string;
 }
 
-export const Terminal = (props: TerminalProps) => {
+export const Terminal = memo((props: TerminalProps) => {
   const { code='', language, syntaxStyle='custom', editable=false, className, ...rest } = props;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [codeContent, setCodeContent] = useState(code);
@@ -83,5 +83,5 @@ export const Terminal = (props: TerminalProps) => {
       )}
     </section>
   );
-};
+});
 Terminal.displayName = 'Terminal';

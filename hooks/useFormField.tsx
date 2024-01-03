@@ -1,7 +1,8 @@
 'use client'
 
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { ControllerFieldState, ControllerRenderProps, FieldPath, FieldValues, UseFormStateReturn, useFormContext } from 'react-hook-form';
+import { nanoid } from '@/utils';
 
 // ***********************
 //    FormFieldContext
@@ -33,8 +34,12 @@ export const useFormField = () => {
     placeholder,
     readOnly=false,
   } = context;
+  const [uuid, setUuid] = useState<string>('');
+  useEffect(() => {
+    setUuid(nanoid());
+  }, []);
   const form = useFormContext();
-  const name = field.name;
+  const name = `${field.name}`;
   const id = name;
   const meta = schema.spec.meta || {};
   const item = meta.item || 'input';
@@ -54,17 +59,19 @@ export const useFormField = () => {
       ...field,
       ...meta,
       disabled,
+      name,
+      id
     },
     fieldState,
     formState,
     schema,
     label,
-    labelId: `${name}-label`,
+    labelId: `${id}-label`,
     description,
-    descriptionId: `${name}-description`,
+    descriptionId: `${id}-description`,
     placeholder,
-    placeholderId: `${name}-placeholder`,
-    messageId: `${name}-message`,
+    placeholderId: `${id}-placeholder`,
+    messageId: `${id}-message`,
     readOnly,
     form,
     item,

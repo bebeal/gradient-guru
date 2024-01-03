@@ -51,9 +51,9 @@ export const useModel = () => {
       // use extracted content to make prompt
       // messages object
       const prompt = getPrompt(extracted, systemPromptName);
-      // make model query
-      // return await modelClient.callApi(prompt).then((response: any) => {
-      return await modelClient.mockApi(prompt).then((response: any) => {
+      // query model
+      // return await modelClient.mockApi(prompt).then((response: any) => {
+      return await modelClient.callApi(prompt).then((response: any) => {
         const html = getHTMLFromOpenAIResponse(response);
         // No HTML? Something went wrong
         if (html.length < 100) {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 'react';
+import { memo, useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 'react';
 import { assert, Canvas, Editor, ErrorScreen, LoadingScreen, TLAnyShapeUtilConstructor, TldrawEditor, TldrawEditorProps, TLOnMountHandler, useEditor } from '@tldraw/editor';
 import {
   ContextMenu,
@@ -22,7 +22,7 @@ import { registerDefaultSideEffects } from '@tldraw/tldraw/src/lib/defaultSideEf
 import { usePreloadAssets } from '@tldraw/tldraw/src/lib/ui/hooks/usePreloadAssets';
 import { TLEditorAssetUrls, useDefaultEditorAssetsWithOverrides } from '@tldraw/tldraw/src/lib/utils/static-assets/assetUrls';
 import { DropWrapper, Erroring, FlowUi, FlowUiProps, Loading } from '@/components';
-import { ContentRecorderProvider, useMounted } from '@/hooks';
+import { useMounted } from '@/hooks';
 import { cn } from '@/utils';
 import { IconNodeUtil, PreviewNodeUtil, TerminalNodeUtil, TipTapNodeUtil } from './Nodes';
 import '@tldraw/tldraw/tldraw.css';
@@ -34,7 +34,7 @@ export type FlowProps = TldrawProps &
     shapeUtils?: TLAnyShapeUtilConstructor[];
   };
 
-export const Flow = (props: FlowProps) => {
+export const Flow = memo((props: FlowProps) => {
   const {
     // Custom props
     initialShapes = [],
@@ -119,20 +119,18 @@ export const Flow = (props: FlowProps) => {
   }
   return (
     <TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)}>
-      <ContentRecorderProvider>
-        <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} {...withDefaults}>
-          <ContextMenu>
-            <DropWrapper>
-              <Canvas />
-            </DropWrapper>
-          </ContextMenu>
-          <InsideOfEditorContext maxImageDimension={maxImageDimension} maxAssetSize={maxAssetSize} acceptedImageMimeTypes={acceptedImageMimeTypes} acceptedVideoMimeTypes={acceptedVideoMimeTypes} onMount={onMount} />
-          {children}
-        </FlowUi>
-      </ContentRecorderProvider>
+      <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} {...withDefaults}>
+        <ContextMenu>
+          <DropWrapper>
+            <Canvas />
+          </DropWrapper>
+        </ContextMenu>
+        <InsideOfEditorContext maxImageDimension={maxImageDimension} maxAssetSize={maxAssetSize} acceptedImageMimeTypes={acceptedImageMimeTypes} acceptedVideoMimeTypes={acceptedVideoMimeTypes} onMount={onMount} />
+        {children}
+      </FlowUi> 
     </TldrawEditor>
   );
-};
+});
 
 // We put these hooks into a component here so that they can run inside of the context provided by TldrawEditor.
 const InsideOfEditorContext = ({

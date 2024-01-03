@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, forwardRef, useEffect, useState } from "react";
+import { ReactNode, forwardRef, memo, useEffect, useState } from "react";
 import * as FormPrimitive from '@radix-ui/react-form';
 import { FormProvider, UseFormProps, UseFormReturn, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -29,14 +29,14 @@ export interface FormProps extends UseFormProps {
   SchemaMap?: Record<string, any>;
 }
 
-export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
+export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => {
   const {
     object: initialObject = {},
     schema: schemaFromProps,
     readOnly = false,
     onSubmit=noop,
     onError=noop,
-    mode = 'onSubmit',
+    mode = 'all',
     labels={},
     className = '',
     ItemRenderer,
@@ -64,19 +64,22 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
   // run validation on initial mount
   useEffect(() => {
     if (form && !initialized) {
-      setTimeout(() => {
-        form.trigger();
-        setInitialized(true);
-      }, 0);
+      form.trigger();
+      setInitialized(true);
     }
   }, [form, initialized]);
+
+  useEffect(() => {
+    form.watch((values) => {
+      form.handleSubmit(() => onSubmit(values, form), onError)();
+    });
+  }, [form, onSubmit, onError]);
 
   return (
     <FormProvider {...rest} {...form}>
       <FormPrimitive.Root
         ref={ref}
         className={cn(`w-full h-auto p-2 overflow-auto rounded items-center`, readOnly && 'bg-primary/90', className)}
-        onChange={(data: any) => form.handleSubmit((data: any) => onSubmit(data, form), onError)()}
       > 
         <div className={cn("w-full h-auto grid gap-px rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`)}>
           <FormFields ItemRenderer={ItemRenderer} form={form} schema={schema} labels={labels} readOnly={readOnly} />
@@ -84,5 +87,5 @@ export const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
       </FormPrimitive.Root>
     </FormProvider>
   )
-});
+}));
 Form.displayName = 'Form';

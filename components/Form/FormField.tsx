@@ -64,6 +64,7 @@ export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
   } else if (FormItemToItemMap['object'].includes(item)) {
     return (
       <Accordion
+        id={field.id}
         highlightActive={false}
         className="text-xs w-full"
         triggerClassName="px-2 py-1 font-semibold text-xs text-primary"
@@ -99,6 +100,7 @@ export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
       <Select ref={ref} className={cn(`text-xs`, className)} items={Array.from(schema?._whitelist)} {...field} readOnly={readOnly} />
     )
   } else if (FormItemToItemMap['boolean'].includes(item)) {
+    
     const value: boolean = field?.value;
     return (item === 'switch') ? (
       <Switch ref={ref} className={className} {...field} pressed={value} readOnly={readOnly} />
@@ -106,10 +108,16 @@ export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
       <Checkbox ref={ref} className={className} {...field} checked={value} readOnly={readOnly} />
     );
   } else if (FormItemToItemMap['text'].includes(item)) {
+    if (typeof field.value === 'number') {
+      field.value = parseFloat(field.value.toFixed(2));
+    }
     if (item === 'input' || item === 'number') {
       return ( <Input ref={ref} placeholder={placeholder} className={className} extraCharWidth={0} {...field} readOnly={readOnly} /> );
     }
   } else {
+    if (typeof field.value === 'number') {
+      field.value = parseFloat(field.value.toFixed(2));
+    }
     // default readOnly
     return (<Input ref={ref} extraCharWidth={0} placeholder={placeholder} readOnly className={cn(className, `p-0 cursor-text bg-transparent border-transparent text-primary/80 ring-transparent hover:border-transparent hover:bg-transparent hover:cursor-text hover:text-primary/80 hover:ring-transparent focus:border-transparent focus:bg-transparent focus:cursor-text focus:text-primary/80 focus:ring-transparent`)} {...field} />);
   }
@@ -123,10 +131,11 @@ export type FormItemProps = {
 export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
   const { className, ItemRenderer=DefaultFormItem } = props;
   const useForm = useFormField();
-  const { fieldState, label, description, item } = useForm;
+  const { fieldState, label, description, schema, item } = useForm;
   const isModel = item === 'model';
   const isBoolean = item === 'boolean' || item === 'checkbox' || item === 'switch';
   const isObject = item === 'object' || item === 'from-array' || item === 'node-schema';
+  const selected = schema?.spec?.meta?.selected || false;
 
   const Label = useMemo(() => {
     // if label is a react fucntional component, call it to render
@@ -141,7 +150,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   return (
     <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-center p-1 gap-px`, isObject && 'col-span-2', isModel && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
       {(description || !isObject) && (<div className={cn("flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start")}>
-        {!isObject && (<FormLabel className="text-xs">{Label}</FormLabel>)}
+        {!isObject && (<FormLabel className={cn("text-xs", selected && `text-accent`)}>{Label}</FormLabel>)}
         {description && (<FormDescription>{description}</FormDescription>)}
       </div>)}
       <div className={cn("flex-col flex w-full h-auto justify-center items-center px-1.5", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end')}>

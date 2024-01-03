@@ -13,6 +13,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = forwardRef((props: InputProps, ref: any) => {
   const {
+    id,
     type='text',
     radius='medium',
     className='',
@@ -41,6 +42,8 @@ export const Input = forwardRef((props: InputProps, ref: any) => {
   return (
     <input
       autoComplete='off'
+      id={id}
+      name={id}
       type={type}
       ref={ref}
       placeholder={placeholder}
@@ -58,7 +61,6 @@ export const Input = forwardRef((props: InputProps, ref: any) => {
         className,
       )}
       {...rest}
-
     />
   )
 });

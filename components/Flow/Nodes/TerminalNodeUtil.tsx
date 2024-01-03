@@ -7,7 +7,7 @@ import {
   useIsEditing,
 } from '@tldraw/tldraw';
 import * as yup from 'yup';
-import { CodeLanguage, IconSetCache, Terminal, codeLanguages } from '@/components';
+import { CodeLanguage, EditingIndicator, IconSetCache, Terminal, codeLanguages } from '@/components';
 import { FlowNodeUtil } from './FlowNodeUtil';
 import { filterObjectByKeys } from '@/utils';
 
@@ -41,35 +41,9 @@ export class TerminalNodeUtil extends FlowNodeUtil<TerminalNode> {
   component(node: TerminalNode) {
     const isEditing = useIsEditing(node.id);
     return (
-      <HTMLContainer id={node.id} className="tl-embed-container w-auto h-auto overflow-hidden z-[500] cursor-pointer" style={{pointerEvents: isEditing ? 'auto' : 'none'}}>
+      <HTMLContainer id={node.id} className="tl-embed-container w-auto h-auto overflow-hidden cursor-pointer" style={{pointerEvents: isEditing ? 'auto' : 'none'}}>
         <Terminal editable showLineNumbers={node.props.showLineNumbers} wrapLongLines={node.props.wrapLongLines} language={node?.props?.language} code={node.props.text} className="h-full w-full" />
-        <div
-          style={{
-            textAlign: 'center',
-            position: 'absolute',
-            bottom: isEditing ? -40 : 0,
-            padding: 4,
-            fontFamily: 'inherit',
-            fontSize: 12,
-            left: 0,
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            pointerEvents: 'none',
-          }}
-        >
-          <span
-            style={{
-              background: 'var(--color-panel)',
-              padding: '4px 12px',
-              borderRadius: 99,
-              border: '1px solid var(--color-muted-1)',
-            }}
-          >
-            {isEditing ? 'Click the canvas to exit' : 'Double click to interact'}
-          </span>
-        </div>
+        <EditingIndicator isEditing={isEditing} />
       </HTMLContainer>
     );
   }

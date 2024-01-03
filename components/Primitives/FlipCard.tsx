@@ -11,7 +11,6 @@ export interface CardSideProps {
 }
 
 export interface FlipCardProps {
-  title?: ReactNode | string;
   front?: CardSideProps;
   back?: CardSideProps;
   onFlip?: () => void;
@@ -20,12 +19,11 @@ export interface FlipCardProps {
 
 export const Side = (props: CardSideProps) => {
   const { className = '', children } = props;
-
-  return <div className={cn(`flex flex-col gap-2 w-full h-full overflow-auto`, className)}>{children}</div>;
+  return <div className={cn(`flex flex-col gap-2 w-full h-auto overflow-auto`, className)}>{children}</div>;
 };
 
 export const FlipCard = (props: FlipCardProps) => {
-  const { front, back, title, className = '', onFlip } = props;
+  const { front, back, className = '', onFlip } = props;
   const [flipped, setFlipped] = useState(Boolean(back && !front));
 
   const flip = useCallback(() => {
@@ -49,9 +47,9 @@ export const FlipCard = (props: FlipCardProps) => {
         className
       )}
     >
-      <div className={cn(`flex flex-col w-full h-auto gap-1 border-inherit border-b pb-1`)}>
+      <div className={cn(`relative flex flex-col w-full h-auto gap-1 border-inherit border-b pb-1`)}>
         <div className={cn(`relative pointer-events-auto flex w-full h-full justify-center p-2`, flipped && `[transform:rotateY(-180deg)]`)}>
-          <div className={cn(`font-bold text-base text-center w-full h-auto self-center break-words`)}>{title}</div>
+          <div className={cn(`font-bold text-base text-center w-full h-auto self-center break-words`)}>{flipped ? back?.title : front?.title}</div>
           {flipped ? front && <FlipButton /> : back && <FlipButton />}
         </div>
       </div>

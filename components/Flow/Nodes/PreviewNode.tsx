@@ -1,21 +1,12 @@
-'use client'
+'use client';
 
 /* eslint-disable react-hooks/rules-of-hooks */
-import { LINK_HOST, PROTOCOL } from '@/utils'
-import {
-	BaseBoxShapeUtil,
-	DefaultSpinner,
-	HTMLContainer,
-	SvgExportContext,
-	TLBaseShape,
-	Vec2d,
-	toDomPrecision,
-	useIsEditing,
-	useToasts,
-	useValue,
-} from '@tldraw/tldraw'
-import { formatNodeId } from './shared'
-import { useApi } from '@/hooks'
+;
+import { BaseBoxShapeUtil, DefaultSpinner, HTMLContainer, SvgExportContext, TLBaseShape, toDomPrecision, useIsEditing, useToasts, useValue, Vec2d } from '@tldraw/tldraw';
+import { useApi } from '@/hooks';
+import { LINK_HOST, PROTOCOL } from '@/utils';
+import { EditingIndicator, formatNodeId } from '../Extensions/shared';
+
 
 export type PreviewNode = TLBaseShape<
 	'preview',
@@ -148,33 +139,7 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
 								</button>
 							</Dropdown> */}
 						</div>
-						<div
-							style={{
-								textAlign: 'center',
-								position: 'absolute',
-								bottom: isEditing ? -40 : 0,
-								padding: 4,
-								fontFamily: 'inherit',
-								fontSize: 12,
-								left: 0,
-								width: '100%',
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'center',
-								pointerEvents: 'none',
-							}}
-						>
-							<span
-								style={{
-									background: 'var(--color-panel)',
-									padding: '4px 12px',
-									borderRadius: 99,
-									border: '1px solid var(--color-muted-1)',
-								}}
-							>
-								{isEditing ? 'Click the canvas to exit' : 'Double click to interact'}
-							</span>
-						</div>
+            <EditingIndicator isEditing={isEditing} />
 					</>
 				)}
 			</HTMLContainer>

@@ -31,6 +31,7 @@ const calcStepMarkOffset = (value: number, min: number, max: number, thumbSize: 
 
 // export type SliderProps = Omit<SliderPrimitive.SliderProps, "value" | "onValueChange" | "onChange" | "defaultValue" > & {
 export type SliderProps = {
+  id?: string;
   value?: number;
   defaultValue?: any;
   onChange?: (value: any) => void;
@@ -47,6 +48,7 @@ export type SliderProps = {
 
 export const Slider = forwardRef<any, SliderProps>((props, ref) => {
   const {
+    id,
     min = 0,
     max = 100,
     step = 1,
@@ -89,6 +91,8 @@ export const Slider = forwardRef<any, SliderProps>((props, ref) => {
 
   return (
     <SliderPrimitive.Root
+      id={id}
+      name={id}
       ref={ref}
       min={min}
       max={max}

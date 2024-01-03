@@ -4,7 +4,7 @@ import { ForwardedRef, forwardRef, useCallback, useEffect, useRef, useState } fr
 import * as Tabs from '@radix-ui/react-tabs';
 import { useRippleEffect } from '@/hooks';
 import { cn } from '@/utils';
-import { Radius, RadiusClasses } from '@/components';
+import { IconSetCache, Radius, RadiusClasses } from '@/components';
 
 export interface SidePanelTabProps {
   icon?: any;
@@ -21,12 +21,13 @@ export interface SidePanelProps {
   overlay?: boolean;
   ripple?: boolean;
   animate?: boolean;
+  handle?: boolean;
   radius?: Radius;
   className?: string;
 }
 
 export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<HTMLElement>) => {
-  const { tabs, resizeable = true, defatultTabIndex = undefined, defaultWidth = 350, bounds = [200, 600], overlay = true, ripple = true, animate = true, radius = 'medium', className = '', ...rest } = props;
+  const { tabs, resizeable = true, defatultTabIndex = undefined, defaultWidth = 350, bounds = [200, 600], overlay = true, ripple = true, animate = true, handle=true, radius = 'medium', className = '', ...rest } = props;
   // activeTabIndex = undefined means no tab is active
   const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(defatultTabIndex);
   const [panelWidth, setPanelWidth] = useState<number>(defaultWidth);
@@ -143,7 +144,6 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
             return (
               <Tabs.Content
                 key={tabValue}
-                forceMount
                 value={tabValue}
                 data-state={'active'}
                 data-orientation={'horizontal'}
@@ -167,7 +167,13 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
           })}
         </div>
         {resizing && overlay && <div className={cn('absolute left-0 top-0 w-screen h-screen z-[505]', cursor, resizing ? 'bg-black bg-opacity-50' : 'bg-transparent')} />}
-        <div draggable={false} ref={resizeRef} className={cn(`absolute top-0 -right-px w-0.5 h-full z-[505] select-none`, resizing ? `bg-accent` : `bg-transparent`, cursor)} onDoubleClick={togglePanel} />
+        <div draggable={false} ref={resizeRef} className={cn(`absolute top-0 -right-px w-0.5 h-full z-[505] select-none`, resizing ? `bg-accent` : `bg-transparent`, cursor)} onDoubleClick={togglePanel}>
+        {handle && (
+          <div onClick={togglePanel} className={cn("z-10 absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2 flex h-4 w-3 items-center justify-center rounded-sm border bg-primary", resizing ? `border-accent` : `border-primary`, activeTabIndex !== undefined && `border-accent`, cursor)}>
+            <IconSetCache.Carbon.Draggable className="h-2.5 w-2.5" />
+          </div>
+        )}
+        </div>
       </Tabs.Root>
     </>
   );

@@ -63,6 +63,7 @@ export const usePlotly = (props: PlotlyProps) => {
   const [frames, setFrames] = useState<Plotly.Frame[]>(initialFrames);
   const [config, setConfig] = useState<Partial<Plotly.Config>>({
     responsive: true,
+    scrollZoom: true,
     ...initialConfig,
   });
 

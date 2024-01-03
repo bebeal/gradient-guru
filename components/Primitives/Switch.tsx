@@ -8,6 +8,7 @@ import { forwardRef, useState, useEffect, useCallback } from 'react';
 
 // export interface SwitchProps extends TogglePrimitive.ToggleProps {
 export interface SwitchProps {
+  id?: string;
   handleOffset?: string;
   baseColor?: string;
   animationTime?: string;
@@ -27,6 +28,7 @@ export interface SwitchProps {
 
 export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
   const {
+    id,
     pressed: externalPressed,
     defaultPressed = undefined,
     disabled = false,
@@ -101,6 +103,7 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
         </div>
       )}
       <TogglePrimitive.Root
+        id={id}
         asChild={asChild}
         ref={ref} className={className} style={style} disabled={disabled}
         pressed={isPressed}

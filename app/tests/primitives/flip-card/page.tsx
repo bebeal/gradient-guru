@@ -11,8 +11,8 @@ const FlipCardPage = () => {
       <div className="flex items-center justify-center gap-10">
         <FlipCard
           className="w-[200px]"
-          title="Flip Card"
           front={{
+            title: 'Front Title',
             children: (
               <div className="w-full h-full flex flex-col justify-center items-center gap-4">
                 <div className="flex w-auto h-auto justify-center items-center">Front Content</div>
@@ -24,6 +24,7 @@ const FlipCardPage = () => {
             )
           }}
           back={{
+            title: 'Back Title',
             children: (
               <div className="w-full h-full flex flex-col justify-center items-center gap-4">
                 <div className="flex w-auto h-auto justify-center items-center">Back Content</div>
@@ -37,15 +38,15 @@ const FlipCardPage = () => {
         />
         <FlipCard
           className="w-[100px]"
-          title="Only Front"
           front={{
+            title: 'Only Front',
             children: <div>wow</div>
           }}
         />
         <FlipCard
           className="w-[100px]"
-          title="Only Back"
           back={{
+            title: 'Only Back',
             children: <div>wow</div>
           }}
         />

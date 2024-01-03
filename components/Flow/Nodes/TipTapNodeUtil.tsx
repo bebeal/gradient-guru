@@ -8,7 +8,7 @@ import {
   useIsEditing,
 } from '@tldraw/tldraw';
 import * as yup from 'yup';
-import { IconSetCache, TipTap } from '@/components';
+import { EditingIndicator, IconSetCache, TipTap } from '@/components';
 import { FlowNodeUtil } from './FlowNodeUtil';
 import { filterObjectByKeys } from '@/utils';
 
@@ -27,8 +27,8 @@ export class TipTapNodeUtil extends FlowNodeUtil<TipTapNode> {
 
   getDefaultProps(): TipTapNode['props'] {
     return {
-      w: 650,
-      h: 550,
+      w: 385,
+      h: 300,
       text: '',
     };
   }
@@ -36,35 +36,9 @@ export class TipTapNodeUtil extends FlowNodeUtil<TipTapNode> {
   component(node: TipTapNode) {
     const isEditing = useIsEditing(node.id);
     return (
-      <HTMLContainer id={node.id} className="tl-embed-container flex justify-center items-center w-auto h-auto overflow-hidden z-[500] cursor-auto text-xs" style={{pointerEvents: isEditing ? 'auto' : 'none'}}>
-        <TipTap autofocus={true} content={node.props.text} />
-        <div
-          style={{
-            textAlign: 'center',
-            position: 'absolute',
-            bottom: isEditing ? -40 : 0,
-            padding: 4,
-            fontFamily: 'inherit',
-            fontSize: 12,
-            left: 0,
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            pointerEvents: 'none',
-          }}
-        >
-          <span
-            style={{
-              background: 'var(--color-panel)',
-              padding: '4px 12px',
-              borderRadius: 99,
-              border: '1px solid var(--color-muted-1)',
-            }}
-          >
-            {isEditing ? 'Click the canvas to exit' : 'Double click to interact'}
-          </span>
-        </div>
+      <HTMLContainer id={node.id} className="relative tl-embed-container flex justify-center items-center w-auto h-auto overflow-hidden text-xs cursor-auto" style={{pointerEvents: isEditing ? 'auto' : 'none'}} onPointerDown={(e) => { e.stopPropagation(); }}>
+        <TipTap content={node.props.text} />
+        <EditingIndicator isEditing={isEditing} />
       </HTMLContainer>
     );
   }
