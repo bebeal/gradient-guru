@@ -1,7 +1,6 @@
 'use client';
-
 /* eslint-disable react-hooks/rules-of-hooks */
-;
+
 import { BaseBoxShapeUtil, DefaultSpinner, HTMLContainer, SvgExportContext, TLBaseShape, toDomPrecision, useIsEditing, useToasts, useValue, Vec2d } from '@tldraw/tldraw';
 import { useApi } from '@/hooks';
 import { LINK_HOST, PROTOCOL } from '@/utils';

@@ -32,18 +32,12 @@ yarn build
 
 ### Setup API Key For Local Development
 
-1. **Create .env.local file** in root directory
+**Create .env.local file** in root directory
 
-    ```bash
-    touch .env.local
-    ```
-
-2. **Add API Key**
-
-    ```bash
-    # .env.local
-    NEXT_PUBLIC_OPENAI_API_KEY='your-api-key-here'
-    ```
+```bash
+touch .env.local
+echo 'NEXT_PUBLIC_OPENAI_API_KEY=<your-api-key-here>' >> .env.local
+```
 
 ## Deployement
 
@@ -77,12 +71,9 @@ yarn build
     * [Styled Components Docs](https://styled-components.com/docs)
 
 * Utility:
-  * Canvas:
+  * Canvas/Whiteboard:
     * [Tldraw](https://github.com/tldraw/tldraw)
       * [Tldraw Docs](https://tldraw.dev/docs)
-  * Forms:
-    * [react-form-hook](https://github.com/react-hook-form/react-hook-form)
-      * [react-form-hook Docs](https://react-hook-form.com/get-started)
   * Schema Validation:
     * [yup](https://github.com/jquense/yup)
       * [yup Docs](https://github.com/jquense/yup)
@@ -95,9 +86,6 @@ yarn build
   * Data Visualization:
     * [plotly.js](https://github.com/plotly/plotly.js)
       * [plotly.js Docs](https://plotly.com/javascript/)
-  * Data Tables:
-    * [ag-grid](https://github.com/ag-grid/ag-grid)
-      * [ag-grid Docs](https://www.ag-grid.com/)
 
 ---
 
@@ -156,11 +144,3 @@ yarn build
       * [`/slider`](https://gradient-guru.com/tests/primitives/slider)
       * [`/switch`](https://gradient-guru.com/tests/primitives/switch)
     * [`/tldraw`](https://gradient-guru.com/tests/tldraw)
-
-### TODO
-
-* [ ] Fix node schemas
-* [ ] Context calculator
-* [ ] Add flask backend
-* [ ] Add other AI clients
-* [ ] Fix plotly component
