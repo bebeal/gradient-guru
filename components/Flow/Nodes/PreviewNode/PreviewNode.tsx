@@ -59,7 +59,7 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
     };
 
     return (
-      <HTMLContainer className="tl-embed-container bg-primary w-auto h-auto flex justify-center items-center pointer-events-auto" id={node.id} onPointerDown={stopPropagation}>
+      <HTMLContainer className="tl-embed-container bg-primary w-auto h-auto flex justify-center items-center pointer-events-auto" id={node.id}>
         {isLoading ? (
           <div
             className="bg-primary flex items-center justify-center w-full h-full"
