@@ -36,54 +36,48 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
   const [cursor, setCursor] = useState<string>('cursor-ew-resize');
   const { createRippleEffect } = useRippleEffect();
 
-  const changeTab = useCallback(
-    (e: any, tabValue: string, index: number) => {
-      ripple && createRippleEffect?.(e);
-      setActiveTabIndex(activeTabIndex === index ? undefined : index);
-    },
-    [activeTabIndex, createRippleEffect, ripple]
-  );
+  const changeTab = useCallback((e: any, tabValue: string, index: number) => {
+    ripple && createRippleEffect?.(e);
+    setActiveTabIndex((active) => active === index ? undefined : index);
+  }, [createRippleEffect, ripple]);
 
-  const onResizeHandleMouseDown = useCallback(
-    (e: MouseEvent) => {
-      if (!resizeable) return;
+  const onResizeHandleMouseDown = useCallback((e: MouseEvent) => {
+    if (!resizeable) return;
 
-      const startX = e.clientX;
-      const startWidth = panelWidth;
-      let animationFrameId: number;
+    const startX = e.clientX;
+    const startWidth = panelWidth;
+    let animationFrameId: number;
 
-      const doResize = (e: MouseEvent) => {
-        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    const doResize = (e: MouseEvent) => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
 
-        animationFrameId = requestAnimationFrame(() => {
-          let currentWidth = startWidth + e.clientX - startX;
-          const isWithinBounds = currentWidth >= bounds[0] && currentWidth <= bounds[1];
+      animationFrameId = requestAnimationFrame(() => {
+        let currentWidth = startWidth + e.clientX - startX;
+        const isWithinBounds = currentWidth >= bounds[0] && currentWidth <= bounds[1];
 
-          // Limiting the cursor movement to the bounds of the resize handle
-          if (!isWithinBounds) {
-            currentWidth = Math.min(Math.max(currentWidth, bounds[0]), bounds[1]);
-            e.preventDefault();
-          }
+        // Limiting the cursor movement to the bounds of the resize handle
+        if (!isWithinBounds) {
+          currentWidth = Math.min(Math.max(currentWidth, bounds[0]), bounds[1]);
+          e.preventDefault();
+        }
 
-          setCursor(isWithinBounds ? 'cursor-ew-resize' : 'cursor-not-allowed');
-          setResizing(true);
-          setPanelWidth(currentWidth);
-        });
-      };
+        setCursor(isWithinBounds ? 'cursor-ew-resize' : 'cursor-not-allowed');
+        setResizing(true);
+        setPanelWidth(currentWidth);
+      });
+    };
 
-      const stopResize = () => {
-        setResizing(false);
-        setCursor('cursor-ew-resize');
-        cancelAnimationFrame(animationFrameId);
-        document.removeEventListener('mousemove', doResize);
-        document.removeEventListener('mouseup', stopResize);
-      };
+    const stopResize = () => {
+      setResizing(false);
+      setCursor('cursor-ew-resize');
+      cancelAnimationFrame(animationFrameId);
+      document.removeEventListener('mousemove', doResize);
+      document.removeEventListener('mouseup', stopResize);
+    };
 
-      document.addEventListener('mousemove', doResize);
-      document.addEventListener('mouseup', stopResize);
-    },
-    [bounds, panelWidth, resizeable]
-  );
+    document.addEventListener('mousemove', doResize);
+    document.addEventListener('mouseup', stopResize);
+  }, [bounds, panelWidth, resizeable]);
 
   useEffect(() => {
     const resizeHandle = resizeRef.current;
@@ -106,7 +100,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
 
   return (
     <>
-      <Tabs.Root className={cn(`relative flex w-auto h-full`, `text-primary shadow-2 shadow-2xl`, `transition-all z-[500]`, className)} data-orientation="vertical" orientation="vertical" activationMode="automatic" {...rest}>
+      <Tabs.Root className={cn(`relative flex w-auto h-full`, `text-primary shadow-2 shadow-2xl`, `transition-all z-[500]`, className)} data-orientation="vertical" orientation="vertical" activationMode="manual" {...rest}>
         <Tabs.List className={cn(`flex flex-col w-auto h-auto items-center z-[503]`, `bg-primary border-0 border-r border-transparent`, activeTabIndex === undefined ? `border-r-primary` : `border-r-transparent`)} aria-label="ColumnPanel">
           {tabs.map((tab, index) => {
             const tabValue = `${tab?.name}`;
@@ -167,12 +161,12 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
           })}
         </div>
         {resizing && overlay && <div className={cn('absolute left-0 top-0 w-screen h-screen z-[505]', cursor, resizing ? 'bg-black bg-opacity-50' : 'bg-transparent')} />}
-        <div draggable={false} ref={resizeRef} className={cn(`absolute top-0 -right-px w-0.5 h-full z-[505] select-none`, resizing ? `bg-accent` : `bg-transparent`, cursor)} onDoubleClick={togglePanel}>
-        {handle && (
-          <div onClick={togglePanel} className={cn("z-10 absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2 flex h-4 w-3 items-center justify-center rounded-sm border bg-primary", resizing ? `border-accent` : `border-primary`, activeTabIndex !== undefined && `border-accent`, cursor)}>
-            <IconSetCache.Carbon.Draggable className="h-2.5 w-2.5" />
-          </div>
-        )}
+        <div draggable={false} ref={resizeRef} className={cn(`absolute top-0 -right-px w-0.5 h-full z-[505] select-none`, resizing ? `bg-accent` : `bg-transparent`, cursor)} onDoubleClick={togglePanel} >
+          {handle && (
+            <div onClick={togglePanel} className={cn("z-[506] absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2 flex h-4 w-3 items-center justify-center rounded-sm border bg-primary hover:bg-secondary !cursor-pointer", resizing ? `border-accent` : `border-primary`, activeTabIndex !== undefined && `border-accent`, cursor)}>
+              <IconSetCache.Carbon.Draggable className="h-2.5 w-2.5" />
+            </div>
+          )}
         </div>
       </Tabs.Root>
     </>

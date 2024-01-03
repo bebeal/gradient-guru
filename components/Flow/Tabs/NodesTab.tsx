@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import * as yup from 'yup';
-import { useEditor, useValue } from '@tldraw/editor';
+import { useEditor } from '@tldraw/editor';
 import {
   Accordion,
   FlowTab,
@@ -38,16 +38,12 @@ export const NodesTab = () => {
   const editor = useEditor();
   const [mounted, setMounted] = useState(false);
   const [nodesSchemas, setNodesSchemas] = useState<any>({});
-	const count = useValue('rendering shapes count', () => editor.getCurrentPageShapesSorted().length + editor.getSelectedShapeIds().length, [
-		editor,
-	]);
 
   useEffect(() => {
     if (!mounted) {
       const schemas = buildNodeSchemas(editor);
       setNodesSchemas(schemas);
       setMounted(true);
-
     }
   }, [editor, mounted, nodesSchemas]);
 
@@ -67,27 +63,30 @@ export const NodesTab = () => {
     })
   }, [editor]);
 
+  const items = useCallback(() => {
+    const selectedShapes = editor.getSelectedShapeIds();
+    return editor.getCurrentPageShapesSorted().map((node: any, index: number) => {
+      // check if node is selected
+      const selected = selectedShapes.includes(node.id);
+      return {
+        key: `${node.id}-${index}-${selected}`,
+        name: getNodeNameComponent(node, selected ? `text-accent`: ``),
+        content: (
+          <div className={cn(`w-full h-full flex flex-col justify-stretch items-center p-1`)}>
+            <Form object={filterObject(node, KeysToIgnore)} schema={nodesSchemas?.[node.id]} SchemaMap={NodeSchemaMappings} onSubmit={onNodeChange} />
+          </div>
+        ),
+      };
+    }) ?? []
+  }, [editor, nodesSchemas, onNodeChange]);
+
   return (
     <FlowTab title="Nodes">
       <Accordion
-        key={count}
         spaceBetween={0}
         className="w-full text-xs p-1"
         triggerClassName="w-full flex justify-center items-center"
-        items={
-          editor.getCurrentPageShapesSorted().map((node: any, index: number) => {
-            // check if node is selected
-            const selected = editor.getSelectedShapeIds().includes(node.id);
-            return {
-              name: getNodeNameComponent(node, selected ? `text-accent`: ``),
-              content: (
-                <div className={cn(`w-full h-full flex flex-col justify-stretch items-center p-1`)}>
-                  <Form object={filterObject(node, KeysToIgnore)} schema={nodesSchemas?.[node.id]} SchemaMap={NodeSchemaMappings} onSubmit={onNodeChange} />
-                </div>
-              ),
-            };
-          }) ?? []
-        }
+        items={items()}
       />
     </FlowTab>
   );
