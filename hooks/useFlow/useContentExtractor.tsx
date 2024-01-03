@@ -233,21 +233,15 @@ export const useContentExtractor = () => {
     }
   }, [mounted, updateCanvasExtractorConfig, updateNodesExtractorConfig, updateUiExtractorConfig]);
 
-  const getNodeIds = useCallback(
-    (nodesToExclude: TLShapeId[] = []): TLShapeId[] => {
-      const nodeIds = Array.from(editor.getCurrentPageShapeIds());
-      return nodeIds.filter((id) => !nodesToExclude.includes(id.replace('shape:', '') as TLShapeId));
-    },
-    [editor]
-  );
+  const getNodeIds = useCallback((nodesToExclude: TLShapeId[] = []): TLShapeId[] => {
+    const nodeIds = Array.from(editor.getCurrentPageShapeIds());
+    return nodeIds.filter((id) => !nodesToExclude.includes(id as TLShapeId));
+  }, [editor] );
 
-  const getNodes = useCallback(
-    (nodesToExclude: TLShapeId[] = []): TLShape[] => {
-      const nodes = editor.getCurrentPageShapesSorted();
-      return nodes.filter((node) => !nodesToExclude.includes(node.id.replace('shape:', '') as TLShapeId));
-    },
-    [editor]
-  );
+  const getNodes = useCallback((nodesToExclude: TLShapeId[] = []): TLShape[] => {
+    const nodes = editor.getCurrentPageShapesSorted();
+    return nodes.filter((node) => !nodesToExclude.includes(node.id as TLShapeId));
+  },[editor]);
 
   const extractImage = useCallback(async (): Promise<{ svg: SVGSVGElement; blob: Blob | null; dataUrl: string | null, base64EncodedSvg: string | null }> => {
     const nodesToInclude = getNodeIds(imageExtractorConfig.nodesToExclude);

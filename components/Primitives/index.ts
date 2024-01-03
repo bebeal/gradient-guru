@@ -19,3 +19,4 @@ export * from './Toolbar';
 export * from './FlipCard';
 export * from './Toast';
 export * from './Progress';
+export * from './Dropdown';

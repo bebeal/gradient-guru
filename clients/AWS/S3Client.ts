@@ -2,7 +2,7 @@ import { AwsCredentialIdentity } from '@aws-sdk/types';
 import { S3Client as InternalS3Client, PutObjectCommand, PutObjectOutput, GetObjectCommand, GetObjectOutput } from '@aws-sdk/client-s3';
 import { getEnvVariable } from '@/utils';
 import { Readable } from 'stream';
-import { defaultHtml } from '@/components';
+import { InvalidLinkHtml } from '@/components';
 
 const streamToString = (stream: Readable): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -110,7 +110,7 @@ export class MockS3Client {
     region: 'us-west-2',
   };
   public records: { [key: string]: string } = {
-    'test': defaultHtml
+    'test': InvalidLinkHtml
   };
 
   public static getInstance(): MockS3Client {

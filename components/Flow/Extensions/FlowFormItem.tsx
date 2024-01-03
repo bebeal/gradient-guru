@@ -1,9 +1,62 @@
 'use client';
 
 import { forwardRef } from 'react';
+import { Badge } from '@radix-ui/themes';
 import { DataModality, Models } from '@/clients/Models';
-import { DataModalityBadge, DefaultFormItem, FormFields, IconSetCache, Select } from "@/components";
+import { DefaultFormItem, FormFields, IconSetCache, Select } from "@/components";
 import { cn } from "@/utils";
+
+const ModalityColors: Record<DataModality, { variant: "solid" | "soft" | "surface" | "outline", color: "tomato" | "red" | "ruby" | "crimson" | "pink" | "plum" | "purple" | "violet" | "iris" | "indigo" | "blue" | "cyan" | "teal" | "jade" | "green" | "grass" | "brown" | "orange" | "sky" | "mint" | "lime" | "yellow" | "amber" | "gold" | "bronze" | "gray" }> = {
+  text: {
+    variant: 'surface',
+    color: 'sky',
+  },
+  image: {
+    variant: 'surface',
+    color: 'green',
+  },
+  audio: {
+    variant: 'surface',
+    color: 'red',
+  },
+  video: {
+    variant: 'surface',
+    color: 'yellow',
+  },
+};
+
+
+const CompactBadge = ({ modality, className, animate=false }: { modality: DataModality; className?: string, animate?: boolean }) => {
+  return (
+    <div className={cn(`h-auto w-auto text-${ModalityColors[modality].color}`, "flex justify-center items-center relative rounded")}>
+    <span className={cn(`block h-2.5 w-2.5 rounded-full bg-${ModalityColors[modality].color} text-${ModalityColors[modality].color} border-black border border-opacity-30`, 
+          animate && `after:animate-ripple after:content-[""] after:rounded-full after:w-full after:h-full after:left-0 after:top-0 after:absolute after:text-${ModalityColors[modality].color} after:border-2 after:border-current after:translate-x-1/2 after:translate-y-1/2`,
+          className
+        )}
+    />
+    </div>
+  )
+}
+
+export const DataModalityBadge = ({ modality, className, compact=false, animate=false }: { modality: DataModality; className?: string, compact?: boolean, animate?: boolean }) => {
+
+  if (compact) {
+    return (
+      <CompactBadge modality={modality} animate={animate} className="p-1 after:p-0" />
+    )
+  }
+  return (
+    <Badge
+      variant={ModalityColors[modality].variant}
+      color={ModalityColors[modality].color}
+      size={'1'}
+      className={cn('!relative !text-[8px] text-center justify-center items-center flex gap-1 flex-row oveflow-hidden !h-full !w-auto', className)}
+    >
+      <CompactBadge modality={modality} />
+      {modality}
+    </Badge>
+  )
+};
 
 
 export const FlowFormItem = forwardRef<any, any>((props, ref) => {

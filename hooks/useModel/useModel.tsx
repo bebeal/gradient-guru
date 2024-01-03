@@ -36,13 +36,10 @@ export const useModel = () => {
   const api = useApi();
   const { imageExtractorConfig, extractAll, getNodeIds } = useContentExtractor();
 
-  const getPrompt = useCallback(
-    (extracted: ExtractedState, key: PromptName) => {
-      const prompt = Prompts[key]({ extracted, config: modelClient.config });
-      return prompt;
-    },
-    [modelClient.config]
-  );
+  const getPrompt = useCallback((extracted: ExtractedState, key: PromptName) => {
+    const prompt = Prompts[key]({ extracted, config: modelClient.config });
+    return prompt;
+  }, [modelClient.config]);
 
   const handleMakeRealPrompt = async (extracted: ExtractedState) => {
     // make response preview shape to hold the response html
@@ -57,7 +54,7 @@ export const useModel = () => {
         const html = getHTMLFromOpenAIResponse(response);
         // No HTML? Something went wrong
         if (html.length < 100) {
-          console.warn(response.choices[0].message.contentx);
+          console.warn(response.choices[0].message.content);
           throw Error('Could not generate a design from those wireframes.');
         }
         // Upload the HTML to S3

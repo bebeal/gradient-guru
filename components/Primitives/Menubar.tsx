@@ -144,6 +144,7 @@ export const MenubarMenu = (props: MenubarMenuProps) => {
       </MenubarPrimitive.Menu>
    )
 };
+MenubarMenu.displayName = MenubarPrimitive.Menu.displayName;
 
 // --------------------------------------------------
 // MenubarTrigger
@@ -228,11 +229,12 @@ export const MenubarSubContent = forwardRef((props: MenubarSubContentProps, ref?
     </MenubarPrimitive.Portal>
   );
 });
+MenubarSubContent.displayName = MenubarPrimitive.SubContent.displayName;
 
 // --------------------------------------------------
 // MenubarGroup
 // --------------------------------------------------
-export interface MenubarGroupProps {
+export interface MenubarGroupProps extends MenubarPrimitive.MenubarGroupProps {
   items?: any[];
   className?: string;
 }
@@ -245,11 +247,12 @@ export const MenubarGroup = (props: MenubarGroupProps) => {
   )
 };
 MenubarGroup.displayName = MenubarPrimitive.Group.displayName;
+MenubarGroup.displayName = 'MenubarGroup';
 
 // --------------------------------------------------
 // MenubarRadioGroup
 // --------------------------------------------------
-export interface MenubarRadioGroupProps {
+export interface MenubarRadioGroupProps extends MenubarPrimitive.MenubarRadioGroupProps {
   items?: any[];
   value?: string;
   onValueChange?: (value: string) => void;
@@ -296,6 +299,7 @@ export const MenubarRadioGroup = (props: MenubarRadioGroupProps) => {
     </MenubarPrimitive.RadioGroup>
   )
 };
+MenubarRadioGroup.displayName = MenubarPrimitive.RadioGroup.displayName;
 
 // --------------------------------------------------
 // MenubarCheckboxItem
@@ -352,6 +356,7 @@ export const MenubarCheckboxItem = (props: MenubarCheckboxItemProps) => {
     </MenubarPrimitive.CheckboxItem>
   )
 };
+MenubarCheckboxItem.displayName = MenubarPrimitive.CheckboxItem.displayName;
 
 // --------------------------------------------------
 // MenubarItem
@@ -385,9 +390,10 @@ export const MenubarItem = (props: MenubarItemProps) => {
     </MenubarPrimitive.Item>
   )
 };
+MenubarItem.displayName = MenubarPrimitive.Item.displayName;
 
 // --------------------------------------------------
-// <MenubarLabel />
+// MenubarLabel
 // --------------------------------------------------
 export interface MenubarLabelProps extends MenubarPrimitive.MenubarLabelProps {
   children?: string;
@@ -405,7 +411,7 @@ export const MenubarLabel = forwardRef((props: MenubarLabelProps, ref?: any) => 
     </MenubarPrimitive.Label>
   );
 });
-MenubarLabel.displayName = 'MenubarLabel'
+MenubarLabel.displayName = 'MenubarLabel';
 
 // --------------------------------------------------
 // MenubarSeparator
@@ -419,7 +425,8 @@ export const MenubarSeparator = forwardRef((props: MenubarSeparatorProps, ref?: 
       className={cn(
         `h-[0.5px] bg-[rgb(var(--text-primary))] text-[rgb(var(--text-primary))] w-[calc(100%-10px)] py-[0.5px]`,
       )}
+      {...props}
     />
   );
 });
-MenubarSeparator.displayName = 'MenubarSeparator'
+MenubarSeparator.displayName = 'MenubarSeparator';

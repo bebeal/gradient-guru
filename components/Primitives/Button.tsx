@@ -28,7 +28,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
     disabled=false,
     variant='none',
     color,
-    size,
+    size='2',
     colors= ['#7F00DE', '#C81BBD', '#FF007E', '#FF1834', '#FF0000', '#FFDA16', '#7FDC4D', '#00E0D9', '#00CDAC', '#02AAB0', '#0074E0'],
     radius='medium',
     ripple=variant !== 'normal',

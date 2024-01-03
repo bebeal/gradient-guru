@@ -2,7 +2,7 @@
 
 import { IconSetCache, Menubar } from '@/components';
 
-const MenubarMenus: any = [
+const MenubarMenus: any[] = [
   {
     children: 'File',
     icon: <IconSetCache.Carbon.Document height="100%" />,

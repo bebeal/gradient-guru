@@ -1,6 +1,6 @@
 'use client'
 
-import { defaultHtml } from '@/components';
+import { InvalidLinkHtml } from '@/components';
 import OpenAI from 'openai';
 
 // Lightweight generic client for interacting with models
@@ -104,7 +104,7 @@ export class BaseModelClient<Config extends ModelConfig, Input = ModelInput, Out
             index: 0,
             logprobs: null,
             message: {
-              content: defaultHtml,
+              content: InvalidLinkHtml,
             },
           },
         ],

@@ -1,95 +1,34 @@
 'use client';
 
-import GradientGuruArchitectureSVG from '@/assets/icons/GradientGuruArchitecture.svg';
 import { Demo } from '@/components';
-import { cn } from '@/utils';
+import { APP_HOST, PROTOCOL, cn } from '@/utils';
+import MakeAGamePng from '@/assets/images/make-a-game.png';
 
-type DemoProps = {
-  preview: React.ReactNode;
-  title: string;
-  description: string;
-  link: string;
-  credits?: string;
-};
 
 const DemoPage = () => {
   const demos = [
+    // {
+    //   preview: (
+    //     <GradientGuruArchitectureSVG
+    //       width={"100%"}
+    //       className="rounded-lg border border-primary w-full h-auto"
+    //     />
+    //   ),
+    //   title: 'Make a UI',
+    //   description: 'Transform wireframe sketches into real UI',
+    //   link: 'https://example.com',
+    // },
     {
       preview: (
-        <GradientGuruArchitectureSVG
-          width={"100%"}
-          className="rounded-lg border border-primary w-full h-auto"
-        />
-      ),
-      title: 'Make a UI',
-      description: 'Transform wireframe sketches into real UI',
-      link: 'https://example.com',
-    },
-    {
-      preview: (
-        <GradientGuruArchitectureSVG
-          width={"100%"}
-          className="rounded-lg border border-primary w-full h-auto"
+        <img
+          src={MakeAGamePng.src}
+          alt="Make a Game Preview"
+          className="object-cover rounded-lg border border-primary w-full h-full flex"
         />
       ),
       title: 'Make a Game',
       description: 'Create interactable games',
-      link: 'https://example.com',
-    },
-    {
-      preview: (
-        <GradientGuruArchitectureSVG
-          width={"100%"}
-          className="rounded-lg border border-primary w-full h-auto"
-        />
-      ),
-      title: 'System Architect',
-      description: 'Create system diagrams from code',
-      link: 'https://example.com',
-    },
-    {
-      preview: (
-        <GradientGuruArchitectureSVG
-          width={"100%"}
-          className="rounded-lg border border-primary w-full h-auto"
-        />
-      ),
-      title: 'Canvas Controller',
-      description: 'Manipulate and interact on the canvas',
-      link: 'https://example.com',
-    },
-    {
-      preview: (
-        <GradientGuruArchitectureSVG
-          width={"100%"}
-          className="rounded-lg border border-primary w-full h-auto"
-        />
-      ),
-      title: 'AI Art',
-      description: 'Generate art with AI',
-      link: 'https://example.com',
-    },
-    {
-      preview: (
-        <GradientGuruArchitectureSVG
-          width={"100%"}
-          className="rounded-lg border border-primary w-full h-auto"
-        />
-      ),
-      title: 'Learn Something New',
-      description: 'Interactive generated educational visuals',
-      link: 'https://example.com',
-    },
-    {
-      preview: (
-        <GradientGuruArchitectureSVG
-          width={"100%"}
-          className="rounded-lg border border-primary w-full h-auto"
-        />
-      ),
-      title: 'Bots',
-      description: 'Control a swarm of bots',
-      link: 'https://example.com',
+      link: `${PROTOCOL}${APP_HOST}/demos/make-a-game`,
     },
   ];
 

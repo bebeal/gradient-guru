@@ -1,10 +1,8 @@
 'use client';
 
-import { Badge } from '@radix-ui/themes';
 import * as yup from 'yup';
-import { DataModality } from '@/clients/Models';
-import { cn, sortObject } from '@/utils';
 import { Schema, SchemaMeta } from './Form';
+import { sortObject } from '@/utils';
 
 
 export const inferSchemaField = (key: string, value: any, SchemaMap: Record<string, any> = {}) => {
@@ -42,58 +40,6 @@ export const extractFromMeta = (schema: Schema, property: string) => {
     }
     return acc;
   }, {});
-};
-
-const ModalityColors: Record<DataModality, { variant: "solid" | "soft" | "surface" | "outline", color: "tomato" | "red" | "ruby" | "crimson" | "pink" | "plum" | "purple" | "violet" | "iris" | "indigo" | "blue" | "cyan" | "teal" | "jade" | "green" | "grass" | "brown" | "orange" | "sky" | "mint" | "lime" | "yellow" | "amber" | "gold" | "bronze" | "gray" }> = {
-  text: {
-    variant: 'surface',
-    color: 'sky',
-  },
-  image: {
-    variant: 'surface',
-    color: 'green',
-  },
-  audio: {
-    variant: 'surface',
-    color: 'red',
-  },
-  video: {
-    variant: 'surface',
-    color: 'yellow',
-  },
-};
-
-
-const CompactBadge = ({ modality, className, animate=true }: { modality: DataModality; className?: string, animate?: boolean }) => {
-  return (
-    <div className={cn(`h-auto w-auto text-${ModalityColors[modality].color}`, "flex justify-center items-center relative rounded")}>
-    <span className={cn(`block h-2.5 w-2.5 rounded-full bg-${ModalityColors[modality].color} text-${ModalityColors[modality].color} border-black border border-opacity-30`, 
-          animate && `after:content-[""] after:rounded-full after:w-full after:h-full after:left-0 after:top-0 after:absolute after:animate-ripple after:text-${ModalityColors[modality].color} after:border-2 after:border-current after:translate-x-1/2 after:translate-y-1/2`,
-          className
-        )}
-    />
-    </div>
-  )
-}
-
-export const DataModalityBadge = ({ modality, className, compact=false }: { modality: DataModality; className?: string, compact?: boolean }) => {
-
-  if (compact) {
-    return (
-      <CompactBadge modality={modality} animate={true} className="p-1 after:p-0" />
-    )
-  }
-  return (
-    <Badge
-      variant={ModalityColors[modality].variant}
-      color={ModalityColors[modality].color}
-      size={'1'}
-      className={cn('!relative !text-[8px] text-center justify-center items-center flex gap-1 flex-row oveflow-hidden !h-full !w-auto', className)}
-    >
-      <CompactBadge modality={modality} />
-      {modality}
-    </Badge>
-  )
 };
 
 // sort schema based on item meta property

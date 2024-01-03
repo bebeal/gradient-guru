@@ -1,14 +1,15 @@
 'use client';
 
+import { memo, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { Box2d, compact, createShapeId, DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, EASINGS } from '@tldraw/editor';
 import { Editor, GeoShapeGeoStyle, TLShape } from '@tldraw/tldraw';
 import { FONT_FAMILIES } from '@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants';
 import { DefaultLabelColorStyle } from '@tldraw/tlschema/src/styles/TLColorStyle';
 import * as yup from 'yup';
-import { cn, isEmptyObject } from '@/utils';
-import { PreviewNode } from '../Nodes/PreviewNode';
 import { Form, Label, Separator, Switch } from '@/components';
-import { memo, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { cn, isEmptyObject } from '@/utils';
+import { PreviewNode } from '../Nodes/PreviewNode/PreviewNode';
+
 
 export const KeysToMakereadOnly: string[] = ['type'] as const;
 export const KeysToIgnore: string[] = ['index', 'typeName', 'meta'] as const;
@@ -81,7 +82,7 @@ export const makeEmptyResponseShape = (editor: Editor) => {
   return newShapeId;
 };
 
-export const zoomToFitNewNode = (editor: Editor, animation: any = { duration: 200, easing: EASINGS.easeInOutQuad }) => {
+export const zoomToFitNewNode = (editor: Editor, animation: any = { duration: 200, easing: EASINGS.easeInOutQuad }, padding: number = 100) => {
   if (!editor.getInstanceState().canMoveCamera) return this;
 
   const ids = [...editor.getCurrentPageShapeIds()];
@@ -91,8 +92,14 @@ export const zoomToFitNewNode = (editor: Editor, animation: any = { duration: 20
   const currentBounds = editor.getCurrentPageBounds();
   pageBounds.x = Math.min(pageBounds.x, currentBounds?.x || pageBounds.x);
   pageBounds.y = Math.min(pageBounds.y, currentBounds?.y || pageBounds.y);
+  // dont decrease the size of the page ever
   pageBounds.width = Math.max(pageBounds.width, currentBounds?.width || pageBounds.width);
   pageBounds.height = Math.max(pageBounds.height, currentBounds?.height || pageBounds.height);
+  // add some padding
+  pageBounds.x -= padding;
+  pageBounds.y -= padding;
+  pageBounds.width += padding * 2;
+  pageBounds.height += padding * 2;
 
   editor.zoomToBounds(pageBounds, undefined, animation);
 };
@@ -171,10 +178,10 @@ export const BulletedList = ({ items, className }: { items: any[]; className?: s
   };
 
   return (
-    <ul role="list" className="relative w-full h-auto break-words pl-6 pr-2 py-2 list-inside">
+    <ul role="list" className="relative w-full h-auto break-words pl-6 pr-2 py-2 list-inside pointer-events-auto">
       {items.map((item, index: number) => {
         return (
-          <li key={`ui-event-${index}`} className="relative flex items-center m-0 p-0 before:content-['\2022'] before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2 before:text-primary before:text-md">
+          <li key={`ui-event-${index}`} className="relative flex items-center m-0 p-0 before:content-['\2022'] before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2 before:text-primary before:text-md select-text cursor-text">
             {getItem(item)}
           </li>
         );

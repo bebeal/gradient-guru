@@ -10,11 +10,6 @@ export const useApi = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | undefined>(undefined);
 
-  const handleError = useCallback((error: Error) => {
-    setIsLoading(false);
-    setError(error);
-  }, []);
-
   const handleRequest = useCallback(async (api: Api, body?: any, method: string = 'POST', headers: any = { 'Content-Type': 'application/json' }) => {
     setIsLoading(true);
     setError(undefined);
@@ -28,19 +23,18 @@ export const useApi = () => {
         console.log(`api call ${api} failed:`, response);
       }
       return await response.json();
-    } catch (error) {
-      handleError(error as Error);
+    } catch (error: any) {
+      setError(error);
     } finally {
       setIsLoading(false);
     }
-  }, [handleError]);
+  }, []);
 
   return {
     isLoading,
     error,
+    handleRequest,
     getS3: (body?: any) => handleRequest('getS3', body),
     putS3: (body?: any) => handleRequest('putS3', body),
-    handleError,
-    handleRequest,
   }
 };

@@ -11,7 +11,7 @@ export interface SeparatorProps extends SeparatorPrimitive.SeparatorProps {
 }
 
 export const Separator = forwardRef((props: SeparatorProps, ref: React.ForwardedRef<HTMLDivElement>) => {
-  const { decorative=true, orientation = 'horizontal', color='bg-gray-400', className, ...rest } = props;
+  const { decorative=true, orientation = 'horizontal', color='bg-[rgb(var(--text-primary))]', className, ...rest } = props;
 
     return (
       <SeparatorPrimitive.Root
@@ -19,13 +19,14 @@ export const Separator = forwardRef((props: SeparatorProps, ref: React.Forwarded
         decorative={decorative}
         orientation={orientation}
         className={cn(
-          `leading-none min-h-[1px] min-w-[1px] ${color} overflow-hidden`,
+          className,
+          `leading-none min-h-[0.5px] min-w-[0.5px] overflow-hidden`,
           OrientationClasses(orientation),
           {
-            ['horizontal']: 'h-[1px] w-11/12',
-            ['vertical']: 'w-[1px] h-11/12',
+            ['horizontal']: 'h-[0.5px] w-11/12',
+            ['vertical']: 'w-[0.5px] h-11/12',
           }[orientation],
-          className
+          color
         )}
         {...rest}
       />

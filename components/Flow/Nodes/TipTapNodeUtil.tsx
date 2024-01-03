@@ -36,7 +36,7 @@ export class TipTapNodeUtil extends FlowNodeUtil<TipTapNode> {
   component(node: TipTapNode) {
     const isEditing = useIsEditing(node.id);
     return (
-      <HTMLContainer id={node.id} className="relative tl-embed-container flex justify-center items-center w-auto h-auto overflow-hidden text-xs cursor-auto" style={{pointerEvents: isEditing ? 'auto' : 'none'}} onPointerDown={(e) => { e.stopPropagation(); }}>
+      <HTMLContainer id={node.id} className="relative tl-embed-container flex justify-center items-center w-auto h-auto overflow-hidden text-xs cursor-auto" onPointerDown={(e) => { e.stopPropagation(); }}>
         <TipTap content={node.props.text} />
         <EditingIndicator isEditing={isEditing} />
       </HTMLContainer>

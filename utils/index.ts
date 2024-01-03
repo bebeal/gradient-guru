@@ -13,3 +13,4 @@ export * from './svg';
 export * from './utils';
 export * from './host'
 export * from './StyledComponentsRegistry';
+export * from './links';
