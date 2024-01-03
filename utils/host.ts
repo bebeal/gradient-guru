@@ -6,7 +6,7 @@ export const PROTOCOL = isDevEnv ? 'http://' : 'https://';
 export const PORT = '3407';
 
 export const LINK_HOST = {
-	production: 'gradient-guru.com/shara',
+	production: 'gradient-guru.com/share',
   test: '',
 	development: `localhost:${PORT}/share`,
 }[env];
