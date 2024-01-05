@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
 import svgToDataUri from 'mini-svg-data-uri';
-import { AnimationPlugin } from './utils/AnimateTailwind';
+import { AnimationTailwindcssPlugin } from './utils/animate-tailwindcss';
 
 const flattenColorPalette = (colors: any): any => {
   return Object.assign(
@@ -400,7 +400,7 @@ const config: Config = {
     },
   },
   plugins: [
-    AnimationPlugin,
+    AnimationTailwindcssPlugin,
     AceternityPlugin,
     addVariablesForColors,
     require('@tailwindcss/typography'),

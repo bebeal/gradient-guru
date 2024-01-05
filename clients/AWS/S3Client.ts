@@ -1,13 +1,13 @@
-import { AwsCredentialIdentity } from '@aws-sdk/types';
-import { S3Client as InternalS3Client, PutObjectCommand, PutObjectOutput, GetObjectCommand, GetObjectOutput } from '@aws-sdk/client-s3';
-import { getEnvVariable } from '@/utils';
 import { Readable } from 'stream';
-import { InvalidLinkHtml } from '@/components';
+import { GetObjectCommand, GetObjectOutput, S3Client as InternalS3Client, PutObjectCommand, PutObjectOutput } from '@aws-sdk/client-s3';
+import { AwsCredentialIdentity } from '@aws-sdk/types';
+import { InvalidIdFallbackHtml } from '@/components';
+import { getEnvVariable } from '@/utils';
 
 const streamToString = (stream: Readable): Promise<string> => {
   return new Promise((resolve, reject) => {
     let data = '';
-    stream.on('data', chunk => data += chunk);
+    stream.on('data', (chunk) => (data += chunk));
     stream.on('end', () => resolve(data));
     stream.on('error', reject);
   });
@@ -25,7 +25,6 @@ const getCredentials = (): AwsCredentialIdentity | null => {
 
 const getRegion = (): string | null => {
   return getEnvVariable('_AWS_REGION');
-
 };
 
 const getBucket = (): string | null => {
@@ -63,7 +62,7 @@ export class S3Client {
       S3Client.instance = new S3Client();
     }
     if (!S3Client.instance) {
-      throw new Error("S3Client instance could not be created");
+      throw new Error('S3Client instance could not be created');
     }
     return S3Client.instance;
   }
@@ -110,7 +109,7 @@ export class MockS3Client {
     region: 'us-west-2',
   };
   public records: { [key: string]: string } = {
-    'test': InvalidLinkHtml
+    test: InvalidIdFallbackHtml,
   };
 
   public static getInstance(): MockS3Client {
@@ -137,4 +136,3 @@ export class MockS3Client {
     });
   }
 }
-

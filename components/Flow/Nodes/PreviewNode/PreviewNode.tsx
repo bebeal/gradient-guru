@@ -14,9 +14,10 @@ export type PreviewNode = TLBaseShape<
     source: string;
     w: number;
     h: number;
-    linkUploadVersion?: number;
     uploadedNodeId?: string;
     dateCreated?: number;
+    version?: number;
+    availableVersions?: number[];
   }
 >;
 
@@ -29,7 +30,10 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
       source: '',
       w: (960 * 2) / 3,
       h: (540 * 2) / 3,
+      uploadedNodeId: '',
       dateCreated: Date.now(),
+      version: 0,
+      availableVersions: [],
     };
   }
 
@@ -48,9 +52,9 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
         return getRotatedBoxShadow(rotation);
     }, [this.editor]);
 
-    const { html, linkUploadVersion, uploadedNodeId } = node.props;
+    const { html, uploadedNodeId } = node.props;
 
-    const isLoading = linkUploadVersion === undefined || uploadedNodeId !== node.id;
+    const isLoading = uploadedNodeId !== node.id;
 
     const uploadUrl = [PROTOCOL, LINK_HOST, '/', formatNodeId(node.id)].join('');
 
@@ -75,7 +79,7 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
           <>
             <iframe
               id={`iframe-1-${node.id}`}
-              src={`${uploadUrl}?preview=1&v=${linkUploadVersion}`}
+              src={`${uploadUrl}?preview=1&version=${node.props.version}`}
               width={toDomPrecision(node.props.w)}
               height={toDomPrecision(node.props.h)}
               draggable={false}

@@ -1,16 +1,13 @@
+'use client';
 
-'use client'
 /* eslint-disable react-hooks/rules-of-hooks */
-import {
-  HTMLContainer,
-  SvgExportContext,
-  TLBaseShape,
-  useIsEditing,
-} from '@tldraw/tldraw';
+
+import { HTMLContainer, SvgExportContext, TLBaseShape, useIsEditing } from '@tldraw/tldraw';
 import * as yup from 'yup';
 import { EditingIndicator, IconSetCache, TipTap } from '@/components';
-import { FlowNodeUtil } from './FlowNodeUtil';
 import { filterObjectByKeys } from '@/utils';
+import { FlowNodeUtil } from './FlowNode';
+
 
 export type TipTapNode = TLBaseShape<
   'tiptap',

@@ -7,7 +7,7 @@ function filterDefault(values) {
 	)
 }
 
-export const AnimationPlugin = plugin(
+export const AnimationTailwindcssPlugin = plugin(
 	({ addUtilities, matchUtilities, theme }) => {
 		matchUtilities(
 			{

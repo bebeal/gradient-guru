@@ -1,15 +1,13 @@
-'use client'
+'use client';
+
 /* eslint-disable react-hooks/rules-of-hooks */
-import {
-  HTMLContainer,
-  SvgExportContext,
-  TLBaseShape,
-  useIsEditing,
-} from '@tldraw/tldraw';
+
+import { HTMLContainer, SvgExportContext, TLBaseShape, useIsEditing } from '@tldraw/tldraw';
 import * as yup from 'yup';
-import { CodeLanguage, EditingIndicator, IconSetCache, Terminal, codeLanguages } from '@/components';
-import { FlowNodeUtil } from './FlowNodeUtil';
+import { CodeLanguage, codeLanguages, EditingIndicator, IconSetCache, Terminal } from '@/components';
 import { filterObjectByKeys } from '@/utils';
+import { FlowNodeUtil } from './FlowNode';
+
 
 export type TerminalNode = TLBaseShape<
   'terminal',

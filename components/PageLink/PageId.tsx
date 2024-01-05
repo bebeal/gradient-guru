@@ -10,12 +10,14 @@ export interface PageId {
   isPreview?: boolean;
 }
 
+// Fetches the versioned ID from S3 and passes it to PageLink to render the iframe
 export const PageId = (props: PageId) => {
   const { id, isPreview=false } = props;
   const [html, setHtml] = useState<string>('');
   const [mounted, setMounted] = useState<boolean>(false);
   const [source, setSource] = useState<string>('');
-  const [linkUploadVersion, setLinkUploadVersion] = useState<number>(0);
+  const [version, setVersion] = useState<number>(0);
+  const [availableVersions, setAvailableVersions] = useState<number[]>([]);
   const api = useApi();
 
   const SCRIPT_TO_INJECT_FOR_PREVIEW = `
@@ -49,7 +51,8 @@ window.addEventListener('message', function(event) {
         
         
         setSource(response?.source);
-        setLinkUploadVersion(response?.linkUploadVersion);
+        setVersion(response?.version);
+        setAvailableVersions(response?.availableVersions);
       });
     }
   }, [SCRIPT_TO_INJECT_FOR_PREVIEW, api, html, id, isPreview, mounted]);
@@ -59,7 +62,8 @@ window.addEventListener('message', function(event) {
       {/* <div className="absolute flex flex-col gap-1 max-w-[100px] top-0 left-0 bg-black bg-opacity-75 text-white p-3 rounded-lg z-10">
           <div>ID: {id}</div>
           <div>Source: {source}</div>
-          <div>Link Upload Version: {linkUploadVersion}</div>
+          <div>Version: {version}</div>
+          <div>Available Versions: {availableVersions.join(', ')}</div>
       </div> */}
       <PageLink id={id} html={html} isPreview={isPreview} />
     </div>

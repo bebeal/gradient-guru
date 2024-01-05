@@ -27,7 +27,7 @@ import { ToastsProvider, useContentRecorder } from '@/hooks';
 import { cn } from '@/utils';
 import { ScratchPanel } from './Extensions';
 import { TestButtons } from './Extensions/TestButtons';
-import { FlowTabs } from './Tabs';
+import { FlowSidePanel } from './FlowSidePanel';
 
 export type FlowUiProps = TldrawUiProps & {
   initialShapes?: TLShape[];
@@ -38,10 +38,13 @@ export const FlowUi = memo((props: FlowUiProps) => {
   const { children, hideUi = false, initialShapes, scratchNodeUtils, onUiEvent: onUiEventCallback, ...rest } = props;
   const { onUiEvent: recordUiEvent } = useContentRecorder();
 
-  const onUiEvent = useCallback<any>((name: any, data: any) => {
+  const onUiEvent = useCallback<any>(
+    (name: any, data: any) => {
       recordUiEvent?.(name, data);
       onUiEventCallback?.(name, data);
-   }, [onUiEventCallback, recordUiEvent] );
+    },
+    [onUiEventCallback, recordUiEvent]
+  );
 
   return (
     <TldrawUiContextProvider onUiEvent={onUiEvent} {...rest}>
@@ -87,7 +90,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
     if (!editor) return;
 
     if (!mounted) {
-      setUserPreferences({ id: editor?.user?.getId(), isDarkMode: true, });
+      setUserPreferences({ id: editor?.user?.getId(), isDarkMode: true });
       editor.updateInstanceState({ isReadonly: false, isGridMode: true, isDebugMode: true });
 
       // to get the initial history records to show up
@@ -103,7 +106,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
 
   return (
     <>
-      <FlowTabs className="tl-tabs" />
+      <FlowSidePanel />
       <div
         className={cn('tlui-layout', {
           'tlui-layout__mobile': breakpoint < 5,

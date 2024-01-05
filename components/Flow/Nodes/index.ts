@@ -1,6 +1,5 @@
-export * from './FlowNodeUtil';
-export * from './IconNodeUtil';
+export * from './FlowNode';
+export * from './IconNode';
 export * from './PreviewNode';
-export * from './TerminalNodeUtil';
-export * from './TipTapNodeUtil';
-
+export * from './TerminalNode';
+export * from './TipTapNode';

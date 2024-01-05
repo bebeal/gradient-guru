@@ -1,9 +1,10 @@
-'use client'
+'use client';
 
 import { useEffect } from "react";
 import { formatNodeId } from "..";
 
-export const InvalidLinkHtml = `<!DOCTYPE html>
+
+export const InvalidIdFallbackHtml = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -24,49 +25,42 @@ export interface PageLinkProps {
   id?: string;
   html?: string;
   isPreview?: boolean;
+  version?: number;
 }
 
 export const PageLink = (props: PageLinkProps) => {
-  const {
-    className,
-    id='',
-    html=InvalidLinkHtml,
-    isPreview=false
-  } = props;
+  const { className, id = '', html = InvalidIdFallbackHtml, isPreview = false, version=0 } = props;
 
   useEffect(() => {
-		// listen for screenshot messages
-		if (typeof window !== 'undefined') {
-			const windowListener = (event: MessageEvent) => {
-				if (event.data.action === 'take-screenshot') {
-					const iframe2 = document.getElementById(`iframe-2-shape:${formatNodeId(id)}`) as HTMLIFrameElement
-					iframe2?.contentWindow?.postMessage(
-						{ action: 'take-screenshot', shapeid: `shape:${formatNodeId(id)}` },
-						'*'
-					)
-				}
-			}
-			window.addEventListener('message', windowListener)
+    // listen for screenshot messages
+    if (typeof window !== 'undefined') {
+      const windowListener = (event: MessageEvent) => {
+        if (event.data.action === 'take-screenshot') {
+          const iframe2 = document.getElementById(`iframe-2-shape:${formatNodeId(id)}`) as HTMLIFrameElement;
+          iframe2?.contentWindow?.postMessage({ action: 'take-screenshot', shapeid: `shape:${formatNodeId(id)}` }, '*');
+        }
+      };
+      window.addEventListener('message', windowListener);
 
-			return () => {
-				window.removeEventListener('message', windowListener)
-			}
-		}
-	}, [id])
+      return () => {
+        window.removeEventListener('message', windowListener);
+      };
+    }
+  }, [id]);
 
-	return (
-		<iframe
-			id={`iframe-2-shape:${id}`}
-			srcDoc={html}
-			draggable={false}
+  return (
+    <iframe
+      id={`iframe-2-shape:${id}`}
+      srcDoc={html}
+      draggable={false}
       className={className}
-			style={{
-				position: 'fixed',
-				inset: 0,
-				width: '100%',
-				height: '100%',
-				border: 'none',
-			}}
-		/>
-	)
+      style={{
+        position: 'fixed',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        border: 'none',
+      }}
+    />
+  );
 };

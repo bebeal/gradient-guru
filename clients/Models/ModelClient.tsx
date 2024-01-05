@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { InvalidLinkHtml } from '@/components';
 import OpenAI from 'openai';
+import { InvalidIdFallbackHtml } from '@/components';
 
 // Lightweight generic client for interacting with models
 
@@ -21,7 +21,7 @@ export interface ModelConfig {
   context_window?: string | number;
   training_data_end_date?: string | Date;
   api_endpoint?: string;
-  client_name: 'Open AI' | 'Backend'
+  client_name: 'Open AI' | 'Backend';
 }
 
 export type ModelInput<T = any> = T;
@@ -95,7 +95,7 @@ export class BaseModelClient<Config extends ModelConfig, Input = ModelInput, Out
   }
 
   async mockApi(input: Input): Promise<Output> {
-    // mock response ChatCompletion 
+    // mock response ChatCompletion
     return await new Promise((resolve, reject) => {
       resolve({
         choices: [
@@ -104,7 +104,7 @@ export class BaseModelClient<Config extends ModelConfig, Input = ModelInput, Out
             index: 0,
             logprobs: null,
             message: {
-              content: InvalidLinkHtml,
+              content: InvalidIdFallbackHtml,
             },
           },
         ],
@@ -112,4 +112,3 @@ export class BaseModelClient<Config extends ModelConfig, Input = ModelInput, Out
     });
   }
 }
-

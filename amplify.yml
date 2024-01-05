@@ -1,0 +1,18 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - yarn clean
+        - yarn install
+    build:
+      commands:
+        - env | grep -e _AWS_ACCESS_KEY_ID -e _AWS_SECRET_ACCESS_KEY -e _AWS_REGION -e _AWS_BUCKET >> .env.production
+        - yarn run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*

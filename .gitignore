@@ -43,9 +43,3 @@ next-env.d.ts
 
 # vscode
 .vscode/*
-
-# amplify
-.amplify
-amplifyconfiguration*
-.amplify.yml
-amplify.yml

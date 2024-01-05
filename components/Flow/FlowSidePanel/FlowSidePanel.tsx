@@ -4,10 +4,10 @@ import { IconSetCache, ModelTab, NodesTab, SidePanel, HistoryTab, ExtractionTab,
 import { useMounted } from '@/hooks';
 import { useMemo } from 'react';
 
-export interface FlowTabsProps {
+export interface FlowSidePanelProps {
   className?: string;
 }
-export const FlowTabs = (props: FlowTabsProps) => {
+export const FlowSidePanel = (props: FlowSidePanelProps) => {
   const { className = '' } = props;
   const mounted = useMounted();
 
@@ -49,4 +49,4 @@ export const FlowTabs = (props: FlowTabsProps) => {
     FlowModelTab
   ]} />;
 };
-FlowTabs.displayName = 'FlowTabs';
+FlowSidePanel.displayName = 'FlowSidePanel';

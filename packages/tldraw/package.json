@@ -34,7 +34,7 @@
 	],
 	"scripts": {
 		"clean": "scripts/clean.sh",
-		"postinstall": "husky install && yarn refresh-assets",
+		"postinstall": "yarn refresh-assets",
 		"refresh-assets": "lazy refresh-assets",
 		"build": "lazy build",
 		"dev": "LAZYREPO_PRETTY_OUTPUT=0 lazy run dev --filter='{,bublic/}apps/examples' --filter='{,bublic/}packages/tldraw'",

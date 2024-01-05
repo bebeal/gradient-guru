@@ -1,16 +1,14 @@
-'use client'
+'use client';
+
 /* eslint-disable react-hooks/rules-of-hooks */
-import {
-  HTMLContainer,
-  SvgExportContext,
-  TLBaseShape,
-  useIsEditing,
-} from '@tldraw/tldraw';
+
+import { HTMLContainer, SvgExportContext, TLBaseShape, useIsEditing } from '@tldraw/tldraw';
+import { PlotType } from 'plotly.js';
 import * as yup from 'yup';
 import { EditingIndicator, IconSetCache, Plotly } from '@/components';
-import { FlowNodeUtil } from './FlowNodeUtil';
-import { PlotType } from 'plotly.js';
 import { filterObjectByKeys } from '@/utils';
+import { FlowNodeUtil } from './FlowNode';
+
 
 const linePlotData = [{
   x: [1, 2, 3, 4, 5],

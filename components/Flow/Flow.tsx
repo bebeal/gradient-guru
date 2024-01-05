@@ -25,7 +25,7 @@ import { cn } from '@/utils';
 import { IconNodeUtil, PreviewNodeUtil, TerminalNodeUtil, TipTapNodeUtil } from './Nodes';
 import '@tldraw/tldraw/tldraw.css';
 import './Flow.css';
-import { PlotlyNodeUtil } from './Nodes/PlotlyNodeUil';
+import { PlotlyNodeUtil } from './Nodes/PlotlyNode';
 
 export type FlowProps = TldrawProps &
   FlowUiProps & {

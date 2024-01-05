@@ -11,8 +11,6 @@ import { ExtractedState, useApi, useContentExtractor } from '@/hooks';
 import { PromptName, Prompts } from '@/utils';
 import { getHTMLFromOpenAIResponse } from './shared';
 
-const LinkUploadVersion = 1;
-
 export type ModelState = {
   modelClient: BaseModelClient<ModelConfig, any, any>;
   setModelClient: (client: BaseModelClient<ModelConfig, any, any>) => void;
@@ -58,7 +56,7 @@ export const useModel = () => {
           throw Error('Could not generate a design from those wireframes.');
         }
         // Upload the HTML to S3
-        const body = { id: formatNodeId(responseNodeId), html, source: extracted?.dataUrl as string, linkUploadVersion: LinkUploadVersion };
+        const body = { id: formatNodeId(responseNodeId), html, source: extracted?.dataUrl as string };
         api.putS3(body);
         // Update the shape with the new props
         editor.updateShape<PreviewNode>({
@@ -67,7 +65,6 @@ export const useModel = () => {
           props: {
             html,
             source: extracted?.dataUrl as string,
-            linkUploadVersion: LinkUploadVersion,
             uploadedNodeId: responseNodeId,
           },
         });
