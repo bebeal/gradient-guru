@@ -3,7 +3,7 @@
 import { useApi } from "@/hooks";
 import { useEffect, useState } from "react";
 import { PageLink } from "./PageLink";
-// import { formatNodeId } from "..";
+import { formatNodeId } from "..";
 
 export interface PageId {
   id: string;
@@ -20,8 +20,8 @@ export const PageId = (props: PageId) => {
   const [availableVersions, setAvailableVersions] = useState<number[]>([]);
   const api = useApi();
 
-  /**
-// send the screenshot to the parent window
+  const SCRIPT_TO_INJECT_FOR_PREVIEW = `
+  // send the screenshot to the parent window
 window.addEventListener('message', function(event) {
   if (event.data.action === 'take-screenshot' && event.data.shapeid === "shape:${formatNodeId(id)}") {
     html2canvas(document.body, {useCors : true, foreignObjectRendering: true, allowTaint: true }).then(function(canvas) {
@@ -30,8 +30,6 @@ window.addEventListener('message', function(event) {
     });
   }
 }, false);
-*/
-  const SCRIPT_TO_INJECT_FOR_PREVIEW = `
 // and prevent the user from pinch-zooming into the iframe
   document.body.addEventListener('wheel', e => {
       if (!e.ctrlKey) return;

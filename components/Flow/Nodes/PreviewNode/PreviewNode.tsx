@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable react-hooks/rules-of-hooks */
-import { BaseBoxShapeUtil, HTMLContainer, TLBaseShape, toDomPrecision, useIsEditing, useValue, Vec } from '@tldraw/tldraw';
+import { BaseBoxShapeUtil, HTMLContainer, SvgExportContext, TLBaseShape, toDomPrecision, useIsEditing, useValue, Vec } from '@tldraw/tldraw';
 import { useToasts } from '@/hooks';
 import { LINK_HOST, PROTOCOL } from '@/utils';
 import { EditingIndicator, formatNodeId } from '../../Extensions/shared';
@@ -113,37 +113,37 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
     );
   }
 
-  // override toSvg(shape: PreviewNode, _ctx: SvgExportContext): SVGElement | Promise<SVGElement> {
-  //   const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  //   // while screenshot is the same as the old one, keep waiting for a new one
-  //   return new Promise((resolve, _) => {
-  //     if (window === undefined) return resolve(g);
-  //     const windowListener = (event: MessageEvent) => {
-  //       if (event.data.screenshot && event.data?.shapeid === shape.id) {
-  //         const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-  //         image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', event.data.screenshot);
-  //         image.setAttribute('width', shape.props.w.toString());
-  //         image.setAttribute('height', shape.props.h.toString());
-  //         g.appendChild(image);
-  //         window.removeEventListener('message', windowListener);
-  //         clearTimeout(timeOut);
-  //         resolve(g);
-  //       }
-  //     };
-  //     const timeOut = setTimeout(() => {
-  //       resolve(g);
-  //       window.removeEventListener('message', windowListener);
-  //     }, 2000);
-  //     window.addEventListener('message', windowListener);
-  //     //request new screenshot
-  //     const firstLevelIframe = document.getElementById(`iframe-1-${shape.id}`) as HTMLIFrameElement;
-  //     if (firstLevelIframe) {
-  //       firstLevelIframe?.contentWindow?.postMessage({ action: 'take-screenshot', shapeid: shape.id }, '*');
-  //     } else {
-  //       console.log('first level iframe not found or not accessible');
-  //     }
-  //   });
-  // }
+  override toSvg(shape: PreviewNode, _ctx: SvgExportContext): SVGElement | Promise<SVGElement> {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    // while screenshot is the same as the old one, keep waiting for a new one
+    return new Promise((resolve, _) => {
+      if (window === undefined) return resolve(g);
+      const windowListener = (event: MessageEvent) => {
+        if (event.data.screenshot && event.data?.shapeid === shape.id) {
+          const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+          image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', event.data.screenshot);
+          image.setAttribute('width', shape.props.w.toString());
+          image.setAttribute('height', shape.props.h.toString());
+          g.appendChild(image);
+          window.removeEventListener('message', windowListener);
+          clearTimeout(timeOut);
+          resolve(g);
+        }
+      };
+      const timeOut = setTimeout(() => {
+        resolve(g);
+        window.removeEventListener('message', windowListener);
+      }, 2000);
+      window.addEventListener('message', windowListener);
+      //request new screenshot
+      const firstLevelIframe = document.getElementById(`iframe-1-${shape.id}`) as HTMLIFrameElement;
+      if (firstLevelIframe) {
+        firstLevelIframe?.contentWindow?.postMessage({ action: 'take-screenshot', shapeid: shape.id }, '*');
+      } else {
+        console.log('first level iframe not found or not accessible');
+      }
+    });
+  }
 
   indicator(shape: PreviewNode) {
     return <rect width={shape.props.w} height={shape.props.h} />;
