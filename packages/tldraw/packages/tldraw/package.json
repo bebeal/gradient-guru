@@ -55,11 +55,11 @@
 		"@tldraw/editor": "workspace:*",
 		"canvas-size": "^1.2.6",
 		"classnames": "^2.3.2",
-		"clsx": "^2.0.0",
+		"clsx": "^2.1.0",
 		"downscale": "^1.0.6",
 		"hotkeys-js": "^3.11.2",
 		"lz-string": "^1.4.4",
-		"tailwind-merge": "^2.1.0"
+		"tailwind-merge": "^2.2.0"
 	},
 	"peerDependencies": {
 		"react": "^18",

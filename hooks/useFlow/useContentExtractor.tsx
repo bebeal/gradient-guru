@@ -2,7 +2,7 @@
 
 import { getNodeName } from '@/components';
 import { encodeBlobAsBase64, getSvgAsImage, getSvgElement } from '@/utils';
-import { Box2d, SVG_PADDING, TLEventInfo, TLShape, TLShapeId, useEditor } from '@tldraw/tldraw';
+import { Box, SVG_PADDING, TLEventInfo, TLShape, TLShapeId, useEditor } from '@tldraw/tldraw';
 import { useCallback, useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { create } from 'zustand';
@@ -22,7 +22,7 @@ export type ImageExtractorConfig = BaseExtractorConfig & {
   imageSmoothingQuality?: 'low' | 'medium' | 'high';
   padding?: number;
   preserveAspectRatio?: React.SVGAttributes<SVGSVGElement>['preserveAspectRatio'];
-  bounds?: Box2d;
+  bounds?: Box;
   nodesToExclude: TLShapeId[];
   grid?: {
     enabled: boolean;

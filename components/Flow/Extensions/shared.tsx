@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { Box2d, compact, createShapeId, DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, EASINGS } from '@tldraw/editor';
+import { Box, compact, createShapeId, DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, EASINGS } from '@tldraw/editor';
 import { Editor, GeoShapeGeoStyle, TLShape } from '@tldraw/tldraw';
 import { FONT_FAMILIES } from '@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants';
 import { DefaultLabelColorStyle } from '@tldraw/tlschema/src/styles/TLColorStyle';
@@ -88,7 +88,7 @@ export const zoomToFitNewNode = (editor: Editor, animation: any = { duration: 20
   const ids = [...editor.getCurrentPageShapeIds()];
   if (ids.length <= 0) return this;
 
-  const pageBounds = Box2d.Common(compact(ids.map((id) => editor.getShapePageBounds(id))));
+  const pageBounds = Box.Common(compact(ids.map((id) => editor.getShapePageBounds(id))));
   const currentBounds = editor.getCurrentPageBounds();
   pageBounds.x = Math.min(pageBounds.x, currentBounds?.x || pageBounds.x);
   pageBounds.y = Math.min(pageBounds.y, currentBounds?.y || pageBounds.y);

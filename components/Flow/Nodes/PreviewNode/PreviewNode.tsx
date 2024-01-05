@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable react-hooks/rules-of-hooks */
-import { BaseBoxShapeUtil, HTMLContainer, SvgExportContext, TLBaseShape, toDomPrecision, useIsEditing, useValue, Vec2d } from '@tldraw/tldraw';
+import { BaseBoxShapeUtil, HTMLContainer, SvgExportContext, TLBaseShape, toDomPrecision, useIsEditing, useValue, Vec } from '@tldraw/tldraw';
 import { useToasts } from '@/hooks';
 import { LINK_HOST, PROTOCOL } from '@/utils';
 import { EditingIndicator, formatNodeId } from '../../Extensions/shared';
@@ -166,7 +166,7 @@ const ROTATING_BOX_SHADOWS = [
 const getRotatedBoxShadow = (rotation: number) => {
   const cssStrings = ROTATING_BOX_SHADOWS.map((shadow) => {
     const { offsetX, offsetY, blur, spread, color } = shadow;
-    const vec = new Vec2d(offsetX, offsetY);
+    const vec = new Vec(offsetX, offsetY);
     const { x, y } = vec.rot(-rotation);
     return `${x}px ${y}px ${blur}px ${spread}px ${color}`;
   });

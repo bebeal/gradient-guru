@@ -13,9 +13,7 @@ import {
   TldrawScribble,
   TldrawSelectionBackground,
   TldrawSelectionForeground,
-  TLUiEventSource,
   TLUiOverrides,
-  toolbarItem,
 } from '@tldraw/tldraw';
 import { registerDefaultExternalContentHandlers, TLExternalContentProps } from '@tldraw/tldraw/src/lib/defaultExternalContentHandlers';
 import { registerDefaultSideEffects } from '@tldraw/tldraw/src/lib/defaultSideEffects';

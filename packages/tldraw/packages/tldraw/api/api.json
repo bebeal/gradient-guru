@@ -1321,8 +1321,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "Vec2dModel",
-                  "canonicalReference": "@tldraw/tlschema!Vec2dModel:interface"
+                  "text": "VecModel",
+                  "canonicalReference": "@tldraw/tlschema!VecModel:interface"
                 },
                 {
                   "kind": "Content",
@@ -1366,8 +1366,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "Vec2dModel",
-                  "canonicalReference": "@tldraw/tlschema!Vec2dModel:interface"
+                  "text": "VecModel",
+                  "canonicalReference": "@tldraw/tlschema!VecModel:interface"
                 },
                 {
                   "kind": "Content",
@@ -3601,8 +3601,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "Vec2dModel",
-                  "canonicalReference": "@tldraw/tlschema!Vec2dModel:interface"
+                  "text": "VecModel",
+                  "canonicalReference": "@tldraw/tlschema!VecModel:interface"
                 },
                 {
                   "kind": "Content",
@@ -8826,8 +8826,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "Vec2dModel",
-                  "canonicalReference": "@tldraw/tlschema!Vec2dModel:interface"
+                  "text": "VecModel",
+                  "canonicalReference": "@tldraw/tlschema!VecModel:interface"
                 },
                 {
                   "kind": "Content",
@@ -9480,8 +9480,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "Vec2dModel",
-                  "canonicalReference": "@tldraw/tlschema!Vec2dModel:interface"
+                  "text": "VecModel",
+                  "canonicalReference": "@tldraw/tlschema!VecModel:interface"
                 },
                 {
                   "kind": "Content",
@@ -9489,8 +9489,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "Vec2dModel",
-                  "canonicalReference": "@tldraw/tlschema!Vec2dModel:interface"
+                  "text": "VecModel",
+                  "canonicalReference": "@tldraw/tlschema!VecModel:interface"
                 },
                 {
                   "kind": "Content",
@@ -10320,8 +10320,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "Vec2d",
-                  "canonicalReference": "@tldraw/editor!Vec2d:class"
+                  "text": "Vec",
+                  "canonicalReference": "@tldraw/editor!Vec:class"
                 },
                 {
                   "kind": "Content",

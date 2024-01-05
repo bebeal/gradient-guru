@@ -163,8 +163,8 @@ export function isShapeId(id?: string): id is TLShapeId {
 }
 
 /** @public */
-export function createShapeId(id?: string, size: number = 8): TLShapeId {
-	return `shape:${id ?? nanoid(size)}` as TLShapeId
+export function createShapeId(id?: string): TLShapeId {
+	return `shape:${id ?? nanoid()}` as TLShapeId
 }
 
 /** @internal */
