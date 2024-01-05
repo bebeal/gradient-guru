@@ -62,6 +62,27 @@ export const sortObject = (
 
 export const isEmptyObject = (obj?: object) => obj ? Object.keys(obj).length === 0 : false;
 
+// Determines if a value is an empty collection (object, array, string, map, set), false for anything else.
+export const isEmpty = (value: any) => {
+  if (value == null) {
+    return true;
+  }
+  if (Array.isArray(value) || typeof value === 'string') {
+    return !value.length;
+  }
+  if (
+    Object.prototype.toString.call(value) === '[object Map]' ||
+    Object.prototype.toString.call(value) === '[object Set]'
+  ) {
+    return !value.size;
+  }
+  if (Object.prototype.toString.call(value) === '[object Object]') {
+    return !Object.keys(value).length;
+  }
+  return false;
+}
+
+
 export const arrayToObject = (arr: string[], value: any = true): { [key: string]: boolean } => {
   const result = arr.reduce((obj, item) => ({ ...obj, [item]: value }), {});
   return result;

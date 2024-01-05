@@ -58,22 +58,9 @@ export const Flow = memo((props: FlowProps) => {
   const overrides: TLUiOverrides = useMemo(
     () => ({
       tools(editor, tools) {
-        // Create a tool item in the ui's context.
-        tools.icon = {
-          id: 'icon',
-          label: 'tool.icon' as any,
-          readonlyOk: false,
-          icon: 'ApplicationWeb',
-          kbd: 'c',
-          onSelect: (source: TLUiEventSource) => {
-            editor.setCurrentTool('icon');
-            // trackEvent('select-tool', { source, id: 'icon' })
-          },
-        };
         return tools;
       },
       toolbar(_app, toolbar, { tools }) {
-        toolbar.push(toolbarItem(tools.icon));
         return toolbar;
       },
     }),

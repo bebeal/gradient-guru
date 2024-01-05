@@ -100,7 +100,7 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
 
   return (
     <>
-      <Tabs.Root className={cn(`relative flex w-auto h-full`, `text-primary shadow-2 shadow-2xl`, `transition-all z-[500]`, className)} data-orientation="vertical" orientation="vertical" activationMode="manual" {...rest}>
+      <Tabs.Root className={cn(`relative flex w-auto h-full`, `text-primary shadow-2 shadow-2xl`, `transition-all z-[500]`, className)} data-orientation="vertical" orientation="vertical" activationMode="manual" value={activeTabIndex !== undefined ? `${tabs[activeTabIndex]?.name}` : undefined} {...rest}>
         <Tabs.List className={cn(`flex flex-col w-auto h-auto items-center z-[503]`, `bg-primary border-0 border-r border-transparent`, activeTabIndex === undefined ? `border-r-primary` : `border-r-transparent`)} aria-label="ColumnPanel">
           {tabs.map((tab, index) => {
             const tabValue = `${tab?.name}`;
