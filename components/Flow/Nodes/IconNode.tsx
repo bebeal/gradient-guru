@@ -42,10 +42,6 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
     );
   }
 
-  indicator(node: IconNode) {
-    return <rect width={node.props.w} height={node.props.h} />;
-  }
-
   override toSvg = (node: IconNode, ctx: SvgExportContext): Promise<SVGElement> | SVGElement => {
     const Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
     if (!Icon) {

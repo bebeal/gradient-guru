@@ -217,8 +217,6 @@ Used for the initial testing of components and features. Just leaving these in c
 
 ### Directory Structure
 
-TODO: Finish filling this out
-
 Structured as a standard Next.js app (app router):
 
 ```bash
@@ -411,3 +409,25 @@ tailwind.config.js                         # Tailwind Config
 |  |-- svg.ts                              # Generic svg utils
 |  |-- utils.ts                            # Generic utils
 ```
+
+### TODO
+
+**Chores**:
+
+* [ ] Replace `html2canvas` with `html-to-image`
+* [ ] Cleanup extraction hook and fix extraction tab rendering which is laggy asf
+
+**Features**:
+
+* [ ] Add historic versions to PreviewNodes and allow for any version from the share/[id] route
+* [ ] Better TipTap component leveraging tiptap-templates
+* [ ] Add rest of the demos
+  * [ ] Make a UI
+  * [ ] Learn Something New
+* [ ] Add more AI clients
+  * [ ] Local Mistral
+  * [ ] Local LLAMA
+  * [ ] Claude
+  * [ ] Gemini
+* [ ] Remove `react-form-hook` and simplify `Form` component
+* [ ] Fix Plotly node interaction and allow for editing the data visualization natively from Flow

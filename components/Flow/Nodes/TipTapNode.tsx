@@ -2,7 +2,7 @@
 
 /* eslint-disable react-hooks/rules-of-hooks */
 
-import { HTMLContainer, SvgExportContext, TLBaseShape, useIsEditing } from '@tldraw/tldraw';
+import { HTMLContainer, TLBaseShape, useIsEditing } from '@tldraw/tldraw';
 import * as yup from 'yup';
 import { EditingIndicator, IconSetCache, TipTap } from '@/components';
 import { filterObjectByKeys } from '@/utils';
@@ -39,18 +39,6 @@ export class TipTapNodeUtil extends FlowNodeUtil<TipTapNode> {
       </HTMLContainer>
     );
   }
-
-  override toSvg = (node: TipTapNode, ctx: SvgExportContext): SVGElement => {
-    const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svgElement.setAttribute('width', `${node.props.w}`);
-    svgElement.setAttribute('height', `${node.props.h}`);
-    return svgElement;
-  }
-
-  indicator(node: TipTapNode) {
-    return <rect width={node.props.w} height={node.props.h} />;
-  }
-
 
   panelPreview(node: TipTapNode) {
     return (

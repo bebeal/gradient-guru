@@ -135,6 +135,7 @@
     "clsx": "^2.0.0",
     "emojibase": "^15.3.0",
     "framer-motion": "^10.16.16",
+    "html-to-image": "^1.11.11",
     "html2canvas": "^1.4.1",
     "katex": "^0.16.9",
     "lodash": "^4.17.21",

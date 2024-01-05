@@ -68,7 +68,7 @@ export const Terminal = memo((props: TerminalProps) => {
           tabIndex={0}
           onKeyDown={() => textareaRef.current?.focus()}
           onClick={() => textareaRef.current?.focus()}
-          className="relative flex bg-[#1e1e1e] rounded-t-0 !rounded-b-lg"
+          className="relative flex bg-[#1e1e1e] rounded-t-0 !rounded-b-lg h-full"
         >
           <textarea
             className="absolute inset-0 resize-none bg-transparent p-[1em] text-transparent dark:caret-white caret-black outline-none text-[12px]"
@@ -76,10 +76,10 @@ export const Terminal = memo((props: TerminalProps) => {
             value={codeContent}
             onChange={(e) => setCodeContent(e.target.value)}
           />
-          <Highlighter code={codeContent} language={language} syntaxStyle={syntaxStyle} className={'h-full !bg-transparent !flex-1'} {...rest} />
+          <Highlighter code={codeContent} language={language} syntaxStyle={syntaxStyle} className={'!bg-transparent !flex-1'} {...rest} />
         </div>
       ) : (
-      <Highlighter code={codeContent} language={language} syntaxStyle={syntaxStyle} className={'!rounded-t-0 !rounded-b-lg h-full'} {...rest} />
+      <Highlighter code={codeContent} language={language} syntaxStyle={syntaxStyle} className={'!h-full !rounded-t-0 !rounded-b-lg !flex-1'} {...rest} />
       )}
     </section>
   );
