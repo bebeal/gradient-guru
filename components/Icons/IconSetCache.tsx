@@ -42,5 +42,5 @@ export const IconSetCache: IconSetMap = IconSetNames.reduce((iconSetsMap: any, I
 }, {} as IconSetMap);
 
 // Example Use Case as JSX component:
-// <IconSetCache.Carbon.Upload /> or <IconSetCache.Carbon.Download className="text-red" width="64px" />
-// <IconSetCache.Custom.Upload /> or <IconSetCache.Custom.Download className="text-red" width="64px" />
+// <IconSetCache.Carbon.Download className="text-red" width="64px" />
+// <IconSetCache.Custom.Download />

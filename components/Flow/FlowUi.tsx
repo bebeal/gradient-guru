@@ -7,14 +7,13 @@ import { BackToContent } from '@tldraw/tldraw/src/lib/ui/components/BackToConten
 import { DebugPanel } from '@tldraw/tldraw/src/lib/ui/components/DebugPanel';
 import { Dialogs } from '@tldraw/tldraw/src/lib/ui/components/Dialogs';
 import { FollowingIndicator } from '@tldraw/tldraw/src/lib/ui/components/FollowingIndicator';
-import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu';
+// import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu';
 import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
 import { NavigationZone } from '@tldraw/tldraw/src/lib/ui/components/NavigationZone/NavigationZone';
 import { ExitPenMode } from '@tldraw/tldraw/src/lib/ui/components/PenModeToggle';
 import { Button } from '@tldraw/tldraw/src/lib/ui/components/primitives/Button';
 import { StopFollowing } from '@tldraw/tldraw/src/lib/ui/components/StopFollowing';
 import { StylePanel } from '@tldraw/tldraw/src/lib/ui/components/StylePanel/StylePanel';
-import { Toolbar } from '@tldraw/tldraw/src/lib/ui/components/Toolbar/Toolbar';
 import { useActions } from '@tldraw/tldraw/src/lib/ui/hooks/useActions';
 import { useBreakpoint } from '@tldraw/tldraw/src/lib/ui/hooks/useBreakpoint';
 import { useNativeClipboardEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useClipboardEvents';
@@ -25,7 +24,7 @@ import { TldrawUiContextProvider } from '@tldraw/tldraw/src/lib/ui/TldrawUiConte
 import { Toasts, ToastViewport, zoomToFitNewNode } from '@/components';
 import { ToastsProvider, useContentRecorder } from '@/hooks';
 import { cn } from '@/utils';
-import { ScratchPanel } from './Extensions';
+import { FlowToolbar, ScratchPanel } from './Extensions';
 import { TestButtons } from './Extensions/TestButtons';
 import { FlowSidePanel } from './FlowSidePanel';
 
@@ -105,7 +104,9 @@ const FlowUiContent = memo((props: FlowUiProps) => {
   }, [editor, initialShapes, mounted]);
 
   return (
-    <>
+    <div className="w-full h-full flex flex-col">
+      <MenuZone /> 
+      <div className="w-full h-full flex flex-row">
       <FlowSidePanel />
       <div
         className={cn('tlui-layout', {
@@ -121,7 +122,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
           <>
             <div className={cn('tlui-layout__top')}>
               <div className={cn('tlui-layout__top__left')}>
-                <MenuZone />
+                {/* <MenuZone /> */}
                 <div className={cn('tlui-helper-buttons')}>
                   <ExitPenMode />
                   <BackToContent />
@@ -141,8 +142,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
             <div className={cn('tlui-layout__bottom')}>
               <div className={cn('tlui-layout__bottom__main')}>
                 <NavigationZone />
-                <Toolbar />
-                {breakpoint >= 4 && <HelpMenu />}
+                <FlowToolbar />
               </div>
               {isDebugMode && <DebugPanel renderDebugMenuItems={() => <TestButtons />} />}
             </div>
@@ -153,6 +153,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
         <ToastViewport />
         <FollowingIndicator />
       </div>
-    </>
+      </div>
+    </div>
   );
 });

@@ -1,3 +1,5 @@
+'use client'
+
 import { useContentExtractor, useToasts, useModel } from "@/hooks";
 import { uniqueId } from "@tldraw/tldraw";
 import { cn } from "@/utils";

@@ -51,7 +51,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
   return isDefaultVariant(variant) ? (
     <ThemedButton ref={ref} size={size} className={cn(`pointer-events-all !cursor-pointer`, disabled && DisabledClasses, `!${RadiusClasses(radius)}`, className)} color={color} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
   ) : (
-    <div className="relative w-auto h-auto">
+    <>
       <button
         ref={ref}
         type={type}
@@ -82,11 +82,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
       </button>
       {/* Border Gradient, backglow to true which will apply large blur to the gradients tranistioning which are in sync with the gradients inside of the buttons */}
       {isGradientVariant && (
-        <div className={cn("absolute grid grid-cols-1 inset-0 z-[1]")}>
-          <GradientDiv backglow={true} isHovered={true} colors={colors} radius={radius} />
+        <div className={cn("relative")}>
+          <div className={cn("absolute grid grid-cols-1 inset-0 z-[1]")}>
+            <GradientDiv backglow={true} isHovered={true} colors={colors} radius={radius} />
+          </div>
         </div>
       )}
-    </div>
+    </>
   )
 });
 Button.displayName = 'Button';

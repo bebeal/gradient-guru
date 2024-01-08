@@ -19,12 +19,11 @@ export const APP_HOST = {
 
 export const getEnvVariable = (key: string, nextPublic: boolean = false): string | null => {
   const value = nextPublic ? process.env[`NEXT_PUBLIC_${key}`] : process.env[key];
-  if (!value) {
-    console.warn(
-      "\x1b[41m\x1b[31m%s\x1b[0m",
-      `Missing ${nextPublic ? 'NEXT_PUBLIC_' : ''}${key} environment variable`
-    )
-    return null;
-  }
-  return value;
+  // if (!value) {
+  //   console.warn(
+  //     `Missing ${nextPublic ? 'NEXT_PUBLIC_' : ''}${key} environment variable`
+  //   )
+  //   return null;
+  // }
+  return value!;
 }

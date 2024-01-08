@@ -10,15 +10,13 @@ const handler = async (request: NextRequest) => {
   const res = await request.json();
 
   if (request.method === 'POST') {
-    const { id, html, source, linkUploadVersion } = res;
+    const { id, html, source, version } = res;
     if (!id) {
       return NextResponse.json({ error: 'id is required' }, { status: 400 });
     } else if (!html) {
       return NextResponse.json({ error: 'html is required' }, { status: 400 });
     } else if (!source) {
       return NextResponse.json({ error: 'source is required' }, { status: 400 });
-    } else if (!linkUploadVersion) {
-      return NextResponse.json({ error: 'linkUploadVersion is required' }, { status: 400 });
     }
 
     const response = await s3Client.put(id, res);

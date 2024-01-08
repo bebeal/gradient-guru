@@ -1,14 +1,14 @@
 'use client';
 
-import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DirectionProvider } from '@radix-ui/react-direction';
 import { ToastProvider } from '@radix-ui/react-toast';
 import { Theme, ThemePanel } from '@radix-ui/themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { DebugPanelContext, ThemePanelContext } from '@/hooks';
-import { isDevEnv, StyledComponentsRegistry } from '@/utils';
-import { Loading } from '@/components';
+import { isDevEnv, NextAuthProvider, StyledComponentsRegistry } from '@/utils';
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
 import '@/assets/fonts/Monaspace/Monaspace.css';
 import '@/app/globals.css';
@@ -24,14 +24,6 @@ const makeQueryClient = (overrideOptions?: any) => {
     ...overrideOptions,
   });
 };
-
-const ReactQueryDevtoolsProduction = lazy(() =>
-  import('@tanstack/react-query-devtools/build/modern/production.js').then(
-    (d) => ({
-      default: d.ReactQueryDevtools,
-    }),
-  ),
-);
 
 const Providers = ({ children }: any) => {
   const [queryClient] = useState(makeQueryClient());
@@ -67,27 +59,27 @@ const Providers = ({ children }: any) => {
               <ThemePanelContext.Provider value={{ themePanelEnabled, setThemePanelEnabled }}>
                 <DirectionProvider dir="ltr">
                     <QueryClientProvider client={queryClient}>
-                      <ToastProvider>
-                        <div className="flex flex-col h-screen w-full overflow-hidden">
-                          {children}
-                          {debugMode === 1 && (
-                            <div className="absolute z-[99999] bg-primary h-full">
-                              {/* <div className="absolute bottom-0 left-0 right-0 w-auto h-full">
-                                <Button variant="ghost" onClick={togglePanel}>Toggle</Button>
-                              </div> */}
-                              <Suspense fallback={<Loading />}>
-                                <ReactQueryDevtoolsProduction
+                      <NextAuthProvider>
+                        <ToastProvider>
+                          <div className="flex flex-col h-screen w-full overflow-hidden">
+                            {children}
+                            {debugMode === 1 && (
+                              <div className="absolute z-[99999] bg-primary h-full">
+                                {/* <div className="absolute bottom-0 left-0 right-0 w-auto h-full">
+                                  <Button variant="ghost" onClick={togglePanel}>Toggle</Button>
+                                </div> */}
+                                <ReactQueryDevtools
                                   key={debugPanel ? 'open' : 'closed'} // hack to force re-render on toggle
                                   initialIsOpen={false}
                                   position="top"
                                   buttonPosition="bottom-left"
                                 />
-                              </Suspense>
-                            </div>
-                          )}
-                        </div>
-                        {themePanelEnabled && <ThemePanel />}
-                      </ToastProvider>
+                              </div>
+                            )}
+                          </div>
+                          {themePanelEnabled && <ThemePanel />}
+                        </ToastProvider>
+                      </NextAuthProvider>
                     </QueryClientProvider>
                 </DirectionProvider>
               </ThemePanelContext.Provider>

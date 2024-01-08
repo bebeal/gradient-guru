@@ -103,7 +103,7 @@ export const Flow = memo((props: FlowProps) => {
     );
   }
   return (
-    <TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex flex-row', rest.className)}>
+    <TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex', rest.className)}>
       <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} {...withDefaults}>
         <ContextMenu>
           <DropWrapper>

@@ -45,9 +45,9 @@ window.addEventListener('message', function(event) {
         setHtml(html.includes('</body>')
           ? htmlFromResponse.replace(
               '</body>',
-              `<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script><script src="https://unpkg.com/html2canvas"></script><script>${SCRIPT_TO_INJECT_FOR_PREVIEW}</script><script>window.alert = function(e) {console.log('alert from iframe:', e)};</script></body>`
+              `<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script><script src="https://unpkg.com/html2canvas"></script><script>${SCRIPT_TO_INJECT_FOR_PREVIEW}</script><script>window.alert = function(e) {console.groupCollapsed('alert from iframe:', e)};</script></body>`
             )
-          : htmlFromResponse + `<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script><script src="https://unpkg.com/html2canvas"></script><script>${SCRIPT_TO_INJECT_FOR_PREVIEW}</script><script>window.alert = function(e) {console.log('alert from iframe:', e)};</script>`);
+          : htmlFromResponse + `<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script><script src="https://unpkg.com/html2canvas"></script><script>${SCRIPT_TO_INJECT_FOR_PREVIEW}</script><script>window.alert = function(e) {console.groupCollapsed('alert from iframe:', e)};</script>`);
         
         
         setSource(response?.source);

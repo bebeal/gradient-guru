@@ -1,6 +1,6 @@
 'use client'
 
-import React, { Suspense } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { IconSetCache } from '@/components';
 import { getEncodedSVGUrl, isSVG } from '../utils/svg';
@@ -191,12 +191,10 @@ export const Loading = (props: LoadingProps) => {
   const content = children ? children : text;
 
   return (
-    <div className="w-full h-full flex items-center justify-center text-xl text-muted gap-1">
-      <Suspense fallback={'...'}>
-        {spinner && <IconSetCache.Custom.Loader className={cn('flex items-center justify-center h-6 w-6 text-base gap-1')} />}
-        {content}
-        {dots && <IconSetCache.Custom.DotsLoader className={'h-6 w-6 self-end'} />}
-      </Suspense>
+    <div className="w-auto h-auto flex items-center justify-center text-xl text-muted gap-1">
+      {spinner && <IconSetCache.Custom.Loader className={cn('flex items-center justify-center h-6 w-6 text-base gap-1')} />}
+      {content}
+      {dots && <IconSetCache.Custom.DotsLoader className={'h-6 w-6 self-end'} />}
     </div>
   );
 };
@@ -218,9 +216,20 @@ export const Erroring = (props: ErroringProps) => {
   );
 
   return (
-    <div className={cn("w-full h-full flex items-center justify-center text-error gap-2 text-xl", className)}>
+    <div className={cn("w-auto h-auto flex items-center justify-center text-error gap-2 text-xl", className)}>
       <IconSetCache.Carbon.StatusPartialFail className={'flex items-center justify-center h-full w-auto'} />
       {content}
+    </div>
+  );
+};
+
+export const Success = (props: { children?: any; className?: string }) => {
+  const { children, className, } = props;
+
+  return (
+    <div className={cn("w-auto h-auto flex items-center justify-center text-green-500 gap-2 text-xl", className)}>
+      <IconSetCache.Carbon.StatusResolved className={'flex items-center justify-center h-full w-auto'} />
+      {children}
     </div>
   );
 };
