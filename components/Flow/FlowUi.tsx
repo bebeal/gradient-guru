@@ -8,7 +8,7 @@ import { DebugPanel } from '@tldraw/tldraw/src/lib/ui/components/DebugPanel';
 import { Dialogs } from '@tldraw/tldraw/src/lib/ui/components/Dialogs';
 import { FollowingIndicator } from '@tldraw/tldraw/src/lib/ui/components/FollowingIndicator';
 // import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu';
-import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
+// import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
 import { NavigationZone } from '@tldraw/tldraw/src/lib/ui/components/NavigationZone/NavigationZone';
 import { ExitPenMode } from '@tldraw/tldraw/src/lib/ui/components/PenModeToggle';
 import { Button } from '@tldraw/tldraw/src/lib/ui/components/primitives/Button';
@@ -24,7 +24,7 @@ import { TldrawUiContextProvider } from '@tldraw/tldraw/src/lib/ui/TldrawUiConte
 import { Toasts, ToastViewport, zoomToFitNewNode } from '@/components';
 import { ToastsProvider, useContentRecorder } from '@/hooks';
 import { cn } from '@/utils';
-import { FlowToolbar, ScratchPanel } from './Extensions';
+import { FlowMenu, FlowToolbar, ScratchPanel } from './Extensions';
 import { TestButtons } from './Extensions/TestButtons';
 import { FlowSidePanel } from './FlowSidePanel';
 
@@ -105,7 +105,6 @@ const FlowUiContent = memo((props: FlowUiProps) => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <MenuZone /> 
       <div className="w-full h-full flex flex-row">
       <FlowSidePanel />
       <div
@@ -122,7 +121,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
           <>
             <div className={cn('tlui-layout__top')}>
               <div className={cn('tlui-layout__top__left')}>
-                {/* <MenuZone /> */}
+                <FlowMenu />
                 <div className={cn('tlui-helper-buttons')}>
                   <ExitPenMode />
                   <BackToContent />

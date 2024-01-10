@@ -2,8 +2,8 @@
 
 import { useCallback } from 'react';
 import * as yup from 'yup';
-import { ModelConfig, ModelConfigLabels, ModelConfigSchemas, Models } from '@/clients/Models';
-import { FlipCard, FlowFormItem, FlowTab, Form } from '@/components';
+import { ModelConfig, ModelConfigLabels, ModelConfigSchemas, ModelProviders, ModelFormItem } from '@/utils';
+import { FlipCard, FlowTab, Form } from '@/components';
 import { useModel } from '@/hooks';
 
 export const ModelTab = () => {
@@ -13,7 +13,7 @@ export const ModelTab = () => {
     (newConfig: ModelConfig) => {
       // update data modalities
       const model = newConfig.model;
-      const modelData = Models[model];
+      const modelData = ModelProviders[newConfig.provider][model];
       const modalities = modelData.modalities;
       if (modalities) {
         newConfig.modalities = modalities;
@@ -29,7 +29,7 @@ export const ModelTab = () => {
         className="h-auto w-full"
         front={{
           title: 'Model Config',
-          children: <Form object={modelClient.config} schema={yup.object().shape({ ...ModelConfigSchemas })} onSubmit={onSubmit} labels={ModelConfigLabels as any} ItemRenderer={FlowFormItem} />,
+          children: <Form object={modelClient.config} schema={yup.object().shape({ ...ModelConfigSchemas })} onSubmit={onSubmit} labels={ModelConfigLabels as any} ItemRenderer={ModelFormItem} />,
         }}
       />
     </FlowTab>

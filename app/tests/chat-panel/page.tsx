@@ -110,10 +110,10 @@ const ChatPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-auto bg-primary text-primary">
       <div className="flex flex-col gap-10 w-full justify-center items-center">
-        <Test title="Chat Status" test={<ChatStatusTest />} />
-        <Test title="Chat Message" test={<ChatMessageTest />} />
-        <Test title="Chat List" test={<ChatListTest />} />
-        <Test title="Chat" test={<ChatTest />} />
+          <Test title="Chat Status" test={<ChatStatusTest />} />
+          <Test title="Chat Message" test={<ChatMessageTest />} />
+          <Test title="Chat List" test={<ChatListTest />} />
+          <Test title="Chat" test={<ChatTest />} />
       </div>
     </div>
   );

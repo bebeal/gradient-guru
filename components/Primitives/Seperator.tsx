@@ -1,3 +1,5 @@
+'use client'
+
 import React, {forwardRef} from 'react'
 import * as SeparatorPrimitive from '@radix-ui/react-separator'
 import { Orientation, OrientationClasses } from '@/components'
@@ -19,13 +21,13 @@ export const Separator = forwardRef((props: SeparatorProps, ref: React.Forwarded
         decorative={decorative}
         orientation={orientation}
         className={cn(
-          className,
           `leading-none min-h-[0.5px] min-w-[0.5px] overflow-hidden`,
           OrientationClasses(orientation),
           {
             ['horizontal']: 'h-[0.5px] w-11/12',
             ['vertical']: 'w-[0.5px] h-11/12',
           }[orientation],
+          className,
           color
         )}
         {...rest}

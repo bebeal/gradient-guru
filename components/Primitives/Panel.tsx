@@ -104,7 +104,7 @@ export const Panel = forwardRef((props: PanelProps, ref?: any) => {
         <PanelPrimitive.Content
           ref={contentRef}
           className={cn(
-            'overflow-hidden text-primary cursor-default border border-accent transition-all z-50 left-0 top-0',
+            'overflow-hidden text-primary cursor-default border border-accent transition-all left-0 top-0',
             isFirst ? 'order-first' : 'order-last',
             {
               [Direction.up]: 'radix-state-closed:animate-accordion-down radix-state-open:animate-accordion-up border-t-transparent',
@@ -127,7 +127,7 @@ export const Panel = forwardRef((props: PanelProps, ref?: any) => {
       {...props}
       type={'multiple'}
       className={cn(
-        'flex bg-primary text-primary overflow-hidden z-50 pointer-events-auto relative',
+        'flex bg-primary text-primary overflow-hidden pointer-events-auto relative',
         {
           [Direction.up]: 'flex-col h-full rounded-b-lg',
           [Direction.left]: 'flex-row-reverse h-full rounded-l-lg',

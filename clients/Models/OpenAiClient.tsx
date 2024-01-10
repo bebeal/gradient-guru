@@ -1,72 +1,33 @@
 'use client'
 
 import OpenAI from 'openai';
-import { ApiKeyError, BaseModelClient, DataModality, ModelConfig } from '@/clients/Models';
-import { filterObjectByKeys, isDevEnv } from '@/utils';
+import { BaseModelClient } from './ModelClient';
+import { filterObjectByKeys, isDevEnv, OpenAIModelConfig, OpenAIModelInput, OpenAIModelOutput, ValidApiKeys , ApiKeyError } from '@/utils';
+import { InvalidIdFallbackHtml } from '@/components';
 
-export const getContentFromChatCompletion = (response: OpenAI.ChatCompletion): string => response?.choices?.[0]?.message?.content || '';
-
-export type OpenAIModelInput =
-  | any // hack for now until this abstraction is sorted out
-  | string
-  | {
-      type: 'image_url';
-      image_url:
-        | string
-        | {
-            url: string;
-            detail: 'low' | 'high' | 'auto';
-          };
-    }
-  | {
-      type: 'text';
-      text: string;
-    };
-export type OpenAIModelOutput = undefined | string | OpenAI.ChatCompletion;
-
-export interface OpenAIModelConfig extends ModelConfig, Omit<OpenAI.Completions.CompletionCreateParamsNonStreaming, 'model' | 'prompt'> {
-  modalities?: DataModality[];
-}
+export const getApiKey = () => {
+  return process.env.OPENAI_API_KEY || process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+};
 
 export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAIModelInput, OpenAIModelOutput> {
   apiKey?: string;
 
   constructor(config: OpenAIModelConfig, apiKey?: string) {
     super(config);
-    this.apiKey = apiKey || isDevEnv ? process.env.NEXT_PUBLIC_OPENAI_API_KEY : '';
+    this.apiKey = apiKey || isDevEnv ? getApiKey() : '';
+  }
+
+  async forwardPrecondition(input: any) {
+    if (!this.apiKey || !this.apiKey.length) {
+      throw ApiKeyError(this.apiKey);
+    }
+    super.forwardPrecondition(input);
   }
 
   async callApi(input: OpenAIModelInput): Promise<OpenAIModelOutput> {
-    if (!this.apiKey) {
-      throw ApiKeyError(this.apiKey);
-    }
     // filter modelInput for only allowed keys, cause openai api is picky
-    const modelInput = filterObjectByKeys({ ...this.config, messages: input }, [
-      'model',
-      'messages',
-      'frequency_penalty',
-      'logit_bias',
-      'logprobs',
-      'top_logprobs',
-      'max_tokens',
-      'n',
-      'presence_penalty',
-      'response_format',
-      'seed',
-      'stop',
-      'stream',
-      'temperature',
-      'top_p',
-      'tools',
-      'tool_choice',
-      'user',
-    ]);
+    const modelInput = filterObjectByKeys({ ...this.config, messages: input }, ValidApiKeys);
     return await this.chatCompletion(modelInput);
-  }
-
-  updateMessages(content: any): void {
-    const extractedContent = getContentFromChatCompletion(content);
-    super.updateMessages(extractedContent);
   }
 
   private async chatCompletion(body: Record<string, any>): Promise<OpenAI.ChatCompletion> {
@@ -79,5 +40,23 @@ export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAI
       body: JSON.stringify(body),
     });
     return await response.json();
+  }
+
+  override async mockApi(input: OpenAIModelInput): Promise<OpenAIModelOutput> {
+    // mock response ChatCompletion
+    return await new Promise((resolve, reject) => {
+      resolve({
+        choices: [
+          {
+            finish_reason: 'stop',
+            index: 0,
+            logprobs: null,
+            message: {
+              content: InvalidIdFallbackHtml,
+            },
+          },
+        ],
+      } as any);
+    });
   }
 }

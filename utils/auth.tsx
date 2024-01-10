@@ -1,11 +1,12 @@
+import { ReactNode } from "react";
 import NextAuth, { NextAuthConfig } from "next-auth";
 import { SessionProvider } from 'next-auth/react';
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import { getEnvVariable, isDevEnv } from "./host";
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
-import { ReactNode } from "react";
 import Logo from '@/public/apple-touch-icon-180x180.png';
+import { isDevEnv, getEnvVariable } from "./host";
+
 
 export const getGoogleAuth = (): any => {
   const clientId = getEnvVariable('GOOGLE_CLIENT_ID');

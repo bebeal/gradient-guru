@@ -90,10 +90,10 @@ export const MenubarMenu = (props: MenubarMenuProps) => {
   const openClassname = "radix-state-open:bg-accent/30 radix-state-open:text-primary radix-state-open:hover:bg-accent/50 radix-state-open:radix-highlighted:bg-accent/50";
   const disabledClassname = "radix-disabled:opacity-50 radix-disabled:cursor-not-allowed";
   const triggerClassname = cn(defaultClassname, highlightedClassname, openClassname, disabledClassname, `cursor-pointer px-2 py-1 border border-primary`, className);
-  const contentClassname = cn(defaultClassname, RadiusClasses('medium'), `z-50 min-w-[12rem] p-1 flex-col border border-primary h-auto w-auto overflow-hidden shadow-lg animate-enter`);
+  const contentClassname = cn(defaultClassname, RadiusClasses('medium'), `min-w-[12rem] p-1 flex-col border border-primary h-auto w-auto overflow-hidden shadow-lg animate-enter`);
   const itemClassname = cn(defaultClassname, highlightedClassname, openClassname, disabledClassname, `px-2 py-1`, RadiusClasses('base'));
   const subTriggerClassname = cn(defaultClassname, highlightedClassname, openClassname, disabledClassname, `cursor-pointer px-2 py-1`, RadiusClasses('base'));
-  const subContentClassname = cn(defaultClassname, RadiusClasses('medium'), `z-50 min-w-[8rem] flex-col border border-primary h-auto w-auto overflow-hidden shadow-lg animate-enter`);
+  const subContentClassname = cn(defaultClassname, RadiusClasses('medium'), `min-w-[8rem] flex-col border border-primary h-auto w-auto overflow-hidden shadow-lg animate-enter`);
   const subItemClassname = cn(defaultClassname, highlightedClassname, openClassname, disabledClassname, `px-2 py-1`, RadiusClasses('base'));
 
   const MenubarMenuItem = useCallback((item: any, idx: number) => {

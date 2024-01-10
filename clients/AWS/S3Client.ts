@@ -1,7 +1,6 @@
 import { Readable } from 'stream';
-import { GetObjectCommand, GetObjectOutput, S3Client as InternalS3Client, PutObjectCommand, PutObjectOutput } from '@aws-sdk/client-s3';
+import { GetObjectCommand, S3Client as InternalS3Client, PutObjectCommand, PutObjectOutput } from '@aws-sdk/client-s3';
 import { AwsCredentialIdentity } from '@aws-sdk/types';
-import { InvalidIdFallbackHtml } from '@/components';
 import { getEnvVariable } from '@/utils';
 
 const streamToString = (stream: Readable): Promise<string> => {
@@ -42,7 +41,7 @@ const getS3Client = (): InternalS3Client | null => {
 };
 
 export class S3Client {
-  // singleton instance - nsuring that only one instance of the client exists throughout the application
+  // singleton instance - ensuring that only one instance of the client exists throughout the application
   private static instance: S3Client;
   private client: InternalS3Client;
   private bucket: string;
@@ -76,13 +75,14 @@ export class S3Client {
       ContentType: 'application/json',
     });
     const response = await this.client.send(request);
-    return response;
+    return response; // contains versionId if bucket versioning is enabled
   }
 
-  public async get(id: string): Promise<string> {
+  public async get(id: string, versionId?: string): Promise<string> {
     const request = new GetObjectCommand({
       Bucket: this.bucket,
       Key: id,
+      VersionId: versionId, // if versionId is not provided, the latest version is returned
     });
 
     const response = await this.client.send(request);
@@ -97,42 +97,5 @@ export class S3Client {
     } catch (error) {
       throw new Error(`Error parsing JSON from ${id}: ${error}`);
     }
-  }
-}
-
-export class MockS3Client {
-  public config = {
-    credentials: {
-      accessKeyId: `accessKeyId`,
-      secretAccessKey: `secretAccessKey`,
-    },
-    region: 'us-west-2',
-  };
-  public records: { [key: string]: string } = {
-    test: InvalidIdFallbackHtml,
-  };
-
-  public static getInstance(): MockS3Client {
-    console.log(`MockS3Client.getInstance`);
-    return new MockS3Client();
-  }
-
-  public async put(id: string, json: Record<string, any>) {
-    const jsonString = JSON.stringify(json);
-    this.records[id] = jsonString;
-    return new Promise((resolve) => {
-      resolve({
-        ETag: 'etag',
-        VersionId: 'versionId',
-        Location: 'location',
-      } as PutObjectOutput);
-    });
-  }
-
-  public async get(id: string): Promise<GetObjectOutput> {
-    const response: any = JSON.parse(this.records[id]);
-    return new Promise((resolve) => {
-      resolve(response as GetObjectOutput);
-    });
   }
 }

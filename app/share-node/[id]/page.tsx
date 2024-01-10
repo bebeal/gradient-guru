@@ -4,7 +4,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 import { PageId } from '@/components';
 import { cn } from '@/utils';
 
-const SharedIdPage = () => {
+const ShareNodePage = () => {
   const { id } = useParams<{ id: string }>();
   const searchParams  = useSearchParams();
   const isPreview = searchParams.get('preview') === 'true';
@@ -16,4 +16,4 @@ const SharedIdPage = () => {
   );
 };
 
-export default SharedIdPage;
+export default ShareNodePage;

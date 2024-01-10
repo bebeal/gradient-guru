@@ -100,8 +100,8 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
 
   return (
     <>
-      <Tabs.Root className={cn(`relative flex w-auto h-full`, `text-primary shadow-2 shadow-2xl`, `transition-all z-[500]`, className)} data-orientation="vertical" orientation="vertical" activationMode="manual" value={activeTabIndex !== undefined ? `${tabs[activeTabIndex]?.name}` : undefined} {...rest}>
-        <Tabs.List className={cn(`flex flex-col w-auto h-auto items-center z-[503]`, `bg-primary border-0 border-r border-transparent`, activeTabIndex === undefined ? `border-r-primary` : `border-r-transparent`)} aria-label="ColumnPanel">
+      <Tabs.Root className={cn(`relative flex w-auto h-full`, `text-primary shadow-2 shadow-2xl`, `transition-all z-[200]`, className)} data-orientation="vertical" orientation="vertical" activationMode="manual" value={activeTabIndex !== undefined ? `${tabs[activeTabIndex]?.name}` : undefined} {...rest}>
+        <Tabs.List className={cn(`flex flex-col w-auto h-auto items-center z-[201]`, `bg-primary border-0 border-r border-transparent`, activeTabIndex === undefined ? `border-r-primary` : `border-r-transparent`)} aria-label="ColumnPanel">
           {tabs.map((tab, index) => {
             const tabValue = `${tab?.name}`;
             const tabIsActive = activeTabIndex === index;
@@ -160,10 +160,14 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
             );
           })}
         </div>
-        {resizing && overlay && <div className={cn('absolute left-0 top-0 w-screen h-screen z-[505]', cursor, resizing ? 'bg-black bg-opacity-50' : 'bg-transparent')} />}
-        <div draggable={false} ref={resizeRef} className={cn(`absolute top-0 -right-px w-0.5 h-full z-[505] select-none`, resizing ? `bg-accent` : `bg-transparent`, cursor)} onDoubleClick={togglePanel} >
+        {resizing && overlay && <div className={cn('absolute left-0 top-0 w-screen h-screen z-[205]', cursor, resizing ? 'bg-black bg-opacity-50' : 'bg-transparent')} />}
+        <div draggable={false} ref={resizeRef} className={cn(`absolute top-0 -right-px w-0.5 h-full z-[205] select-none`, resizing ? `bg-accent` : `bg-transparent`, cursor)} onDoubleClick={togglePanel} >
           {handle && (
-            <div onClick={togglePanel} className={cn("z-[506] absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2 flex h-4 w-3 items-center justify-center rounded-sm border bg-primary hover:bg-secondary !cursor-pointer", resizing ? `border-accent` : `border-primary`, activeTabIndex !== undefined && `border-accent`, cursor)}>
+            <div onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              togglePanel();
+            }} className={cn("z-[206] absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2 flex h-4 w-3 items-center justify-center rounded-sm border bg-primary hover:bg-secondary !cursor-pointer", resizing ? `border-accent` : `border-primary`, activeTabIndex !== undefined && `border-accent`, cursor)}>
               <IconSetCache.Carbon.Draggable className="h-2.5 w-2.5" />
             </div>
           )}

@@ -5,11 +5,10 @@ import { useMutation } from '@tanstack/react-query';
 import { useEditor } from '@tldraw/editor';
 import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
-import { BaseModelClient, DefaultModelConfig, ModelConfig, OpenAIModelClient } from '@/clients/Models';
 import { formatNodeId, makeEmptyResponseShape, PreviewNode } from '@/components';
 import { ExtractedState, useApi, useContentExtractor } from '@/hooks';
-import { PromptName, Prompts } from '@/utils';
-import { getHTMLFromOpenAIResponse } from './shared';
+import { PromptName, Prompts, DefaultModelConfig, ModelConfig, getHTMLFromOpenAIResponse  } from '@/utils';
+import { BaseModelClient, OpenAIModelClient } from '@/clients/Models';
 
 export type ModelState = {
   modelClient: BaseModelClient<ModelConfig, any, any>;
@@ -99,7 +98,6 @@ export const useModel = () => {
     modelClient,
     setModelClient,
     modelQueryMutation,
-    handleMakeRealPrompt,
     systemPromptName,
     setSystemPromptName,
     getPrompt,

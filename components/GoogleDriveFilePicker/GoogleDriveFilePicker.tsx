@@ -102,7 +102,6 @@ export const GoogleDriveUtility = (props: GoogleDriveUtilityProps) => {
       <Button 
         variant="outline"
         onClick={async () => {
-          console.log('listFilesFromDrive');
           const results = await listFilesFromDrive();
           setResult(results);
           console.log('results', results);

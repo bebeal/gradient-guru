@@ -15,3 +15,4 @@ export * from './prompts';
 export * from './regex';
 export * from './svg';
 export * from './utils';
+export * from './models';
