@@ -12,7 +12,7 @@ const streamToString = (stream: Readable): Promise<string> => {
   });
 };
 
-const getCredentials = (): AwsCredentialIdentity | null => {
+const getAWSCredentials = (): AwsCredentialIdentity | null => {
   const accessKeyId = getEnvVariable('_AWS_ACCESS_KEY_ID');
   const secretAccessKey = getEnvVariable('_AWS_SECRET_ACCESS_KEY');
   if (!accessKeyId || !secretAccessKey) {
@@ -31,7 +31,7 @@ const getBucket = (): string | null => {
 };
 
 const getS3Client = (): InternalS3Client | null => {
-  const credentials = getCredentials();
+  const credentials = getAWSCredentials();
   const region = getRegion();
   if (!credentials || !region) {
     console.error('Invalid AWS S3 credentials', `\ncredentials: ${credentials}`, `\nregion: ${region}`);

@@ -5,23 +5,19 @@ module.exports = {
   compiler: {
     styledComponents: true
   },
-  webpack: (config, { isServer }) => {
-    
+  webpack: (config) => {
     // https://stackoverflow.com/questions/76005377/module-not-found-cant-resolve-fs-nextjs-nextauth
-    if (!isServer) {
-      config.resolve = {
-        ...config.resolve,
-        fallback: {
-          child_process: false,
-          net: false,
-          dns: false,
-          tls: false,
-          fs: false,
-          request: false,
-        },
-      };
-    }
-    
+    config.resolve = {
+      ...config.resolve,
+      fallback: {
+        child_process: false,
+        net: false,
+        dns: false,
+        tls: false,
+        fs: false,
+        request: false,
+      },
+    };
     // https://github.com/vercel/next.js/discussions/30870
     config.infrastructureLogging = {
         level: "error",
@@ -129,7 +125,7 @@ module.exports = {
     isrFlushToDisk: true,
     workerThreads: false,
     proxyTimeout: undefined,
-    optimizeCss: false, // https://github.com/vercel/next.js/issues/60473
+    optimizeCss: true, // ? https://github.com/vercel/next.js/issues/60473
     nextScriptWorkers: false,
     scrollRestoration: false,
     externalDir: false,
