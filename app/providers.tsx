@@ -53,9 +53,9 @@ const Providers = ({ children }: any) => {
   }, [togglePanel]);
 
   useEffect(() => {
-    const pathSegments = window.location.pathname.split('/').filter(Boolean);
-    const lastSegment = pathSegments[pathSegments.length - 1];
-    const newTitle = lastSegment ? `GG • ${lastSegment}` : 'Gradient Guru';
+    const pathSegments = window.location.pathname;
+    console.log('pathSegments', pathSegments);
+    const newTitle = pathSegments ? `GG • ${pathSegments}` : 'Gradient Guru';
     document.title = newTitle;
   }, []);
 
