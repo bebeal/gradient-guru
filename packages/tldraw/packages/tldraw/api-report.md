@@ -44,6 +44,7 @@ import { SnapPoint } from '@tldraw/editor';
 import { StateNode } from '@tldraw/editor';
 import { StoreSnapshot } from '@tldraw/editor';
 import { SvgExportContext } from '@tldraw/editor';
+import { T } from '@tldraw/editor';
 import { TLAnyShapeUtilConstructor } from '@tldraw/editor';
 import { TLArrowShape } from '@tldraw/editor';
 import { TLAssetId } from '@tldraw/editor';
@@ -243,10 +244,10 @@ export class BookmarkShapeUtil extends BaseBoxShapeUtil<TLBookmarkShape> {
     onBeforeUpdate?: TLOnBeforeUpdateHandler<TLBookmarkShape>;
     // (undocumented)
     static props: {
-        w: Validator<number>;
-        h: Validator<number>;
-        assetId: Validator<null | TLAssetId>;
-        url: Validator<string>;
+        w: T.Validator<number>;
+        h: T.Validator<number>;
+        assetId: T.Validator<null | TLAssetId>;
+        url: T.Validator<string>;
     };
     // (undocumented)
     static type: "bookmark";
@@ -318,6 +319,12 @@ declare namespace Dialog {
     }
 }
 export { Dialog }
+
+// @public
+export function downsizeImage(blob: Blob, width: number, height: number, opts?: {
+    type?: string | undefined;
+    quality?: number | undefined;
+}): Promise<Blob>;
 
 // @public (undocumented)
 export class DrawShapeTool extends StateNode {
@@ -691,15 +698,9 @@ export class GeoShapeUtil extends BaseBoxShapeUtil<TLGeoShape> {
 // @public
 export function getEmbedInfo(inputUrl: string): TLEmbedResult;
 
-// @public
-export function getResizedImageDataUrl(dataURLForImage: string, width: number, height: number, opts?: {
-    type?: string | undefined;
-    quality?: number | undefined;
-}): Promise<string>;
-
 // @public (undocumented)
 export function getSvgAsImage(svg: SVGElement, isSafari: boolean, options: {
-    type: 'jpeg' | 'png' | 'svg' | 'webp';
+    type: 'jpeg' | 'png' | 'webp';
     quality: number;
     scale: number;
 }): Promise<Blob | null>;
@@ -833,7 +834,7 @@ function Indicator(): JSX.Element;
 export const Input: React_3.ForwardRefExoticComponent<TLUiInputProps & React_3.RefAttributes<HTMLInputElement>>;
 
 // @public (undocumented)
-export function isGifAnimated(file: File): Promise<boolean>;
+export function isGifAnimated(file: Blob): Promise<boolean>;
 
 // @public (undocumented)
 function Item({ noClose, ...props }: DropdownMenuItemProps): JSX.Element;

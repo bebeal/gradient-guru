@@ -1,6 +1,5 @@
 export * from './DropWrapper';
 export * from './FlowChat';
-export * from './FlowCursor';
 export * from './FlowFormItem';
 export * from './FlowMenu';
 export * from './FlowToolbar';

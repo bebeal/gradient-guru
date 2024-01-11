@@ -2,12 +2,43 @@
 // refactored editor from https://github.com/tldraw/tldraw/blob/main/packages/tldraw/src/lib/utils/export/export.ts
 
 import canvasSize from 'canvas-size';
-import { Editor, SVG_PADDING, SvgExportContext, SvgExportDef, TLFrameShape, TLGroupShape, TLShape, TLShapeId, uniqueId } from '@tldraw/editor';
+import { TLShapeId, TLShape, SvgExportContext, SvgExportDef, uniqueId } from '@tldraw/editor';
 import { ImageExtractorConfig } from '@/hooks';
 
 import { isSafari } from './device';
 import { PNG } from './png';
 import { addGridToSvg } from './svg';
+
+const SVG_PADDING = 32;
+// https://github.com/jhildenbiddle/canvas-size?tab=readme-ov-file#test-results
+export const MAX_SAFE_CANVAS_DIMENSION = 8192
+
+export const clampToBrowserMaxCanvasSize = async (width: number, height: number) => {
+	if (width <= MAX_SAFE_CANVAS_DIMENSION && height <= MAX_SAFE_CANVAS_DIMENSION) {
+		return [width, height];
+	}
+
+	const { maxWidth, maxHeight, maxArea } = await getBrowserCanvasMaxSize();
+	const aspectRatio = width / height;
+
+	if (width > maxWidth) {
+		width = maxWidth;
+		height = width / aspectRatio;
+	}
+
+	if (height > maxHeight) {
+		height = maxHeight;
+		width = height * aspectRatio;
+	}
+
+	if (width * height > maxArea) {
+		const ratio = Math.sqrt(maxArea / (width * height));
+		width *= ratio;
+		height *= ratio;
+	}
+
+	return [width, height];
+}
 
 const btoa = (text: string): string => {
   return Buffer.from(text, 'binary').toString('base64');
@@ -76,7 +107,7 @@ export const adjustSizeForCanvasLimits = async (
 };
 
 // Gets an exported SVG from the editor for the given nodes
-export const getSvgElement: any = async (editor: Editor, ids: TLShapeId[], imageConfig?: ImageExtractorConfig) => {
+export const getSvgElement: any = async (editor: any, ids: TLShapeId[], imageConfig?: ImageExtractorConfig) => {
 	const svg = await editor.getSvg(ids, imageConfig);
 	if (!svg) throw new Error('Could not construct SVG.');
   if (imageConfig?.grid?.enabled) {
@@ -210,17 +241,24 @@ export const getSvgAsCanvas = async (svg: SVGElement, options: ImageExtractorCon
   const { scale=1 } = options;
 
   const { width, height } = getSvgDimensions(svg);
-  const { width: scaledWidth, height: scaledHeight } = scaleDimensions(width, height, scale);
-  const { width: effectiveWidth, height: effectiveHeight, scale: effectiveScale } = await adjustSizeForCanvasLimits(
-    scaledWidth,
-    scaledHeight,
-    width,
-    height
-  );
+  // const { width: scaledWidth, height: scaledHeight } = scaleDimensions(width, height, scale);
+  // const { width: effectiveWidth, height: effectiveHeight, scale: effectiveScale } = await adjustSizeForCanvasLimits(
+  //   scaledWidth,
+  //   scaledHeight,
+  //   width,
+  //   height
+  // );
+  let [clampedWidth, clampedHeight] = await clampToBrowserMaxCanvasSize(
+		width * scale,
+		height * scale
+	);
+	clampedWidth = Math.floor(clampedWidth);
+	clampedHeight = Math.floor(clampedHeight);
+	const effectiveScale = clampedWidth / width;
 
   const base64EncodedSvg = await encodeSVGAsBase64(svg, encodeEmbedImages);
-  const canvas = await createCanvasFromImage(base64EncodedSvg, effectiveWidth, effectiveHeight, options);
-  return { canvas, dimensions: { width: effectiveWidth, height: effectiveHeight, scale: effectiveScale }, base64EncodedSvg };
+  const canvas = await createCanvasFromImage(base64EncodedSvg, clampedWidth, clampedHeight, options);
+  return { canvas, dimensions: { width: clampedWidth, height: clampedHeight, scale: effectiveScale }, base64EncodedSvg };
 };
 
 export const getSvgAsImage = async (svg: SVGElement, options: ImageExtractorConfig): Promise<{ blob: Blob | null; base64EncodedSvg: string | null }> => {
@@ -240,11 +278,11 @@ export const getSvgAsImage = async (svg: SVGElement, options: ImageExtractorConf
   return { blob: null, base64EncodedSvg };
 };
 
-export const getExportedCanvas = async (editor: Editor, ids: TLShapeId[], options: ImageExtractorConfig) => {
+export const getExportedCanvas = async (editor: any, ids: TLShapeId[], options: ImageExtractorConfig) => {
   return await getSvgAsCanvas(await getSvgElement(editor, ids, options), options);
 };
 
-export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], options: ImageExtractorConfig) => {
+export const getExportedImageBlob = async (editor: any, ids: TLShapeId[], options: ImageExtractorConfig) => {
   const svg = await getSvgElement(editor, ids, options);
 	const { blob } = await getSvgAsImage(svg, options);
   return blob;
@@ -261,7 +299,7 @@ export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], opt
  *
  * @public
  */
-export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShape[], opts = {} as Partial<ImageExtractorConfig>): Promise<SVGSVGElement | undefined> => {
+export const getSvgPreview = async (editor: any, shapes: TLShapeId[] | TLShape[], opts = {} as Partial<ImageExtractorConfig>): Promise<SVGSVGElement | undefined> => {
   const ids =
     typeof shapes[0] === 'string'
       ? (shapes as TLShapeId[])
@@ -303,7 +341,7 @@ export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShap
   if (!bbox) return
 
   const singleFrameShapeId =
-    ids.length === 1 && editor.isShapeOfType<TLFrameShape>(editor.getShape(ids[0])!, 'frame')
+    ids.length === 1 && editor?.isShapeOfType(editor.getShape(ids[0])!, 'frame')
       ? ids[0]
       : null
   if (!singleFrameShapeId) {
@@ -382,7 +420,7 @@ export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShap
 
         const shape = editor.getShape(id)!
 
-        if (editor.isShapeOfType<TLGroupShape>(shape, 'group')) return []
+        if (editor?.isShapeOfType(shape, 'group')) return []
 
         const util = editor.getShapeUtil(shape)
 
@@ -436,7 +474,7 @@ export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShap
 
           // Create a polyline mask that does the clipping
           const mask = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-          mask.setAttribute('d', `M${pageMask.map(({ x, y }) => `${x},${y}`).join('L')}Z`)
+          mask.setAttribute('d', `M${pageMask.map(({ x, y }: any) => `${x},${y}`).join('L')}Z`)
           clipPathEl.appendChild(mask)
 
           // Create group that uses the clip path and wraps the shape elements

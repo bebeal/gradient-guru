@@ -102,7 +102,7 @@ module.exports = {
   output: process.env.NEXT_PRIVATE_STANDALONE ? 'standalone' : undefined,
   modularizeImports: undefined,
   experimental: {
-    webpackBuildWorker: true,
+    // webpackBuildWorker: true,
     serverMinification: true,
     serverSourceMaps: false,
     caseSensitiveRoutes: false,

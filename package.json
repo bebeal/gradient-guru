@@ -155,7 +155,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
-    "react-parallax-tilt": "^1.7.175",
+    "react-parallax-tilt": "1.7.175",
     "react-plotly.js": "^2.6.0",
     "react-syntax-highlighter": "^15.5.0",
     "react-virtuoso": "^4.6.2",

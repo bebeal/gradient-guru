@@ -17,7 +17,7 @@ export const MenuZone = track(function MenuZone() {
 
 	return (
 		<div className="tlui-menu-zone">
-			<div className="tlui-buttons__horizontal w-full">
+			<div className="tlui-buttons__horizontal">
 				<Menu />
 				<PageMenu />
 				{breakpoint >= 6 && !isReadonly && !editor.isInAny('hand', 'zoom') && (

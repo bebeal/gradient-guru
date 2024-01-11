@@ -2689,6 +2689,7 @@ export class Editor extends EventEmitter<TLEventMap> {
 
 	/** @internal */
 	private _willSetInitialBounds = true
+	private _wasInset = false
 
 	/**
 	 * Update the viewport. The viewport will measure the size and screen position of its container
@@ -2706,8 +2707,8 @@ export class Editor extends EventEmitter<TLEventMap> {
 	 */
 	updateViewportScreenBounds(center = false): this {
 		const container = this.getContainer()
-
 		if (!container) return this
+
 		const rect = container.getBoundingClientRect()
 		const screenBounds = new Box(
 			rect.left || rect.x,
@@ -2715,6 +2716,18 @@ export class Editor extends EventEmitter<TLEventMap> {
 			Math.max(rect.width, 1),
 			Math.max(rect.height, 1)
 		)
+
+		const insets = [
+			// top
+			screenBounds.minY !== 0,
+			// right
+			document.body.scrollWidth !== screenBounds.maxX,
+			// bottom
+			document.body.scrollHeight !== screenBounds.maxY,
+			// left
+			screenBounds.minX !== 0,
+		]
+
 		const boundsAreEqual = screenBounds.equals(this.getViewportScreenBounds())
 
 		const { _willSetInitialBounds } = this
@@ -2726,7 +2739,7 @@ export class Editor extends EventEmitter<TLEventMap> {
 				// If we have just received the initial bounds, don't center the camera.
 				this._willSetInitialBounds = false
 				this.updateInstanceState(
-					{ screenBounds: screenBounds.toJson() },
+					{ screenBounds: screenBounds.toJson(), insets },
 					{ squashing: true, ephemeral: true }
 				)
 			} else {
@@ -2734,14 +2747,14 @@ export class Editor extends EventEmitter<TLEventMap> {
 					// Get the page center before the change, make the change, and restore it
 					const before = this.getViewportPageCenter()
 					this.updateInstanceState(
-						{ screenBounds: screenBounds.toJson() },
+						{ screenBounds: screenBounds.toJson(), insets },
 						{ squashing: true, ephemeral: true }
 					)
 					this.centerOnPoint(before)
 				} else {
 					// Otherwise,
 					this.updateInstanceState(
-						{ screenBounds: screenBounds.toJson() },
+						{ screenBounds: screenBounds.toJson(), insets },
 						{ squashing: true, ephemeral: true }
 					)
 				}
@@ -2772,6 +2785,7 @@ export class Editor extends EventEmitter<TLEventMap> {
 	@computed getViewportScreenCenter() {
 		return this.getViewportScreenBounds().center
 	}
+
 	/**
 	 * The current viewport in the current page space.
 	 *
@@ -3025,8 +3039,11 @@ export class Editor extends EventEmitter<TLEventMap> {
 		}
 	}
 
-	/** @public */
-	getUnorderedRenderingShapes(
+  /**
+   * 
+   * @public
+   */
+	@computed getUnorderedRenderingShapes(
 		// The rendering state. We use this method both for rendering, which
 		// is based on other state, and for computing order for SVG export,
 		// which should work even when things are for example off-screen.
@@ -4067,7 +4084,7 @@ export class Editor extends EventEmitter<TLEventMap> {
 			if (pageMask.length === 0) return undefined
 
 			const { corners } = pageBounds
-			if (corners.every((p, i) => Vec.Equals(p, pageMask[i]))) return pageBounds.clone()
+			if (corners.every((p, i) => p && Vec.Equals(p, pageMask[i]))) return pageBounds.clone()
 
 			// todo: find out why intersect polygon polygon for identical polygons produces zero w/h intersections
 			const intersection = intersectPolygonPolygon(pageMask, corners)
@@ -7391,12 +7408,12 @@ export class Editor extends EventEmitter<TLEventMap> {
 	}
 
 	/**
-	 * Set the value of a {@link @tldraw/tlschema#StyleProp} for the selected shapes.
+	 * Set the value of a {@link @tldraw/tlschema#StyleProp} for the next shapes. This change will be applied to subsequently created shapes.
 	 *
 	 * @example
 	 * ```ts
-	 * editor.setStyleForSelectedShapes(DefaultColorStyle, 'red')
-	 * editor.setStyleForSelectedShapes(DefaultColorStyle, 'red', { ephemeral: true })
+	 * editor.setStyleForNextShapes(DefaultColorStyle, 'red')
+	 * editor.setStyleForNextShapes(DefaultColorStyle, 'red', { ephemeral: true })
 	 * ```
 	 *
 	 * @param style - The style to set.

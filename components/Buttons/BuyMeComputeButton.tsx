@@ -1,9 +1,9 @@
 'use client'
 
 import { forwardRef, useCallback, useState } from 'react';
-import ParallaxTilt from 'react-parallax-tilt';
 import { IconSetCache, ThreeFanGpuProps } from '@/components';
 import { cn } from '@/utils';
+import ReactParallaxTilt from 'react-parallax-tilt';
 
 
 export interface BuyMeComputeButtonProps extends ThreeFanGpuProps {}
@@ -31,7 +31,7 @@ export const BuyMeComputeButton = forwardRef((props: BuyMeComputeButtonProps, re
 
   return (
     <div className={cn(`bg-transparent w-auto h-auto relative flex transition-animation anim-duration-1000 justify-center items-center cursor-pointer`, className)}>
-      <ParallaxTilt tiltMaxAngleX={12.5} tiltMaxAngleY={12.5} transitionSpeed={1000 / 2} gyroscope={true} perspective={500} onEnter={onEnter} onLeave={onLeave}>
+      <ReactParallaxTilt tiltMaxAngleX={12.5} tiltMaxAngleY={12.5} transitionSpeed={1000 / 2} gyroscope={true} perspective={500} onEnter={onEnter} onLeave={onLeave}>
         <div
           onClick={onClick}
           className={cn(
@@ -67,7 +67,7 @@ export const BuyMeComputeButton = forwardRef((props: BuyMeComputeButtonProps, re
             BUY ME COMPUTE
           </div>
         </div>
-      </ParallaxTilt>
+      </ReactParallaxTilt>
     </div>
   );
 });

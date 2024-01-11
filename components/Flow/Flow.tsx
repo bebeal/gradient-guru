@@ -1,7 +1,12 @@
 'use client';
 
 import { memo, useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 'react';
-import { assert, Canvas, Editor, ErrorScreen, LoadingScreen, TLAnyShapeUtilConstructor, TldrawEditor, TldrawEditorProps, TLOnMountHandler, useEditor } from '@tldraw/editor';
+import { assert, TLAnyShapeUtilConstructor, TldrawEditorProps, TLOnMountHandler, useEditor, Canvas, ErrorScreen, LoadingScreen, TldrawEditor, Editor } from '@tldraw/editor';
+// import dynamic from 'next/dynamic';
+// const Canvas = dynamic(async () => (await import('@tldraw/editor')).Canvas, { ssr: false, });
+// const ErrorScreen = dynamic(async () => (await import('@tldraw/editor')).ErrorScreen, { ssr: false, });
+// const LoadingScreen = dynamic(async () => (await import('@tldraw/editor')).LoadingScreen, { ssr: false, });
+// const TldrawEditor = dynamic(async () => (await import('@tldraw/editor')).TldrawEditor, { ssr: false, });
 import {
   ContextMenu,
   defaultShapeTools,
@@ -22,10 +27,9 @@ import { TLEditorAssetUrls, useDefaultEditorAssetsWithOverrides } from '@tldraw/
 import { DropWrapper, Erroring, FlowUi, FlowUiProps, Loading } from '@/components';
 import { useMounted } from '@/hooks';
 import { cn } from '@/utils';
-import { IconNodeUtil, PreviewNodeUtil, TerminalNodeUtil, TipTapNodeUtil } from './Nodes';
+import { IconNodeUtil, PreviewNodeUtil, TerminalNodeUtil, TipTapNodeUtil, PlotlyNodeUtil } from './Nodes';
 import '@tldraw/tldraw/tldraw.css';
 import './Flow.css';
-import { PlotlyNodeUtil } from './Nodes/PlotlyNode';
 
 export type FlowProps = TldrawProps &
   FlowUiProps & {

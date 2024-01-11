@@ -150,7 +150,7 @@ export {
 	DEFAULT_ACCEPTED_IMG_TYPE,
 	DEFAULT_ACCEPTED_VID_TYPE,
 	containBoxSize,
-	getResizedImageDataUrl,
+	downsizeImage,
 	isGifAnimated,
 } from './lib/utils/assets/assets'
 export { getEmbedInfo } from './lib/utils/embeds/embeds'
@@ -173,3 +173,4 @@ export {
 	type TldrawFile,
 } from './lib/utils/tldr/file'
 export { Dialog, DropdownMenu }
+
