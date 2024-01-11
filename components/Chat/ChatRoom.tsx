@@ -1,16 +1,16 @@
 'use client'
 
 import { ChatRoomProvider } from "@/hooks";
-import { Chat } from "@/components";
+import { Chat, ChatRoomMessage } from "@/components";
 
 export interface ChatRoomProps {
-
+  messages?: ChatRoomMessage[];
 }
 
 export const ChatRoom: React.FC<ChatRoomProps> = (props: ChatRoomProps) => {
   return (
-    <ChatRoomProvider>
-      <Chat {...props} />
+    <ChatRoomProvider {...props}>
+      <Chat />
     </ChatRoomProvider>
   );
 };

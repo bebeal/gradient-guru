@@ -5,7 +5,7 @@ import { DefaultFormItem, HoverCard, IconSetCache, Select } from '@/components';
 import OpenAI from 'openai';
 import { OpenAIModelConfig, OpenAiModels } from './openai-models';
 import { Badge } from '@radix-ui/themes';
-import { cn } from '@/utils';
+import { cn } from '../utils';
 
 export const dataModalities = ['text', 'image', 'audio', 'video'] as const;
 export type DataModality = (typeof dataModalities)[number];

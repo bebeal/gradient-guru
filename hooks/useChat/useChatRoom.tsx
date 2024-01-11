@@ -1,38 +1,46 @@
 'use client'
 
+import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { create } from 'zustand';
-import { nanoid } from '@/utils';
-import { ChatRoomMessage, ChatRoomUser } from '@/components';
-import { createContext, useContext } from 'react';
 import { useShallow } from 'zustand/react/shallow';
+import { ChatBotUsers, ChatListTheme, ChatRoomMessage, ChatRoomUser } from '@/components';
+import { nanoid } from '@/utils';
 
 export type ChatRoomStoreState = {
-  userDB: Record<ChatRoomUser['id'], ChatRoomUser>;
   users: ChatRoomUser['id'][];
   setUsers: (newUsers: ChatRoomUser['id'][]) => void;
   removeUser: (userId: ChatRoomUser['id']) => void;
-  addUser: (newUser: ChatRoomUser['id']) => void;
+  addUsers: (newUsers: ChatRoomUser['id'][] | ChatRoomUser['id'], onNewUserCallback?: (user: ChatRoomUser['id']) => void) => void;
   messages: ChatRoomMessage[];
   setMessages: (newMessages: ChatRoomMessage[]) => void;
-  addMessage: (newMessage: ChatRoomMessage) => void;
-  id: string;
+  addMessages: (newMessages: ChatRoomMessage[] | ChatRoomMessage, onNewMessageCallback?: (message: ChatRoomMessage) => void) => void;
 };
 
 // Factory function to create a store for a single instance of a chat room
-export const createChatRoomStore = () => create<ChatRoomStoreState>((set) => ({
-  userDB: {},
+export const useChatRoomStore = create<ChatRoomStoreState>((set) => ({
   users: [],
   setUsers: (newUsers) => set({ users: newUsers }),
   removeUser: (userId) => set((state) => ({ users: state.users.filter((user) => user !== userId) })),
-  addUser: (newUser) => set((state) => ({ users: Array.from(new Set([...state.users, newUser])) })),
+  addUsers: (newUsera, onNewUserCallback) => set((state) => {
+    const users = Array.isArray(newUsera) ? newUsera : [newUsera];
+    onNewUserCallback && users.forEach(onNewUserCallback);
+    return { users: [...state.users, ...users] };
+  }),
   messages: [],
   setMessages: (newMessages) => set({ messages: newMessages }),
-  addMessage: (newMessage) => set((state) => ({ messages: [...state.messages, newMessage] })),
-  id: nanoid(),
+  addMessages: (newMessages, onNewMessageCallback) => set((state) => {
+    const messages = Array.isArray(newMessages) ? newMessages : [newMessages];
+    onNewMessageCallback && messages.forEach(onNewMessageCallback);
+    return { messages: [...state.messages, ...messages] };
+  }),
 }));
 
 export type ChatRoomOps = {
+  id: string;
   fetchUser: (userId: ChatRoomUser['id']) => ChatRoomUser;
+  themeKey: ChatListTheme;
+  toJSON: () => string;
+  copyAsJSON: () => void;
 }
 
 export type ChatRoomState = ChatRoomStoreState & ChatRoomOps;
@@ -40,24 +48,54 @@ export type ChatRoomState = ChatRoomStoreState & ChatRoomOps;
 
 // top level chat room provider for which all children will pull from. encapsulates the chat room store
 export const ChatRoomContext = createContext<ChatRoomState>({} as ChatRoomState);
-export const ChatRoomProvider = ({ children }: { children: React.ReactNode }) => {
-  const useChatRoomStore = createChatRoomStore();
-  const userDB = useChatRoomStore(useShallow((state) => state.userDB));
-  const [users, setUsers, addUser, removeUser] = useChatRoomStore(useShallow((state) => [state.users, state.setUsers, state.addUser, state.removeUser]));
-  const [messages, setMessages, addMessage] = useChatRoomStore(useShallow((state) => [state.messages, state.setMessages, state.addMessage]));
-  const id = useChatRoomStore(useShallow((state) => state.id));
+export const ChatRoomProvider = ({ children, messages: initialMessages, onNewMessage, onNewUser }: { children: ReactNode, messages?: ChatRoomMessage[], onNewMessage?: (message: ChatRoomMessage) => void, onNewUser?: (user: ChatRoomUser['id']) => void }) => {
+  const userDB = ChatBotUsers;
+  const [users, setUsers, addUsersToStore, removeUser] = useChatRoomStore(useShallow((state) => [state.users, state.setUsers, state.addUsers, state.removeUser]));
+  const [messages, setMessages, addMessagesToStore] = useChatRoomStore(useShallow((state) => [state.messages, state.setMessages, state.addMessages]));
+  const [id, setId] = useState<string>('');
+  const [themeKey, setThemeKey] = useState<ChatListTheme>('base');
+
+  const addMessages = useCallback((newMessages: ChatRoomMessage[] | ChatRoomMessage) => {
+    addMessagesToStore(newMessages, onNewMessage);
+  }, [addMessagesToStore, onNewMessage]);
+
+  const addUsers = useCallback((newUsers: ChatRoomUser['id'][] | ChatRoomUser['id']) => {
+    addUsersToStore(newUsers, onNewUser);
+  }, [addUsersToStore, onNewUser]);
+
+  const toJSON = useCallback(() => {
+    return JSON.stringify({
+      users,
+      messages,
+    }, null, 2);
+  }, [users, messages]);
+
+  const copyAsJSON = useCallback(() => {
+    navigator.clipboard.writeText(toJSON());
+  }, [toJSON]);
+
+  useEffect(() => {
+    if (initialMessages) {
+      addMessages(initialMessages);
+    }
+    setId(nanoid());
+  }, [addMessages, initialMessages]);
 
   const fetchUser = (userId: ChatRoomUser['id']) => {
+    if (!userDB[userId]) {
+      return userDB.unknown;
+    }
     return userDB[userId];
   };
 
   return (
     <ChatRoomContext.Provider value={{
-      userDB,
-      users, setUsers, addUser, removeUser,
-      messages, setMessages, addMessage,
+      users, setUsers, addUsers, removeUser,
+      messages, setMessages, addMessages,
       id,
       fetchUser,
+      themeKey,
+      toJSON, copyAsJSON,
     }}>
       {children}
     </ChatRoomContext.Provider>

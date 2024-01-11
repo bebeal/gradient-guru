@@ -1,24 +1,38 @@
 'use client'
 
 import { useRef, useState, ChangeEvent, useCallback, KeyboardEventHandler } from "react";
-import { SubmitChatInputKeys, TextArea, makeNewChatRoomMessage } from "@/components";
+import { IconSetCache, Separator, SubmitChatInputKeys, TextArea, makeNewChatRoomMessage } from "@/components";
 import { useChatRoom } from "@/hooks";
+import { AnimatedLineSVG, cn } from "@/utils";
 
-export const ChatTextArea = () => {
+export interface ChatTextAreaProps {
+  className?: string;
+}
+
+export const ChatTextArea = (props: ChatTextAreaProps) => {
+  const {
+     className
+  } = props;
   const ref = useRef<HTMLTextAreaElement>(null);
   const [input, setInput] = useState<string>("");
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const { addMessage } = useChatRoom();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { addMessages } = useChatRoom();
 
-  const handleKeyUp: KeyboardEventHandler<HTMLTextAreaElement> = useCallback((event) => {
-    const key = event.key.toLowerCase();
-    if (SubmitChatInputKeys.includes(key)) {
+  const onSubmit: KeyboardEventHandler<HTMLTextAreaElement> = useCallback((event) => {
+    const key = event.key;
+    if (!event.shiftKey && SubmitChatInputKeys.includes(key)) {
       event.preventDefault();
+      event.stopPropagation();
       const chatRoomMessage = makeNewChatRoomMessage('user', input);
-      addMessage(chatRoomMessage);
+      addMessages(chatRoomMessage);
       setInput("");
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 7000);
     }
-  }, [addMessage, input]);
+  }, [addMessages, input]);
 
   const onFocus = useCallback(() => {
     setIsFocused(true);
@@ -33,21 +47,28 @@ export const ChatTextArea = () => {
   }, []);
 
   return (
-    <div className="flex flex-col h-auto inset-x-0 bottom-0 from-[#40414F] from-60% bg-gradient-to-b to-[#202027]/30 backdrop-blur-2xl">
-        <div className="shadow-lg rounded-lg p-2 overflow-hidden">
+      <div className={cn("relative flex flex-col h-auto p-2 from-[#363d44] from-60% bg-gradient-to-b to-[#202027]/30 backdrop-blur-2xl", className)}>
+        <Separator className="bg-primary/80 w-full absolute left-0 top-0 h-px" />
+        <div className="relative flex flex-row h-auto">
+          <div className="absolute top-1/2 -translate-y-1/2 left-2 w-8 h-full">
+            <IconSetCache.Carbon.DocumentAttachment width="60%" />
+          </div>
           <TextArea
             ref={ref}
             tabIndex={0}
-            onKeyUp={handleKeyUp}
+            onKeyDown={onSubmit}
             rows={1}
             value={input}
-            onFocus={onFocus}
-            onBlur={onBlur}
             onChange={onInputChange}
             placeholder="Send a message"
             spellCheck={false}
+            id="prompt-textarea"
           />
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-full">
+          {isLoading ? <AnimatedLineSVG width="60%"><IconSetCache.Carbon.Send width="60%" /></AnimatedLineSVG> : <IconSetCache.Carbon.Send width="60%"/>}
+          </div>
         </div>
-      </div>
-  )
+    </div>
+  );
 }
+

@@ -76,6 +76,9 @@ ALL_ICON_SETS = {
     "VSCode": {
         "url": "https://github.com/vscode-icons/vscode-icons/tree/master/icons"
     },
+    "CSSGG": {
+        "url": "https://github.com/astrit/css.gg/tree/master/icons/svg"
+    }
 }
 
 # Function to convert SVG file name to CamelCase

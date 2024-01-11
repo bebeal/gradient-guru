@@ -265,6 +265,16 @@ export const Indeterminate = forwardRef((props?: any, ref?: any) => {
   )
 });
 
+export const MissingNo = forwardRef((props?: any, ref?: any) => {
+  return (
+    <svg ref={ref} height={'1em'} viewBox="0 -0.5 24 56" shapeRendering="crispEdges" {...props}>
+      <path fill="#fff" d="M8-.5v24H0v32h24v-56z"/>
+      <path stroke="#0a0303" d="M8 0h1M8 6h1m1 0h1m1 0h1m1 0h1M8 9h1m2 0h1m1 0h1m1 0h1m5 0h1m1 0h1M8 11h1m8 1h5m1 0h1m-14 2h4m5 0h4m-8 1h1m1 0h2m-7 2h1m3 0h2m1 0h2m1 0h1M8 18h1m-1 1h1m0 1h1m1 0h2m2 0h1m0 2h4m2 0h2M9 25h1m1 0h5M0 26h1m7 0h1m2 0h2m1 0h1m-7 1h2m2 0h2m1 0h1m-9 1h1m-8 2h1m8 0h2m3 0h2M1 31h5m1 0h1m-8 1h1m8 0h7m7 0h1M0 33h1m1 0h1m1 0h1m2 0h1m0 1h2m2 0h1M0 35h1m22 1h1m-2 1h1M2 38h1m1 0h1m1 0h1m1 0h4m2 0h1m7 0h1m-6 1h1m1 0h1m1 0h1m1 0h1m-11 1h1m8 0h1M8 42h1m9 4h3m-4 1h1m1 0h2m-5 2h1m6 0h1m-6 3h3m1 0h1"/>
+      <path stroke="#76658f" d="M12 0h2m1 0h1m1 0h2m2 0h2M12 1h3m2 0h1m1 0h2m2 0h1M12 2h1m1 0h2m6 0h2M13 3h2m2 0h1m1 0h1m1 0h3M9 4h4m4 0h1m1 0h1m1 0h1m-8 1h3m1 0h1m1 0h1m1 0h2m-8 1h1m2 0h4M8 7h1m7 0h1m1 0h5m-7 1h1m1 0h4m-3 1h1M8 10h2m11 0h1m1 0h1M9 11h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2M8 12h1m2 0h1m1 0h1m1 0h1m-6 1h1m1 0h1m1 0h4m1 0h2m1 0h2m-7 1h2M8 15h1m10 0h2m2 0h1m-14 1h1m1 0h1m1 0h4m2 0h2m-10 2h1m2 0h1m3 0h4M9 19h1m1 0h1m2 0h3m1 0h3m0 1h3m-14 1h2m2 0h2m4 0h1m2 0h1M9 22h3m1 0h3m-4 1h1m1 0h2m1 0h1m1 0h2m2 0h1M0 24h8m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1M6 25h2m9 0h2m1 0h1m1 0h2M6 26h2m8 0h1m2 0h1m1 0h1m1 0h1M6 27h1m9 0h1m2 0h1m1 0h1m1 0h1M6 28h1m3 0h2m5 0h2m1 0h1m1 0h1M1 29h9m1 0h2m3 0h1m2 0h1m1 0h1m1 0h1M7 30h1m8 0h1m1 0h4m-11 1h1m1 0h1m1 0h1m3 0h1m1 0h2M5 32h1m11 0h5M8 33h2m1 0h1m2 0h1m4 0h1m1 0h1m1 0h1M6 34h2m9 0h2m3 0h1M1 35h1m1 0h1m1 0h2m1 0h4m1 0h2m2 0h1m1 0h1M0 36h6m1 0h6m2 0h6m1 0h1M1 37h6m3 0h3m2 0h1m5 0h1M2 39h1m1 0h1m1 0h1m1 0h2m1 0h1m3 0h1m6 0h1M2 40h1m1 0h1m1 0h1m2 0h1m7 0h1m1 0h1m1 0h1M1 41h1m1 0h1m1 0h1m1 0h1m2 0h2m2 0h2m7 0h1m-13 1h1m3 0h8m-10 1h2m2 0h1m1 0h1m1 0h1m1 0h1m-13 1h5m1 0h1m1 0h1M0 45h10m1 0h1m4 0h4m2 0h1M8 46h2m1 0h2m1 0h1m6 0h1m1 0h1M8 47h2m2 0h4m7 0h1M4 48h4m2 0h2m4 0h7M0 49h4m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1M0 50h5m1 0h1m1 0h2m1 0h1m3 0h3m1 0h5M6 51h1m1 0h3m1 0h3m3 0h3m1 0h1M0 52h6m1 0h5M0 53h4m1 0h2m5 0h1m1 0h1m1 0h2m4 0h2M0 54h5m2 0h1m5 0h2m1 0h2m1 0h1m1 0h2M4 55h2m2 0h4m1 0h2m2 0h1m5 0h1"/><path stroke="#efaa7f" d="M8 5h1m0 1h1m1 0h1m1 0h1m1 0h1M9 7h7M8 8h1m0 1h2m1 0h1m1 0h1m5 0h1m1 0h1m-7 3h1m5 0h1M9 14h1m4 0h2m7 0h1M9 15h6m1 0h1m-9 1h1m-1 1h4m1 0h3m2 0h1m2 0h1m1 0h1M8 20h1m1 0h1m2 0h2m-7 2h1m11 0h2m-12 3h1m-2 1h2m2 0h1m1 0h1m-6 1h2m2 0h1M0 29h1m10 1h3m-8 1h1m-6 2h1m1 0h1m1 0h2m3 0h1m-1 1h2m1 0h3M0 37h1m7 0h2m13 0h1M1 38h1m1 0h1m1 0h1m1 0h1m4 0h2m1 0h7M0 39h1m9 0h1m5 0h1m1 0h1m1 0h1M0 40h1m7 0h1m2 0h2m1 0h2m7 0h1m-8 1h7m0 1h1m-4 3h1m-5 1h2m-2 1h1m1 0h1m-2 2h6m-7 3h2m3 0h1m1 0h1"/>
+    </svg>
+  )
+});
+
 export const CustomIconSet = {
   Spinner,
   Loader,
@@ -288,6 +298,7 @@ export const CustomIconSet = {
   Folder,
   OpenFolder,
   Indeterminate,
+  MissingNo,
   ThreeFanGpu,
   GradientGuru
 };

@@ -1,7 +1,7 @@
-import { ModelConfig } from '@/clients/Models';
 import { ExtractedState } from '@/hooks';
 import { getMakeRealPrompt } from './MakeReal';
 import { getNodeControlPrompt } from './NodeControl';
+import { ModelConfig } from '../models';
 
 export const getCurrentState = (screenBounds: any, nodes: any[], selectedNodeIds: any[]): string => {
   return `Current state:

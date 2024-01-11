@@ -1,6 +1,6 @@
 'use client';
 
-import { IconSetCache, ModelTab, NodesTab, SidePanel, HistoryTab, ExtractionTab, Loading } from '@/components';
+import { IconSetCache, ModelTab, NodesTab, SidePanel, HistoryTab, ExtractionTab, Loading, ChatTab } from '@/components';
 import { useMounted } from '@/hooks';
 import { useMemo } from 'react';
 
@@ -42,11 +42,20 @@ export const FlowSidePanel = (props: FlowSidePanelProps) => {
   };
 }, [mounted]);
 
+const FlowChatTab = useMemo(() => {
+  return {
+    icon: <IconSetCache.Carbon.MachineLearning height={'100%'} width={'100%'} />,
+    name: 'Chat',
+    content: mounted ? <ChatTab /> : <Loading />,
+  };
+}, [mounted]);
+
   return <SidePanel className={className} tabs={[
     FlowNodesTab,
     FlowHistoryTab,
     FlowExtractionTab,
-    FlowModelTab
+    FlowModelTab,
+    FlowChatTab
   ]} />;
 };
 FlowSidePanel.displayName = 'FlowSidePanel';

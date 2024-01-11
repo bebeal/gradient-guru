@@ -4,7 +4,7 @@ import { Radius, RadiusClasses, Variant } from "@/components";
 import { cn } from "@/utils";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 
-import React, { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 
 export interface AvatarProps extends AvatarPrimitive.AvatarProps {
   variant?: Variant;
@@ -16,13 +16,14 @@ export interface AvatarProps extends AvatarPrimitive.AvatarProps {
   statusColor?: string;
   badge?: ReactElement;
   padding?: string;
+  border?: boolean;
   onLoadingStatusChange?: (status: 'idle' | 'loading' | 'loaded' | 'error') => void;
 }
 
 export const Avatar = (props: AvatarProps) => {
   const {
     variant='solid',
-    radius='large',
+    radius='full',
     fallback,
     size='auto',
     color='accent',
@@ -30,24 +31,26 @@ export const Avatar = (props: AvatarProps) => {
     statusColor,
     badge,
     padding="1",
+    border="after:[box-shadow:inset_0_0_0_1px_var(--tw-shadow-color)] after:rounded-full after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:shadow-gray-300 after:opacity-50",
     ...rest
   } = props;
-  const [status, setStatus] = React.useState<'idle' | 'loading' | 'loaded' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'loaded' | 'error'>('idle');
   return (
         <AvatarPrimitive.Root
           key={`avatar-${color}-${size}-${variant}-${radius}`}
           className={cn(
-            `relative inline-flex h-${size} w-${size} items-center justify-center align-middle select-none uppercase flex-shrink-0`,
+            `relative flex h-${size} w-${size} items-center justify-center align-middle select-none uppercase flex-shrink-0`,
             `bg-${color} text-primary`,
+            border,
             RadiusClasses(radius),
           )}
         >
-          {status === 'idle' || status === 'loading' ? <span className="z-0 w-full h-full flex items-center justify-center leading-none" /> : null}
+          {status === 'idle' || status === 'loading' ? <span className="w-full h-full flex items-center justify-center leading-none" /> : null}
           {status === 'error' ? (
             <AvatarPrimitive.Fallback
               className={cn(
-                `z-0 w-full h-full flex items-center justify-center leading-none font-semibold text-lg p-${padding}`,
-
+                `w-full h-full flex items-center justify-center leading-none font-semibold p-${padding} text-base`,
+                RadiusClasses(radius),
               )}
               delayMs={0}
             >

@@ -180,7 +180,7 @@ echo '_AWS_BUCKET=node-previews' >> .env.local
     * [`/make-a-ui`](https://gradient-guru.com/demo/make-a-ui)
     * [`/make-a-game`](https://gradient-guru.com/demo/make-a-game)
     * [`/learn-something-new`](https://gradient-guru.com/demo/learn-something-new)
-  * [`/share-node`](https://gradient-guru.com/share) redirects to [`/`](https://gradient-guru.com/)
+  * [`/share-node`](https://gradient-guru.com/share-node) redirects to [`/`](https://gradient-guru.com/)
     * [`[id]`](https://gradient-guru.com/share/aaaaa): where `[id]`  is the `id` of a `PreviewNode`. `PreviewNode`s are generated every forward pass of the model where html is generated. The content is saved in s3, associated by the id of the node which is used to generate the share link. The share link page itself simply retrieves the content from s3 and renders it on the page. The `PreviewNode` when in the tldraw whiteboard iframes embeds the share link page hence the name `PreviewNode`.
 
 **Testing Routes**
@@ -231,7 +231,7 @@ tailwind.config.js                         # Tailwind Config
 |   |  |-- putS3/                          # Route for uploading content to S3
 |   |-- compute/                           # `/compute` Route
 |   |-- demos/                             # `/demos` Route
-|   |-- share-noe/                             # `/share-node` Route
+|   |-- share-node/                             # `/share-node` Route
 |   |-- tests/                             # `/tests` Route
 |   |-- global.css                         # Global CSS injected at the top level of the app
 |   |-- layout.tsx                         # defines the top level layout of the app

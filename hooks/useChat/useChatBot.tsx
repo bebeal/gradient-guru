@@ -1,8 +1,8 @@
 'use client'
 
-import { ChatBotUsers, ChatRoomUser } from "@/components";
-import { useChatRoom, useModel } from "@/hooks";
 import { useEffect, useMemo } from "react";
+import { ChatBotUsers, ChatRoomUser } from "@/components";
+import { useModel, useChatRoom } from "@/hooks";
 
 // Instantiates a bot user 
 export const useChatBot = () => {
@@ -13,7 +13,7 @@ export const useChatBot = () => {
   const botUser: ChatRoomUser = useMemo(() => ChatBotUsers[modelClient.config.model], [modelClient.config.model]);
   
   useEffect(() => {
-    chatRoom.addUser(botUser.id);
+    chatRoom.addUsers(botUser.id);
   }, [chatRoom, botUser]);
 
   return {

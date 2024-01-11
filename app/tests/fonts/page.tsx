@@ -1,4 +1,5 @@
 'use client'
+
 const FontsPage = () => {
   const tailwindFonts = [
     "font-mono",

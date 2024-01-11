@@ -19,6 +19,7 @@ export type ChatRoomUser = {
 export type ChatRoomUserMessage = {
   id: string;
   timestamp?: Date | number;
+  tokensCount?: number;
   content: any | string | ReactElement;
 };
 
@@ -43,41 +44,6 @@ export const ChatListThemes: Record<ChatListTheme, any> = {
 export const chatBotStatuses = ['loading', 'idle', 'error', 'disabled'] as const;
 export type ChatBotStatus = (typeof chatBotStatuses)[number];
 
-export const ChatBotUsers: Record<string, ChatRoomUser> = {
-  'gpt-3.5-turbo': {
-    role: 'assistant',
-    name: 'gpt-3.5-turbo',
-    icon: <IconSetCache.Logos.OpenAI className="bg-green" />,
-    color: 'green',
-    theme: 'secondary',
-    id: 'gpt-3.5-turbo',
-  },
-  'gpt-4': {
-    role: 'assistant',
-    name: 'gpt-4',
-    icon: <IconSetCache.Logos.OpenAI className="bg-violet" />,
-    color: 'violet',
-    theme: 'secondary',
-    id: 'gpt-4',
-  },
-  identity: {
-    role: 'assistant',
-    name: 'identity',
-    icon: <IconSetCache.Carbon.Replicate className="bg-violet" />,
-    color: 'violet',
-    theme: 'secondary',
-    id: 'identity',
-  },
-  user: {
-    role: 'user',
-    name: 'Noah',
-    icon: 'N',
-    theme: 'primary',
-    color: 'blue',
-    id: 'user',
-  },
-};
-
 export const simulateChatResponse = async (input: string): Promise<ChatRoomMessage> => {
   const modelResponse: OpenAi.ChatCompletion = {} as OpenAi.ChatCompletion;
   return {
@@ -98,4 +64,42 @@ export const makeNewChatRoomMessage = (userId: ChatRoomUser['id'], content: any)
       timestamp: new Date(),
     },
   };
-}
+};
+
+export const ChatBotUsers: Record<string, ChatRoomUser> = {
+  'gpt-3.5-turbo': {
+    role: 'assistant',
+    name: 'gpt-3.5-turbo',
+    icon: <IconSetCache.Logos.OpenAI className="bg-green" />,
+    color: 'green',
+    id: 'gpt-3.5-turbo',
+  },
+  'gpt-4': {
+    role: 'assistant',
+    name: 'gpt-4',
+    icon: <IconSetCache.Logos.OpenAI className="bg-violet" />,
+    color: 'violet',
+    id: 'gpt-4',
+  },
+  'identity': {
+    role: 'assistant',
+    name: 'identity',
+    icon: <IconSetCache.Carbon.Replicate className="bg-violet" />,
+    color: 'violet',
+    id: 'identity',
+  },
+  'unknown': {
+    role: 'user',
+    name: '?',
+    icon: <IconSetCache.Custom.MissingNo className="bg-gray" />,
+    color: 'gray',
+    id: '?',
+  },
+  'noah': {
+    role: 'user',
+    name: 'Noah',
+    icon: 'N',
+    color: 'blue',
+    id: 'user',
+  },
+};

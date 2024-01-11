@@ -2,13 +2,12 @@
 
 /* eslint-disable react-hooks/rules-of-hooks */
 
-import ReactDOMServer from 'react-dom/server';
 import { HTMLContainer, SvgExportContext, TLBaseShape } from '@tldraw/tldraw';
 import * as yup from 'yup';
 import { IconSetCache, SetNames } from '@/components';
 import { filterObjectByKeys } from '@/utils';
 import { FlowNodeUtil } from './FlowNode';
-
+import ReactDOMServer from 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.development';
 
 export type IconNode = TLBaseShape<
   'icon',
@@ -52,6 +51,7 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
       return svgElement;
     }
     const iconComponent = <Icon width={node.props.w} height={node.props.h} xmlns='http://www.w3.org/2000/svg' />;
+
     // Render the Icon component to markup string
     const svgString = ReactDOMServer.renderToStaticMarkup(iconComponent);
     // Parse the string to an SVGElement
@@ -74,6 +74,7 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
 
     // Return the SVG element
     return svgElement;
+  
   }
 
   panelPreview(node: IconNode) {

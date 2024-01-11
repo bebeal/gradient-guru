@@ -1,3 +1,4 @@
+'use client'
 
 const PrimitivesPage = () => {
   const primitives = ['accordion', 'checkbox', 'radix-themed-components', 'side-panel', 'slider', 'switch', 'menubar'];

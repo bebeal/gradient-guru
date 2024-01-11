@@ -142,15 +142,15 @@ export const TabTitle = ({ title, children, className }: { title?: string; child
   const titleText: string = title || children || '';
   return (
     <div className={cn('flex flex-col w-full gap-1 justify-center items-center text-base', className)}>
-      <div className="text-primary font-bold w-auto h-auto flex justify-center items-center gap-1">{titleText}</div>
-      <Separator />
+      {titleText && <><div className="text-primary font-bold w-auto h-auto flex justify-center items-center gap-1">{titleText}</div>
+      <Separator /></>}
     </div>
   );
 };
 
-export const FlowTab = memo(({ title, children, className }: { title?: string; children?: any; className?: string }) => {
+export const FlowTab = memo(({ title, children, className, tabClasses=TabClasses }: { title?: string; children?: any; className?: string, tabClasses?: string }) => {
   return (
-    <div className={cn(TabClasses)}>
+    <div className={cn(tabClasses)}>
       <TabTitle title={title} />
       <div className={cn('p-2 pt-0 flex flex-col w-full h-auto items-center gap-1', className)}>{children}</div>
     </div>

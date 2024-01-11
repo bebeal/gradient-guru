@@ -1,3 +1,4 @@
+export * from './ChatTab';
 export * from './NodesTab';
 export * from './ModelTab';
 export * from './ExtractionTab';

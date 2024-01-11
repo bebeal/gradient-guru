@@ -1,5 +1,3 @@
-'use client';
-
 import { forwardRef, ReactNode, Suspense } from 'react';
 import { Loading } from '@/components';
 import { cn } from '@/utils';

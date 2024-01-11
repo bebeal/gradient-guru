@@ -1,16 +1,22 @@
 'use client'
 
 import { ChatList, ChatTextArea, ChatRoomInfo } from "@/components";
+import { useChatRoom } from "@/hooks";
 import { cn } from "@/utils";
 
 export interface ChatProps {
 }
 
 export const Chat = () => {
+  const {
+    messages,
+    themeKey,
+  } = useChatRoom();
+
   return (
-    <div className={cn('pt-4 w-full h-full relative justify-between flex flex-col')}>
+    <div className={cn('w-full h-full relative flex flex-col rounded')}>
       <ChatRoomInfo />
-      <ChatList />
+      <ChatList messages={messages} themeKey={themeKey} />
       <ChatTextArea />
     </div>
   )

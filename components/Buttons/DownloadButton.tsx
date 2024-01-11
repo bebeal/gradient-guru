@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useCallback, useMemo, useRef } from 'react';
 import { Button, IconSetCache, Tooltip } from '@/components';

@@ -3,7 +3,7 @@ import { clsx, type ClassValue } from 'clsx'
 import { customAlphabet } from 'nanoid'
 import { twMerge } from 'tailwind-merge';
 import { ALPHANUMERIC } from "./constants";
-
+  
 // noop function to use as defaults
 export const noop = (...params: any): any => {};
 

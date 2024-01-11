@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { forwardRef, useCallback, useState } from 'react';
 import ParallaxTilt from 'react-parallax-tilt';

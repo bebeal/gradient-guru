@@ -1,53 +1,62 @@
 'use client';
 
-import { Chat, ChatList, ChatMessage, ChatMessageProps, ChatStatus, IconSetCache } from "@/components";
-import { ChatStatusEnum, Message, User } from "@/hooks";
+import { Chat, ChatBotStatusIcons, ChatList, ChatMessage, ChatRoomMessage, ChatRoomUser, ChatRoomUserMessage, IconSetCache } from "@/components";
+import { ChatRoomProvider } from "@/hooks";
+import { nanoid } from "@/utils";
 
 
-const exampleUser: User = {
-  id: 'Noah',
+const exampleUser: ChatRoomUser = {
+  id: 'noah',
   name: 'Noah',
   theme: 'primary',
   color: 'indigo',
-  type: 'user',
+  role: 'user',
 };
 
-const exampleBot: User = {
-  id: 'Bot',
+const exampleBot: ChatRoomUser = {
+  id: 'gpt-4',
   name: 'Bot',
   icon: <IconSetCache.Logos.OpenAI />,
   theme: 'secondary',
   color: 'violet',
-  type: 'assistant',
+  role: 'assistant',
 };
 
 const exampleDate = new Date(7, 29, 1997);
 
-const exampleUserMessage: Message = {
+const exampleUserMessage: ChatRoomUserMessage = {
   content: 'I am become God. Creator of Life.',
   timestamp: exampleDate,
+  id: nanoid(),
 };
 
-const exampleBotMessage: Message = {
+const exampleBotMessage: ChatRoomUserMessage = {
   content: "I'm sorry, Dave. I'm afraid I can't do that.\nI'm sorry, Dave. I'm afraid I can't do that.\nI'm sorry, Dave. I'm afraid I can't do that.",
   timestamp: exampleDate,
+  id: nanoid(),
+  tokensCount: 100,
 };
 
-const userMessageProps: ChatMessageProps = {
-  user: exampleUser,
+const userMessageProps: ChatRoomMessage = {
+  userId: exampleUser.id,
   message: exampleUserMessage,
 };
 
-const botMessageProps: ChatMessageProps = {
-  user: exampleBot,
+const botMessageProps: ChatRoomMessage = {
+  userId: exampleBot.id,
   message: exampleBotMessage,
 };
+
+const messages = [
+  userMessageProps,
+  botMessageProps,
+];
 
 const ChatStatusTest = () => {
   return (
     <div className="flex flex-col gap-2 h-auto w-auto text-primary text-lg">
-      {Object.values(ChatStatusEnum).map(status => (
-        <ChatStatus key={status} status={status} />
+      {Object.entries(ChatBotStatusIcons).map(([status, Icon]) => (
+        <Icon key={status} status={status} width={"1em"} height={"1em"} color={"currentColor"} />
       ))}
     </div>
   )
@@ -56,8 +65,8 @@ const ChatMessageTest = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="w-[700px]">
-        <ChatMessage {...userMessageProps} />
-        <ChatMessage {...botMessageProps} />
+        <ChatMessage chatRoomMessage={userMessageProps} />
+        <ChatMessage chatRoomMessage={botMessageProps} />
       </div>
     </div>
   )
@@ -66,13 +75,7 @@ const ChatListTest = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="w-[700px]">
-        <ChatList messages={[
-            userMessageProps,
-            botMessageProps,
-            userMessageProps,
-            botMessageProps,
-          ]}
-        />
+        <ChatList messages={messages} />
       </div>
     </div>
   );
@@ -81,13 +84,7 @@ const ChatTest = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="w-[700px]">
-        <Chat 
-          initialMessages={[
-            userMessageProps,
-            botMessageProps,
-            userMessageProps,
-            botMessageProps,
-          ]} />
+        <Chat />
       </div>
     </div>
   )
@@ -110,10 +107,12 @@ const ChatPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-auto bg-primary text-primary">
       <div className="flex flex-col gap-10 w-full justify-center items-center">
+      <ChatRoomProvider messages={messages}>
         <Test title="Chat Status" test={<ChatStatusTest />} />
-        <Test title="Chat Message" test={<ChatMessageTest />} />
         <Test title="Chat List" test={<ChatListTest />} />
+        <Test title="Chat Message" test={<ChatMessageTest />} />
         <Test title="Chat" test={<ChatTest />} />
+      </ChatRoomProvider>
       </div>
     </div>
   );

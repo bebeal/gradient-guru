@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { IconSetCache } from '@/components';
 import { getEncodedSVGUrl, isSVG } from '../utils/svg';
@@ -84,6 +84,11 @@ export const OrientationClasses = (orientation: Orientation = 'horizontal') => {
 
 export const DynamicGradients = ($colors: string[], $direction: string) => {
   return `
+    @keyframes gradient-transition {
+      0% { background-position: 0% 50% },
+      50% { background-position: 100% 50% },
+      100% { background-position: 0% 50% },
+    }
     background-image: linear-gradient(${$direction}, ${$colors.join(',')});
     background-size: ${$colors.length * 100}%;
     animation: gradient-transition ${$colors.length * 2}s ease infinite;
@@ -96,11 +101,6 @@ export const DynamicGradientBackground = styled.div<{
   $onDiv: boolean;
   $onPsuedoAfter: boolean;
 }>`
-  @keyframes gradient-transition {
-    0% { background-position: 0% 50% },
-    50% { background-position: 100% 50% },
-    100% { background-position: 0% 50% },
-  }
   ${(props) => props.$onDiv && DynamicGradients(props.$colors, props.$direction)}
   ${(props) =>
     props.$onPsuedoAfter &&
@@ -192,9 +192,11 @@ export const Loading = (props: LoadingProps) => {
 
   return (
     <div className="w-auto h-auto flex items-center justify-center text-xl text-muted gap-1">
-      {spinner && <IconSetCache.Custom.Loader className={cn('flex items-center justify-center h-6 w-6 text-base gap-1')} />}
-      {content}
-      {dots && <IconSetCache.Custom.DotsLoader className={'h-6 w-6 self-end'} />}
+      <Suspense>
+        {spinner && <IconSetCache.Custom.Loader className={cn('flex items-center justify-center h-6 w-6 text-base gap-1')} />}
+        {content}
+        {dots && <IconSetCache.Custom.DotsLoader className={'h-6 w-6 self-end'} />}
+      </Suspense>
     </div>
   );
 };

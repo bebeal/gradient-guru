@@ -1,11 +1,12 @@
 'use client'
 
-import React, {TextareaHTMLAttributes, forwardRef} from 'react'
+import { CSSProperties, TextareaHTMLAttributes, forwardRef, useCallback, useEffect, useRef } from 'react'
 import { cn } from '@/utils';
 import { Radius, RadiusClasses } from '@/components';
 
 export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   className?: string;
+  style?: CSSProperties;
   children?: React.ReactNode;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -13,29 +14,50 @@ export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   radius?: Radius;
 }
 
-export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>((props: TextAreaProps, ref: React.ForwardedRef<any>) => {
-  const { className, children, value, onChange, placeholder="Add prompt...", radius='medium', ...rest } = props;
+export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>((props: TextAreaProps, ref: any) => {
+  const { className, style, children, value, onChange, placeholder="Add prompt...", radius='medium', ...rest } = props;
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const adjustHeight = useCallback(() => {
+    const textarea = textAreaRef.current;
+    if (textarea) {
+      // Reset the height to the minimum to correctly reduce the scrollHeight if needed
+      textarea.style.height = 'auto';
+
+      // Set the height to scrollHeight if there is a value, otherwise reset it to default
+      let newHeight = value ? textarea.scrollHeight : textarea.offsetHeight;
+      newHeight = Math.min(newHeight, 200);
+      textarea.style.height = `${newHeight}px`;
+    }
+  }, [value]);
+
+  useEffect(() => {
+    adjustHeight();
+  }, [adjustHeight, value]);
 
     return (
       <textarea
-        ref={ref}
+      ref={textAreaRef}
         tabIndex={0}
         rows={1}
         spellCheck={false}
         autoComplete='off'
         placeholder={placeholder}
         value={value}
-        onChange={onChange}
+        onChange={(e) => {
+          if (onChange) onChange(e);
+          adjustHeight();
+        }}
         className={cn(
-          `flex w-full flex-shrink h-auto items-center flex-wrap border px-1.5 py-0.5 shadow-sm text-center min-h-[30px] resize-none`,
-          `focus:outline-none [&>span]:line-clamp-1`,
-          'bg-secondary text-secondary ring-inset border-secondary ring-1 ring-primary outline-none',
-          'hover:bg-secondary hover:text-primary hover:ring-accent/50',
-          'focus:bg-secondary focus:text-primary focus:ring-accent focus:caret-accent',
-          'focus-within:bg-secondary focus-within:text-primary focus-within:ring-accent focus-within:caret-accent',
+          `m-0 w-full h-auto resize-none border-0 bg-transparent py-[10px] pr-10 focus:ring-0 focus-visible:ring-0 placeholder-black/50 dark:placeholder-white/50 pl-10`,
           RadiusClasses(radius),
           className,
         )}
+        style={{
+          maxHeight: '200px',
+          overflowY: 'auto',
+          ...style,
+        }}
         {...rest}
         />
     );
