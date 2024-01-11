@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { DebugPanelContext, ThemePanelContext } from '@/hooks';
 import { isDevEnv, NextAuthProvider, StyledComponentsRegistry } from '@/utils';
+
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
 import '@/assets/fonts/Monaspace/Monaspace.css';
 import '@/app/globals.css';
@@ -50,6 +51,13 @@ const Providers = ({ children }: any) => {
       }
     }
   }, [togglePanel]);
+
+  useEffect(() => {
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+    const lastSegment = pathSegments[pathSegments.length - 1];
+    const newTitle = lastSegment ? `GG • ${lastSegment}` : 'Gradient Guru';
+    document.title = newTitle;
+  }, []);
 
   return (
     <StyledComponentsRegistry>

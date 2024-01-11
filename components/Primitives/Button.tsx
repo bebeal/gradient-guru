@@ -18,6 +18,7 @@ export interface ButtonProps {
   size?: "1" | "2" | "3" | "4" | undefined;
   color?: "ruby" | "tomato" | "red" | "crimson" | "pink" | "plum" | "purple" | "violet" | "iris" | "indigo" | "blue" | "cyan" | "teal" | "jade" | "green" | "grass" | "brown" | "orange" | "sky" | "mint" | "lime" | "yellow" | "amber" | "gold" | "bronze" | "gray" | undefined;
   type?: any;
+  containerClassName?: string;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externalRef) => {
@@ -33,6 +34,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
     radius='medium',
     ripple=variant !== 'normal',
     type='button',
+    containerClassName='',
     ...rest
   } = props;
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -51,7 +53,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
   return isDefaultVariant(variant) ? (
     <ThemedButton ref={ref} size={size} className={cn(`pointer-events-all !cursor-pointer`, disabled && DisabledClasses, `!${RadiusClasses(radius)}`, className)} color={color} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
   ) : (
-    <>
+    <div className={cn("relative w-auto h-auto", containerClassName)}>
       <button
         ref={ref}
         type={type}
@@ -82,13 +84,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
       </button>
       {/* Border Gradient, backglow to true which will apply large blur to the gradients tranistioning which are in sync with the gradients inside of the buttons */}
       {isGradientVariant && (
-        <div className={cn("relative")}>
-          <div className={cn("absolute grid grid-cols-1 inset-0 z-[1]")}>
-            <GradientDiv backglow={true} isHovered={true} colors={colors} radius={radius} />
-          </div>
+        <div className={cn("absolute grid grid-cols-1 inset-0 z-[1]")}>
+          <GradientDiv backglow={true} isHovered={true} colors={colors} radius={radius} />
         </div>
       )}
-    </>
+    </div>
   )
 });
 Button.displayName = 'Button';

@@ -1,11 +1,12 @@
-// refactored editor from https://github.com/tldraw/tldraw/blob/main/packages/tldraw/src/lib/utils/export/export.ts
 'use client'
+// refactored editor from https://github.com/tldraw/tldraw/blob/main/packages/tldraw/src/lib/utils/export/export.ts
 
-import { ImageExtractorConfig } from '@/hooks';
 import canvasSize from 'canvas-size';
+import { Editor, SVG_PADDING, SvgExportContext, SvgExportDef, TLFrameShape, TLGroupShape, TLShape, TLShapeId, uniqueId } from '@tldraw/editor';
+import { ImageExtractorConfig } from '@/hooks';
+
 import { isSafari } from './device';
 import { PNG } from './png';
-import { Editor, SVG_PADDING, SvgExportContext, SvgExportDef, TLFrameShape, TLGroupShape, TLShape, TLShapeId, uniqueId } from '@tldraw/editor';
 import { addGridToSvg } from './svg';
 
 const btoa = (text: string): string => {

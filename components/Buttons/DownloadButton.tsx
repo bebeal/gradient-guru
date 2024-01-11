@@ -51,7 +51,7 @@ export const DownloadButton = (props: DownloadButtonProps) => {
   const DownloadButton = useMemo(() => (
       <Button ref={buttonRef} onClick={onClick} variant={'none'} className={cn('rounded-full h-8 w-8 p-2 relative hover:bg-primary/30', className)}>
         {status === 'pending' || status === 'error' ? (
-          <div className={cn(`absolute w-full h-full text-${getColorFromState(status)}-500`)}>
+          <div className={cn(`absolute w-full h-full text-${getColorFromState(status)}-500 left-0 top-0`)}>
             <IconSetCache.Custom.Spinner
               id={`download-spinner-${id}`}
               className={cn('absolute inset-0 flex items-center justify-center text-xs w-full h-full')}

@@ -142,7 +142,7 @@ export const TestExtractionButton = () => {
   }, [extractAll, toast]);
 
   return (
-    <Button variant={'normal'} className={cn(`tlui-button tlui-button__menu w-full h-auto flex justify-start text-start`)} onClick={onClick}>
+    <Button variant={'normal'} className={cn(`tlui-button tlui-button__menu w-full h-auto flex justify-start text-start`)} containerClassName={'w-full'} onClick={onClick}>
       Test Extraction
     </Button>
   );
@@ -178,7 +178,7 @@ export const TestModelButton = () => {
   }, [modelQueryMutation, toast]);
 
   return (
-    <Button variant={'normal'} className={cn(`tlui-button tlui-button__menu w-full h-auto flex justify-start text-start`)} onClick={onClick}>
+    <Button variant={'normal'} className={cn(`tlui-button tlui-button__menu w-full h-auto flex justify-start text-start`)} containerClassName={'w-full'} onClick={onClick}>
       Test Model
     </Button>
   );

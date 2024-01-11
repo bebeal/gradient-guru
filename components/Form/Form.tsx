@@ -27,6 +27,7 @@ export interface FormProps extends UseFormProps {
   className?: string;
   ItemRenderer?: any;
   SchemaMap?: Record<string, any>;
+  fieldClassName?: string;
 }
 
 export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => {
@@ -43,6 +44,7 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
     SchemaMap,
     criteriaMode='all',
     shouldFocusError=false,
+    fieldClassName='',
     ...rest
   } = props;
   const [initialized, setInitialized] = useState(false);
@@ -81,11 +83,11 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
         ref={ref}
         className={cn(`w-full h-auto p-2 overflow-auto rounded items-center`, readOnly && 'bg-primary/90', className)}
       > 
-        <div className={cn("w-full h-auto grid gap-px rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`)}>
+        <div className={cn("w-full h-auto grid gap-px rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`, fieldClassName)}>
           <FormFields ItemRenderer={ItemRenderer} form={form} schema={schema} labels={labels} readOnly={readOnly} />
         </div>
       </FormPrimitive.Root>
     </FormProvider>
-  )
+  );
 }));
 Form.displayName = 'Form';

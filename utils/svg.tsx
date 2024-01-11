@@ -5,6 +5,7 @@ import ReactDOMServer from 'next/dist/compiled/react-dom/cjs/react-dom-server-le
 import styled from 'styled-components';
 import { cn } from './utils';
 import { DynamicGradientBackground } from '@/components';
+import svgToDataUri from 'mini-svg-data-uri';
 
 // Check if a react element is an svg in various ways
 export const isSVG = (svg: ReactElement): boolean => {
@@ -19,15 +20,15 @@ export const isSVG = (svg: ReactElement): boolean => {
   );
 };
 
-// Encode svg given as a react functional component as a data url encoded string
+// Encode SVG given as a React functional component as a data URL encoded string
 export const getURISVG = (svg: any): string => {
-  const uri = ReactDOMServer.renderToStaticMarkup(svg);
-  return encodeURIComponent(uri);
+  const markup = ReactDOMServer.renderToStaticMarkup(svg);
+  return svgToDataUri(markup);
 };
 
-// Encode svg given as a react functional component as a data url encoded string, and add css url markup to it
+// Encode SVG given as a React functional component as a data URL encoded string, and add CSS url markup to it
 export const getEncodedSVGUrl = (svg: any): string => {
-  return `url("data:image/svg+xml,${getURISVG(svg)}")`;
+  return `url("${typeof svg === 'string' ? svgToDataUri(svg) : getURISVG(svg)}")`;
 };
 
 // svg version of linear-gradient using id #svg-gradient-<colors> (e.g. #svg-gradient-38C9EA,db258f,FFA93A,6D3DFC)

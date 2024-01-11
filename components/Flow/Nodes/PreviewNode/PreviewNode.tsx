@@ -62,11 +62,12 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
       e.stopPropagation();
     };
 
+    // TODO: make sure the loading icon isn't huge
     return (
       <HTMLContainer className="tl-embed-container bg-primary w-auto h-auto flex justify-center items-center pointer-events-auto" id={node.id}>
         {isLoading ? (
           <div
-            className="bg-primary flex items-center justify-center w-full h-full"
+            className="bg-primary flex items-center justify-center w-auto h-auto"
             style={{
               boxShadow,
               border: '1px solid var(--color-panel-contrast)',

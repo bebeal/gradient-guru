@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Providers from '@/app/providers';
 
-export const TITLE = 'Gradient • Guru';
+export const TITLE = 'Gradient Guru';
 export const DESCRIPTION = 'GG';
 export const THEME_COLOR = '#FFFFFF';
 export const SITE_URL = 'https://gradient-guru.com';
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
 		default: TITLE,
-		template: `%s • ${TITLE}`,
+		template: `${TITLE} • %s`,
 	},
   description: DESCRIPTION,
   applicationName: TITLE,
