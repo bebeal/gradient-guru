@@ -1,9 +1,7 @@
 'use client'
 
 import { cn } from '@/utils';
-import { TLRecord } from '@tldraw/tlschema';
-import { RecordsDiff } from '@tldraw/store';
-import { useEditor } from '@tldraw/editor';
+import { useEditor, RecordsDiff, TLRecord} from '@tldraw/tldraw';
 import { useCallback, useRef, useState } from 'react';
 import { Slider } from '@/components';
 

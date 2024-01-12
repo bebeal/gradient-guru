@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { useEditor } from '@tldraw/editor';
+import { useEditor } from '@tldraw/tldraw';
 import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
 import { formatNodeId, makeEmptyResponseShape, PreviewNode } from '@/components';

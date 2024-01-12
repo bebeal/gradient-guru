@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, useCallback, useEffect, useState } from 'react';
-import { setUserPreferences, TLAnyShapeUtilConstructor, TLShape, useEditor, useValue } from '@tldraw/editor';
+import { setUserPreferences, TLAnyShapeUtilConstructor, TLShape, useEditor, useValue } from '@tldraw/tldraw';
 import { TldrawUiProps } from '@tldraw/tldraw';
 import { BackToContent } from '@tldraw/tldraw/src/lib/ui/components/BackToContent';
 import { DebugPanel } from '@tldraw/tldraw/src/lib/ui/components/DebugPanel';

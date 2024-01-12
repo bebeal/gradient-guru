@@ -1,24 +1,28 @@
 'use client';
 
 import { memo, useCallback, useDebugValue, useLayoutEffect, useMemo, useRef } from 'react';
-import { assert, TLAnyShapeUtilConstructor, TldrawEditorProps, TLOnMountHandler, useEditor, Canvas, ErrorScreen, LoadingScreen, TldrawEditor, Editor } from '@tldraw/editor';
-// import dynamic from 'next/dynamic';
-// const Canvas = dynamic(async () => (await import('@tldraw/editor')).Canvas, { ssr: false, });
-// const ErrorScreen = dynamic(async () => (await import('@tldraw/editor')).ErrorScreen, { ssr: false, });
-// const LoadingScreen = dynamic(async () => (await import('@tldraw/editor')).LoadingScreen, { ssr: false, });
-// const TldrawEditor = dynamic(async () => (await import('@tldraw/editor')).TldrawEditor, { ssr: false, });
 import {
+  assert,
+  Canvas,
   ContextMenu,
   defaultShapeTools,
   defaultShapeUtils,
   defaultTools,
+  Editor,
+  ErrorScreen,
+  LoadingScreen,
+  TLAnyShapeUtilConstructor,
+  TldrawEditor,
+  TldrawEditorProps,
   TldrawHandles,
   TldrawHoveredShapeIndicator,
   TldrawProps,
   TldrawScribble,
   TldrawSelectionBackground,
   TldrawSelectionForeground,
+  TLOnMountHandler,
   TLUiOverrides,
+  useEditor,
 } from '@tldraw/tldraw';
 import { registerDefaultExternalContentHandlers, TLExternalContentProps } from '@tldraw/tldraw/src/lib/defaultExternalContentHandlers';
 import { registerDefaultSideEffects } from '@tldraw/tldraw/src/lib/defaultSideEffects';
@@ -28,6 +32,7 @@ import { DropWrapper, Erroring, FlowUi, FlowUiProps, Loading } from '@/component
 import { useMounted } from '@/hooks';
 import { cn } from '@/utils';
 import { IconNodeUtil, PreviewNodeUtil, TerminalNodeUtil, TipTapNodeUtil, PlotlyNodeUtil } from './Nodes';
+
 import '@tldraw/tldraw/tldraw.css';
 import './Flow.css';
 

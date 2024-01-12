@@ -2,7 +2,7 @@
 // refactored editor from https://github.com/tldraw/tldraw/blob/main/packages/tldraw/src/lib/utils/export/export.ts
 
 import canvasSize from 'canvas-size';
-import { TLShapeId, TLShape, SvgExportContext, SvgExportDef, uniqueId } from '@tldraw/editor';
+import { TLShapeId, TLShape, SvgExportContext, SvgExportDef, uniqueId } from '@tldraw/tldraw';
 import { ImageExtractorConfig } from '@/hooks';
 
 import { isSafari } from './device';

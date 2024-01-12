@@ -1,9 +1,6 @@
 'use client'
 
-import { TLUiEventHandler } from "@tldraw/tldraw";
-import { TLRecord } from '@tldraw/tlschema';
-import { RecordsDiff } from '@tldraw/store';
-import { TLEventInfo, TLStoreEventInfo, UiEvent, useEditor } from "@tldraw/editor";
+import { TLUiEventHandler, TLEventInfo, TLStoreEventInfo, UiEvent, useEditor, TLRecord, RecordsDiff} from "@tldraw/tldraw";
 import { useCallback, useEffect } from "react";
 import { create } from "zustand";
 import { useShallow } from "zustand/react/shallow";

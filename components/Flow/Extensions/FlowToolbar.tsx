@@ -2,7 +2,7 @@
 
 import React, { memo } from 'react'
 import * as M from '@tldraw/tldraw/src/lib/ui/components/primitives/DropdownMenu';
-import { GeoShapeGeoStyle, preventDefault, track, useEditor, useValue } from '@tldraw/editor';
+import { GeoShapeGeoStyle, preventDefault, track, useEditor, useValue } from '@tldraw/tldraw';
 import { useBreakpoint } from '@tldraw/tldraw/src/lib/ui/hooks/useBreakpoint'
 import { useReadonly } from '@tldraw/tldraw/src/lib/ui/hooks/useReadonly'
 import { TLUiToolbarItem, useToolbarSchema } from '@tldraw/tldraw/src/lib/ui/hooks/useToolbarSchema'

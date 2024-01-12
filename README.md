@@ -2,8 +2,6 @@
 
 <div style="display: flex; align-items: center; justify-content: center; gap:4px; height:100%;">
 
-[![Buy Me A Coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20compute&emoji=🧠&slug=bebeal&button_colour=008cff&font_colour=ffffff&font_family=Inter&outline_colour=ffffff&coffee_colour=FFDD00)](https://www.buymeacoffee.com/bebeal)
-
  <a href="https://github.com/sponsors/bebeal">
     <img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white" />        
   </a>

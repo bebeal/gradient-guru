@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import * as yup from 'yup';
-import { useEditor } from '@tldraw/editor';
+import { useEditor } from '@tldraw/tldraw';
 import {
   Accordion,
   FlowTab,

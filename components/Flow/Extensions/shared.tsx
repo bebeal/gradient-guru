@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { Box, compact, createShapeId, DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, EASINGS } from '@tldraw/editor';
+import { Box, compact, createShapeId, DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, EASINGS } from '@tldraw/tldraw';
 import { Editor, GeoShapeGeoStyle, TLShape } from '@tldraw/tldraw';
 import { FONT_FAMILIES } from '@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants';
 import { DefaultLabelColorStyle } from '@tldraw/tlschema/src/styles/TLColorStyle';
