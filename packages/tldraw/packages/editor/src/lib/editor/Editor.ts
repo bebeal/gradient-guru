@@ -1,5 +1,5 @@
 import { EMPTY_ARRAY, atom, computed, transact } from '@tldraw/state'
-import { ComputedCache, RecordType } from '@tldraw/store'
+import { RecordType, type ComputedCache } from '@tldraw/store'
 import {
 	CameraRecordType,
 	InstancePageStateRecordType,
@@ -19,8 +19,6 @@ import {
 	TLHandle,
 	TLINSTANCE_ID,
 	TLImageAsset,
-	TLInstance,
-	TLInstancePageState,
 	TLPOINTER_ID,
 	TLPage,
 	TLPageId,
@@ -37,6 +35,8 @@ import {
 	isPageId,
 	isShape,
 	isShapeId,
+	type TLInstance,
+	type TLInstancePageState,
 } from '@tldraw/tlschema'
 import {
 	JsonObject,
@@ -84,7 +84,7 @@ import { Geometry2d } from '../primitives/geometry/Geometry2d'
 import { Group2d } from '../primitives/geometry/Group2d'
 import { intersectPolygonPolygon } from '../primitives/intersect'
 import { PI2, approximately, areAnglesCompatible, clamp, pointInPolygon } from '../primitives/utils'
-import { ReadonlySharedStyleMap, SharedStyle, SharedStyleMap } from '../utils/SharedStylesMap'
+import { ReadonlySharedStyleMap, SharedStyleMap, type SharedStyle } from '../utils/SharedStylesMap'
 import { WeakMapCache } from '../utils/WeakMapCache'
 import { dataUrlToFile } from '../utils/assets'
 import { getIncrementedName } from '../utils/getIncrementedName'
@@ -3039,11 +3039,8 @@ export class Editor extends EventEmitter<TLEventMap> {
 		}
 	}
 
-  /**
-   * 
-   * @public
-   */
-	@computed getUnorderedRenderingShapes(
+	/** @public */
+	getUnorderedRenderingShapes(
 		// The rendering state. We use this method both for rendering, which
 		// is based on other state, and for computing order for SVG export,
 		// which should work even when things are for example off-screen.

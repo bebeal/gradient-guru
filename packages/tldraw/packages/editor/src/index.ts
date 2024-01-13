@@ -332,7 +332,7 @@ export {
 export {
 	ReadonlySharedStyleMap,
 	SharedStyleMap,
-	type SharedStyle
+	type SharedStyle,
 } from './lib/utils/SharedStylesMap'
 export { WeakMapCache } from './lib/utils/WeakMapCache'
 export { dataUrlToFile } from './lib/utils/assets'

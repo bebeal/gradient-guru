@@ -187,12 +187,12 @@ export const ModelFormItem = forwardRef<any, any>((props, ref) => {
     const provider = values?.provider;
     let icon = <></>;
     if (provider === 'openai') {
-      icon = <IconSetCache.Logos.OpenAI height={"auto"} className={cn("flex rounded w-auto h-[16px] text-primary")}/>;
+      icon = <IconSetCache.Logos.OpenAI className={cn("flex rounded w-auto h-[16px] text-primary")}/>;
     }
     return (
       <div className="flex flex-row items-center justify-center text-primary gap-1 w-full h-auto px-2">
         {icon}
-        <div className={cn(`flex  w-auto leading-none h-full`)}>Open AI</div>
+        <div className={cn(`flex w-auto leading-none h-full`)}>Open AI</div>
       </div>
     );
   } else if (item === 'model') {
@@ -215,7 +215,7 @@ export const ModelFormItem = forwardRef<any, any>((props, ref) => {
         return { 
           value: model,
           children: (
-            <div className="flex flex-row justify-start items-center text-xs text-center text-primary gap-2 w-auto h-full p-2 py-1"><IconSetCache.Logos.OpenAI height={"auto"} width={"100%"} className={cn("flex p-[3px] rounded w-[24px] h-[24px]", model.includes('gpt-3') && 'bg-[#19c37d]', model.includes('gpt-4') && 'bg-[#ab68ff]' )}/> <div className={cn(`flex h-full w-auto leading-none items-center`)}>{model}{DataModalitiesBadges}</div></div>
+            <div className="flex flex-row justify-start items-center text-xs text-center text-primary gap-2 w-auto h-full p-2 py-1"><IconSetCache.Logos.OpenAI width={"100%"} className={cn("flex p-[3px] rounded w-[24px] h-[24px]", model.includes('gpt-3') && 'bg-[#19c37d]', model.includes('gpt-4') && 'bg-[#ab68ff]' )}/> <div className={cn(`flex h-full w-auto leading-none items-center`)}>{model}{DataModalitiesBadges}</div></div>
           ),
           className: 'justify-start'
         }

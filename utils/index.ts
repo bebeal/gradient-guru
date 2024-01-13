@@ -16,3 +16,4 @@ export * from './regex';
 export * from './svg';
 export * from './models';
 export * from './export';
+export * from './images';

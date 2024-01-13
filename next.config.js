@@ -5,7 +5,7 @@ module.exports = {
   compiler: {
     styledComponents: true
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     // https://stackoverflow.com/questions/76005377/module-not-found-cant-resolve-fs-nextjs-nextauth
     config.resolve = {
       ...config.resolve,
@@ -22,11 +22,29 @@ module.exports = {
     config.infrastructureLogging = {
         level: "error",
     };
-    config.module.rules.push({
-      test: /\.svg$/i,
-      issuer: /\.[jt]sx?$/,
-      use: [{ loader: '@svgr/webpack', options: { dimensions: true, icon: true } }]
-    })
+    // Grab the existing rule that handles SVG imports
+    const fileLoaderRule = config.module.rules.find((rule) =>
+        rule.test?.test?.('.svg'),
+      )
+
+    config.module.rules.push(
+      // Reapply the existing rule, but only for svg imports ending in ?url
+      {
+        ...fileLoaderRule,
+        test: /\.svg$/i,
+        resourceQuery: /url/, // *.svg?url
+      },
+      // Convert all other *.svg imports to React components
+      {
+        test: /\.svg$/i,
+        issuer: fileLoaderRule.issuer,
+        resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] }, // exclude if *.svg?url
+        use: ['@svgr/webpack'],
+      },
+    )
+
+    // Modify the file loader rule to ignore *.svg, since we have it handled now.
+    fileLoaderRule.exclude = /\.svg$/i
     return config
   },
   env: {},
@@ -57,7 +75,7 @@ module.exports = {
     domains: [],
     disableStaticImages: false,
     minimumCacheTTL: 60,
-    formats: ['image/webp'],
+    formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: false,
     contentSecurityPolicy: `script-src 'none'; frame-src 'none'; sandbox;`,
     contentDispositionType: 'inline',
@@ -102,7 +120,7 @@ module.exports = {
   output: process.env.NEXT_PRIVATE_STANDALONE ? 'standalone' : undefined,
   modularizeImports: undefined,
   experimental: {
-    // webpackBuildWorker: true,
+    webpackBuildWorker: true,
     serverMinification: true,
     serverSourceMaps: false,
     caseSensitiveRoutes: false,

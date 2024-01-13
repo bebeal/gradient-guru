@@ -2,7 +2,8 @@
 // refactored editor from https://github.com/tldraw/tldraw/blob/main/packages/tldraw/src/lib/utils/export/export.ts
 
 import canvasSize from 'canvas-size';
-import { TLShapeId, TLShape, SvgExportContext, SvgExportDef, uniqueId } from '@tldraw/tldraw';
+import { uniqueId } from '@tldraw/tldraw';
+import type { TLShapeId, TLShape, SvgExportDef, SvgExportContext, Editor } from '@tldraw/tldraw';
 import { ImageExtractorConfig } from '@/hooks';
 
 import { isSafari } from './device';
@@ -40,8 +41,10 @@ export const clampToBrowserMaxCanvasSize = async (width: number, height: number)
 	return [width, height];
 }
 
-const btoa = (text: string): string => {
-  return Buffer.from(text, 'binary').toString('base64');
+export const toBase64 = (text: string): string => {
+  return typeof window === "undefined"
+    ? Buffer.from(text).toString("base64")
+    : window.btoa(text);
 };
 
 export type CanvasMaxSize = {
@@ -107,7 +110,7 @@ export const adjustSizeForCanvasLimits = async (
 };
 
 // Gets an exported SVG from the editor for the given nodes
-export const getSvgElement: any = async (editor: any, ids: TLShapeId[], imageConfig?: ImageExtractorConfig) => {
+export const getSvgElement: any = async (editor: Editor, ids: TLShapeId[], imageConfig?: ImageExtractorConfig) => {
 	const svg = await editor.getSvg(ids, imageConfig);
 	if (!svg) throw new Error('Could not construct SVG.');
   if (imageConfig?.grid?.enabled) {
@@ -119,7 +122,7 @@ export const getSvgElement: any = async (editor: any, ids: TLShapeId[], imageCon
 // Encodes the given svg element as a base64 string
 export const encodeSVGElementAsBase64 = (svg: SVGElement): string => {
   const svgStr = new XMLSerializer().serializeToString(svg);
-  const base64SVG = btoa(unescape(encodeURIComponent(svgStr)));
+  const base64SVG = toBase64(unescape(encodeURIComponent(svgStr)));
   return `data:image/svg+xml;base64,${base64SVG}`
 };
 
@@ -278,11 +281,11 @@ export const getSvgAsImage = async (svg: SVGElement, options: ImageExtractorConf
   return { blob: null, base64EncodedSvg };
 };
 
-export const getExportedCanvas = async (editor: any, ids: TLShapeId[], options: ImageExtractorConfig) => {
+export const getExportedCanvas = async (editor: Editor, ids: TLShapeId[], options: ImageExtractorConfig) => {
   return await getSvgAsCanvas(await getSvgElement(editor, ids, options), options);
 };
 
-export const getExportedImageBlob = async (editor: any, ids: TLShapeId[], options: ImageExtractorConfig) => {
+export const getExportedImageBlob = async (editor: Editor, ids: TLShapeId[], options: ImageExtractorConfig) => {
   const svg = await getSvgElement(editor, ids, options);
 	const { blob } = await getSvgAsImage(svg, options);
   return blob;
@@ -299,7 +302,7 @@ export const getExportedImageBlob = async (editor: any, ids: TLShapeId[], option
  *
  * @public
  */
-export const getSvgPreview = async (editor: any, shapes: TLShapeId[] | TLShape[], opts = {} as Partial<ImageExtractorConfig>): Promise<SVGSVGElement | undefined> => {
+export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShape[], opts = {} as Partial<ImageExtractorConfig>): Promise<SVGSVGElement | undefined> => {
   const ids =
     typeof shapes[0] === 'string'
       ? (shapes as TLShapeId[])

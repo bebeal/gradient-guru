@@ -17,6 +17,7 @@
   "scripts": {
     "build": "yarn build:tldraw && next build",
     "build:tldraw": "mv node_modules _node_modules && mv postcss.config.js _postcss.config.js && cd packages/tldraw && yarn && yarn build && cd ../.. && mv _postcss.config.js postcss.config.js && mv _node_modules node_modules",
+    "build:debug": "yarn build:tldraw && next build --debug",
     "clean": "rm -rf yarn.lock && rm -rf node_modules && rm -rf .next",
     "dev": "PORT=3407 next dev",
     "generate-iconsets": "cd ./scripts && ./download-iconsets.sh",
@@ -144,7 +145,7 @@
     "lucide-react": "^0.309.0",
     "lz-string": "^1.5.0",
     "mini-svg-data-uri": "^1.4.4",
-    "next": "^13.5.6",
+    "next": "^14.0.4",
     "next-auth": "^5.0.0-beta.4",
     "next-themes": "^0.2.1",
     "node-gyp": "^10.0.1",

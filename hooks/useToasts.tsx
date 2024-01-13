@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useCallback, useContext, useState } from "react";
-import { Editor, uniqueId } from "@tldraw/tldraw";
+import { uniqueId } from "@tldraw/tldraw";
 import { TLUiToast } from "@/components";
 
 
@@ -14,7 +14,7 @@ export type TLUiToastsContextType = {
 export const ToastsContext = createContext({} as TLUiToastsContextType);
 
 export type ToastsProviderProps = {
-	overrides?: (editor: Editor) => TLUiToastsContextType;
+	overrides?: (editor: any) => TLUiToastsContextType;
 	children: any;
 }
 export const ToastsProvider = ({ children }: ToastsProviderProps) => {
