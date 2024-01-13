@@ -54,7 +54,7 @@ const Providers = ({ children }: any) => {
 
   useEffect(() => {
     const pathSegments = window.location.pathname;
-    const newTitle = pathSegments ? `GG • ${pathSegments}` : 'Gradient Guru';
+    const newTitle = pathSegments && pathSegments.length > 1 ? `GG • ${pathSegments}` : 'Gradient Guru';
     document.title = newTitle;
   }, []);
 

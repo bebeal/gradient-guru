@@ -1,9 +1,9 @@
 # Ignore artifacts:
-build
-coverage
+**/build
+**/coverage
 
 # third party packages
-packages
+**/packages
 
 # Ignore all HTML files:
 **/*.html

@@ -1,6 +1,24 @@
 'use client'
 
 import { useCallback } from "react";
+import styled from "styled-components";
+
+const RippleEffectSpan = styled.span`
+  @keyframes ripple-click-effect {
+    to {
+      transform: scale(4);
+      opacity: 0;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-click-effect 0.5s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+`;
 
 export const useRippleEffect = () => {
 

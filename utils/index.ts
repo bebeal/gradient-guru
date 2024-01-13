@@ -3,7 +3,7 @@ export * from './device';
 export * from './utils';
 export * from './auth';
 export * from './MapCache';
-export * from './StyledComponentsRegistry';
+export * from './styles';
 export * from './colors';
 export * from './constants';
 export * from './filesystem';

@@ -1,7 +1,8 @@
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
-import { AnimationTailwindcssPlugin } from './utils/animate-tailwindcss';
-import { AceternityTailwindcssPlugin, addVariablesForColors } from './utils/aceternity-tailwindcss';
+// can't use @/utils import for some dumb reason that I don't care to figure out
+import { AnimationTailwindcssPlugin } from './utils/styles/animate-tailwindcss';
+import { AceternityTailwindcssPlugin, addVariablesForColors } from './utils/styles/aceternity-tailwindcss';
 
 const config: Config = {
   safelist: [
