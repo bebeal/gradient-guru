@@ -4,7 +4,7 @@ import { Erroring, Form, IconSetCache, Loading, PreviewNodeBaseProps, formatNode
 import { useApi } from "@/hooks";
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import * as yup from "yup";
-import { renderToStaticMarkup } from 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.development';
+import { renderToStaticMarkup } from 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.production';
 
 export const InvalidIdFallbackHtml = (title: string = 'Invalid Link', message: string = 'This link is invalid or has expired.') => {
   const ErrorPage = renderToStaticMarkup(

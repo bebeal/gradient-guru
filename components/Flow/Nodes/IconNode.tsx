@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { IconSetCache, SetNames } from '@/components';
 import { filterObjectByKeys } from '@/utils';
 import { FlowNodeUtil } from './FlowNode';
-import ReactDOMServer from 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.development';
+import ReactDOMServer from 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.production';
 
 export type IconNode = TLBaseShape<
   'icon',

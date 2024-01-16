@@ -3,3 +3,9 @@ declare module 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser
   import ReactDOMServer from 'react-dom/server';
   export = ReactDOMServer;
 }
+
+// https://github.com/vercel/next.js/discussions/58305
+declare module 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.production' {
+  import ReactDOMServer from 'react-dom/server';
+  export = ReactDOMServer;
+}

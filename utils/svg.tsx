@@ -1,7 +1,7 @@
 'use client';
 
 import React, { isValidElement, ReactElement, useEffect, useRef } from 'react';
-import ReactDOMServer from 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.development';
+import ReactDOMServer from 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.production';
 import styled from 'styled-components';
 import { cn } from './utils';
 import { DynamicGradientBackground } from '@/components';
