@@ -5,35 +5,34 @@ import { BaseBoxShapeUtil, HTMLContainer, SvgExportContext, TLBaseShape, toDomPr
 import { useToasts } from '@/hooks';
 import { LINK_HOST, PROTOCOL } from '@/utils';
 import { EditingIndicator, formatNodeId } from '../../Extensions/shared';
-import { Loader, PreviewNodeDropdown } from '@/components';
+import { Loading, PreviewNodeDropdown } from '@/components';
+import { Suspense, useState } from 'react';
 
-export type PreviewNode = TLBaseShape<
-  'preview',
-  {
-    html: string;
-    source: string;
-    w: number;
-    h: number;
-    uploadedNodeId?: string;
-    dateCreated?: number;
-    version?: number;
-    availableVersions?: number[];
-  }
->;
+export type PreviewNodeBaseProps = {
+  html: string;
+  source?: string;
+  version?: number;
+  dateCreated?: number;
+};
+
+export type PreviewNodeProps = PreviewNodeBaseProps & {
+  w: number;
+  h: number;
+  uploadedNodeId?: string;
+};
+
+export type PreviewNode = TLBaseShape<'preview', PreviewNodeProps>;
 
 export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
   static override type = 'preview' as const;
 
   getDefaultProps(): PreviewNode['props'] {
     return {
-      html: '',
-      source: '',
       w: (960 * 2) / 3,
       h: (540 * 2) / 3,
-      uploadedNodeId: '',
+      html: '',
+      source: '',
       dateCreated: Date.now(),
-      version: 0,
-      availableVersions: [],
     };
   }
 
@@ -44,6 +43,10 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
   override canUnmount = () => false;
 
   override component(node: PreviewNode) {
+    const { w, h, html, source, version, dateCreated } = node.props;
+    const id = formatNodeId(node.id);
+    const uploadUrl = `${PROTOCOL}${LINK_HOST}/${id}`;
+    const isLoading = html.length < 25 || version === undefined;
     const isEditing = useIsEditing(node.id);
     const toast = useToasts();
 
@@ -52,19 +55,8 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
         return getRotatedBoxShadow(rotation);
     }, [this.editor]);
 
-    const { html, uploadedNodeId } = node.props;
-
-    const isLoading = uploadedNodeId !== node.id;
-
-    const uploadUrl = [PROTOCOL, LINK_HOST, '/', formatNodeId(node.id)].join('');
-
-    const stopPropagation = (e: any) => {
-      e.stopPropagation();
-    };
-
-    // TODO: make sure the loading icon isn't huge
     return (
-      <HTMLContainer className="tl-embed-container bg-primary w-auto h-auto flex justify-center items-center pointer-events-auto" id={node.id}>
+      <HTMLContainer className="tl-embed-container bg-primary w-auto h-auto flex justify-center items-center pointer-events-auto" id={`html-container-${id}`}>
         {isLoading ? (
           <div
             className="bg-primary flex items-center justify-center w-auto h-auto"
@@ -74,15 +66,16 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
               borderRadius: 'var(--radius-2)',
             }}
           >
-            <Loader />
+            <Loading />
           </div>
         ) : (
           <>
+          <Suspense fallback={<Loading />}>
             <iframe
-              id={`iframe-1-${node.id}`}
-              src={`${uploadUrl}?preview=1&version=${node.props.version}`}
-              width={toDomPrecision(node.props.w)}
-              height={toDomPrecision(node.props.h)}
+              id={`iframe-preview-${id}`}
+              src={`${uploadUrl}?preview=1`}
+              width={toDomPrecision(w)}
+              height={toDomPrecision(h)}
               draggable={false}
               style={{
                 pointerEvents: isEditing ? 'auto' : 'none',
@@ -91,6 +84,7 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
                 borderRadius: 'var(--radius-2)',
               }}
             />
+            </Suspense>
             <div
               style={{
                 position: 'absolute',
@@ -114,17 +108,19 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
     );
   }
 
-  override toSvg(shape: PreviewNode, _ctx: SvgExportContext): SVGElement | Promise<SVGElement> {
+  override toSvg(node: PreviewNode, _ctx: SvgExportContext): SVGElement | Promise<SVGElement> {
+    const id = formatNodeId(node.id);
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     // while screenshot is the same as the old one, keep waiting for a new one
     return new Promise((resolve, _) => {
       if (window === undefined) return resolve(g);
       const windowListener = (event: MessageEvent) => {
-        if (event.data.screenshot && event.data?.shapeid === shape.id) {
+        const eventId = formatNodeId(event.data?.nodeid);
+        if (event.data.screenshot && eventId === id) {
           const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
           image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', event.data.screenshot);
-          image.setAttribute('width', shape.props.w.toString());
-          image.setAttribute('height', shape.props.h.toString());
+          image.setAttribute('width', node.props.w.toString());
+          image.setAttribute('height', node.props.h.toString());
           g.appendChild(image);
           window.removeEventListener('message', windowListener);
           clearTimeout(timeOut);
@@ -134,20 +130,20 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
       const timeOut = setTimeout(() => {
         resolve(g);
         window.removeEventListener('message', windowListener);
-      }, 2000);
+      }, 5000);
       window.addEventListener('message', windowListener);
-      //request new screenshot
-      const firstLevelIframe = document.getElementById(`iframe-1-${shape.id}`) as HTMLIFrameElement;
+      // request new screenshot
+      const firstLevelIframe = document.getElementById(`iframe-preview-${id}`) as HTMLIFrameElement;
       if (firstLevelIframe) {
-        firstLevelIframe?.contentWindow?.postMessage({ action: 'take-screenshot', shapeid: shape.id }, '*');
+        firstLevelIframe?.contentWindow?.postMessage({ action: 'take-screenshot', nodeid: id }, '*');
       } else {
-        console.log('first level iframe not found or not accessible');
+        console.log('first level iframe not found or not accessible', id);
       }
     });
   }
 
-  indicator(shape: PreviewNode) {
-    return <rect width={shape.props.w} height={shape.props.h} />;
+  indicator(node: PreviewNode) {
+    return <rect width={node.props.w} height={node.props.h} />;
   }
 }
 

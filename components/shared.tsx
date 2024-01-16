@@ -201,26 +201,19 @@ export const Loading = (props: LoadingProps) => {
   );
 };
 
-export type ErrorMessage = { message?: string; stack?: string };
+export type ErrorMessage = { message?: string; stack?: string, title?: string };
 export interface ErroringProps {
   children?: any;
   error?: ErrorMessage | string;
   className?: string;
 }
 export const Erroring = (props: ErroringProps) => {
-  const { children, error = { message: 'Something went wrong', stack: 'Error: Something went wrong' }, className, } = props;
-  const content = children ? (
-    children
-  ) : (
-    <>
-      Error: <div className={cn(`text-lg`)}>{typeof error === 'string' ? error : error?.message}</div>
-    </>
-  );
+  const { children, error = { title: 'Error: ', message: 'Something went wrong'}, className, } = props;
 
   return (
-    <div className={cn("w-auto h-auto flex items-center justify-center text-error gap-2 text-xl", className)}>
-      <IconSetCache.Carbon.StatusPartialFail className={'flex items-center justify-center h-full w-auto'} />
-      {content}
+    <div className={cn("w-auto h-auto flex flex-col items-center justify-center text-error gap-2 text-xl", className)}>
+      <div className="w-full h-auto flex text-sm gap-1"><IconSetCache.Carbon.StatusPartialFail className={'flex items-center justify-center h-full w-auto'} />{typeof error === 'string' ? 'Error' : error?.title}</div>
+      {children ? children : <div className={cn(`text-xs`)}>{typeof error === 'string' ? error : error?.message}</div>}
     </div>
   );
 };

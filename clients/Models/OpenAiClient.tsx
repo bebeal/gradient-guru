@@ -52,7 +52,7 @@ export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAI
             index: 0,
             logprobs: null,
             message: {
-              content: InvalidIdFallbackHtml,
+              content: InvalidIdFallbackHtml('Mocked OpenAIModelClient Response', ''),
             },
           },
         ],

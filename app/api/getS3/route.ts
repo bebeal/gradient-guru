@@ -9,13 +9,18 @@ const handler = async (request: NextRequest) => {
   const res = await request.json();
 
   if (request.method === 'POST') {
-    const { id } = res;
+    const { id, version } = res;
     if (!id) {
       return NextResponse.json({ error: 'id is required' }, { status: 400 });
     }
-
-    const response = await s3Client.get(id);
-    return NextResponse.json(response, { status: 200 });
+    
+    try {
+      const response = await s3Client.get(id, version);
+      return NextResponse.json(response, { status: 200 });
+    } catch (error: any) {
+      console.log(error);
+      return NextResponse.json(error.message, { status: error.statusCode || 500, statusText: error.message });
+    }
 
   } else {
     return NextResponse.json({ error: 'Method Not Allowed' }, { status: 405 });

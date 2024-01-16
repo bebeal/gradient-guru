@@ -1,5 +1,5 @@
 import { Readable } from 'stream';
-import { GetObjectCommand, S3Client as InternalS3Client, PutObjectCommand, PutObjectOutput } from '@aws-sdk/client-s3';
+import { GetObjectCommand, S3Client as InternalS3Client, ListObjectVersionsCommand, ObjectVersion, PutObjectCommand, PutObjectOutput } from '@aws-sdk/client-s3';
 import { AwsCredentialIdentity } from '@aws-sdk/types';
 import { getEnvVariable } from '@/utils';
 
@@ -45,6 +45,7 @@ export class S3Client {
   private static instance: S3Client;
   private client: InternalS3Client;
   private bucket: string;
+  private cache: Record<string, any> = {};
 
   private constructor() {
     const bucket = getBucket();
@@ -66,6 +67,22 @@ export class S3Client {
     return S3Client.instance;
   }
 
+  private static getCacheKey(id: string, versionId: string | undefined = undefined): string {
+    return versionId ? `${id}-${versionId}` : id;
+  }
+
+  // lists the versions of an object
+  public async listVersions(id: string): Promise<ObjectVersion[]> {
+    const request = new ListObjectVersionsCommand({
+      Bucket: this.bucket,
+      Prefix: id,
+    });
+
+    const response = await this.client.send(request);
+    return response.Versions || []; // return the versions array
+  }
+
+  // puts a new object in the bucket, returns the versionId of the object if bucket versioning is enabled
   public async put(id: string, json: Record<string, any>): Promise<PutObjectOutput> {
     const jsonString = JSON.stringify(json);
     const request = new PutObjectCommand({
@@ -75,10 +92,39 @@ export class S3Client {
       ContentType: 'application/json',
     });
     const response = await this.client.send(request);
-    return response; // contains versionId if bucket versioning is enabled
+    this.cache[S3Client.getCacheKey(id, response?.VersionId)] = json;
+    return response;
   }
 
-  public async get(id: string, versionId?: string): Promise<string> {
+  // get all versions of an object in an array where index = version
+  public async getAll(id: string): Promise<Record<string, any>[]> {
+    const versions = await this.listVersions(id);
+    return Promise.all(versions.map(version => this.getObject(id, version.VersionId)));
+  }
+
+  // get an object by `id` and optional `version`
+  // `version` is an index of which version of the object to retrieve. Defaults to latest version.
+  public async get(id: string, version: number | undefined = undefined): Promise<Record<string, any>> {
+    if (version) {
+        // get all versions of the object, use version as index to get the versionId
+      const versions = await this.listVersions(id);
+      if (version >= versions.length) {
+        throw new Error(`Invalid version ${version} for ${id}`);
+      }
+      return this.getObject(id, versions[version || 0].VersionId);
+    } else {
+      return this.getObject(id);
+    }
+  };
+
+  // get `versionId` of an object
+  public async getObject(id: string, versionId: string | undefined = undefined): Promise<Record<string, any>> {
+    // Return from cache if available
+    const cacheKey = S3Client.getCacheKey(id, versionId);
+    if (this.cache[cacheKey]) {
+      return this.cache[cacheKey];
+    }
+
     const request = new GetObjectCommand({
       Bucket: this.bucket,
       Key: id,
@@ -93,6 +139,7 @@ export class S3Client {
     const fetchedResponse = await streamToString(response.Body as Readable);
     try {
       const json = JSON.parse(fetchedResponse);
+      this.cache[cacheKey] = json;
       return json;
     } catch (error) {
       throw new Error(`Error parsing JSON from ${id}: ${error}`);

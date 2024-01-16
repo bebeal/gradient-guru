@@ -1,10 +1,6 @@
-import { Metadata } from 'next';
 import Providers from '@/app/providers';
-
-export const TITLE = 'Gradient Guru';
-export const DESCRIPTION = 'GG';
-export const THEME_COLOR = '#FFFFFF';
-export const SITE_URL = 'https://gradient-guru.com';
+import { DESCRIPTION, SITE_URL, TITLE } from './config';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -52,14 +48,14 @@ const RootLayout = ({
   children: React.ReactNode
 }) => {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning={true}>
       <head>
 				<meta
 					name="viewport"
 					content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1"
 				/>
 			</head>
-      <body suppressHydrationWarning className="p-0 m-0 h-screen w-screen min-h-[-webkit-fill-available] touch-none overscroll-none leading-none antialiased overflow-hidden">
+      <body suppressHydrationWarning={true} className="p-0 m-0 h-screen w-screen min-h-[-webkit-fill-available] touch-none overscroll-none leading-none antialiased overflow-hidden">
         <Providers>
           <main className="h-full w-full overflow-auto relative">
             {children}

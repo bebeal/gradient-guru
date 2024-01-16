@@ -1,24 +1,24 @@
 'use client'
 
 import { useCallback } from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 
-const RippleEffectSpan = styled.span`
-  @keyframes ripple-click-effect {
-    to {
-      transform: scale(4);
-      opacity: 0;
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-  }
+// const RippleEffectSpan = styled.span`
+//   @keyframes ripple-click-effect {
+//     to {
+//       transform: scale(4);
+//       opacity: 0;
+//       background-color: rgba(255, 255, 255, 0.1);
+//     }
+//   }
 
-  position: absolute;
-  border-radius: 50%;
-  transform: scale(0);
-  animation: ripple-click-effect 0.5s ease-in-out;
-  background-color: rgba(255, 255, 255, 0.3);
-  pointer-events: none;
-`;
+//   position: absolute;
+//   border-radius: 50%;
+//   transform: scale(0);
+//   animation: ripple-click-effect 0.5s ease-in-out;
+//   background-color: rgba(255, 255, 255, 0.3);
+//   pointer-events: none;
+// `;
 
 export const useRippleEffect = () => {
 
@@ -40,13 +40,13 @@ export const useRippleEffect = () => {
   }
 
   const createRippleEffect = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    const btn = event.currentTarget;
-    if (!btn) {
-      console.error('Button is null. Unable to create ripple effect.');
+    const target = event.currentTarget;
+    if (!target) {
+      console.error('target is null. Unable to create ripple effect.');
       return;
     }
-    const ripple = createRipple(btn.clientWidth, btn.clientHeight, event.nativeEvent.offsetX, event.nativeEvent.offsetY);
-    btn.appendChild(ripple);  
+    const ripple = createRipple(target.clientWidth, target.clientHeight, event.nativeEvent.offsetX, event.nativeEvent.offsetY);
+    target.appendChild(ripple);  
     ripple.addEventListener('animationend', () => {
       ripple.remove();
     });

@@ -6,8 +6,9 @@ import { FormProvider, UseFormProps, UseFormReturn, useForm } from "react-hook-f
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { inferSchema } from "./shared";
-import { arrayToObject, cn, noop } from "@/utils";
+import { arrayToObject, cn } from "@/utils";
 import { FormFields } from "./FormFields";
+import { isEqual } from "lodash";
 
 // Custom meta properties I'm defining for each field to specify how it should be rendered
 export type SchemaMeta = {
@@ -35,8 +36,8 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
     object: initialObject = {},
     schema: schemaFromProps,
     readOnly = false,
-    onSubmit=noop,
-    onError=noop,
+    onSubmit,
+    onError,
     mode = 'all',
     labels={},
     className = '',
@@ -53,10 +54,20 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
   const schema: any = schemaFromProps || inferSchema(object, SchemaMap);
   const fromArray = schema?.spec?.meta?.item === 'from-array';
   type FormSchema = yup.InferType<typeof schema>;
+  const [values, setValues] = useState<FormSchema>(schema.cast(object));
+
+  useEffect(() => {
+    const newobj = schema.cast(object);
+    if (!isEqual(newobj, values)) {
+      setValues(newobj);
+    }
+  }, [object, schema]);
+
   const form: UseFormReturn = useForm<FormSchema>({
     resolver: yupResolver(schema),
     // cast initial values to conform to schema
-    values: schema.cast(object),
+    values: values,
+    defaultValues: values,
     mode,
     criteriaMode,
     shouldFocusError,
@@ -66,16 +77,18 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
   // run validation on initial mount
   useEffect(() => {
     if (form && !initialized) {
-      form.trigger();
       setInitialized(true);
+      form.trigger();
     }
   }, [form, initialized]);
 
   useEffect(() => {
-    form.watch((values) => {
-      form.handleSubmit(() => onSubmit(schema.cast(values), form), onError)();
+    const subscription = form.watch((newValues: any) => {
+      setValues(newValues);
+      form.handleSubmit(() => onSubmit(schema.cast(newValues), form), onError)();
     });
-  }, [form, onSubmit, onError, schema]);
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   return (
     <FormProvider {...rest} {...form}>

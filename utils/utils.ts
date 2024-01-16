@@ -83,6 +83,7 @@ export const isEmpty = (value: any) => {
 }
 
 
+
 export const arrayToObject = (arr: string[], value: any = true): { [key: string]: boolean } => {
   const result = arr.reduce((obj, item) => ({ ...obj, [item]: value }), {});
   return result;

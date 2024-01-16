@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ForwardedRef, forwardRef, useCallback, useMemo } from 'react';
+import React, { ForwardedRef, forwardRef, useCallback, useEffect, useMemo } from 'react';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import { CaretSortIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import * as SelectPrimitive from '@radix-ui/react-select';
@@ -107,7 +107,7 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>((props, for
       >
         <SelectScrollUpButton />
         <SelectPrimitive.Viewport
-          onKeyDown={(e) => {}}
+          // onKeyDown={(e) => {}}
           ref={(r) => {
             // Set state needed to rerender Virtuoso
             if (r) setScrollParent(r);
@@ -134,7 +134,7 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>((props, for
               customScrollParent={scrollParent}
             />
           ) : (
-            items.map((item, index) => <SelectItem key={`${item.value}-${index}`} {...item} />)
+            items.map((item, index) => <SelectItem key={`select-item-${item.value}-${index}`} {...item} />)
           )}
         </SelectPrimitive.Viewport>
         <SelectScrollDownButton />
@@ -222,7 +222,7 @@ SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 export interface SelectProps {
   items?: SelectItemProps[] | string[];
   placeholder?: string;
-  onChange?: (event: any) => void;
+  onChange?: any;
   virtualize?: boolean;
   className?: string;
   defaultValue?: any;
@@ -241,10 +241,10 @@ export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) =>
     items: initialItems = [],
     className = '',
     placeholder = '',
-    onChange: onChangeCallback = noop,
+    onChange: onChangeCallback,
     defaultValue,
-    value = defaultValue,
-    onValueChange: onValueChangeCallback = noop,
+    value,
+    onValueChange: onValueChangeCallback,
     defaultOpen = false,
     open,
     onOpenChange,
@@ -257,7 +257,7 @@ export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) =>
   } = props;
   const items = useMemo(() => {
     return initialItems.map((item) => {
-      if (typeof item === 'string') {
+      if (typeof item === 'string' || typeof item === 'number') {
         return { value: item, children: item };
       }
       return item;

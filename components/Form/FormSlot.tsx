@@ -1,9 +1,9 @@
 'use client'
 
 import React from "react";
-import { Slot } from "@radix-ui/themes";
 import { useFormField } from "@/hooks";
 import { cn } from "@/utils";
+import { Slot } from '@radix-ui/react-slot';
 
 export type FormControlProps = React.ComponentPropsWithoutRef<"div"> & {
 };

@@ -106,7 +106,7 @@ const Test = ({title, test}: any) => {
 const ChatPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-auto bg-primary text-primary">
-      <div className="flex flex-col gap-10 w-full justify-center items-center">
+      <div className="flex flex-col w-full justify-center items-center  gap-10">
       <ChatRoomProvider messages={messages}>
         <Test title="Chat Status" test={<ChatStatusTest />} />
         <Test title="Chat List" test={<ChatListTest />} />

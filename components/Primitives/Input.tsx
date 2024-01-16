@@ -21,7 +21,6 @@ export const Input = forwardRef((props: InputProps, ref: any) => {
     extraCharWidth=1,
     value='',
     onChange: onChangeCallback=noop,
-    ...rest
   } = props;
   const [internalValue, setInternalValue] = useState(value);
 
@@ -60,7 +59,6 @@ export const Input = forwardRef((props: InputProps, ref: any) => {
         RadiusClasses(radius),
         className,
       )}
-      {...rest}
     />
   )
 });

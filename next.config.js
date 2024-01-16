@@ -39,12 +39,11 @@ module.exports = {
         test: /\.svg$/i,
         issuer: fileLoaderRule.issuer,
         resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] }, // exclude if *.svg?url
-        use: ['@svgr/webpack'],
+        use: [{ loader: '@svgr/webpack', options: { dimensions: true, icon: true } }]
       },
-    )
-
+    );
     // Modify the file loader rule to ignore *.svg, since we have it handled now.
-    fileLoaderRule.exclude = /\.svg$/i
+    fileLoaderRule.exclude = /\.svg$/i;
     return config
   },
   env: {},
@@ -143,7 +142,7 @@ module.exports = {
     isrFlushToDisk: true,
     workerThreads: false,
     proxyTimeout: undefined,
-    optimizeCss: true, // ? https://github.com/vercel/next.js/issues/60473
+    optimizeCss: false, // ? https://github.com/vercel/next.js/issues/60473
     nextScriptWorkers: false,
     scrollRestoration: false,
     externalDir: false,

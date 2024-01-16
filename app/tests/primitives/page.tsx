@@ -1,13 +1,13 @@
 'use client'
 
 const PrimitivesPage = () => {
-  const primitives = ['accordion', 'checkbox', 'radix-themed-components', 'side-panel', 'slider', 'switch', 'menubar'];
+  const primitives = ['accordion', 'checkbox', 'dropdown', 'flip-card', 'kbd', 'menubar', 'progress', 'radix-themed-components', 'side-panel', 'slider', 'switch', 'textarea', 'tooltip'];
 
   return (
-    <div className="flex flex-col gap-2 w-full h-full justify-center items-center p-4">
+    <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">
       {primitives.map((primitive) => (
         <div key={primitive}>
-          <a href={`/tests/primitives/${primitive}`} className="text-lg font-bold">{primitive}</a>
+          <a href={`/tests/primitives/${primitive}`} rel="noopener noreferrer" target="_blank" className="text-lg font-bold">{primitive}</a>
         </div>
       ))}  
     </div>

@@ -46,12 +46,12 @@ KeysToMakereadOnly.forEach((key) => {
   NodeSchemaMappings[key] = yup.string().meta({ item: 'readOnly' });
 });
 
-export const formatNodeId = (id: string) => {
-  return id.replace(/^shape:/, '');
+export const formatNodeId = (id: string | undefined) => {
+  return id?.replace(/^shape:/, '').replace(/^shape%3A/, '').replace(/^node:/, '').replace(/^node%3A/, '');
 };
 
 export const getNodeId = (node: TLShape) => {
-  return formatNodeId(node.id);
+  return formatNodeId(node?.id);
 };
 
 export const getNodeName = (node: TLShape) => {

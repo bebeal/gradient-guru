@@ -10,7 +10,7 @@ const handler = async (request: NextRequest) => {
   const res = await request.json();
 
   if (request.method === 'POST') {
-    const { id, html, source, version } = res;
+    const { id, html, source } = res;
     if (!id) {
       return NextResponse.json({ error: 'id is required' }, { status: 400 });
     } else if (!html) {
@@ -19,8 +19,12 @@ const handler = async (request: NextRequest) => {
       return NextResponse.json({ error: 'source is required' }, { status: 400 });
     }
 
-    const response = await s3Client.put(id, res);
-    return NextResponse.json(response, { status: 200 });
+    try {
+      const response = await s3Client.put(id, res);
+      return NextResponse.json(response, { status: 200 });
+    } catch (error: any) {
+      return NextResponse.json(error.message, { status: error.statusCode || 500, statusText: error.message });
+    }
 
   } else {
     return NextResponse.json({ error: 'Method Not Allowed' }, { status: 405 });

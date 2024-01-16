@@ -161,17 +161,18 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
           })}
         </div>
         {resizing && overlay && <div className={cn('absolute left-0 top-0 w-screen h-screen z-[205]', cursor, resizing ? 'bg-black bg-opacity-50' : 'bg-transparent')} />}
-        <div draggable={false} ref={resizeRef} className={cn(`absolute top-0 -right-px w-0.5 h-full z-[205] select-none`, resizing ? `bg-accent` : `bg-transparent`, cursor)} onDoubleClick={togglePanel} >
-          {handle && (
-            <div onClick={(e) => {
+        <div draggable={false} ref={resizeRef} className={cn(`absolute top-0 -right-px w-0.5 h-full z-[205] select-none`, resizing ? `bg-accent` : `bg-transparent`, cursor)} onDoubleClick={togglePanel} />
+        {handle && (
+          <div onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();
               togglePanel();
-            }} className={cn("z-[206] absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2 flex h-4 w-3 items-center justify-center rounded-sm border bg-primary hover:bg-secondary !cursor-pointer", resizing ? `border-accent` : `border-primary`, activeTabIndex !== undefined && `border-accent`, cursor)}>
-              <IconSetCache.Carbon.Draggable className="h-2.5 w-2.5" />
-            </div>
-          )}
-        </div>
+            }}
+            className={cn("z-[206] absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-full flex h-4 w-3 items-center justify-center rounded-sm border bg-primary hover:bg-secondary !cursor-pointer", resizing ? `border-accent` : `border-primary`, activeTabIndex !== undefined && `border-accent`, cursor)}
+          >
+            <IconSetCache.Carbon.Draggable className="h-2.5 w-2.5" />
+          </div>
+        )}
       </Tabs.Root>
     </>
   );

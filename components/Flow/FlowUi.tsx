@@ -1,14 +1,16 @@
 'use client';
 
-import { memo, useCallback, useEffect, useState } from 'react';
-import { setUserPreferences, TLAnyShapeUtilConstructor, TLShape, useEditor, useValue } from '@tldraw/tldraw';
-import { TldrawUiProps } from '@tldraw/tldraw';
+import { setUserPreferences, TLAnyShapeUtilConstructor, TldrawUiProps, TLShape, useEditor, useValue } from '@tldraw/tldraw';
 import { BackToContent } from '@tldraw/tldraw/src/lib/ui/components/BackToContent';
 import { DebugPanel } from '@tldraw/tldraw/src/lib/ui/components/DebugPanel';
 import { Dialogs } from '@tldraw/tldraw/src/lib/ui/components/Dialogs';
 import { FollowingIndicator } from '@tldraw/tldraw/src/lib/ui/components/FollowingIndicator';
+import { memo, useCallback, useEffect, useState } from 'react';
 // import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu';
 // import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
+import { Toasts, ToastViewport, zoomToFitNewNode } from '@/components';
+import { ToastsProvider, useContentRecorder } from '@/hooks';
+import { cn } from '@/utils';
 import { NavigationZone } from '@tldraw/tldraw/src/lib/ui/components/NavigationZone/NavigationZone';
 import { ExitPenMode } from '@tldraw/tldraw/src/lib/ui/components/PenModeToggle';
 import { Button } from '@tldraw/tldraw/src/lib/ui/components/primitives/Button';
@@ -21,12 +23,9 @@ import { useEditorEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useEditorEvents
 import { useKeyboardShortcuts } from '@tldraw/tldraw/src/lib/ui/hooks/useKeyboardShortcuts';
 import { useTranslation } from '@tldraw/tldraw/src/lib/ui/hooks/useTranslation/useTranslation';
 import { TldrawUiContextProvider } from '@tldraw/tldraw/src/lib/ui/TldrawUiContextProvider';
-import { Toasts, ToastViewport, zoomToFitNewNode } from '@/components';
-import { ToastsProvider, useContentRecorder } from '@/hooks';
-import { cn } from '@/utils';
 import { FlowMenu, FlowToolbar, ScratchPanel } from './Extensions';
 import { TestButtons } from './Extensions/TestButtons';
-import { FlowSidePanel } from './FlowSidePanel';
+import { FlowSidePanel } from './TabPanel';
 
 export type FlowUiProps = TldrawUiProps & {
   initialShapes?: TLShape[];

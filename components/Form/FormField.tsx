@@ -1,17 +1,22 @@
 'use client'
 
-import { ReactNode, forwardRef, useMemo } from "react";
+import { ReactNode, forwardRef, useCallback, useMemo } from "react";
 import * as FormPrimitive from "@radix-ui/react-form";
 import { Control, FieldPath, FieldValues, useController } from "react-hook-form";
 import { FormFieldContext, useFormField } from "@/hooks";
 import { Schema } from "./Form";
-import { cn } from "@/utils";
-import { Accordion, Checkbox, Input, Select, Slider, Switch, FormFields, FormMessage, FormLabel, FormDescription, FormSlot } from '@/components';
+import { cn, formatDate } from "@/utils";
+import { Accordion, Checkbox, Input, Select, Slider, Switch } from '@/components';
+import { FormFields } from "./FormFields";
+import { FormDescription } from "./FormDescription";
+import { FormLabel } from "./FormLabel";
+import { FormMessage } from "./FormMessage";
+import { FormSlot } from "./FormSlot";
 
-const basicFormItems = ['object', 'select', 'slider', 'boolean', 'text', 'readOnly'] as const;
+const basicFormItems = ['object', 'select', 'slider', 'boolean', 'text', 'readOnly', 'date'] as const;
 export type BasicFormItem = typeof basicFormItems[number];
 
-const basicItems = ['array', 'object', 'from-array', 'select', 'slider', 'boolean', 'checkbox', 'switch', 'number', 'input', 'readOnly'];
+const basicItems = ['array', 'object', 'from-array', 'select', 'slider', 'boolean', 'checkbox', 'switch', 'number', 'input', 'readOnly', 'date', 'displayDate', 'datetime'] as const;
 export type BasicItem = typeof basicItems[number];
 
 export const FormItemToItemMap: Record<BasicFormItem, BasicItem[]> = {
@@ -20,7 +25,8 @@ export const FormItemToItemMap: Record<BasicFormItem, BasicItem[]> = {
   'slider': ['slider'],
   'boolean': ['boolean', 'checkbox', 'switch'],
   'text': ['number', 'input'],
-  'readOnly': ['readOnly']
+  'readOnly': ['readOnly'],
+  'date': ['date', 'displayDate', 'datetime'],
 };
 
 export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
@@ -108,18 +114,28 @@ export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
       <Checkbox ref={ref} className={className} {...field} checked={value} readOnly={readOnly} />
     );
   } else if (FormItemToItemMap['text'].includes(item)) {
+    let value = field.value;
     if (typeof field.value === 'number') {
-      field.value = parseFloat(field.value.toFixed(2));
+      value = parseFloat(field.value.toFixed(2));
     }
     if (item === 'input' || item === 'number') {
-      return ( <Input ref={ref} placeholder={placeholder} className={className} extraCharWidth={0} {...field} readOnly={readOnly} /> );
+      return ( <Input ref={ref} placeholder={placeholder} className={className} extraCharWidth={0} readOnly={readOnly} value={value} onChange={field?.onChange} /> );
     }
-  } else {
+  } else if (FormItemToItemMap['date'].includes(item)) {
+    // TODO: add date picker for `date` and date-time picker for `datetime`. displayDate will be a read-only input
+    let value = field.value;
     if (typeof field.value === 'number') {
-      field.value = parseFloat(field.value.toFixed(2));
+      // interpret as epoch
+      value = formatDate(field.value);
+    }
+    return (<Input ref={ref} extraCharWidth={0} placeholder={placeholder} readOnly={true} className={cn(className, `p-0 cursor-text bg-transparent border-transparent text-primary/80 ring-transparent hover:border-transparent hover:bg-transparent hover:cursor-text hover:text-primary/80 hover:ring-transparent focus:border-transparent focus:bg-transparent focus:cursor-text focus:text-primary/80 focus:ring-transparent`)} value={value} />);
+  } else {
+    let value = field.value;
+    if (typeof field.value === 'number') {
+      value = parseFloat(field.value.toFixed(2));
     }
     // default readOnly
-    return (<Input ref={ref} extraCharWidth={0} placeholder={placeholder} readOnly className={cn(className, `p-0 cursor-text bg-transparent border-transparent text-primary/80 ring-transparent hover:border-transparent hover:bg-transparent hover:cursor-text hover:text-primary/80 hover:ring-transparent focus:border-transparent focus:bg-transparent focus:cursor-text focus:text-primary/80 focus:ring-transparent`)} {...field} />);
+    return (<Input ref={ref} extraCharWidth={0} placeholder={placeholder} readOnly={true} className={cn(className, `p-0 cursor-text bg-transparent border-transparent text-primary/80 ring-transparent hover:border-transparent hover:bg-transparent hover:cursor-text hover:text-primary/80 hover:ring-transparent focus:border-transparent focus:bg-transparent focus:cursor-text focus:text-primary/80 focus:ring-transparent`)} value={value} />);
   }
 });
 DefaultFormItem.displayName = 'DefaultFormItem';
@@ -132,7 +148,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   const { className, ItemRenderer=DefaultFormItem } = props;
   const useForm = useFormField();
   const { fieldState, label, description, schema, item } = useForm;
-  const isModel = item === 'model';
+  const shouldSpan2 = item === 'model' || item === 'apiKey';
   const isBoolean = item === 'boolean' || item === 'checkbox' || item === 'switch';
   const isObject = item === 'object' || item === 'from-array' || item === 'node-schema';
   const selected = schema?.spec?.meta?.selected || false;
@@ -148,7 +164,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   }, [label]);
 
   return (
-    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-center p-1 gap-px`, isObject && 'col-span-2', isModel && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
+    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-center p-1 gap-px`, isObject && 'col-span-2', shouldSpan2 && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
       {(description || !isObject) && (<div className={cn("flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start")}>
         {!isObject && (<FormLabel className={cn("text-xs", selected && `text-accent`)}>{Label}</FormLabel>)}
         {description && (<FormDescription>{description}</FormDescription>)}
@@ -171,7 +187,6 @@ TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > {
   name: TName;
   schema: Schema;
-  control: Control<TFieldValues, TName>;
   label?: ReactNode | string;
   description?: ReactNode;
   placeholder?: ReactNode;
@@ -180,11 +195,10 @@ TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
   ItemRenderer: React.ComponentType<any>;
 }
 
-export const FormField = forwardRef<any, FormFieldProps<FieldValues, FieldPath<FieldValues>>>((props, ref) => {
+export const FormField = (props: FormFieldProps) => {
   const {
     name,
     schema,
-    control,
     label,
     description,
     placeholder,
@@ -196,16 +210,16 @@ export const FormField = forwardRef<any, FormFieldProps<FieldValues, FieldPath<F
   const {
     field,
     fieldState,
-    formState
-  } = useController({ name, control });
+    formState, 
+  } = useController({ name });
 
   return (
     <FormFieldContext.Provider value={{ schema, field, fieldState, formState, label, description, placeholder, readOnly }}>
-      <FormPrimitive.Field name={name} asChild>
-        <FormItem ItemRenderer={ItemRenderer} className={className} {...rest} />
+      <FormPrimitive.Field name={field?.name} asChild>
+        <FormItem ItemRenderer={ItemRenderer} className={className} />
       </FormPrimitive.Field>
     </FormFieldContext.Provider>
   );
-});
+};
 FormField.displayName = 'FormField';
 

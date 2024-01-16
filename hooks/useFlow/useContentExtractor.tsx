@@ -1,6 +1,6 @@
 'use client';
 
-import { getNodeName } from '@/components';
+import { formatNodeId, getNodeName } from '@/components';
 import { encodeBlobAsBase64, getSvgAsImage, getSvgElement } from '@/utils';
 import { Box, SVG_PADDING, TLEventInfo, TLShape, TLShapeId, useEditor } from '@tldraw/tldraw';
 import { useCallback, useEffect, useState } from 'react';
@@ -167,7 +167,7 @@ export const useContentExtractor = () => {
     useContentExtractorStore.setState((prevState) => {
       const nodes = editor.getCurrentPageShapesSorted();
       const nodePropertiesToExtract = nodes.reduce((propertiesToExtract: any, node: any, index: number) => {
-        const nodeKey = node.id.replace('shape:', '');
+        const nodeKey = formatNodeId(node.id) as TLShapeId;
         const keys = Object.keys(node).filter((key) => !defaultNodePropertiesToIgnore.includes(key as keyof TLShape)) as (keyof TLShape)[];
         const properties =
           prevState.nodesExtractorConfig.nodePropertiesToExtract[nodeKey]?.properties ||
@@ -272,12 +272,12 @@ export const useContentExtractor = () => {
     const nodesToExclude = (Object.keys(nodesExtractorConfig.nodePropertiesToExtract).filter((nodeId) => !nodesExtractorConfig.nodePropertiesToExtract[nodeId as TLShapeId].enabled) || []) as TLShapeId[];
     const nodes = getNodes(nodesToExclude);
     const nodeExtraction = nodes.map((node) => {
-      const nodeKey = node.id.replace('shape:', '') as TLShapeId;
+      const nodeKey = formatNodeId(node.id) as TLShapeId;
       const properties = nodesExtractorConfig.nodePropertiesToExtract[nodeKey]?.properties || {};
       const nodeProperties = Object.entries(node).reduce((acc: any, [key, value]) => {
         if (properties?.[key as keyof TLShape]) {
           if (key === 'id') {
-            acc['id'] = value.replace('shape:', '');
+            acc['id'] = formatNodeId(value);
           } else {
             acc[key] = value;
           }
@@ -295,7 +295,7 @@ export const useContentExtractor = () => {
     const nodes = editor.getCurrentPageShapesSorted();
     const selectedNodes = editor.getSelectedShapeIds();
     const nodeSchema = nodes.reduce((acc: any, node: any) => {
-      const nodeKey = node.id.replace('shape:', '');
+      const nodeKey = formatNodeId(node.id)!;
       const keys = (Object.keys(node).filter((key) => !defaultNodePropertiesToIgnore.includes(key as keyof TLShape)) as (keyof TLShape)[]) || [];
       const selected = selectedNodes.includes(node.id);
       // key -> yup boolean schema

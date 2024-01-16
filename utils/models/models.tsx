@@ -1,3 +1,4 @@
+'use client'
 
 import { forwardRef } from 'react';
 import * as yup from 'yup';
@@ -6,6 +7,7 @@ import OpenAI from 'openai';
 import { OpenAIModelConfig, OpenAiModels } from './openai-models';
 import { Badge } from '@radix-ui/themes';
 import { cn } from '../utils';
+import { HiddenKeyInput } from '@/components';
 
 export const dataModalities = ['text', 'image', 'audio', 'video'] as const;
 export type DataModality = (typeof dataModalities)[number];
@@ -87,6 +89,7 @@ export const ModelConfigLabels = {
 };
 
 export const ModelConfigSchemas: Record<string, any> = {
+  apiKey: yup.string().meta({ item: 'apiKey', label: 'API Key' }),
   provider: yup.string().oneOf(modelProviders).meta({ item: 'provider' }),
   modalities: yup
     .array()
@@ -158,7 +161,9 @@ export const DataModalityBadge = ({ modality, className, compact=false, animate=
 export const ModelFormItem = forwardRef<any, any>((props, ref) => {
   const { field, schema, placeholder, readOnly, form, item, className='' } = props;
 
-  if (item === 'modality') {
+  if (item === 'apiKey') {
+    return <HiddenKeyInput />;
+  } else if (item === 'modality') {
     const values = form.getValues();
     const modalities = values?.modalities;
     // for the content I want compact versions for teh trigger I want the full version

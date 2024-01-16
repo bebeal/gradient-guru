@@ -11,4 +11,5 @@ export * from './Highlighter';
 export * from './Terminal';
 export * from './TipTap';
 export * from './Chat';
-export * from './PageLink';
+export * from './SharedPreviewNode';
+export * from './HiddenKeyInput';

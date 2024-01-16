@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { DebugPanelContext, ThemePanelContext } from '@/hooks';
 import { isDevEnv, NextAuthProvider, StyledComponentsRegistry } from '@/utils';
+import { TITLE, TITLE_SHORTHAND } from './config';
 
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
 import '@/assets/fonts/Monaspace/Monaspace.css';
@@ -54,7 +55,7 @@ const Providers = ({ children }: any) => {
 
   useEffect(() => {
     const pathSegments = window.location.pathname;
-    const newTitle = pathSegments && pathSegments.length > 1 ? `GG • ${pathSegments}` : 'Gradient Guru';
+    const newTitle = pathSegments && pathSegments.length > 1 ? `${TITLE_SHORTHAND} • ${pathSegments}` : TITLE;
     document.title = newTitle;
   }, []);
 

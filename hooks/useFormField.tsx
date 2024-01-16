@@ -34,13 +34,9 @@ export const useFormField = () => {
     placeholder,
     readOnly=false,
   } = context;
-  const [uuid, setUuid] = useState<string>('');
-  useEffect(() => {
-    setUuid(nanoid());
-  }, []);
   const form = useFormContext();
-  const name = `${field.name}`;
-  const id = name;
+  const id = `${field.name}`
+  const name = field.name;
   const meta = schema.spec.meta || {};
   const item = meta.item || 'input';
   const label = labelRenderer || meta?.label || schema?.spec?.label || name;

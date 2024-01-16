@@ -15,7 +15,6 @@ export const FormFields = ({form, schema, prefix = '', labels={}, readOnly: bool
         key={`${prefix}${key}`}
         name={`${prefix}${key}`}
         schema={fieldSchema}
-        control={form.control}
         label={labels?.[key]}
         readOnly={boolean}
       />

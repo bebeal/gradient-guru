@@ -55,7 +55,7 @@ export const useModel = () => {
           throw Error('Could not generate a design from those wireframes.');
         }
         // Upload the HTML to S3
-        const body = { id: formatNodeId(responseNodeId), html, source: extracted?.dataUrl as string };
+        const body = { id: formatNodeId(responseNodeId), html, source: extracted?.dataUrl as string, dateCreated: Date.now() };
         api.putS3(body);
         // Update the shape with the new props
         editor.updateShape<PreviewNode>({
