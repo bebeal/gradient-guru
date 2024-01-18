@@ -89,7 +89,7 @@ export const ModelConfigLabels = {
 };
 
 export const ModelConfigSchemas: Record<string, any> = {
-  apiKey: yup.string().meta({ item: 'apiKey', label: 'API Key' }),
+  apiKey: yup.string().meta({ item: 'apiKey', noLabel: true }),
   provider: yup.string().oneOf(modelProviders).meta({ item: 'provider' }),
   modalities: yup
     .array()

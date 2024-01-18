@@ -50,7 +50,7 @@ export const GpuPartVariantSets: Record<GpuVariantSet, Record<GpuParts, VariantS
       className: cn('fill-[url(#pcieGradient)] stroke-[url(#pcieGradient)] [box-shadow:0_4px_6px_rgba(0, 0, 0, 0.1)] '),
     }, // gold gradient
     'inner-circle': {},
-    gpu: { className: cn('w-auto h-auto') },
+    gpu: { className: cn('w-full h-full p-1') },
   },
 };
 
@@ -116,6 +116,8 @@ export const ThreeFanGpu = forwardRef((props: ThreeFanGpuProps, ref?: any) => {
   interface BaseGpuIconProps {
     gpuVariant?: GpuVariantSet;
     className?: string;
+    width?: string;
+    height?: string;
   }
 
   const BaseGpuIcon = useCallback(
@@ -199,7 +201,7 @@ export const ThreeFanGpu = forwardRef((props: ThreeFanGpuProps, ref?: any) => {
         gpuVariant={variant}
         className={cn(
           className,
-          outline && `[&>*]:stroke-black [&>*]:[stroke-alignment:outside] [&>*]:[stroke-width:0.5]`
+          outline && `[&>*]:stroke-black [&>*]:[stroke-alignment:outside] [&>*]:[stroke-width:0.5] w-full h-full`
         )}
       />
     );

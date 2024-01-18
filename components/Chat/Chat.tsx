@@ -19,5 +19,5 @@ export const Chat = () => {
       <ChatList messages={messages} themeKey={themeKey} />
       <ChatTextArea />
     </div>
-  )
+  );
 };

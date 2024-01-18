@@ -28,11 +28,18 @@ export const HiddenKeyInput = (props: HiddenKeyInputProps) => {
 	}, [])
 
   return (
-		<div className={cn(`w-full flex items-center justify-center text-[var(--color-text-0)] focus:text-[var(--color-text-0)]`)}>
-			<div className={cn(`w-full flex items-center justify-center bg-[var(--color-low)] rounded gap-1 border-[4px_solid_var(--color_background)] max-w-[308px]`)}>
-				<div className={cn(`relative flex-grow-[2] after:pointer-events-none [&:not(:focus-within)]:after:content-["API Key"] [&:not(:focus-within)]:after:absolute [&:not(:focus-within)]:after:inset-0 [&:not(:focus-within)]:after:flex [&:not(:focus-within)]:after:items-center [&:not(:focus-within)]:after:p-[0px_12px] [&:not(:focus-within)]:after:z-[99999] [&:not(:focus-within)]:after:bg-none`)}>
+		<div className={cn(
+      `w-full flex flex-col items-center justify-center pointer-events-none text-[var(--color-text-0)] z-[var(--layer-panels)]`,
+    )}>
+			<div className={cn(`flex text-xs flex-row w-full rounded-lg p-1 max-w-[308px] gap-1 bg-[var(--color-low)] pointer-events-auto [border:4px_solid_var(--color-background)]`)}>
+				<div className={cn(
+          `relative flex-grow-[2]`,
+          `after:pointer-events-none`,
+          `[&:not(:focus-within)]:after:flex [&:not(:focus-within)]:after:absolute [&:not(:focus-within)]:after:items-center [&:not(:focus-within)]:after:text-xs [&:not(:focus-within)]:after:opacity-100 [&:not(:focus-within)]:after:content-["API_Key"] [&:not(:focus-within)]:after:inset-0 [&:not(:focus-within)]:after:p-[0px_12px] [&:not(:focus-within)]:after:z-[999999] [&:not(:focus-within)]:after:bg-none`
+        )}>
 					<input
-						id="openai_key_risky_but_cool"
+            id="api-key"
+            className="rounded text-transparent bg-[var(--color-panel)] w-full h-8 focus:text-[var(--color-text-0)]"
 						defaultValue={localStorage.getItem(localStorageKey) ?? ''}
 						onChange={handleChange}
 						onKeyDown={handleKeyDown}
@@ -41,11 +48,11 @@ export const HiddenKeyInput = (props: HiddenKeyInputProps) => {
 					/>
 				</div>
 				<a
-					className="flex items-center justify-center rounded bg-none w-8 h-8 flex-shrink-0 cursor-pointer"
+					className="text-primary w-8 h-8 p-[7px] rounded flex items-center justify-center pointer-events-auto cursor-pointer bg-none overflow-hidden"
 					target="_blank"
 					href="https://tldraw.notion.site/Make-Real-FAQs-93be8b5273d14f7386e14eb142575e6e?pvs=4"
 				>
-					{cooldown ? <IconSetCache.Carbon.Checkmark /> : <IconSetCache.Carbon.Help />}
+					{cooldown ? <IconSetCache.Carbon.Checkmark className="h-full w-auto" /> : <IconSetCache.Carbon.Help className="h-full w-auto" />}
 				</a>
 			</div>
 		</div>

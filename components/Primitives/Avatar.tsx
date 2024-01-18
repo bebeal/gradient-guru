@@ -9,6 +9,8 @@ import { ReactElement, useState } from "react";
 export interface AvatarProps extends AvatarPrimitive.AvatarProps {
   variant?: Variant;
   radius?: Radius;
+  width?: string;
+  height?: string;
   fallback?: any;
   size?: string;
   color?: string;
@@ -16,7 +18,7 @@ export interface AvatarProps extends AvatarPrimitive.AvatarProps {
   statusColor?: string;
   badge?: ReactElement;
   padding?: string;
-  border?: boolean;
+  border?: any;
   onLoadingStatusChange?: (status: 'idle' | 'loading' | 'loaded' | 'error') => void;
 }
 
@@ -24,6 +26,8 @@ export const Avatar = (props: AvatarProps) => {
   const {
     variant='solid',
     radius='full',
+    width,
+    height,
     fallback,
     size='auto',
     color='accent',
@@ -37,13 +41,17 @@ export const Avatar = (props: AvatarProps) => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'loaded' | 'error'>('idle');
   return (
         <AvatarPrimitive.Root
-          key={`avatar-${color}-${size}-${variant}-${radius}`}
+          key={`avatar-${color}-${width}-${height}-${variant}-${radius}`}
           className={cn(
-            `relative flex h-${size} w-${size} items-center justify-center align-middle select-none uppercase flex-shrink-0`,
+            `relative flex items-center justify-center align-middle select-none uppercase flex-shrink-0`,
             `bg-${color} text-primary`,
+            size && `w-${size} h-${size}`,
+            width && `w-${width}`,
+            height && `h-${height}`,
             border,
             RadiusClasses(radius),
           )}
+          {...rest}
         >
           {status === 'idle' || status === 'loading' ? <span className="w-full h-full flex items-center justify-center leading-none" /> : null}
           {status === 'error' ? (

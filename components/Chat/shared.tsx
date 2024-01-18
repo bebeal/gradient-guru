@@ -14,6 +14,9 @@ export type ChatRoomUser = {
   theme?: string;
   color?: string;
   role?: OpenAi.ChatCompletionRole;
+  height?: string;
+  size?: string;
+  width?: string;
 };
 
 export type ChatRoomUserMessage = {
@@ -73,6 +76,7 @@ export const ChatBotUsers: Record<string, ChatRoomUser> = {
     icon: <IconSetCache.Logos.OpenAI className="bg-green" />,
     color: 'green',
     id: 'gpt-3.5-turbo',
+    size: '6',
   },
   'gpt-4': {
     role: 'assistant',
@@ -80,6 +84,7 @@ export const ChatBotUsers: Record<string, ChatRoomUser> = {
     icon: <IconSetCache.Logos.OpenAI className="bg-violet" />,
     color: 'violet',
     id: 'gpt-4',
+    size: '6',
   },
   'identity': {
     role: 'assistant',
@@ -87,13 +92,15 @@ export const ChatBotUsers: Record<string, ChatRoomUser> = {
     icon: <IconSetCache.Carbon.Replicate className="bg-violet" />,
     color: 'violet',
     id: 'identity',
+    size: '6',
   },
   'unknown': {
     role: 'user',
     name: '?',
-    icon: <IconSetCache.Custom.MissingNo className="bg-gray" />,
+    icon: <IconSetCache.Custom.WildMissingNoAppeaered width="100%" className="bg-gray" />,
     color: 'gray',
     id: '?',
+    width: 'full',
   },
   'noah': {
     role: 'user',
@@ -101,5 +108,6 @@ export const ChatBotUsers: Record<string, ChatRoomUser> = {
     icon: 'N',
     color: 'blue',
     id: 'user',
+    size: '6',
   },
 };

@@ -3,18 +3,20 @@
 import { Avatar, ChatRoomMessage, ChatRoomUser, ChatRoomUserMessage, CopyButton } from '@/components';
 import { useChatRoom } from '@/hooks';
 import { cn, formatTime, getInitials } from '@/utils';
+import { rest } from 'lodash';
 
 export interface ChatMessageUserProps {
   user: ChatRoomUser;
 }
 export const ChatMessageUser = (props: ChatMessageUserProps) => {
   const {
-    user
+    user,
+    ...rest
   } = props;
 
   return (
-    <div className="flex flex-col items-center gap-1 w-24 p-1 px-2 text-pretty">
-      <Avatar color={user?.color} fallback={user?.icon || getInitials(user?.name || "")} size="6">
+    <div className="flex flex-col items-center gap-1 min-w-24 h-full p-1 px-2 text-pretty">
+      <Avatar border={""} color={user?.color} fallback={user?.icon || getInitials(user?.name || "")} size={user?.size} width={user?.width} height={user?.height} {...rest}>
         {user?.icon}
       </Avatar>
       {user?.role !== 'user' && <div className="text-xs text-gray-300">{user?.role}</div>}
@@ -68,12 +70,11 @@ export interface ChatMessageProps {
 export const ChatMessage = (props: ChatMessageProps) => {
   const {
     chatRoomMessage,
-    className
+    className,
   } = props;
   const { fetchUser } = useChatRoom();
   const user = fetchUser(chatRoomMessage.userId);
   const message = chatRoomMessage.message;
-
   return (
     <div className={cn("p-4 flex items-start w-full", className)}>
       <ChatMessageUser user={user} />

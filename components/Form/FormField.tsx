@@ -152,6 +152,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   const isBoolean = item === 'boolean' || item === 'checkbox' || item === 'switch';
   const isObject = item === 'object' || item === 'from-array' || item === 'node-schema';
   const selected = schema?.spec?.meta?.selected || false;
+  const noLabel = schema?.spec?.meta?.noLabel || false;
 
   const Label = useMemo(() => {
     // if label is a react fucntional component, call it to render
@@ -166,7 +167,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   return (
     <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-center p-1 gap-px`, isObject && 'col-span-2', shouldSpan2 && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
       {(description || !isObject) && (<div className={cn("flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start")}>
-        {!isObject && (<FormLabel className={cn("text-xs", selected && `text-accent`)}>{Label}</FormLabel>)}
+        {!isObject && !noLabel && (<FormLabel className={cn("text-xs", selected && `text-accent`)}>{Label}</FormLabel>)}
         {description && (<FormDescription>{description}</FormDescription>)}
       </div>)}
       <div className={cn("flex-col flex w-full h-auto justify-center items-center px-1.5", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end')}>

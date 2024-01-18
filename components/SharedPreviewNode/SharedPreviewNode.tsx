@@ -149,7 +149,7 @@ export const SharedPreviewNode = (props: SharedPreviewNodeProps) => {
     return yup.object().shape({
       id: yup.string().meta({ label: 'ID', item: 'readonly' }),
       version: yup.number().oneOf(versions, `Invalid Version: ${version}`).meta({ item: 'select', label: 'Version' }),
-      source: yup.string().meta({ label: 'Source', item: 'readonly' }),
+      // source: yup.string().meta({ label: 'Source', item: 'readonly' }),
       dateCreated: yup.string().meta({ label: 'Date Created', item: 'displayDate' }),
     }).meta({ item: 'object' });
   }, [versions]);

@@ -11,7 +11,8 @@ interface PageState {
 }
 
 const IconSetsPage = () => {
-  const [size, setSize] = useState<number>(24);
+  const [width, setWidth] = useState<number | string>(32);
+  const [height, setHeight] = useState<number | string>('100%');
   const [currentPage, setCurrentPage] = useState<PageState>({});
   const [globalSearchQuery, setGlobalSearchQuery] = useState<string>('');
   const [localSearchQueries, setLocalSearchQueries] = useState<{ [key: string]: string }>({});
@@ -80,22 +81,30 @@ const IconSetsPage = () => {
   return (
     <div className='p-8'>
       <div className='flex flex-row w-full justify-center items-center p-2'>
-      <Input
-        extraCharWidth={10}
-        type="text"
-        placeholder="Search icons or sets..."
-        value={globalSearchQuery}
-        onChange={handleGlobalSearchChange}
-        className="w-full mr-2 border border-gray-300 rounded"
-      />
-      <Input
-        extraCharWidth={10}
-        type="number"
-        placeholder="Icon size..."
-        value={size}
-        onChange={(e) => setSize(parseInt(e.target.value))}
-        className="w-auto ml-2 border border-gray-300 rounded"
-      />
+        <Input
+          extraCharWidth={10}
+          type="text"
+          placeholder="Search icons or sets..."
+          value={globalSearchQuery}
+          onChange={handleGlobalSearchChange}
+          className="w-full mr-2 border border-gray-300 rounded"
+        />
+        <Input
+          extraCharWidth={10}
+          type="text"
+          placeholder="Width"
+          value={width}
+          onChange={(e) => setWidth(parseInt(e.target.value))}
+          className="w-auto ml-2 border border-gray-300 rounded"
+        />
+        <Input
+          extraCharWidth={10}
+          type="text"
+          placeholder="Height"
+          value={height}
+          onChange={(e) => setHeight(parseInt(e.target.value))}
+          className="w-auto ml-2 border border-gray-300 rounded"
+        />
       </div>
       {filteredIconSets.map((iconSetName: string) => {
         const IconSet = IconSetCache[iconSetName];
@@ -104,6 +113,14 @@ const IconSetsPage = () => {
           page * ICONS_PER_PAGE,
           (page + 1) * ICONS_PER_PAGE
         );
+
+        let iconProps = {};
+        if (typeof width === 'number') {
+          iconProps = { ...iconProps, width };
+        }
+        if (typeof height === 'number') {
+          iconProps = { ...iconProps, height };
+        }
 
         return (
           <div key={iconSetName} className="flex flex-col justify-center items-center gap-4 rounded p-2">
@@ -128,19 +145,12 @@ const IconSetsPage = () => {
                           }
                           className="w-full m-2 border border-gray-300 rounded"
                         />
-                        <div className="grid grid-cols-6 gap-2 w-full h-full justify-center items-center">
-                          {paginatedIcons.map(([IconName, Icon]: [string, any]) => (
-                            <div
-                              key={IconName}
-                              className="flex bg-gray-600 bg-opacity-50 border border-gray-400 rounded shadow-2xl justify-center items-center overflow-hidden flex-shrink-0"
-                            >
-                              <div
-                                className={cn(
-                                  `flex flex-col items-center justify-center gap-1 w-full h-[${size + 32}px] p-1`
-                                )}
-                              >
-                                {Icon && <Icon width={`${size}`} height={`${size}`} />}
-                                <div className="flex flex-wrap break-all text-xs text-center justify-center items-center w-full h-12 overflow-hidden">
+                        <div className="grid grid-cols-5 gap-2 w-full h-auto justify-center items-stretch auto-rows-fr overflow-auto">
+                          {paginatedIcons.map(([IconName, IconFromSet]: [string, any]) => (
+                            <div key={IconName} className="flex flex-col bg-gray-600 bg-opacity-50 border border-gray-400 rounded shadow-2xl overflow-auto h-full justify-center">
+                              <div className="flex flex-col items-center w-full h-full p-1 overflow-hidden">
+                                {IconFromSet && <IconFromSet {...iconProps} />}
+                                <div className="text-xs w-full flex text-center justify-center items-end">
                                   {IconName}
                                 </div>
                               </div>

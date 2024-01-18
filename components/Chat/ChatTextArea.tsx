@@ -47,7 +47,7 @@ export const ChatTextArea = (props: ChatTextAreaProps) => {
   }, []);
 
   return (
-      <div className={cn("relative flex flex-col h-auto p-2 from-[#363d44] from-60% bg-gradient-to-b to-[#202027]/30 backdrop-blur-2xl", className)}>
+      <div className={cn("relative flex flex-col h-auto p-2 from-[#000000] from-60% bg-gradient-to-b to-[#000000]/30 backdrop-blur-2xl", className)}>
         <Separator className="bg-primary/80 w-full absolute left-0 top-0 h-px" />
         <div className="relative flex flex-row h-auto">
           <div className="absolute top-1/2 -translate-y-1/2 left-2 w-8 h-full">
