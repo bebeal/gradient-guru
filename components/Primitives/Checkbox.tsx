@@ -25,7 +25,7 @@ import { IconSetCache } from "..";
 export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>) => {
   const {
     id,
-    children=<IconSetCache.Carbon.Checkmark width={"100%"} />,
+    children=<IconSetCache.Carbon.Checkmark width={"100%"} fill="black" stroke="black" />,
     checked: externalChecked,
     defaultChecked=false, // 'indeterminate',
     onChange: onChangeCallback,
@@ -75,7 +75,7 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
       checked={internalChecked}
       className={cn(
         `flex w-[${size}px] h-[${size}px] items-center justify-center rounded border border-primary`,
-        "bg-secondary radix-state-checked:bg-accent hover:ring-accent hover:ring-opacity-50 hover:ring-[0.5px] hover:outline-none",
+        "bg-secondary radix-state-checked:bg-accent hover:ring-accent/50 hover:ring-[0.5px] hover:outline-none",
         "focus:outline-none focus-visible:ring focus-visible:ring-accent focus-visible:ring-opacity-75",
         DisabledClasses,
         RadiusClasses(radius),

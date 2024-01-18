@@ -105,7 +105,7 @@ export const Slider = forwardRef<any, SliderProps>((props, ref) => {
       onChange={noop}
       onValueChange={onValueChange}
     >
-      <SliderPrimitive.Track className="relative h-1 w-full flex-grow rounded-full bg-tertiary cursor-pointer">
+      <SliderPrimitive.Track className="relative h-1 w-full flex-grow rounded-full bg-secondary cursor-pointer">
         {marks?.map((markValue, index) => (
           <div
             key={index}
@@ -126,7 +126,7 @@ export const Slider = forwardRef<any, SliderProps>((props, ref) => {
         ref={thumbRef}
         className={cn(
           `block h-[${thumbSize}px] w-[${thumbSize}px] rounded-full bg-accent cursor-pointer pointer-events-auto overflow-hidden`,
-          "hover:outline-none hover:ring-[0.5px] hover:ring-accent hover:ring-opacity-75 ",
+          "hover:outline-none hover:ring-[1px] hover:ring-accent hover:ring-opacity-50",
           "focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75",
           "focus-within:outline-none focus-within:ring-2 focus-within:ring-accent focus-within:ring-opacity-75",
         )}

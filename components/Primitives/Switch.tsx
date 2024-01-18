@@ -78,25 +78,19 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
     onPressedChange();
   }, [onPressedChange]);
 
-  const baseColor = isPressed === undefined ? 'rgba(80, 80, 80, 0.7)' : isPressed ? 'rgba(0, 140, 255, 1)' : 'rgba(80, 80, 80, 0.7)';
-  const thumbColor = isPressed === undefined ? 'rgb(255, 255, 255)' : isPressed ? 'rgb(255, 255, 255)' : 'rgb(255, 255, 255)';
+  const baseColor = isPressed === undefined ? 'rgb(var(--background-secondary))' : isPressed ? 'rgb(var(--accent-500))' : 'rgb(var(--background-secondary))';
+  const thumbColor = isPressed === undefined ? 'rgb(0, 0, 0)' : isPressed ? 'rgb(0, 0, 0)' : 'rgb(0, 0, 0)';
+  const thumbSize = "1rem";
   const style: any = {
     transition: `background, box-shadow ${animationTime} ease-out`,
     boxShadow: isPressed === undefined
-                ? `calc(${handleOffset} / 2) 0 0 2px ${baseColor} inset, calc(${handleOffset} / -2) 0 0 2px ${baseColor} inset, 0 0 0 2px ${baseColor} inset`
-                : isPressed ? `${handleOffset} 0 0 2px ${baseColor} inset, 0 0 0 2px ${baseColor} inset`
-                            : `calc(${handleOffset} * -1) 0 0 2px ${baseColor} inset, 0 0 0 2px ${baseColor} inset`,
-    appearance: 'none',
-    border: `solid 1px ${thumbColor}`,
-    borderRadius: '1.9rem',
-    height: '1.25rem',
-    width: '2.5rem',
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    backgroundColor: thumbColor,
+                ? `calc(${thumbSize} / 2) 0 0 2px ${baseColor} inset, calc(${thumbSize} / -2) 0 0 2px ${baseColor} inset, 0 0 0 2px ${baseColor} inset`
+                : isPressed ? `${thumbSize} 0 0 2px ${baseColor} inset, 0 0 0 2px ${baseColor} inset`
+                            : `calc(${thumbSize} * -1) 0 0 2px ${baseColor} inset, 0 0 0 2px ${baseColor} inset`,
   };
 
   return (
-    <div className={cn("flex w-auto justify-center items-center gap-1", readOnly && 'cursor-default pointer-events-none')}>
+    <div className={cn("flex w-auto h-auto justify-center items-center gap-1", readOnly && 'cursor-default pointer-events-none')}>
       {offLabel && (
         <div className={cn("text-[10px] text-muted break-words text-center w-12", !internalPressed && `text-primary`)}>
           {offLabel}
@@ -105,12 +99,20 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
       <TogglePrimitive.Root
         id={id}
         asChild={asChild}
-        ref={ref} className={className} style={style} disabled={disabled}
+        ref={ref} className={cn(
+          `appearance-none border border-primary rounded-[1.9rem] h-[1.25rem] w-[2.25rem] cursor-pointer bg-[${thumbColor}]`,
+          disabled && `cursor-not-allowed`,
+          `hover:outline-accent/50 hover:outline-[0.5px] hover:outline`,
+          ``,
+          className
+        )}
+        style={style}
+        disabled={disabled}
         pressed={isPressed}
-        {...rest}
         onChange={noop}
         onClick={onClick}
         onPressedChange={onPressedChange}
+        {...rest}
       >{children}</TogglePrimitive.Root>
       {onLabel && (
         <div className={cn("text-[10px] text-muted break-words text-center w-12", internalPressed && `text-primary`)}>

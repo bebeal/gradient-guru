@@ -41,9 +41,9 @@ export const NodesTab = () => {
 
   useEffect(() => {
     if (!mounted) {
+      setMounted(true);
       const schemas = buildNodeSchemas(editor);
       setNodesSchemas(schemas);
-      setMounted(true);
     }
   }, [editor, mounted, nodesSchemas]);
 
@@ -65,7 +65,8 @@ export const NodesTab = () => {
 
   const items = useCallback(() => {
     const selectedShapes = editor.getSelectedShapeIds();
-    return editor.getCurrentPageShapesSorted().map((node: any, index: number) => {
+    const pageShapes = editor.getCurrentPageShapesSorted();
+    return pageShapes.map((node: any, index: number) => {
       // check if node is selected
       const selected = selectedShapes.includes(node.id);
       return {

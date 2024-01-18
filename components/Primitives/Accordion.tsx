@@ -82,8 +82,8 @@ export const Accordion = (props: AccordionProps) => {
                   spaceBetween !== 0 && `radix-state-open:rounded-t-${ConvertRadiusClass(radius)} radix-state-closed:${RadiusClasses(radius)}`,
                   spaceBetween === 0 && index === 0 && `rounded-t-${ConvertRadiusClass(radius)}`,
                   spaceBetween === 0 && index === items.length - 1 && `rounded-b-${ConvertRadiusClass(radius)} radix-state-open:rounded-b-none`,
-                  'relative overflow-hidden bg-primary w-full flex',
-                  'hover:bg-secondary/80 hover:text-primary radix-state-open:text-primary'
+                  'relative overflow-hidden bg-primary w-full flex border border-transparent',
+                  'hover:bg-secondary/80 hover:text-primary radix-state-open:text-primary',
                 )}
               >
                 <div className={cn('flex w-full h-auto items-center px-2 py-1 pointer-events-none', triggerClassName)}>

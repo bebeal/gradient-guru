@@ -161,7 +161,8 @@ const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>((props, ref) => {
       ref={ref}
       value={value}
       className={cn(
-        'overflow-hidden relative h-auto justify-center items-center text-center flex-grow cursor-pointer select-none py-1 px-1 text-xs outline-none focus:bg-accent focus:text-primary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[state=checked]:text-primary',
+        `text-secondary`,
+        'overflow-hidden relative h-auto justify-center items-center text-center flex-grow cursor-pointer select-none py-1 px-1 text-xs outline-none focus:bg-accent/70 focus:text-black data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[state=checked]:text-primary',
         `whitespace-normal break-all flex overflow-hidden w-full hyphens-auto`,
         RadiusClasses(radius),
         className
@@ -197,6 +198,7 @@ export const SelectTrigger = forwardRef<any, SelectTriggerProps>((props, ref) =>
       defaultValue={placeholder}
       className={cn(
         `relative text-secondary flex w-full h-auto overflow-hidden justify-center items-center whitespace-normal break-all border border-secondary bg-secondary px-2 py-0.5 text-sm shadow-sm`,
+        `hover:ring-accent/50 hover:ring-[0.5px] hover:outline-none`,
         `placeholder:text-muted focus:outline-none focus:ring-inset focus:ring-1 focus:ring-accent disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1`,
         `data-[state=open]:outline-none data-[state=open]:ring-1 data-[state=open]:ring-accent data-[state=open]:ring-inset data-[state=open]:text-primary`,
         RadiusClasses(radius),
