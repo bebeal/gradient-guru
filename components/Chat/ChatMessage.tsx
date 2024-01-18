@@ -15,7 +15,7 @@ export const ChatMessageUser = (props: ChatMessageUserProps) => {
   } = props;
 
   return (
-    <div className="flex flex-col items-center gap-1 min-w-24 h-full p-1 px-2 text-pretty">
+    <div className="flex flex-col items-center gap-1 max-w-24 w-auto h-full p-1 px-2 text-pretty">
       <Avatar border={""} color={user?.color} fallback={user?.icon || getInitials(user?.name || "")} size={user?.size} width={user?.width} height={user?.height} {...rest}>
         {user?.icon}
       </Avatar>
