@@ -118,6 +118,9 @@ module.exports = {
   swcMinify: true,
   output: process.env.NEXT_PRIVATE_STANDALONE ? 'standalone' : undefined,
   modularizeImports: undefined,
+  cacheHandler: undefined,
+  // default to 50MB limit
+  cacheMaxMemorySize: 50 * 1024 * 1024,
   experimental: {
     webpackBuildWorker: true,
     serverMinification: true,
@@ -150,9 +153,6 @@ module.exports = {
     gzipSize: true,
     craCompat: false,
     esmExternals: true,
-    // default to 50MB limit
-    isrMemoryCacheSize: 50 * 1024 * 1024,
-    incrementalCacheHandlerPath: undefined,
     fullySpecified: false,
     outputFileTracingRoot: process.env.NEXT_PRIVATE_OUTPUT_TRACE_ROOT || '',
     swcTraceProfiling: false,
