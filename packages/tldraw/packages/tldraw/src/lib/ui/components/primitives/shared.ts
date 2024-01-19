@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 
 /** @internal */
 export const cn = (...inputs: ClassValue[]): string => {
-	return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs))
 }
 
 /** @internal */

@@ -20,7 +20,14 @@ export function Kbd(props: KbdProps) {
 
 		for (let i = 0; i < mappedKeys.length; i++) {
 			// I hate that this key is horiztonally offset, so this is to line it up with the other keys
-			elements.push(<span key={i}>{mappedKeys[i]}</span>)
+			elements.push(
+				<span
+					key={i}
+					className={cn(mappedKeys[i] === '⇧' && 'transform translate-y-[-1px] h-full')}
+				>
+					{mappedKeys[i]}
+				</span>
+			)
 			if (plusSign && i < mappedKeys.length - 1 && mappedKeys[i + 1] !== ' ') {
 				elements.push('+')
 			}

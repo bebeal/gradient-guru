@@ -58,7 +58,6 @@
 		"clsx": "^2.1.0",
 		"hotkeys-js": "^3.11.2",
 		"lz-string": "^1.4.4",
-		"node-gyp": "^10.0.1",
 		"tailwind-merge": "^2.2.0"
 	},
 	"peerDependencies": {

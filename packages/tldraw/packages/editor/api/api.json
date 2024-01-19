@@ -13209,7 +13209,7 @@
             {
               "kind": "Method",
               "canonicalReference": "@tldraw/editor!Editor#getUnorderedRenderingShapes:member(1)",
-              "docComment": "/**\n * @public\n */\n",
+              "docComment": "/**\n * Get the shapes that should be displayed in the current viewport.\n *\n * @public\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30501,7 +30501,7 @@
             {
               "kind": "Property",
               "canonicalReference": "@tldraw/editor!ShapeUtil#hideRotateHandle:member",
-              "docComment": "/**\n * Whether the shape should hide its rotation handles when selected.\n *\n * @public\n */\n",
+              "docComment": "/**\n * Whether the shape should hide its resize handles when selected.\n *\n * @public\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

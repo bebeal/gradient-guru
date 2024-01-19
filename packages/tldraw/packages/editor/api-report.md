@@ -754,7 +754,6 @@ export class Editor extends EventEmitter<TLEventMap> {
     // @internal (undocumented)
     getStyleForNextShape<T>(style: StyleProp<T>): T;
     getSvg(shapes: TLShape[] | TLShapeId[], opts?: Partial<TLSvgOptions>): Promise<SVGSVGElement | undefined>;
-    // (undocumented)
     getUnorderedRenderingShapes(useEditorState: boolean): {
         id: TLShapeId;
         shape: TLShape;
