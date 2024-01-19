@@ -3039,7 +3039,7 @@ export class Editor extends EventEmitter<TLEventMap> {
 		}
 	}
 
-	/**
+  /**
 	 * Get the shapes that should be displayed in the current viewport.
 	 *
 	 * @public

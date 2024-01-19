@@ -399,7 +399,7 @@ export const StarterKitExtensions = [
   'Blockquote',
   'BulletList',
   'TerminalBlock', // replacement for code block
-  'Document', // required doc
+  'Document',      // required doc
   'HardBreak',
   'Heading',
   'HorizontalRule',
