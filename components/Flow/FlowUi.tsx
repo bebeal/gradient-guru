@@ -6,7 +6,7 @@ import { DebugPanel } from '@tldraw/tldraw/src/lib/ui/components/DebugPanel';
 import { Dialogs } from '@tldraw/tldraw/src/lib/ui/components/Dialogs';
 import { FollowingIndicator } from '@tldraw/tldraw/src/lib/ui/components/FollowingIndicator';
 import { memo, useCallback, useEffect, useState } from 'react';
-// import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu';
+import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu';
 // import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
 import { Toasts, ToastViewport, zoomToFitNewNode } from '@/components';
 import { ToastsProvider, useContentRecorder } from '@/hooks';
@@ -25,7 +25,7 @@ import { useTranslation } from '@tldraw/tldraw/src/lib/ui/hooks/useTranslation/u
 import { TldrawUiContextProvider } from '@tldraw/tldraw/src/lib/ui/TldrawUiContextProvider';
 import { FlowMenu, FlowToolbar, ScratchPanel } from './Extensions';
 import { TestButtons } from './Extensions/TestButtons';
-import { FlowSidePanel } from './TabPanel';
+import { FlowTabPanel } from './TabPanel';
 
 export type FlowUiProps = TldrawUiProps & {
   initialShapes?: TLShape[];
@@ -105,7 +105,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
   return (
     <div className="w-full h-full flex flex-col">
       <div className="w-full h-full flex flex-row">
-      <FlowSidePanel />
+      <FlowTabPanel />
       <div
         className={cn('tlui-layout', {
           'tlui-layout__mobile': breakpoint < 5,
@@ -141,6 +141,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
               <div className={cn('tlui-layout__bottom__main')}>
                 <NavigationZone />
                 <FlowToolbar />
+                <HelpMenu />
               </div>
               {isDebugMode && <DebugPanel renderDebugMenuItems={() => <TestButtons />} />}
             </div>

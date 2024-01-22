@@ -1,8 +1,8 @@
 'use client'
 
-import { ReactNode, forwardRef, useCallback, useMemo } from "react";
+import { ReactNode, forwardRef, useMemo } from "react";
 import * as FormPrimitive from "@radix-ui/react-form";
-import { Control, FieldPath, FieldValues, useController } from "react-hook-form";
+import { FieldPath, FieldValues, useController } from "react-hook-form";
 import { FormFieldContext, useFormField } from "@/hooks";
 import { Schema } from "./Form";
 import { cn, formatDate } from "@/utils";
@@ -30,7 +30,7 @@ export const FormItemToItemMap: Record<BasicFormItem, BasicItem[]> = {
 };
 
 export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
-  const { field, schema, placeholder, readOnly, form, item, className = '' } = props;
+  const { field, schema, placeholder, readOnly, form, item, className, } = props;
   const hasMin = schema?.exclusiveTests?.min;
   const hasMax = schema?.exclusiveTests?.max;
   let min = Infinity;
@@ -75,7 +75,7 @@ export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
         className="text-xs w-full"
         triggerClassName="px-2 py-1 font-semibold text-xs text-primary"
         items={[ 
-          {name: field?.label || field?.name, open: true, content: (
+          {name: field?.label || field?.name, open: false, content: (
             <div ref={ref} className="w-auto h-full grid grid-cols-2 col-span-2 gap-1 p-2 overflow-auto rounded items-center">
               <FormFields form={form} schema={schema} prefix={`${field?.name}.`} readOnly={readOnly} />
             </div>
@@ -172,7 +172,7 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
       </div>)}
       <div className={cn("flex-col flex w-full h-auto justify-center items-center px-1.5", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end')}>
         <FormSlot>
-          <ItemRenderer {...props} {...useForm} className={cn(className, 'text-xs w-full placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error' )} />
+          <ItemRenderer {...props} {...useForm} className={cn(className, 'text-xs placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error' )} />
         </FormSlot>
       </div>
       {!isObject && (<FormMessage />)}

@@ -15,7 +15,7 @@ const config: Config = {
     `text-red-500 text-error-500 text-green-500 text-success-500 text-primary-500 text-accent-500`,
     `bg-red-500 bg-error-500 bg-green-500 bg-success-500 bg-primary-500 bg-accent-500`,
     'prose prose-sm prose-base prose-slate dark:prose-invert focus:outline-none',
-    `object-fit object-contain object-cover max-w-full !max-w-full text-error`
+    `object-fit object-contain object-cover max-w-full !max-w-full text-error bg-[rgb(0, 0, 0)] bg-[rgb(var(--accent-500))]`
   ],
   darkMode: ['class'],
   content: [
@@ -168,20 +168,20 @@ const config: Config = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: { maxHeight: "0" },
+          to: { maxHeight: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: { maxHeight: "var(--radix-accordion-content-height)" },
+          to: { maxHeight: "0" },
         },
         'accordion-out': {
-          'from': { width: '0' },
-          'to': { width: 'var(--radix-accordion-content-width)' }
+          'from': { maxWidth: '0' },
+          'to': { maxWidth: 'var(--radix-accordion-content-width)' }
         },
         'accordion-in': {
-          'from': { width: 'var(--radix-accordion-content-width)' },
-          'to': { width: '0' }
+          'from': { maxWidth: 'var(--radix-accordion-content-width)' },
+          'to': { maxWidth: '0' }
         },
         "bigger-bounce": {
           '0%': {

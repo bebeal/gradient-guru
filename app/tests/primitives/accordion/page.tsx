@@ -4,11 +4,9 @@ import { Accordion } from "@/components";
 import { useState } from "react";
 
 const AccordionPage = () => {
-  const [value, setValue] = useState<boolean | undefined>(undefined);
-
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-primary text-primary">
-      <div className="flex justify-center gap-2 w-[300px] p-4 border border-primary">
+      <div className="flex justify-center gap-2 w-[300px] min-h-[350px] p-4 border border-primary">
         <Accordion
           items={[
             {

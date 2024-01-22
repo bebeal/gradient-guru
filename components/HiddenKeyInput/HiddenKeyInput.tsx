@@ -12,10 +12,10 @@ export const HiddenKeyInput = (props: HiddenKeyInputProps) => {
   } = props;
   const [cooldown, setCooldown] = useState<boolean>(false);
 
-  	// Store the API key locally
+  // Store the API key locally
 	const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		localStorage.setItem(localStorageKey, e.target.value)
-	}, []);
+	}, [localStorageKey]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
@@ -25,13 +25,13 @@ export const HiddenKeyInput = (props: HiddenKeyInputProps) => {
 			setCooldown(true);
 			setTimeout(() => setCooldown(false), 1200);
 		}
-	}, [])
+	}, []);
 
   return (
 		<div className={cn(
       `w-full flex flex-col items-center justify-center pointer-events-none text-[var(--color-text-0)] z-[var(--layer-panels)]`,
     )}>
-			<div className={cn(`flex text-xs flex-row w-full rounded-lg p-1 max-w-[308px] gap-1 bg-[var(--color-low)] pointer-events-auto [border:4px_solid_var(--color-background)]`)}>
+			<div className={cn(`flex text-xs flex-row w-full rounded-lg p-1 max-w-[308px] gap-1 bg-[var(--color-low)] pointer-events-auto [border:4px_solid_var(--color-low)]`)}>
 				<div className={cn(
           `relative flex-grow-[2]`,
           `after:pointer-events-none`,

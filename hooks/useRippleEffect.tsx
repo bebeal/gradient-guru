@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback } from "react";
+import { useCallback, MouseEvent } from "react";
 // import styled from "styled-components";
 
 // const RippleEffectSpan = styled.span`
@@ -39,13 +39,18 @@ export const useRippleEffect = () => {
     return ripple;
   }
 
-  const createRippleEffect = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+  const createRippleEffect = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     const target = event.currentTarget;
     if (!target) {
       console.error('target is null. Unable to create ripple effect.');
       return;
     }
-    const ripple = createRipple(target.clientWidth, target.clientHeight, event.nativeEvent.offsetX, event.nativeEvent.offsetY);
+    // Calculate the ripple position relative to the button's boundaries
+    const rect = target.getBoundingClientRect();
+    const rippleX = event.clientX - rect.left;
+    const rippleY = event.clientY - rect.top;
+
+    const ripple = createRipple(target.clientWidth, target.clientHeight, rippleX, rippleY);
     target.appendChild(ripple);  
     ripple.addEventListener('animationend', () => {
       ripple.remove();

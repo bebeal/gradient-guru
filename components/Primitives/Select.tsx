@@ -1,10 +1,10 @@
 'use client';
 
-import React, { ForwardedRef, forwardRef, useCallback, useEffect, useMemo } from 'react';
+import React, { ForwardedRef, forwardRef, useCallback, useMemo } from 'react';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import { CaretSortIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { cn, noop } from '@/utils';
+import { cn } from '@/utils';
 import { Radius, RadiusClasses } from '@/components';
 
 // ***********************
@@ -162,7 +162,7 @@ const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>((props, ref) => {
       value={value}
       className={cn(
         `text-secondary`,
-        'overflow-hidden relative h-auto justify-center items-center text-center flex-grow cursor-pointer select-none py-1 px-1 text-xs outline-none focus:bg-accent/70 focus:text-black data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[state=checked]:text-primary',
+        'overflow-hidden relative h-auto justify-center items-center text-center flex-grow cursor-pointer select-none py-1 px-1 text-xs outline-none focus:bg-accent/30 focus:text-black data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[state=checked]:text-primary',
         `whitespace-normal break-all flex overflow-hidden w-full hyphens-auto`,
         RadiusClasses(radius),
         className
@@ -206,7 +206,7 @@ export const SelectTrigger = forwardRef<any, SelectTriggerProps>((props, ref) =>
       )}
       {...rest}
     >
-      <div className="flex w-full h-full items-center justify-center justify-self-center text-center">
+      <div className={cn("flex w-full h-auto justify-center")}>
         <SelectPrimitive.Value>{children}</SelectPrimitive.Value>
       </div>
       <SelectPrimitive.Icon asChild className={cn(`opacity-80 text-current`)}>

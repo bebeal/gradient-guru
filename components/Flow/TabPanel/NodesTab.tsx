@@ -1,8 +1,8 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import * as yup from 'yup';
-import { useEditor } from '@tldraw/tldraw';
+import { useEditor, useValue } from '@tldraw/tldraw';
 import {
   Accordion,
   FlowTab,
@@ -23,63 +23,42 @@ const buildNodeSchema = (editor: any, node: any) => {
     return yup.object().shape(nodeSchema).meta({ item: 'object' });
 };
 
-const buildNodeSchemas = (editor: any) => {
-  if (!editor) return {};
-  const newNodeSchema: any = {};
-  editor?.getCurrentPageShapesSorted().map((node: any, index: number) => {
-    newNodeSchema[node.id] = buildNodeSchema(editor, node);
-  });
-  return newNodeSchema;
-};
-
 export interface NodesTabProps {}
 
 export const NodesTab = () => {
   const editor = useEditor();
-  const [mounted, setMounted] = useState(false);
-  const [nodesSchemas, setNodesSchemas] = useState<any>({});
-
-  useEffect(() => {
-    if (!mounted) {
-      setMounted(true);
-      const schemas = buildNodeSchemas(editor);
-      setNodesSchemas(schemas);
-    }
-  }, [editor, mounted, nodesSchemas]);
+  const currentPageShapesSorted: any = useValue('current page shapes', () => editor.getCurrentPageShapesSorted(), [editor]);
+  const selectedShapeIds: any = useValue('selected shape ids', () => editor.getSelectedShapeIds(), [editor]);
 
   const onNodeChange = useCallback((newNodeProperties: any) => {
+    if (!editor) return;
     if (newNodeProperties.type === 'icon') {
       const id = newNodeProperties.id;
       const currentNode: any = editor.getShape(id);
       if (currentNode.props.iconSet !== newNodeProperties.props.iconSet) {
+        console.log('iconSet changed', currentNode.props.iconSet, newNodeProperties.props.iconSet);
         // update icon if iconSet has changed
         newNodeProperties.props.icon = Object.keys(IconSetCache?.[newNodeProperties.props.iconSet])[0];
       }
     }
     editor.updateShape({...newNodeProperties});
-    setNodesSchemas((oldSchemas: any) => {
-      const newNodeSchema = buildNodeSchema(editor, newNodeProperties);
-      return {...oldSchemas, [newNodeProperties.id]: newNodeSchema};
-    })
   }, [editor]);
 
-  const items = useCallback(() => {
-    const selectedShapes = editor.getSelectedShapeIds();
-    const pageShapes = editor.getCurrentPageShapesSorted();
-    return pageShapes.map((node: any, index: number) => {
+  const items = useMemo(() => {
+    return currentPageShapesSorted.map((node: any, index: number) => {
       // check if node is selected
-      const selected = selectedShapes.includes(node.id);
+      const selected = selectedShapeIds.includes(node.id);
       return {
         key: `${node.id}-${index}-${selected}`,
         name: getNodeNameComponent(node, selected ? `text-accent`: ``),
         content: (
           <div className={cn(`w-full h-full flex flex-col justify-stretch items-center p-1`)}>
-            <Form object={filterObject(node, KeysToIgnore)} schema={nodesSchemas?.[node.id]} SchemaMap={NodeSchemaMappings} onSubmit={onNodeChange} />
+            <Form object={filterObject(node, KeysToIgnore)} schema={buildNodeSchema(editor, node)} SchemaMap={NodeSchemaMappings} onSubmit={onNodeChange} />
           </div>
         ),
       };
     }) ?? []
-  }, [editor, nodesSchemas, onNodeChange]);
+  }, [onNodeChange, currentPageShapesSorted, selectedShapeIds]);
 
   return (
     <FlowTab title="Nodes">
@@ -87,7 +66,7 @@ export const NodesTab = () => {
         spaceBetween={0}
         className="w-full text-xs p-1"
         triggerClassName="w-full flex justify-center items-center"
-        items={items()}
+        items={items}
       />
     </FlowTab>
   );

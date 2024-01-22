@@ -1,9 +1,9 @@
 'use client';
 
-import { createContext, useCallback, useContext, useState } from 'react';
-import { createShapeId, TLAnyShapeUtilConstructor, TLShape, useEditor } from '@tldraw/tldraw';
 import { FlowNodeUtil } from '@/components';
 import { getExportedImageBlob } from '@/utils';
+import { TLAnyShapeUtilConstructor, TLShape, createShapeId, useEditor } from '@tldraw/tldraw';
+import { createContext, useCallback, useContext, useState } from 'react';
 import { ImageExtractorConfig } from './useContentExtractor';
 
 export interface ScratchNode {

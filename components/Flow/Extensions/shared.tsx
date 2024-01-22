@@ -1,13 +1,12 @@
 'use client';
 
-import { memo, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { Box, compact, createShapeId, DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, EASINGS } from '@tldraw/tldraw';
-import { Editor, GeoShapeGeoStyle, TLShape } from '@tldraw/tldraw';
+import { Form, Label, Loading, Separator, Switch } from '@/components';
+import { cn, isEmptyObject, urlRegex } from '@/utils';
+import { Box, compact, createShapeId, DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, EASINGS, Editor, GeoShapeGeoStyle, TLShape } from '@tldraw/tldraw';
 import { FONT_FAMILIES } from '@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants';
 import { DefaultLabelColorStyle } from '@tldraw/tlschema/src/styles/TLColorStyle';
+import { memo, ReactNode, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import * as yup from 'yup';
-import { Form, Label, Separator, Switch } from '@/components';
-import { cn, isEmptyObject } from '@/utils';
 import { PreviewNode } from '../Nodes/PreviewNode/PreviewNode';
 
 
@@ -37,7 +36,7 @@ export const NodeSchemaMappings: any = {
       geo: yup.string().oneOf(GeoShapeGeoStyle.values).meta({ item: 'select', label: 'Geo', hidden: true }),
       w: yup.number().meta({ item: 'input', label: 'Width' }),
       h: yup.number().meta({ item: 'input', label: 'Height' }),
-      url: yup.string().meta({ item: 'input', label: 'URL' }),
+      url: yup.string().trim().matches(urlRegex, {excludeEmptyString: true, message: 'Must be valid URL'}).meta({ item: 'input', label: 'URL' }),
       text: yup.string().meta({ item: 'input', label: 'Text' }),
     })
     .meta({ item: 'object', label: 'Props' }),
@@ -193,9 +192,9 @@ export const BulletedList = ({ items, className }: { items: any[]; className?: s
 export const ToggleTitle = ({ pressed, onPressedChange, children }: any) => {
   return (
     <div className={cn(`pointer-events-auto relative flex h-full w-full justify-center gap-3 items-center`)}>
-      <div className="absolute flex w-full h-full left-1">
-        <Switch pressed={pressed} onPressedChange={onPressedChange}>
-          <div className="flex w-auto h-full" />
+      <div className="absolute flex w-auto h-full left-1">
+        <Switch pressed={pressed} onPressedChange={onPressedChange} asChild>
+          <div className="flex" />
         </Switch>
       </div>
       <div className="font-bold justify-self-center text-sm ml-10 mr-6">{children}</div>
@@ -203,7 +202,7 @@ export const ToggleTitle = ({ pressed, onPressedChange, children }: any) => {
   );
 };
 
-export const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
+export const ImageWithRuler: React.FC<{ src: string }> = ({ src }) => {
   const imgRef = useRef<HTMLImageElement>(null);
   type Size = { width: number; height: number };
   const [size, setSize] = useState<{ natural: Size; offset: Size }>({ natural: { width: 0, height: 0 }, offset: { width: 0, height: 0 } });
@@ -226,7 +225,7 @@ export const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
         y: imgRef.current.offsetTop,
       });
     }
-  }, []);
+  }, [imgRef]);
 
   useEffect(() => {
     updateSize();
@@ -235,7 +234,7 @@ export const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
   }, [updateSize]);
 
   return (
-    <div className="flex items-center justify-center w-full h-full bg-secondary p-2 rounded border border-primary">
+    <div className="flex items-center justify-center w-full h-full rounded">
       <div className={cn(`relative flex items-center justify-center w-auto h-auto overflow-hidden`)} style={{ padding: `${24}px ${44}px` }}>
         {/* Horizontal Size Indicator */}
         <div className={cn('absolute flex flex-col items-center')} style={{ width: `${size?.offset?.width}px`, height: `${24}px`, top: 0, left: `${position?.x}px` }}>
@@ -246,7 +245,9 @@ export const ImageWithSizeIndicator: React.FC<{ src: string }> = ({ src }) => {
             <div className="h-[8px] w-[1px] bg-white" />
           </div>
         </div>
-        <img ref={imgRef} src={src} onLoad={updateSize} className="object-cover object-center w-auto h-auto border border-primary" alt="Preview of Image Extraction" />
+        <Suspense fallback={<Loading />}>
+          <img ref={imgRef} src={src} onLoad={updateSize} className="object-cover object-center w-auto h-auto border border-primary" alt="Preview of Image Extraction" />
+        </Suspense>
         {/* Vertical Size Indicator */}
         <div className={cn('absolute flex flex-row justify-center items-start')} style={{ height: `${size?.offset?.height}px`, width: `${48}px`, top: `${position?.y}px`, left: `${position?.x + size?.offset?.width - 1}px` }}>
           <div className="flex flex-col w-auto h-full items-center mr-px">

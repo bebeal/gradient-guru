@@ -168,9 +168,9 @@ export const encodeSVGAsBase64 = async (svg: SVGElement, encodeEmbedImages = fal
   return encodeSVGElementAsBase64(svgElement);
 };
 
-export const getSVGAsBlob = async (svg: SVGElement, encodeEmbedImages = false): Promise<string | null> => {
+export const getSVGAsBlob = async (svg: SVGElement, encodeEmbedImages = false, clone = false): Promise<string | null> => {
   // Clone svg so we don't mutate the original
-  const svgElement = svg.cloneNode(true) as SVGGraphicsElement;
+  const svgElement = clone ? svg.cloneNode(true) as SVGGraphicsElement : svg;
   svgElement.setAttribute('encoding', 'utf-8');
 
   if (encodeEmbedImages) {
@@ -180,8 +180,7 @@ export const getSVGAsBlob = async (svg: SVGElement, encodeEmbedImages = false): 
   }
 
   // Convert SVG element to string
-  const serializer = new XMLSerializer();
-  const svgString = serializer.serializeToString(svgElement);
+  const svgString = new XMLSerializer().serializeToString(svgElement);
 
   // Create a Blob from the SVG string
   const svgBlob = new Blob([svgString], { type: 'image/svg+xml' });
@@ -306,10 +305,10 @@ export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShap
   const ids =
     typeof shapes[0] === 'string'
       ? (shapes as TLShapeId[])
-      : (shapes as TLShape[]).map((s) => s.id)
+      : (shapes as TLShape[]).map((s) => s.id);
 
   if (ids.length === 0) return;
-  if (!window.document) throw Error('No document')
+  if (!window.document) throw Error('No document');
 
   const {
     scale = 1,
@@ -317,62 +316,62 @@ export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShap
     padding = SVG_PADDING,
     preserveAspectRatio = false,
     grid
-  } = opts
+  } = opts;
 
   // ---Figure out which shapes we need to include
-  const shapeIdsToInclude = editor.getShapeAndDescendantIds(ids)
+  const shapeIdsToInclude = editor.getShapeAndDescendantIds(ids);
   const renderingShapes = editor.getUnorderedRenderingShapes(false).filter(({ id }: {id: TLShapeId}) =>
     shapeIdsToInclude.has(id)
-  )
+  );
 
   // --- Common bounding box of all shapes
   let bbox = null
   if (opts.bounds) {
-    bbox = opts.bounds
+    bbox = opts.bounds;
   } else {
     for (const { maskedPageBounds } of renderingShapes) {
-      if (!maskedPageBounds) continue
+      if (!maskedPageBounds) continue;
       if (bbox) {
-        bbox.union(maskedPageBounds)
+        bbox.union(maskedPageBounds);
       } else {
-        bbox = maskedPageBounds.clone()
+        bbox = maskedPageBounds.clone();
       }
     }
   }
 
   // no unmasked shapes to export
-  if (!bbox) return
+  if (!bbox) return;
 
   const singleFrameShapeId =
     ids.length === 1 && editor?.isShapeOfType(editor.getShape(ids[0])!, 'frame')
       ? ids[0]
-      : null
+      : null;
   if (!singleFrameShapeId) {
     // Expand by an extra 32 pixels
-    bbox.expandBy(padding)
+    bbox.expandBy(padding);
   }
 
   // We want the svg image to be BIGGER THAN USUAL to account for image quality
-  const w = bbox.width * scale
-  const h = bbox.height * scale
+  const w = bbox.width * scale;
+  const h = bbox.height * scale;
 
   // --- Create the SVG
 
   // Embed our custom fonts
-  const svg = window.document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+  const svg = window.document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
   if (preserveAspectRatio) {
-    svg.setAttribute('preserveAspectRatio', preserveAspectRatio)
+    svg.setAttribute('preserveAspectRatio', preserveAspectRatio);
   }
 
-  svg.setAttribute('direction', 'ltr')
-  svg.setAttribute('width', w + '')
-  svg.setAttribute('height', h + '')
-  svg.setAttribute('viewBox', `${bbox.minX} ${bbox.minY} ${bbox.width} ${bbox.height}`)
-  svg.setAttribute('stroke-linecap', 'round')
-  svg.setAttribute('stroke-linejoin', 'round')
-  // Add current background color, or else background will be transparent
+  svg.setAttribute('direction', 'ltr');
+  svg.setAttribute('width', w + '');
+  svg.setAttribute('height', h + '');
+  svg.setAttribute('viewBox', `${bbox.minX} ${bbox.minY} ${bbox.width} ${bbox.height}`);
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
 
+  // Add current background color, or else background will be transparent  
   if (background) {
     if (singleFrameShapeId) {
       svg.style.setProperty('background', `#28292e`)
@@ -489,6 +488,7 @@ export const getSvgPreview = async (editor: Editor, shapes: TLShapeId[] | TLShap
           }
 
           if (backgroundSvgElement) {
+            console.log('backgroundSvgElement', backgroundSvgElement)
             const outerElement = document.createElementNS('http://www.w3.org/2000/svg', 'g')
             outerElement.setAttribute('clip-path', `url(#${id})`)
             outerElement.appendChild(backgroundSvgElement)

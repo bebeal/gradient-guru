@@ -13,7 +13,7 @@ export const FormMessage = forwardRef<HTMLDivElement, FormMessageProps>((props, 
     className = "",
     ...rest
   } = props;
-  const { fieldState, messageId } = useFormField()
+  const { fieldState, messageId } = useFormField();
   const body = fieldState.error ? String(fieldState.error?.message) : children;
 
   if (!body) return null;
@@ -21,7 +21,7 @@ export const FormMessage = forwardRef<HTMLDivElement, FormMessageProps>((props, 
     <FormPrimitive.FormMessage
       ref={ref}
       id={messageId}
-      className={cn("text-[10px] font-medium text-muted flex flex-wrap overflow-hidden w-full leading-none mt-1 px2", fieldState.error && `text-error`, className)}
+      className={cn("text-[10px] font-medium text-muted flex overflow-auto w-full h-auto max-h-[18px] leading-none pt-1 px-2 !cursor-text !select-text !pointer-events-auto !z-[100]", fieldState.error && `text-error`, className)}
       {...rest}
     >{body}</FormPrimitive.FormMessage>
   );

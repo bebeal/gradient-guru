@@ -135,8 +135,8 @@ export const SidePanel = forwardRef((props: SidePanelProps, ref?: ForwardedRef<H
           {tabs.map((tab, index) => {
             const tabValue = `${tab?.name}`;
             const tabIsActive = activeTabIndex === index;
-            const tabProps: any = {}
-            if (activeTabIndex !== undefined) {
+            const tabProps: any = {};
+            if (tabIsActive) {
               tabProps['forceMount'] = true;
             }
             return (

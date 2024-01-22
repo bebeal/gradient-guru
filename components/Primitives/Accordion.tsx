@@ -1,8 +1,8 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { Suspense, useCallback, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { IconSetCache } from '@/components';
+import { IconSetCache, Loading } from '@/components';
 import { useRippleEffect } from '@/hooks';
 import { cn } from '@/utils';
 import { ConvertRadiusClass, Radius, RadiusClasses } from '@/components';
@@ -47,6 +47,7 @@ export const Accordion = (props: AccordionProps) => {
   // }, [getValues, items, type]);
 
   const onValueChange = useCallback((event: any, newValue: string | string[]) => {
+    event.preventDefault();
     ripple && createRippleEffect?.(event);
     if (type === 'single') {
       value === newValue ? setValue('') : setValue(newValue);
@@ -56,7 +57,7 @@ export const Accordion = (props: AccordionProps) => {
   }, [createRippleEffect, ripple, type, value]);
 
   return (
-    <AccordionPrimitive.Root type={type} className={cn(`space-y-[${spaceBetween}px] w-full h-auto`, className)} defaultValue={getValues(items)} value={value as any}>
+    <AccordionPrimitive.Root type={type} className={cn(`space-y-[${spaceBetween}px] w-full h-auto transition-all`, className)} defaultValue={getValues(items)} value={value as any}>
       {items?.map((item: any, index: number) => {
         return (
           <AccordionPrimitive.Item
@@ -88,20 +89,22 @@ export const Accordion = (props: AccordionProps) => {
               >
                 <div className={cn('flex w-full h-auto items-center px-2 py-1 pointer-events-none', triggerClassName)}>
                   <div className="font-bold text-xs flex-grow text-center items-center w-full">{item.name}</div>
-                  <IconSetCache.Carbon.ChevronDown className={cn('ml-auto shrink-0', 'group-radix-state-open:rotate-180', 'transition-transform anim-duration-200 ease-in-out')} />
+                  <IconSetCache.Carbon.ChevronDown className={cn('ml-auto shrink-0', 'group-radix-state-open:rotate-180', 'transition-transform anim-duration-200 ease-linear')} />
                 </div>
               </AccordionPrimitive.Trigger>
             </AccordionPrimitive.Header>
-            <AccordionPrimitive.Content
-              className={cn(
-                'w-full h-auto bg-primary overflow-auto border border-transparent',
-                spaceBetween !== 0 && `rounded-b-${ConvertRadiusClass(radius)}`,
-                spaceBetween !== 0 || (index === items.length - 1 && `rounded-b-${ConvertRadiusClass(radius)}`),
-                'radix-state-closed:animate-accordion-up radix-state-open:animate-accordion-down transition-all'
-              )}
-            >
-              {item.content}
-            </AccordionPrimitive.Content>
+            <Suspense fallback={<Loading />}>
+              <AccordionPrimitive.Content
+                className={cn(
+                  'w-full h-auto bg-primary overflow-auto border border-transparent',
+                  spaceBetween !== 0 && `rounded-b-${ConvertRadiusClass(radius)}`,
+                  spaceBetween !== 0 || (index === items.length - 1 && `rounded-b-${ConvertRadiusClass(radius)}`),
+                  'radix-state-closed:animate-accordion-up radix-state-open:animate-accordion-down'
+                )}
+              >
+                {item.content}
+              </AccordionPrimitive.Content>
+            </Suspense>
           </AccordionPrimitive.Item>
         );
       })}

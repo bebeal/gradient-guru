@@ -210,7 +210,7 @@ export const ModelFormItem = forwardRef<any, any>((props, ref) => {
         const modalities = modelFromMap?.modalities || [];
         
         const DataModalitiesBadges = (
-          <div className={cn(`grid grid-cols-2 gap-3 ml-2 h-auto`, modalities.length > 2 && `grid-rows-2`)}>
+          <div className={cn(`grid grid-cols-2 gap-3 ml-2 w-auto h-auto`, modalities.length > 2 && `grid-rows-2`)}>
             {modalities.map((modality: DataModality) => (
               <DataModalityBadge key={modality} modality={modality} compact={true} />
             ))}
@@ -226,7 +226,7 @@ export const ModelFormItem = forwardRef<any, any>((props, ref) => {
         }
       });
     }
-    return (<Select className={className} items={betterItems} {...field} readOnly={readOnly} />);
+    return (<Select className={cn(`justify-start w-auto`, className)} items={betterItems} {...field} readOnly={readOnly} />);
   }
  return <DefaultFormItem ref={ref} {...props} />;
 });

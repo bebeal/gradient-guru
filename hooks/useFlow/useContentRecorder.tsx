@@ -27,8 +27,8 @@ export type UiState = UiEvent & {
 };
 
 export type ContentRecorderState = {
-  frameId: number | null;
-  setFrameId: (newFrameId: number | null) => void;
+  // frameId: number | null;
+  // setFrameId: (newFrameId: number | null) => void;
   canvasState: TLEventInfo;
   setCanvasState: (newCanvasEvent: TLEventInfo) => void;
   uiState: UiState;
@@ -43,8 +43,8 @@ export type ContentRecorderState = {
 };
 
 export const useContentRecorderStore = create<ContentRecorderState>((set, get) => ({
-  frameId: null,
-  setFrameId: (newFrameId: number | null) => set({ frameId: newFrameId }),
+  // frameId: null,
+  // setFrameId: (newFrameId: number | null) => set({ frameId: newFrameId }),
   canvasState: {} as TLEventInfo,
   uiState: {} as UiState,
   historyRecords: [],
@@ -94,42 +94,25 @@ export const useContentRecorderStore = create<ContentRecorderState>((set, get) =
 
 export const useContentRecorder = () => {
   const editor = useEditor();
-  const frameId = useContentRecorderStore(useShallow((state) => state.frameId));
-  const setFrameId = useContentRecorderStore(useShallow((state) => state.setFrameId));
-  const canvasState = useContentRecorderStore(useShallow((state) => state.canvasState));
-  const uiState = useContentRecorderStore(useShallow((state) => state.uiState));
-  const historyRecords = useContentRecorderStore(useShallow((state) => state.historyRecords));
-  const readableRecords = useContentRecorderStore(useShallow((state) => state.readableRecords));
-  const setCanvasState = useContentRecorderStore(useShallow((state) => state.setCanvasState));
-  const setUiState = useContentRecorderStore(useShallow((state) => state.setUiState));
-  const addHistoryRecord = useContentRecorderStore(useShallow((state) => state.addHistoryRecord));
-  const addReadableRecord = useContentRecorderStore(useShallow((state) => state.addReadableRecord));
-
-  // const requestFrameUpdate = useCallback((callback: () => void) => {
-  //   if (frameId === null) {
-  //     const id = requestAnimationFrame(() => {
-  //       callback();
-  //       setFrameId(null); // Reset frameId after the frame is rendered
-  //     });
-  //     setFrameId(id);
-  //   }
-  // }, [frameId, setFrameId]);
+  // const frameId = useContentRecorderStore(useShallow((state) => state.frameId));
+  // const setFrameId = useContentRecorderStore(useShallow((state) => state.setFrameId));
+  const [canvasState, setCanvasState] = useContentRecorderStore(useShallow((state) => [state.canvasState, state.setCanvasState]));
+  const [uiState, setUiState] = useContentRecorderStore(useShallow((state) => [state.uiState, state.setUiState]));
+  const [historyRecords, addHistoryRecord] = useContentRecorderStore(useShallow((state) => [state.historyRecords, state.addHistoryRecord]));
+  const [readableRecords, addReadableRecord] = useContentRecorderStore(useShallow((state) => [state.readableRecords, state.addReadableRecord]));
 
   const onUiEvent = useCallback<TLUiEventHandler>((name, data) => {
     setUiState({ name, ...data } as any);
   }, [setUiState]);
 
   const onCanvasEvent = useCallback((newCanvasEvent: any) => {
-    // requestFrameUpdate(() => setCanvasState(newCanvasEvent));
     setCanvasState(newCanvasEvent);
   }, [setCanvasState]);
 
   const onStoreEvent = useCallback((event: TLStoreEventInfo) => {
     if (event.source === 'user' && isShapeEvent(event)) {
-      // requestFrameUpdate(() => {
         addHistoryRecord(event.changes);
         addReadableRecord(event.changes);
-      // });
     }
   }, [addHistoryRecord, addReadableRecord]);
 
@@ -140,20 +123,17 @@ export const useContentRecorder = () => {
     editor.on('event', onCanvasEvent);
 
     const fakeUiState = {
-      id: 'select',
-      name: 'select-tool',
-      source: 'toolbar'
+      'name': 'select-tool',
+      'source': 'toolbar',
+      'id': 'select'
     } as unknown as UiEvent;
     setUiState(fakeUiState);
 
     return () => {
-      // if (frameId !== null) {
-      //   cancelAnimationFrame(frameId);
-      // }
       editor.off('change');
       editor.off('event');
     };
-  }, [editor, frameId, onCanvasEvent, onStoreEvent, setFrameId, setUiState]);
+  }, [editor, onCanvasEvent, onStoreEvent, setUiState]);
 
   return {
     canvasState,

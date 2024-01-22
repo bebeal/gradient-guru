@@ -9,7 +9,6 @@ import { forwardRef, useState, useEffect, useCallback } from 'react';
 // export interface SwitchProps extends TogglePrimitive.ToggleProps {
 export interface SwitchProps {
   id?: string;
-  handleOffset?: string;
   baseColor?: string;
   animationTime?: string;
   pressed?: boolean | undefined;
@@ -34,13 +33,12 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
     disabled = false,
     onPressedChange: onPressedChangeCallback,
     onChange: onChangeCallback,
-    handleOffset = '1.25rem',
-    animationTime = '0.2s',
+    animationTime = '0.3s',
     className,
     offLabel,
     onLabel,
     children,
-    asChild,
+    asChild=false,
     readOnly=false,
     ...rest
   } = props;
@@ -79,10 +77,10 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
   }, [onPressedChange]);
 
   const baseColor = isPressed === undefined ? 'rgb(var(--background-secondary))' : isPressed ? 'rgb(var(--accent-500))' : 'rgb(var(--background-secondary))';
-  const thumbColor = isPressed === undefined ? 'rgb(0, 0, 0)' : isPressed ? 'rgb(0, 0, 0)' : 'rgb(0, 0, 0)';
+  const thumbColor = isPressed === undefined ? 'rgb(0, 0, 0)' : isPressed ? 'rgb(0, 0, 0)' : 'rgb(var(--accent-500))'
   const thumbSize = "1rem";
   const style: any = {
-    transition: `background, box-shadow ${animationTime} ease-out`,
+    transition: `all ${animationTime} ease-out`,
     boxShadow: isPressed === undefined
                 ? `calc(${thumbSize} / 2) 0 0 2px ${baseColor} inset, calc(${thumbSize} / -2) 0 0 2px ${baseColor} inset, 0 0 0 2px ${baseColor} inset`
                 : isPressed ? `${thumbSize} 0 0 2px ${baseColor} inset, 0 0 0 2px ${baseColor} inset`
@@ -90,7 +88,7 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
   };
 
   return (
-    <div className={cn("flex w-auto h-auto justify-center items-center gap-1", readOnly && 'cursor-default pointer-events-none')}>
+    <div className={cn("relative flex w-auto h-auto justify-center items-center gap-1", readOnly && 'cursor-default pointer-events-none')}>
       {offLabel && (
         <div className={cn("text-[10px] text-muted break-words text-center w-12", !internalPressed && `text-primary`)}>
           {offLabel}
@@ -99,11 +97,11 @@ export const Switch = forwardRef<any, SwitchProps>((props, ref) => {
       <TogglePrimitive.Root
         id={id}
         asChild={asChild}
-        ref={ref} className={cn(
-          `appearance-none border border-primary rounded-[1.9rem] h-[1.25rem] w-[2.25rem] cursor-pointer bg-[${thumbColor}]`,
+        ref={ref}
+        className={cn(
+          `appearance-none border border-primary rounded-[1.9rem] h-[1.25rem] min-w-[2.25rem] cursor-pointer bg-[${thumbColor}]`,
           disabled && `cursor-not-allowed`,
           `hover:outline-accent/50 hover:outline-[0.5px] hover:outline`,
-          ``,
           className
         )}
         style={style}

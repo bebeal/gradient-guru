@@ -1,6 +1,6 @@
 'use client'
 
-import { Erroring, Form, IconSetCache, Loading, PreviewNodeBaseProps, formatNodeId } from "@/components";
+import { Erroring, Form, Loading } from "@/components";
 import { useApi } from "@/hooks";
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import * as yup from "yup";
@@ -28,7 +28,6 @@ return `<!DOCTYPE html>
 const SCRIPT_TO_INJECT_FOR_PREVIEW = (id: string | undefined) => {
   return `
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
-    <script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
     <script>
     // send alert messages to the parent window
@@ -39,10 +38,8 @@ const SCRIPT_TO_INJECT_FOR_PREVIEW = (id: string | undefined) => {
     // send the screenshot to the parent window
     window.addEventListener('message', function(event) {
       if (event.data.action === 'take-screenshot' && event.data.nodeid === "node:${id}") {
-        html2canvas(document.body, {useCors : true, foreignObjectRendering: true, allowTaint: true }).then(function(canvas) {
-          const data = canvas.toDataURL('image/png');
-          console.log('Sending screenshot to parent window:', data);
-          window.parent.parent.postMessage({screenshot: data, nodeid: "node:${id}"}, "*");
+        htmlToImage.toPng(document.body, { quality: 1, cacheBust: true }).then(dataUrl => {
+          window.parent.parent.postMessage({screenshot: dataUrl, nodeid: "node:${id}"}, "*");
         });
       }
     }, false);
@@ -83,7 +80,7 @@ export const SharedPreviewNode = (props: SharedPreviewNodeProps) => {
     // Remove tailwind CDN if it exists, since we already injected it
     injectedHtml = injectedHtml.replace(/<script.*?src="https:\/\/cdn\.tailwindcss\.com\/.*?"><\/script>\s*/g, '');
     setHtml(injectedHtml);
-  }, [setHtml]);
+  }, [id]);
 
   const fetchVersions = useCallback(async () => {
     if (versions.includes(version)) return;
@@ -91,7 +88,7 @@ export const SharedPreviewNode = (props: SharedPreviewNodeProps) => {
     // 0...n for length of versionsArray
     const versionsIndexArray = Array.from(Array(versionsArray.length).keys());
     setVersions(versionsIndexArray);
-  }, [api, id, versions, version, setVersion, setVersions]);
+  }, [api, id, versions, version, setVersions]);
 
   const fetchData = useCallback(async () => {
     if (!id) return;
@@ -104,7 +101,7 @@ export const SharedPreviewNode = (props: SharedPreviewNodeProps) => {
     setSource(response?.source);
     setDateCreated(response?.dateCreated);
     injectHtml(response);
-  }, [api, id, version, setHtml]);
+  }, [id, version, api, injectHtml, fetchVersions]);
 
   useEffect(() => {
     if (!mounted) {
@@ -152,11 +149,11 @@ export const SharedPreviewNode = (props: SharedPreviewNodeProps) => {
       // source: yup.string().meta({ label: 'Source', item: 'readonly' }),
       dateCreated: yup.string().meta({ label: 'Date Created', item: 'displayDate' }),
     }).meta({ item: 'object' });
-  }, [versions]);
+  }, [version, versions]);
 
   useEffect(() => {
     fetchData();
-  }, [version]);
+  }, [fetchData, version]);
 
   const onChange = useCallback((data: any, e?: any) => {
     setVersion(data?.version);

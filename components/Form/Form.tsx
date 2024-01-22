@@ -61,6 +61,7 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
     if (!isEqual(newobj, values)) {
       setValues(newobj);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [object, schema]);
 
   const form: UseFormReturn = useForm<FormSchema>({
@@ -88,7 +89,7 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
       form.handleSubmit(() => onSubmit(schema.cast(newValues), form), onError)();
     });
     return () => subscription.unsubscribe();
-  }, [form]);
+  }, [form, onError, onSubmit, schema]);
 
   return (
     <FormProvider {...rest} {...form}>

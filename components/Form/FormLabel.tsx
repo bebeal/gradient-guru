@@ -13,11 +13,11 @@ export const FormLabel = forwardRef<HTMLLabelElement, FormLabelProps>((props, re
   return (
     <Label
       ref={ref}
-      className={cn("flex gap-1 font-semibold text-primary", className)}
+      className={cn("relative flex gap-1 font-semibold text-primary h-auto w-full pl-2", className)}
       id={labelId}
       htmlFor={id}
       {...rest}
-    >{fieldState.error && <div className="text-error text-[10px] align-top">*</div>}<div className={cn(fieldState.error && "underline decoration-error")}>{typeof children === 'string' ? children?.split('.').pop() : children}</div></Label>
+    >{fieldState.error && <div className="absolute text-error text-[10px] left-0 top-0 w-full h-full align-top">*</div>}<div className={cn(fieldState.error && "underline decoration-error")}>{typeof children === 'string' ? children?.split('.').pop() : children}</div></Label>
   )
 })
 FormLabel.displayName = "FormLabel"

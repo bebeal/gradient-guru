@@ -72,6 +72,35 @@
   --text-primary: 249 249 249;
   --text-secondary: 187 187 187;
 
+  --background-primary: 30 31 33;
+  --background-secondary: 35 37 41;
+  --background-tertiary: 26 26 26;
+
+  --border-primary: 73 85 95;
+  --border-secondary: 85 95 105;
+
+  --accent-50: 252 252 253;
+  --accent-100: 249 250 251;
+  --accent-200: 246 247 248;
+  --accent-300: 241 242 244;
+  --accent-400: 235 236 239;
+  --accent-500: 229 231 235;
+  --accent-600: 206 210 217;
+  --accent-700: 177 183 195;
+  --accent-800: 146 154 171;
+  --accent-900: 102 112 133;
+  --accent-950: 73 81 95;
+
+  --muted: 85 85 85;
+  --error: 255 69 58;
+
+  --kbd-foreground: 161 161 170;
+}
+
+.black {
+  --text-primary: 249 249 249;
+  --text-secondary: 187 187 187;
+
   --background-primary: 13 12 13;
   --background-secondary: 35 37 41;
   --background-tertiary: 26 26 26;
