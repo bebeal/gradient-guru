@@ -1,6 +1,6 @@
 'use client'
 
-import React, { Suspense } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { IconSetCache } from '@/components';
 import { getEncodedSVGUrl, isSVG } from '../utils/svg';
@@ -192,11 +192,9 @@ export const Loading = (props: LoadingProps) => {
 
   return (
     <div className="w-auto h-auto flex items-center justify-center text-xl text-muted gap-1">
-      <Suspense>
-        {spinner && <IconSetCache.Custom.Loader className={cn('flex items-center justify-center h-6 w-6 text-base gap-1')} />}
-        {content}
-        {dots && <IconSetCache.Custom.DotsLoader className={'h-6 w-6 self-end'} />}
-      </Suspense>
+      {spinner && <IconSetCache.Custom.Loader className={cn('flex items-center justify-center h-6 w-6 text-base gap-1')} />}
+      {content}
+      {dots && <IconSetCache.Custom.DotsLoader className={'h-6 w-6 self-end'} />}
     </div>
   );
 };

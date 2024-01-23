@@ -2,10 +2,10 @@
 
 import { Form, Label, Loading, Separator, Switch } from '@/components';
 import { cn, isEmptyObject, urlRegex } from '@/utils';
-import { Box, compact, createShapeId, DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, EASINGS, Editor, GeoShapeGeoStyle, TLShape } from '@tldraw/tldraw';
+import { Box, DefaultColorStyle, DefaultDashStyle, DefaultFillStyle, DefaultHorizontalAlignStyle, DefaultSizeStyle, DefaultVerticalAlignStyle, EASINGS, Editor, GeoShapeGeoStyle, TLShape, compact, createShapeId } from '@tldraw/tldraw';
 import { FONT_FAMILIES } from '@tldraw/tldraw/src/lib/shapes/shared/default-shape-constants';
 import { DefaultLabelColorStyle } from '@tldraw/tlschema/src/styles/TLColorStyle';
-import { memo, ReactNode, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { ReactNode, Suspense, memo, useCallback, useEffect, useRef, useState } from 'react';
 import * as yup from 'yup';
 import { PreviewNode } from '../Nodes/PreviewNode/PreviewNode';
 
@@ -67,19 +67,23 @@ export const getNodeNameComponent = (node: TLShape, className: string = '') => {
   );
 };
 
-export const makeEmptyResponseShape = (editor: Editor) => {
-  // Create the preview shape
+export const makeEmptyResponseNode = (editor: Editor) => {
+  // Create the preview node
   const { maxX = 0, midY = 0 }: any = editor.getCurrentPageBounds();
-  const newShapeId = createShapeId();
+  const newNodeId = createShapeId();
   editor.createShape<PreviewNode>({
-    id: newShapeId,
+    id: newNodeId,
     type: 'preview',
     x: maxX + 60, // to the right of the selection
-    y: midY - (540 * 2) / 3 / 2, // half the height of the preview's initial shape
+    y: midY - (540 * 2) / 3 / 2, // half the height of the preview's initial node
     props: { html: '', source: '' },
   });
-  return newShapeId;
+  return newNodeId;
 };
+
+export const getPreviousPreviews = (nodes: TLShape[]): PreviewNode[] => {
+  return nodes.filter((node) => node.type === 'preview') as PreviewNode[];
+}
 
 export const zoomToFitNewNode = (editor: Editor, animation: any = { duration: 200, easing: EASINGS.easeInOutQuad }, padding: number = 100) => {
   if (!editor.getInstanceState().canMoveCamera) return this;

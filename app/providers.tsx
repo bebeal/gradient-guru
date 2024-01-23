@@ -14,7 +14,7 @@ import { TITLE, TITLE_SHORTHAND } from './config';
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
 import '@/assets/fonts/Monaspace/Monaspace.css';
 import '@/app/globals.css';
-import '@radix-ui/themes/styles.css';
+// import '@radix-ui/themes/styles.css';
 
 const makeQueryClient = (overrideOptions?: any) => {
   return new QueryClient({

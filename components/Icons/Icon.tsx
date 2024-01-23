@@ -1,5 +1,4 @@
-import { forwardRef, ReactNode, Suspense } from 'react';
-import { Loading } from '@/components';
+import { forwardRef, ReactNode } from 'react';
 import { cn } from '@/utils';
 
 
@@ -8,9 +7,7 @@ export const Icon = (Ico: any, label: string = '', defaultProps: any) => {
     defaultProps = { width: '1em', height: '100%', fill: 'currentColor', stroke: 'none', ...defaultProps };
     const merged = { ...defaultProps, ...props };
     return (
-      <Suspense fallback={<Loading />}>
-        <Ico ref={ref} label={label} {...merged} />
-      </Suspense>
+      <Ico ref={ref} label={label} {...merged} />
     );
   });
 };

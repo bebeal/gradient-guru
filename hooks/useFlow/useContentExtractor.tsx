@@ -1,6 +1,6 @@
 'use client';
 
-import { formatNodeId, getNodeName } from '@/components';
+import { formatNodeId, getNodeName, getPreviousPreviews } from '@/components';
 import { encodeBlobAsBase64, getSvgAsImage, getSvgElement } from '@/utils';
 import { TLEventInfo, TLShape, TLShapeId, useEditor, useValue } from '@tldraw/tldraw';
 import { useCallback, useEffect, useState } from 'react';
@@ -257,8 +257,9 @@ export const useContentExtractor = () => {
     const canvasState = canvasExtractorConfig.enabled ? extractCanvasState() : null;
     const uiState = uiExtractorConfig.enabled ? extractUiState() : null;
     const theme = editor?.user.getUserPreferences().isDarkMode ? 'dark' : 'light';
-    return { nodes, text, svg, blob, dataUrl, base64EncodedSvg, canvasState, uiState, theme, ...useContentExtractorStore.getState() };
-  }, [nodesExtractorConfig, extractNodes, imageExtractorConfig, extractImage, textExtractorConfig, extractText, canvasExtractorConfig, extractCanvasState, uiExtractorConfig, extractUiState, editor]);
+    const previousPreviews = getPreviousPreviews(getNodes(imageExtractorConfig.nodesToExclude));
+    return { nodes, text, svg, blob, dataUrl, base64EncodedSvg, canvasState, uiState, theme, previousPreviews, ...useContentExtractorStore.getState() };
+  }, [nodesExtractorConfig.enabled, extractNodes, imageExtractorConfig.enabled, imageExtractorConfig.nodesToExclude, extractImage, textExtractorConfig.enabled, extractText, canvasExtractorConfig.enabled, extractCanvasState, uiExtractorConfig.enabled, extractUiState, editor?.user, getNodes]);
 
   return {
     imageExtractorConfig,

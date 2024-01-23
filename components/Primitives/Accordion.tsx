@@ -1,8 +1,8 @@
 'use client';
 
-import { Suspense, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { IconSetCache, Loading } from '@/components';
+import { IconSetCache } from '@/components';
 import { useRippleEffect } from '@/hooks';
 import { cn } from '@/utils';
 import { ConvertRadiusClass, Radius, RadiusClasses } from '@/components';
@@ -93,18 +93,16 @@ export const Accordion = (props: AccordionProps) => {
                 </div>
               </AccordionPrimitive.Trigger>
             </AccordionPrimitive.Header>
-            <Suspense fallback={<Loading />}>
-              <AccordionPrimitive.Content
-                className={cn(
-                  'w-full h-auto bg-primary overflow-auto border border-transparent',
-                  spaceBetween !== 0 && `rounded-b-${ConvertRadiusClass(radius)}`,
-                  spaceBetween !== 0 || (index === items.length - 1 && `rounded-b-${ConvertRadiusClass(radius)}`),
-                  'radix-state-closed:animate-accordion-up radix-state-open:animate-accordion-down'
-                )}
-              >
-                {item.content}
-              </AccordionPrimitive.Content>
-            </Suspense>
+            <AccordionPrimitive.Content
+              className={cn(
+                'w-full h-auto bg-primary overflow-auto border border-transparent',
+                spaceBetween !== 0 && `rounded-b-${ConvertRadiusClass(radius)}`,
+                spaceBetween !== 0 || (index === items.length - 1 && `rounded-b-${ConvertRadiusClass(radius)}`),
+                'radix-state-closed:animate-accordion-up radix-state-open:animate-accordion-down'
+              )}
+            >
+              {item.content}
+            </AccordionPrimitive.Content>
           </AccordionPrimitive.Item>
         );
       })}

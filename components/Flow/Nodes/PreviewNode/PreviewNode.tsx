@@ -6,7 +6,7 @@ import { useToasts } from '@/hooks';
 import { LINK_HOST, PROTOCOL } from '@/utils';
 import { EditingIndicator, formatNodeId } from '../../Extensions/shared';
 import { Loading, PreviewNodeDropdown } from '@/components';
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 
 export type PreviewNodeBaseProps = {
   html: string;

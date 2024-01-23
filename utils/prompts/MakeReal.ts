@@ -1,10 +1,5 @@
 import { PreviewNode } from "@/components";
-import { TLShape } from "@tldraw/tldraw";
 import { PromptInputProps } from ".";
-
-export const getPreviewNodes = (nodes: TLShape[]): PreviewNode[] => {
-  return nodes.filter(node => node.type === 'preview') as PreviewNode[];
-}
 
 export const addPreviews = (previousPreviws: PreviewNode[]) => {
   return previousPreviws.map((preview, i) => {
@@ -31,7 +26,7 @@ export const addPreviews = (previousPreviws: PreviewNode[]) => {
 export const getUserContent = (opts: PromptInputProps) => {
   const {
     extracted,
-    config
+    config,
   } = opts;
   const {
     nodes,
@@ -39,9 +34,10 @@ export const getUserContent = (opts: PromptInputProps) => {
     imageExtractorConfig,
     text,
     theme,
+    previousPreviews,
   } = extracted;
   const { grid }: any = imageExtractorConfig;
-  const previews = addPreviews(getPreviewNodes(nodes || []));
+  const previews = addPreviews(previousPreviews);
   const userContent = {
     user: {
       type: 'text',

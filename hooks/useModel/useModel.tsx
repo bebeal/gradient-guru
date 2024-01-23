@@ -1,14 +1,14 @@
 'use client'
 
-import { useCallback } from 'react';
+import { BaseModelClient, OpenAIModelClient } from '@/clients/Models';
+import { formatNodeId, makeEmptyResponseNode, PreviewNode } from '@/components';
+import { ExtractedState, useApi, useContentExtractor } from '@/hooks';
+import { DefaultModelConfig, getHTMLFromOpenAIResponse, ModelConfig, PromptName, Prompts } from '@/utils';
 import { useMutation } from '@tanstack/react-query';
-import { useEditor } from '@tldraw/tldraw';
+import { TLShapeId, useEditor } from '@tldraw/tldraw';
+import { useCallback } from 'react';
 import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
-import { formatNodeId, makeEmptyResponseShape, PreviewNode } from '@/components';
-import { ExtractedState, useApi, useContentExtractor } from '@/hooks';
-import { PromptName, Prompts, DefaultModelConfig, ModelConfig, getHTMLFromOpenAIResponse  } from '@/utils';
-import { BaseModelClient, OpenAIModelClient } from '@/clients/Models';
 
 export type ModelState = {
   modelClient: BaseModelClient<ModelConfig, any, any>;
@@ -40,7 +40,19 @@ export const useModel = () => {
 
   const handleMakeRealPrompt = async (extracted: ExtractedState) => {
     // make response preview shape to hold the response html
-    const responseNodeId = makeEmptyResponseShape(editor);
+    const previousPreviews = extracted?.previousPreviews;
+    let responseNodeId: TLShapeId;
+    let version = 0;
+    if (previousPreviews?.length !== 1) {
+      // make a new node if 0 or more than 1 previews exist
+      responseNodeId = makeEmptyResponseNode(editor);
+    } else {
+      // version on existing preview if only 1 exists
+      responseNodeId = previousPreviews[0].id;
+      if (previousPreviews[0].props.version) {
+        version = previousPreviews[0].props.version;
+      }
+    }
     try {
       // use extracted content to make prompt
       // messages object

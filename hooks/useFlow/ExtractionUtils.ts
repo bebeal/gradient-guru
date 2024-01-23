@@ -1,6 +1,7 @@
 import { TLShapeId, TLShape, Box, SVG_PADDING, TLEventInfo } from "@tldraw/tldraw";
 import * as yup from 'yup';
 import { UiState } from "@/hooks";
+import { PreviewNode } from "@/components";
 
 type BaseExtractorConfig = {
   enabled: boolean;
@@ -124,6 +125,7 @@ export type ExtractedState = ExtractorConfigs & {
   canvasState: Partial<TLEventInfo> | null;
   uiState: Partial<UiState> | null
   theme?: 'dark' | 'light';
+  previousPreviews: PreviewNode[];
 };
 
 export type ContentExtractorConfig = ExtractorConfigs & {
