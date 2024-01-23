@@ -1,7 +1,6 @@
 'use client'
 
 import { Accordion } from "@/components";
-import { useState } from "react";
 
 const AccordionPage = () => {
   return (

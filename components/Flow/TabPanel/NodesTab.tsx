@@ -58,7 +58,7 @@ export const NodesTab = () => {
         ),
       };
     }) ?? []
-  }, [onNodeChange, currentPageShapesSorted, selectedShapeIds]);
+  }, [currentPageShapesSorted, selectedShapeIds, editor, onNodeChange]);
 
   return (
     <FlowTab title="Nodes">

@@ -3,7 +3,6 @@
 import { Avatar, ChatRoomMessage, ChatRoomUser, ChatRoomUserMessage, CopyButton } from '@/components';
 import { useChatRoom } from '@/hooks';
 import { cn, formatTime, getInitials } from '@/utils';
-import { rest } from 'lodash';
 
 export interface ChatMessageUserProps {
   user: ChatRoomUser;

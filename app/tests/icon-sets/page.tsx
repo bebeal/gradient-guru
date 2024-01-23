@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from 'react';
 import { Accordion, Button, IconSetCache, Input } from '@/components';
-import { cn } from '@/utils';
 
 const ICONS_PER_PAGE = 50;
 
