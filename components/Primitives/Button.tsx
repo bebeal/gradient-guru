@@ -15,6 +15,7 @@ export interface ButtonProps {
   colors?: string[];
   radius?: Radius;
   ripple?: boolean;
+  backglow?: boolean;
   size?: "1" | "2" | "3" | "4" | undefined;
   color?: "ruby" | "tomato" | "red" | "crimson" | "pink" | "plum" | "purple" | "violet" | "iris" | "indigo" | "blue" | "cyan" | "teal" | "jade" | "green" | "grass" | "brown" | "orange" | "sky" | "mint" | "lime" | "yellow" | "amber" | "gold" | "bronze" | "gray" | undefined;
   type?: any;
@@ -31,7 +32,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
     color,
     size='2',
     colors= ['#7F00DE', '#C81BBD', '#FF007E', '#FF1834', '#FF0000', '#FFDA16', '#7FDC4D', '#00E0D9', '#00CDAC', '#02AAB0', '#0074E0'],
-    radius='medium',
+    radius='large',
+    backglow=false,
     ripple=variant !== 'normal',
     type='button',
     containerClassName='',
@@ -53,12 +55,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
   return isDefaultVariant(variant) ? (
     <ThemedButton ref={ref} size={size} className={cn(`pointer-events-all !cursor-pointer`, disabled && DisabledClasses, `!${RadiusClasses(radius)}`, className)} color={color} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
   ) : (
-    <div className={cn("relative w-auto h-auto", containerClassName)}>
+    <div className={cn("relative w-auto h-auto", RadiusClasses(radius), containerClassName)}>
       <button
         ref={ref}
         type={type}
         className={cn(
-          `relative w-auto h-auto flex overflow-hidden select-none align-top cursor-pointer text-base leading-none z-[2] [&>*]:pointer-events-none`,
+          `relative w-auto h-auto flex overflow-hidden select-none align-top cursor-pointer leading-none z-[2] [&>*]:pointer-events-none`,
           disabled && DisabledClasses,
           RadiusClasses(radius),
           VariantClasses(variant),
@@ -70,9 +72,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
         {...rest}
       >
         {isGradientVariant ? (
-          <div className={cn( `w-full h-full bg-primary text-transparent font-bold py-2 px-2.5 m-px`, RadiusClasses(radius))}>
+          <div className={cn( `w-full h-full bg-primary text-transparent py-2 px-2.5 m-px`, RadiusClasses(radius))}>
             {/* For sizing the div properly since the gradient is an absolutely positioned div and this parent div needs to size as if its child is relative */}
-            <div className={cn(`invisible w-auto h-auto flex gap-1 justify-center items-center`)}>{children}</div>
+            <div className={cn(`invisible w-full h-full gap-2 flex justify-center items-center`)}>{children}</div>
             {/* This is 1 out of 2 absolutely positioned divs with a linear-gradient backgrounds and is used to apply gradients to the child components */}
             <GradientDiv backglow={false} isHovered={isHovered} colors={colors} radius={radius}>{children}</GradientDiv>
           </div>
@@ -84,8 +86,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
       </button>
       {/* Border Gradient, backglow to true which will apply large blur to the gradients tranistioning which are in sync with the gradients inside of the buttons */}
       {isGradientVariant && (
-        <div className={cn("absolute grid grid-cols-1 inset-0 z-[1]")}>
-          <GradientDiv backglow={true} isHovered={true} colors={colors} radius={radius} />
+        <div className={cn("absolute grid grid-cols-1 inset-0 z-[1]", RadiusClasses(radius))}>
+          <GradientDiv backglow={backglow} isHovered={true} colors={colors} radius={radius} />
         </div>
       )}
     </div>

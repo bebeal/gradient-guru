@@ -1,6 +1,6 @@
 export * from './useRippleEffect';
 export * from './useActionKey';
-export * from './useDebugger';
+export * from './useDebugPanel';
 export * from './useFormField';
 export * from './useIsomorphicLayout';
 export * from './useMounted';

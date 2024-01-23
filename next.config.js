@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const os = require('os');
+
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 /** @type {import('next').NextConfig} */
-module.exports = {
+const nextConfig = {
   compiler: {
     styledComponents: true
   },
@@ -145,7 +150,7 @@ module.exports = {
     isrFlushToDisk: true,
     workerThreads: false,
     proxyTimeout: undefined,
-    optimizeCss: false, // ? https://github.com/vercel/next.js/issues/60473
+    optimizeCss: true, // ? https://github.com/vercel/next.js/issues/60473
     nextScriptWorkers: false,
     scrollRestoration: false,
     externalDir: false,
@@ -171,4 +176,6 @@ module.exports = {
     bundlePagesExternals: false,
     webVitalsAttribution: ["CLS", "FCP", "FID", "INP", "LCP", "TTFB"],
   },
-}
+};
+
+module.exports = withBundleAnalyzer(nextConfig);

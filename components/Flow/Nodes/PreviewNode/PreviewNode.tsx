@@ -62,8 +62,6 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
             className="bg-primary flex items-center justify-center w-auto h-auto"
             style={{
               boxShadow,
-              border: '1px solid var(--color-panel-contrast)',
-              borderRadius: 'var(--radius-2)',
             }}
           >
             <Loading />
@@ -72,8 +70,8 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
           <>
           <Suspense fallback={<Loading />}>
             <iframe
-              id={`iframe-preview-${id}`}
-              src={`${uploadUrl}?preview=1`}
+              id={`iframe-preview-${id}-${version}`}
+              src={`${uploadUrl}?preview=1&version=${version}`}
               width={toDomPrecision(w)}
               height={toDomPrecision(h)}
               draggable={false}
@@ -109,6 +107,7 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
   }
 
   override toSvg(node: PreviewNode, _ctx: SvgExportContext): SVGElement | Promise<SVGElement> {
+    const { version, html } = node.props;
     const id = formatNodeId(node.id);
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     // while screenshot is the same as the old one, keep waiting for a new one
@@ -133,7 +132,7 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
       }, 5000);
       window.addEventListener('message', windowListener);
       // request new screenshot
-      const firstLevelIframe = document.getElementById(`iframe-preview-${id}`) as HTMLIFrameElement;
+      const firstLevelIframe = document.getElementById(`iframe-preview-${id}-${version}`) as HTMLIFrameElement;
       if (firstLevelIframe) {
         firstLevelIframe?.contentWindow?.postMessage({ action: 'take-screenshot', nodeid: id }, '*');
       } else {

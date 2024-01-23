@@ -18,6 +18,7 @@
     "build": "yarn build:tldraw && next build",
     "build:tldraw": "mv node_modules _node_modules && mv postcss.config.js _postcss.config.js && cd packages/tldraw && yarn && yarn build && cd ../.. && mv _postcss.config.js postcss.config.js && mv _node_modules node_modules",
     "build:debug": "yarn build:tldraw && next build --debug",
+    "build:analyze": "yarn build:tldraw && ANALYZE=true next build",
     "clean": "rm -rf yarn.lock && rm -rf node_modules && rm -rf .next",
     "dev": "PORT=3407 next dev",
     "generate-iconsets": "cd ./scripts && ./download-iconsets.sh",
@@ -33,6 +34,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.481.0",
     "@hookform/resolvers": "^3.3.2",
+    "@next/bundle-analyzer": "^14.1.0",
     "@radix-ui/react-accessible-icon": "^1.0.3",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
@@ -137,7 +139,6 @@
     "framer-motion": "^10.16.16",
     "googleapis": "^131.0.0",
     "html-to-image": "^1.11.11",
-    "html2canvas": "^1.4.1",
     "install": "^0.13.0",
     "katex": "^0.16.9",
     "lodash": "^4.17.21",

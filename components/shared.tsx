@@ -136,12 +136,12 @@ export const GradientDiv = (props: GradientDivProps) => {
       $colors={colors}
       $direction={direction}
       className={cn(
-        `w-full h-full flex gap-1 justify-center items-center absolute left-0 top-0 brightness-125 pointer-events-none`,
+        `w-full h-full flex gap-2 justify-center items-center absolute left-0 top-0 brightness-125 pointer-events-none`,
         backglow && cn(`after:left-0 after:top-0 after:blur-xl after:opacity-60 after:brightness-100`),
         // when hovered: invert the colors everywhere instead of showing gradient through the svg/text show as background:
         // 1. Change the svg and text children to primary (black/white) color
         // 2. Drop the background clip so that the gradient shows as the background now of the outer div
-        isHovered ? 'text-primary' : 'bg-clip-text text-transparent',
+        isHovered ? 'text-[rgb(var(--background-primary))]' : 'bg-clip-text text-transparent',
         RadiusClasses(radius),
         className
       )}
@@ -162,7 +162,7 @@ export const GradientDiv = (props: GradientDivProps) => {
                 WebkitMask: `${getEncodedSVGUrl(child)} 0 0 / 100% 100% no-repeat`,
                 mask: `${getEncodedSVGUrl(child)} 0 0 / 100% 100% no-repeat`,
               }}
-              className={cn(`w-auto h-auto justify-center items-center flex`, `after:w-4/5 after:h-4/5 after:brightness-125`)}
+              className={cn(`w-auto h-auto justify-center items-center flex text-inherit`, `after:w-4/5 after:h-4/5 after:brightness-125`)}
             >
               {child}
             </DynamicGradientBackground>

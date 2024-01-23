@@ -28,13 +28,14 @@ import { registerDefaultExternalContentHandlers, TLExternalContentProps } from '
 import { registerDefaultSideEffects } from '@tldraw/tldraw/src/lib/defaultSideEffects';
 import { usePreloadAssets } from '@tldraw/tldraw/src/lib/ui/hooks/usePreloadAssets';
 import { TLEditorAssetUrls, useDefaultEditorAssetsWithOverrides } from '@tldraw/tldraw/src/lib/utils/static-assets/assetUrls';
-import { DropWrapper, Erroring, FlowUi, FlowUiProps, Loading } from '@/components';
+import { DropWrapper, Erroring, FlowUi, FlowUiProps, Loading, MakeRealButton } from '@/components';
 import { useMounted } from '@/hooks';
 import { cn } from '@/utils';
 import { IconNodeUtil, PreviewNodeUtil, TerminalNodeUtil, TipTapNodeUtil, PlotlyNodeUtil } from './Nodes';
 
 import '@tldraw/tldraw/tldraw.css';
 import './Flow.css';
+import './z-board.css';
 
 export type FlowProps = TldrawProps &
   FlowUiProps & {
@@ -113,7 +114,11 @@ export const Flow = memo((props: FlowProps) => {
   }
   return (
     <TldrawEditor onMount={onMount} {...withDefaults} className={cn('w-full h-full flex tracking-tight', rest.className)}>
-      <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} {...withDefaults}>
+      <FlowUi overrides={overrides} initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils as any} shareZone={
+        <div className="tlui-share-zone" draggable={false}>
+          <MakeRealButton />
+        </div>
+      } {...withDefaults}>
         <ContextMenu>
           <DropWrapper>
             <Canvas />

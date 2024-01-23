@@ -148,7 +148,13 @@ export const TestExtractionButton = () => {
   );
 };
 
-export const TestModelButton = () => {
+export const TestModelButton = (props: any) => {
+  const {
+    children = 'Test Model',
+    className = 'tlui-button tlui-button__menu w-full h-auto flex justify-start text-start',
+    containerClassName = 'w-full',
+    variant='normal',
+  } = props;
   const {
     modelClient,
     setModelClient,
@@ -178,19 +184,68 @@ export const TestModelButton = () => {
   }, [modelQueryMutation, toast]);
 
   return (
-    <Button variant={'normal'} className={cn(`tlui-button tlui-button__menu w-full h-auto flex justify-start text-start`)} containerClassName={'w-full'} onClick={onClick}>
-      Test Model
+    <Button variant={variant} className={cn(className)} containerClassName={cn(containerClassName)} onClick={onClick}>
+      {children}
     </Button>
   );
 };
 
+export const MakeRealButton = () => {
+  return (
+    <div className="tlui-style-panel__wrapper w-full h-auto !mb-0 p-px">
+      <TestModelButton variant='gradient' className={cn('w-full gap-2 tracking-normal [word-spacing:normal]')} containerClassName={'w-full'}>
+        <IconSetCache.Carbon.DataEnrichment height="100%" width="14" stroke="currentColor" fill="currentColor" />
+        <div className="w-full h-auto text-sm font-bold flex items-center justify-center">Make Real</div>
+      </TestModelButton>
+    </div>
+  )
+};
+
+export const TestDisplayInfoButton = () => {
+  const {
+    modelClient,
+    setModelClient,
+    modelQueryMutation,
+    systemPromptName,
+    setSystemPromptName,
+  } = useModel();
+  const { imageExtractorConfig, nodesExtractorConfig, canvasExtractorConfig, uiExtractorConfig } = useContentExtractor();
+  const toast = useToasts();
+
+  const onClick = useCallback(() => {
+    const message = {
+      modelConfig: {
+        ...modelClient.config,
+      },
+      systemPromptName,
+      imageExtractorConfig,
+      nodesExtractorConfig,
+      canvasExtractorConfig,
+      uiExtractorConfig,
+    };
+    console.log('Display Info Result:', message);
+    toast?.addToast({
+      id: `display-info-${uniqueId()}`,
+      title: 'Display Info',
+      description: <div className="relative flex flex-col gap-1 w-full pointer-events-auto overflow-auto !text-[8px] max-h-[200px]">{JSON.stringify(message, null, 2)}</div>,
+      keepOpen: true,
+    });
+  
+  }, [canvasExtractorConfig, imageExtractorConfig, modelClient.config, nodesExtractorConfig, systemPromptName, toast, uiExtractorConfig]);
+
+  return (
+    <Button variant={'normal'} className={cn(`tlui-button tlui-button__menu w-full h-auto flex justify-start text-start`)} containerClassName={'w-full'} onClick={onClick}>
+      Display Info
+    </Button>
+  );
+};
 
 export const TestButtons = () => {
-  
   return (
     <div className="flex flex-col items-center justify-start rounded w-full h-auto">
       <TestExtractionButton />
       <TestModelButton />
+      <TestDisplayInfoButton />
     </div>
   );
 };

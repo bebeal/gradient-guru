@@ -49,9 +49,22 @@ export const useModel = () => {
     } else {
       // version on existing preview if only 1 exists
       responseNodeId = previousPreviews[0].id;
-      if (previousPreviews[0].props.version) {
-        version = previousPreviews[0].props.version;
+      if (!responseNodeId.includes('shape:')) {
+        responseNodeId = `shape:${responseNodeId}` as TLShapeId;
       }
+      if (previousPreviews[0].props.version) {
+        version = previousPreviews[0].props.version + 1;
+      }
+      console.log('Updating existing preview node:', responseNodeId);
+      modelClient.updateConfig({ seed: 501 } as any);
+      editor.updateShape<PreviewNode>({
+        id: responseNodeId,
+        type: 'preview',
+        props: {
+          html: '',
+          version: undefined,
+        },
+      });
     }
     try {
       // use extracted content to make prompt
@@ -76,7 +89,8 @@ export const useModel = () => {
           props: {
             html,
             source: extracted?.dataUrl as string,
-            uploadedNodeId: responseNodeId,
+            version,
+            dateCreated: body.dateCreated,
           },
         });
         return response;

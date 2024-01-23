@@ -79,7 +79,13 @@ export class S3Client {
     });
 
     const response = await this.client.send(request);
-    return response.Versions || []; // return the versions array
+    const unsortedVersions = response?.Versions || [];
+    // const sortedVersions = unsortedVersions.sort((a, b) => {
+    //   const dateA = a.LastModified ? new Date(a.LastModified).getTime() : 0;
+    //   const dateB = b.LastModified ? new Date(b.LastModified).getTime() : 0;
+    //   return dateA - dateB;
+    // });
+    return unsortedVersions;
   }
 
   // puts a new object in the bucket, returns the versionId of the object if bucket versioning is enabled
@@ -115,7 +121,7 @@ export class S3Client {
     } else {
       return this.getObject(id);
     }
-  };
+  }
 
   // get `versionId` of an object
   public async getObject(id: string, versionId: string | undefined = undefined): Promise<Record<string, any>> {

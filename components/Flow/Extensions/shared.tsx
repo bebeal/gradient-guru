@@ -206,9 +206,10 @@ export const ToggleTitle = ({ pressed, onPressedChange, children }: any) => {
   );
 };
 
+type Size = { width: number; height: number };
 export const ImageWithRuler: React.FC<{ src: string }> = ({ src }) => {
   const imgRef = useRef<HTMLImageElement>(null);
-  type Size = { width: number; height: number };
+  const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<{ natural: Size; offset: Size }>({ natural: { width: 0, height: 0 }, offset: { width: 0, height: 0 } });
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
@@ -232,14 +233,22 @@ export const ImageWithRuler: React.FC<{ src: string }> = ({ src }) => {
   }, [imgRef]);
 
   useEffect(() => {
-    updateSize();
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
+    const observer = new ResizeObserver(() => {
+      updateSize();
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
   }, [updateSize]);
 
   return (
     <div className="flex items-center justify-center w-full h-full rounded">
-      <div className={cn(`relative flex items-center justify-center w-auto h-auto overflow-hidden`)} style={{ padding: `${24}px ${44}px` }}>
+      <div ref={containerRef} className={cn(`relative flex items-center justify-center w-auto h-auto overflow-hidden`)} style={{ padding: `${24}px ${44}px` }}>
         {/* Horizontal Size Indicator */}
         <div className={cn('absolute flex flex-col items-center')} style={{ width: `${size?.offset?.width}px`, height: `${24}px`, top: 0, left: `${position?.x}px` }}>
           <span className="text-white text-xs flex justify-center">{size?.natural?.width}px</span>

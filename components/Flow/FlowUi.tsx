@@ -33,7 +33,7 @@ export type FlowUiProps = TldrawUiProps & {
 };
 
 export const FlowUi = memo((props: FlowUiProps) => {
-  const { children, hideUi = false, initialShapes, scratchNodeUtils, onUiEvent: onUiEventCallback, ...rest } = props;
+  const { children, hideUi = false, initialShapes, scratchNodeUtils, onUiEvent: onUiEventCallback, shareZone, ...rest } = props;
   const { onUiEvent: recordUiEvent } = useContentRecorder();
 
   const onUiEvent = useCallback<any>(
@@ -47,7 +47,7 @@ export const FlowUi = memo((props: FlowUiProps) => {
   return (
     <TldrawUiContextProvider onUiEvent={onUiEvent} {...rest}>
       <ToastsProvider>
-        <FlowUiInner initialShapes={initialShapes} hideUi={hideUi} scratchNodeUtils={scratchNodeUtils} {...rest}>
+        <FlowUiInner initialShapes={initialShapes} hideUi={hideUi} scratchNodeUtils={scratchNodeUtils} shareZone={shareZone} {...rest}>
           {children}
         </FlowUiInner>
       </ToastsProvider>
@@ -56,20 +56,20 @@ export const FlowUi = memo((props: FlowUiProps) => {
 });
 
 const FlowUiInner = memo((props: FlowUiProps) => {
-  const { children, hideUi, initialShapes, scratchNodeUtils, ...rest } = props;
+  const { children, hideUi, initialShapes, scratchNodeUtils, shareZone, ...rest } = props;
   // The hideUi prop should prevent the UI from mounting.
   // If we ever need want the UI to mount and preserve state, then
   // we should change this behavior and hide the UI via CSS instead.
   return (
     <>
       {children}
-      {hideUi ? null : <FlowUiContent initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils} {...rest} />}
+      {hideUi ? null : <FlowUiContent initialShapes={initialShapes} scratchNodeUtils={scratchNodeUtils} shareZone={shareZone} {...rest} />}
     </>
   );
 });
 
 const FlowUiContent = memo((props: FlowUiProps) => {
-  const { initialShapes, scratchNodeUtils, ...rest } = props;
+  const { initialShapes, scratchNodeUtils, shareZone, ...rest } = props;
   const [mounted, setMounted] = useState(false);
   const editor = useEditor();
   const msg = useTranslation();
@@ -129,6 +129,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
               </div>
               <div className={cn('tlui-layout__top__center')}></div>
               <div className={cn('tlui-layout__top__right')}>
+                {shareZone}
                 {breakpoint >= 5 && !isReadonlyMode && (
                   <div className={cn('tlui-style-panel__wrapper')}>
                     <StylePanel />

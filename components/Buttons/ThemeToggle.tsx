@@ -3,19 +3,15 @@
 import * as React from "react"
 import { useTheme } from "next-themes"
 
-import { Button, IconSetCache } from "@/components"
+import { Select } from "@/components";
+
+const themes = ['light', 'dark', 'black', 'blueish'] as const;
+export type Theme = typeof themes[number];
 
 export const ThemeToggle = () => {
   const { setTheme, theme } = useTheme();
 
   return (
-    <Button
-      variant="ghost"
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-    >
-      <IconSetCache.Carbon.Sun className="h-[1.5rem] w-[1.3rem] dark:hidden" />
-      <IconSetCache.Carbon.Moon className="hidden h-5 w-5 dark:block" />
-      <span className="sr-only">Toggle theme</span>
-    </Button>
+    <Select items={Array.from(themes)} value={theme} onChange={setTheme} />
   )
 };

@@ -3,7 +3,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
 import { HTMLContainer, TLBaseShape, useIsEditing } from '@tldraw/tldraw';
-import { PlotType } from 'plotly.js';
+import { PlotType } from 'plotly.js-dist-min';
 import * as yup from 'yup';
 import { EditingIndicator, IconSetCache, Plotly } from '@/components';
 import { filterObjectByKeys } from '@/utils';

@@ -1,12 +1,12 @@
 'use client'
 
 import { usePlotly } from '@/hooks';
-import { Erroring } from '@/components';
-import dynamic from 'next/dynamic';
+import { Erroring, Loading } from '@/components';
 import { PlotParams } from 'react-plotly.js';
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 
 const DynamicPlotly = dynamic(() => import('react-plotly.js'), { ssr: false });
-
 
 export interface PlotlyProps extends Omit<PlotParams, 'data' | 'layout'> {
   data: Plotly.Data[] | string | File;
@@ -28,13 +28,15 @@ export const Plotly = (props: PlotlyProps) => {
 
   if (error) return <Erroring error={error} />;
   return (
-    <DynamicPlotly
-      data={data}
-      layout={layout}
-      frames={frames}
-      config={config}
-      {...rest}
-    />
+    <Suspense fallback={<Loading />}>
+      <DynamicPlotly
+        data={data}
+        layout={layout}
+        frames={frames}
+        config={config}
+        {...rest}
+      />
+    </Suspense>
   );
 };
 

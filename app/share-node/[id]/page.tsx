@@ -2,6 +2,7 @@
 
 import { SharedPreviewNode } from '@/components';
 import { useParams, useSearchParams } from 'next/navigation';
+// import { useEffect } from 'react';
 
 const ShareNodePage = () => {
   // Route -> /share-node/[id]

@@ -81,7 +81,7 @@ export const getUserContent = (opts: PromptInputProps) => {
       previews.length > 0 ? userContent.userWithPreviousDesign : userContent.user,
       dataUrl ? userContent.image : '',
       text ? userContent.text : '',
-      grid ? userContent.grid : '',
+      grid.enabled ? userContent.grid : '',
       theme ? userContent.theme : '',
 
     ],

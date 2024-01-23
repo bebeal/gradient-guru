@@ -8,9 +8,9 @@ const ButtonsPage = () => {
     return (
       <div className="flex flex-col items-center justify-center gap-4">
         <div className="text-primary font-bold">{title}</div>
-      <div className="flex items-center justify-center gap-2">
-        {children}
-      </div>
+        <div className="flex items-center justify-center gap-2">
+          {children}
+        </div>
       </div>
     )
   }

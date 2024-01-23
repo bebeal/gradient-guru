@@ -6,8 +6,9 @@
     "plugin:@tanstack/eslint-plugin-query/recommended",
     "next/core-web-vitals",
     "prettier",
+    "next",
     "eslint:recommended",
-		"plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
     "no-case-declarations": "off",

@@ -7,7 +7,9 @@ module.exports = {
   singleQuote: true, // use single quotes instead of double quotes
   arrowParens: 'always', // avoid parentheses when single argument
   tabWidth: 2, // 2 spaces for indentation
-  trailingComma: 'es5', // avoid trailing commas
+  trailingComma: 'all', // avoid trailing commas
+  bracketSameLine: false, // put brackets on a new line
+  bracketSpacing: true, // put spaces between brackets
   importOrder: [ // import order
     '^react(.*)$',
     '^(next/(.*)$)|^(next$)',
