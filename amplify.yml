@@ -4,7 +4,6 @@ frontend:
     preBuild:
       commands:
         - corepack enable
-        - yarn clean
         - yarn install
     build:
       commands:
