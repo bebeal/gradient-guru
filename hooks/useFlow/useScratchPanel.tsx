@@ -4,7 +4,7 @@ import { FlowNodeUtil } from '@/components';
 import { getExportedImageBlob } from '@/utils';
 import { TLAnyShapeUtilConstructor, TLShape, createShapeId, useEditor } from '@tldraw/tldraw';
 import { createContext, useCallback, useContext, useState } from 'react';
-import { ImageExtractorConfig } from './useContentExtractor';
+import { ImageExtractorConfig } from './ExtractionUtils';
 
 export interface ScratchNode {
   panelPreview: React.ReactNode;
