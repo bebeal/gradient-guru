@@ -3,8 +3,8 @@ import { useToasts } from "@/hooks"
 import { Toast } from "./Toast"
 
 
-const _Toasts = () => {
-	const { toasts } = useToasts()
+export const Toasts = memo(() => {
+	const { toasts } = useToasts();
 
 	return (
 		<>
@@ -13,6 +13,4 @@ const _Toasts = () => {
 			))}
 		</>
 	)
-};
-
-export const Toasts = memo(_Toasts);
+});
