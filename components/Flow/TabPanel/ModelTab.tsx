@@ -1,22 +1,13 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import * as yup from 'yup';
 import { ModelConfig, ModelConfigLabels, ModelConfigSchemas, ModelProviders, ModelFormItem } from '@/utils';
 import { FlowTab, Form } from '@/components';
 import { useModel } from '@/hooks';
-import { OpenAIModelClient } from '@/clients';
 
 export const ModelTab = () => {
   const { modelClient, systemPromptName, setSystemPromptName, modelQueryMutation, getPrompt } = useModel();
-
-  useEffect(() => {
-    // check local system for api key
-    const localApiKey = localStorage.getItem('gg_api_key');
-    if (localApiKey) {
-      (modelClient as OpenAIModelClient).updateConfig({ apiKey: localApiKey });
-    }
-  }, [modelClient]);
 
   const onSubmit = useCallback((newConfig: ModelConfig) => {
     // update data modalities

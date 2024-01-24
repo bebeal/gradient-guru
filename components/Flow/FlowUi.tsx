@@ -9,7 +9,7 @@ import { memo, useCallback, useEffect, useState } from 'react';
 import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu';
 // import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
 import { Toasts, ToastViewport, zoomToFitNewNode } from '@/components';
-import { ToastsProvider, useContentRecorder } from '@/hooks';
+import { ToastsProvider, useContentRecorder, useModel } from '@/hooks';
 import { cn } from '@/utils';
 import { NavigationZone } from '@tldraw/tldraw/src/lib/ui/components/NavigationZone/NavigationZone';
 import { ExitPenMode } from '@tldraw/tldraw/src/lib/ui/components/PenModeToggle';
@@ -26,6 +26,7 @@ import { TldrawUiContextProvider } from '@tldraw/tldraw/src/lib/ui/TldrawUiConte
 import { FlowMenu, FlowToolbar, ScratchPanel } from './Extensions';
 import { TestButtons } from './Extensions/TestButtons';
 import { FlowTabPanel } from './TabPanel';
+import { OpenAIModelClient } from '@/clients';
 
 export type FlowUiProps = TldrawUiProps & {
   initialShapes?: TLShape[];
@@ -77,12 +78,23 @@ const FlowUiContent = memo((props: FlowUiProps) => {
   const isReadonlyMode = useValue('isReadonlyMode', () => editor.getInstanceState().isReadonly, [editor]);
   const isFocusMode = useValue('focus', () => editor.getInstanceState().isFocusMode, [editor]);
   const isDebugMode = useValue('debug', () => editor.getInstanceState().isDebugMode, [editor]);
+  const {
+    modelClient
+  } = useModel();
 
   useKeyboardShortcuts();
   useNativeClipboardEvents();
   useEditorEvents();
 
   const { 'toggle-focus-mode': toggleFocus } = useActions();
+
+  useEffect(() => {
+    // check local system for api key
+    const localApiKey = localStorage.getItem('gg_api_key');
+    if (localApiKey) {
+      (modelClient as OpenAIModelClient).updateConfig({ apiKey: localApiKey });
+    }
+  }, [modelClient]);
 
   useEffect(() => {
     if (!editor) return;

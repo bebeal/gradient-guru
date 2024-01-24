@@ -1,6 +1,8 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { IconSetCache } from "..";
 import { cn } from "@/utils";
+import { useModel } from "@/hooks";
+import { OpenAIModelClient } from "@/clients";
 
 export interface HiddenKeyInputProps {
   localStorageKey?: string;
@@ -13,6 +15,18 @@ export const HiddenKeyInput = (props: HiddenKeyInputProps) => {
     onChange,
   } = props;
   const [cooldown, setCooldown] = useState<boolean>(false);
+  const {
+    modelClient
+  } = useModel();
+
+  useEffect(() => {
+    // check local system for api key
+    const localApiKey = localStorage.getItem('gg_api_key');
+    if (localApiKey) {
+      (modelClient as OpenAIModelClient).updateConfig({ apiKey: localApiKey });
+    }
+  }, [modelClient]);
+
   // Store the API key locally
 	const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		localStorage.setItem(localStorageKey, e.target.value);
