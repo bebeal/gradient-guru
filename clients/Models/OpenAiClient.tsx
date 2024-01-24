@@ -12,9 +12,9 @@ export const getApiKey = () => {
 export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAIModelInput, OpenAIModelOutput> {
   constructor(config: OpenAIModelConfig) {
     super(config);
-    // if (isDevEnv && !config.apiKey) {
-    //   this.updateConfig({ apiKey: getApiKey() });
-    // }
+    if (isDevEnv && !config.apiKey) {
+      this.updateConfig({ apiKey: getApiKey() });
+    }
   }
 
   async forwardPrecondition(input: any) {

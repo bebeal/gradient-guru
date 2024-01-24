@@ -56,7 +56,7 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
     }, [this.editor]);
 
     return (
-      <HTMLContainer className="tl-embed-container bg-primary w-auto h-auto flex justify-center items-center pointer-events-auto" id={`html-container-${id}`}>
+      <HTMLContainer className="tl-embed-container bg-primary w-full h-full flex justify-center items-center pointer-events-auto" id={`html-container-${id}`}>
         {isLoading ? (
           <div
             className="bg-primary flex items-center justify-center w-auto h-auto"
