@@ -32,6 +32,7 @@ export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAI
   }
 
   private async chatCompletion(body: Record<string, any>): Promise<OpenAI.ChatCompletion> {
+    console.log("API Key:", this.config.apiKey);
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {

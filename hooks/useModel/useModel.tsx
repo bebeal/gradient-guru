@@ -73,7 +73,7 @@ export const useModel = () => {
       // query model
       // return await modelClient.mockApi(prompt).then((response: any) => {
       console.log('Prompt:', prompt);
-      return await modelClient.callApi(prompt).then((response: any) => {
+      return await modelClient.forward(prompt).then((response: any) => {
         const html = getHTMLFromOpenAIResponse(response);
         // No HTML? Something went wrong
         if (html.length < 100) {
