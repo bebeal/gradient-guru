@@ -1,7 +1,7 @@
 'use client'
 
 import { BaseModelClient, OpenAIModelClient } from '@/clients/Models';
-import { formatNodeId, makeEmptyResponseNode, PreviewNode } from '@/components';
+import { formatNodeId, makeEmptyResponseNode, PreviewNode, zoomToFitNewNode } from '@/components';
 import { ExtractedState, useApi, useContentExtractor } from '@/hooks';
 import { DefaultModelConfig, getHTMLFromOpenAIResponse, ModelConfig, PromptName, Prompts } from '@/utils';
 import { useMutation } from '@tanstack/react-query';
@@ -46,6 +46,7 @@ export const useModel = () => {
     if (previousPreviews?.length !== 1) {
       // make a new node if 0 or more than 1 previews exist
       responseNodeId = makeEmptyResponseNode(editor);
+      zoomToFitNewNode(editor);
     } else {
       // version on existing preview if only 1 exists
       responseNodeId = previousPreviews[0].id;
