@@ -86,10 +86,10 @@ const text_node: any = {
 };
 
 const initialShapes: TLShape[] = [
-  box_1,
-  box_2,
-  icon_node,
-  text_node
+  // box_1,
+  // box_2,
+  // icon_node,
+  // text_node
 ];
 
 const FlowPage = () => {
