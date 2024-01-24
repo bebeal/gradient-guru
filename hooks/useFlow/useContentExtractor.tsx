@@ -290,5 +290,7 @@ export const useContentExtractor = () => {
     getNodesToExcludeSchema,
     setExtractorConfig,
     extractAll,
+    currentPageShapes,
+    currentPageShapeIds,
   };
 };

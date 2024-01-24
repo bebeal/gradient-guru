@@ -23,7 +23,8 @@ export const ExtractionTab = () => {
     getUiStateExtractorSchema,
     updateUiConfig,
     getNodesToExcludeSchema,
-    getNodeIds
+    getNodeIds,
+    currentPageShapeIds
   } = useContentExtractor();
   const { canvasState, uiState } = useRecordedContent();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -68,6 +69,25 @@ export const ExtractionTab = () => {
         <div className={cn(`w-full h-full flex flex-col justify-stretch items-center`)}>
           <div className="flex p-1 flex-wrap flex-col w-full justify-center items-center">
             <Form object={imageExtractorConfig} schema={ImageSchema} onSubmit={updateImageConfig} />
+            {/* <Accordion
+                className="text-xs w-full px-5"
+                triggerClassName="px-2 py-1 font-semibold text-xs text-primary"
+                items={[
+                  {
+                    name: 'Filter Out Nodes',
+                    content: (
+                      <Form
+                        object={Array.from(currentPageShapeIds || {}).reduce((obj: any, item: any) => ({ ...obj, [item]: imageExtractorConfig.nodesToExclude?.includes(item) }), {})}
+                        schema={getNodesToExcludeSchema()}
+                        onSubmit={(newNodesToExclude: any) => {
+                          const nodesToExclude = Object.keys(newNodesToExclude || {}).filter((nodeId: any) => newNodesToExclude[nodeId]) as TLShapeId[];
+                          updateImageConfig({ nodesToExclude });
+                        }}
+                      />
+                    ),
+                  },
+                ]}
+              /> */}
           </div>
           <div className="flex flex-wrap flex-col w-full justify-center items-center">
             {imagePreview ? <ImageWithRuler src={imagePreview} /> :  <div className="text-primary/80 w-full h-full flex justify-center items-center">No Image</div>}
@@ -76,7 +96,7 @@ export const ExtractionTab = () => {
       ),
       open: enabled,
     };
-  }, [imageExtractorConfig, imagePreview, updateImageConfig]);
+  }, [currentPageShapeIds, getNodesToExcludeSchema, imageExtractorConfig, imagePreview, updateImageConfig]);
 
   const NodesExtractorConfiguration = useCallback(() => {
     const enabled = nodesExtractorConfig.enabled;

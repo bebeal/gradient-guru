@@ -79,7 +79,7 @@ export const defaultImageExtractorConfig: ImageExtractorConfig = {
   preserveAspectRatio: 'none',
   bounds: undefined,
   grid: {
-    enabled: false,
+    enabled: true,
     size: 100,
     color: 'red',
     labels: true,
