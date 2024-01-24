@@ -38,7 +38,7 @@ export const HiddenKeyInput = (props: HiddenKeyInputProps) => {
 				<div className={cn(
           `relative flex-grow-[2]`,
           `after:pointer-events-none`,
-          `[&:not(:focus-within)]:after:flex [&:not(:focus-within)]:after:absolute [&:not(:focus-within)]:after:items-center [&:not(:focus-within)]:after:text-xs [&:not(:focus-within)]:after:px-2 [&:not(:focus-within)]:after:py-3 [&:not(:focus-within)]:after:opacity-100 [&:not(:focus-within)]:after:content-["API_Key"] [&:not(:focus-within)]:after:inset-0 [&:not(:focus-within)]:after:z-[999999] [&:not(:focus-within)]:after:bg-none`
+          `[&:not(:focus-within)]:after:flex [&:not(:focus-within)]:after:absolute [&:not(:focus-within)]:after:items-center [&:not(:focus-within)]:after:text-xs [&:not(:focus-within)]:after:px-2 [&:not(:focus-within)]:after:py-3 [&:not(:focus-within)]:after:opacity-100 [&:not(:focus-within)]:after:content-["API_Key_(Hidden)"] [&:not(:focus-within)]:after:inset-0 [&:not(:focus-within)]:after:z-[999999] [&:not(:focus-within)]:after:bg-none`
         )}>
 					<input
             id="api-key"
