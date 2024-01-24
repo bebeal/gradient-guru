@@ -55,7 +55,7 @@ export type OpenAIModelInput =
 export type OpenAIModelOutput = undefined | string | OpenAI.ChatCompletion;
 
 export interface OpenAIModelConfig extends ModelConfig, Omit<OpenAI.Completions.CompletionCreateParamsNonStreaming, 'model' | 'prompt'> {
-  modalities?: DataModality[];
+  apiKey: string;
 }
 
 export const OpenAiModels: Record<string, any> = {

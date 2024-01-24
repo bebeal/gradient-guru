@@ -1,6 +1,8 @@
 import { ChangeEvent, useCallback, useState } from "react";
 import { IconSetCache } from "..";
 import { cn } from "@/utils";
+import { useModel } from "@/hooks";
+import { OpenAIModelClient } from "@/clients";
 
 export interface HiddenKeyInputProps {
   localStorageKey?: string;
@@ -11,11 +13,15 @@ export const HiddenKeyInput = (props: HiddenKeyInputProps) => {
     localStorageKey="gg_api_key",
   } = props;
   const [cooldown, setCooldown] = useState<boolean>(false);
+  const {
+    modelClient,
+  } = useModel();
 
   // Store the API key locally
 	const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-		localStorage.setItem(localStorageKey, e.target.value)
-	}, [localStorageKey]);
+		localStorage.setItem(localStorageKey, e.target.value);
+    (modelClient as OpenAIModelClient).updateConfig({ apiKey: e.target.value });
+	}, [localStorageKey, modelClient]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
@@ -31,15 +37,15 @@ export const HiddenKeyInput = (props: HiddenKeyInputProps) => {
 		<div className={cn(
       `w-full flex flex-col items-center justify-center pointer-events-none text-[var(--color-text-0)] z-[var(--layer-panels)]`,
     )}>
-			<div className={cn(`flex text-xs flex-row w-full rounded-lg p-1 max-w-[308px] gap-1 bg-[var(--color-low)] pointer-events-auto [border:4px_solid_var(--color-low)]`)}>
+			<div className={cn(`flex text-xs flex-row w-full rounded-lg p-1 max-w-[308px] gap-1 bg-[rgb(var(--background-tertiary))] pointer-events-auto [border:1px_solid_rgb(var(--background-tertiary))]`)}>
 				<div className={cn(
           `relative flex-grow-[2]`,
           `after:pointer-events-none`,
-          `[&:not(:focus-within)]:after:flex [&:not(:focus-within)]:after:absolute [&:not(:focus-within)]:after:items-center [&:not(:focus-within)]:after:text-xs [&:not(:focus-within)]:after:opacity-100 [&:not(:focus-within)]:after:content-["API_Key"] [&:not(:focus-within)]:after:inset-0 [&:not(:focus-within)]:after:p-[0px_12px] [&:not(:focus-within)]:after:z-[999999] [&:not(:focus-within)]:after:bg-none`
+          `[&:not(:focus-within)]:after:flex [&:not(:focus-within)]:after:absolute [&:not(:focus-within)]:after:items-center [&:not(:focus-within)]:after:text-xs [&:not(:focus-within)]:after:px-2 [&:not(:focus-within)]:after:py-3 [&:not(:focus-within)]:after:opacity-100 [&:not(:focus-within)]:after:content-["API_Key"] [&:not(:focus-within)]:after:inset-0 [&:not(:focus-within)]:after:z-[999999] [&:not(:focus-within)]:after:bg-none`
         )}>
 					<input
             id="api-key"
-            className="rounded text-transparent bg-[var(--color-panel)] w-full h-8 focus:text-[var(--color-text-0)]"
+            className="rounded text-transparent bg-[var(--color-panel)] w-full h-8 focus:text-[var(--color-text-0)] px-2 py-3 overflow-x-auto"
 						defaultValue={localStorage.getItem(localStorageKey) ?? ''}
 						onChange={handleChange}
 						onKeyDown={handleKeyDown}

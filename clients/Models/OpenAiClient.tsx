@@ -6,20 +6,20 @@ import { filterObjectByKeys, isDevEnv, OpenAIModelConfig, OpenAIModelInput, Open
 import { InvalidIdFallbackHtml } from '@/components';
 
 export const getApiKey = () => {
-  return process.env.OPENAI_API_KEY || process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+  return process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 };
 
 export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAIModelInput, OpenAIModelOutput> {
-  apiKey?: string;
-
-  constructor(config: OpenAIModelConfig, apiKey?: string) {
+  constructor(config: OpenAIModelConfig) {
     super(config);
-    this.apiKey = apiKey || isDevEnv ? getApiKey() : '';
+    if (isDevEnv && !config.apiKey) {
+      this.updateConfig({ apiKey: getApiKey() });
+    }
   }
 
   async forwardPrecondition(input: any) {
-    if (!this.apiKey || !this.apiKey.length) {
-      throw ApiKeyError(this.apiKey);
+    if (!this.config.apiKey || !this.config.apiKey.length) {
+      throw ApiKeyError(this.config.apiKey);
     }
     super.forwardPrecondition(input);
   }
@@ -35,11 +35,15 @@ export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAI
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.apiKey}`,
+        Authorization: `Bearer ${this.config.apiKey}`,
       },
       body: JSON.stringify(body),
     });
     return await response.json();
+  }
+
+  private async streamCompletion(body: Record<string, any>) {
+    
   }
 
   override async mockApi(input: OpenAIModelInput): Promise<OpenAIModelOutput> {
