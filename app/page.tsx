@@ -100,7 +100,6 @@ const preview_node_loading: any = {
 };
 
 const initialShapes: TLShape[] = [
-  preview_node_loading
 ];
 
 const FlowPage = () => {

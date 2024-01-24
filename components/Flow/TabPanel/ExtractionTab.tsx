@@ -96,7 +96,7 @@ export const ExtractionTab = () => {
       ),
       open: enabled,
     };
-  }, [currentPageShapeIds, getNodesToExcludeSchema, imageExtractorConfig, imagePreview, updateImageConfig]);
+  }, [imageExtractorConfig, imagePreview, updateImageConfig]);
 
   const NodesExtractorConfiguration = useCallback(() => {
     const enabled = nodesExtractorConfig.enabled;
