@@ -41,7 +41,6 @@ export const DefaultModelConfig: OpenAIModelConfig = {
   frequency_penalty: 0,
   presence_penalty: 0,
   provider: 'openai',
-  seed: 500,
 };
 
 export const ModelProviders: Record<ModelProvider, Record<string, ModelConfig>> = {

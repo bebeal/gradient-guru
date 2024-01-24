@@ -56,7 +56,6 @@ export const useModel = () => {
         version = previousPreviews[0].props.version + 1;
       }
       console.log('Updating existing preview node:', responseNodeId);
-      modelClient.updateConfig({ seed: 100 } as any);
       editor.updateShape<PreviewNode>({
         id: responseNodeId,
         type: 'preview',
