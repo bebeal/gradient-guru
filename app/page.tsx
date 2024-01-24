@@ -85,11 +85,22 @@ const text_node: any = {
   }
 };
 
+const preview_node_loading: any = {
+  id: createShapeId(`preview-node`),
+  type: 'preview',
+  x: 0,
+  y: 0,
+  props: {
+    w: 300,
+    h: 300,
+   html: '',
+   source: '',
+   dateCreated: 0,
+  }
+};
+
 const initialShapes: TLShape[] = [
-  // box_1,
-  // box_2,
-  // icon_node,
-  // text_node
+  preview_node_loading
 ];
 
 const FlowPage = () => {
