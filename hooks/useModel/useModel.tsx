@@ -35,6 +35,7 @@ export const useModel = () => {
 
   const getPrompt = useCallback((extracted: ExtractedState, key: PromptName) => {
     const prompt = Prompts[key]({ extracted, config: modelClient.config });
+    console.log('config:', modelClient.config);
     return prompt;
   }, [modelClient.config]);
 
@@ -72,7 +73,6 @@ export const useModel = () => {
       const prompt = getPrompt(extracted, systemPromptName);
       // query model
       // return await modelClient.mockApi(prompt).then((response: any) => {
-      console.log('Prompt:', prompt);
       return await modelClient.forward(prompt).then((response: any) => {
         const html = getHTMLFromOpenAIResponse(response);
         // No HTML? Something went wrong

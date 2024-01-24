@@ -24,8 +24,8 @@ export class BaseModelClient<Config extends ModelConfig, Input = ModelInput, Out
     this.state = 'idle';
   }
 
-  updateConfig(configOverride: Partial<Config> = {}): void {
-    this.config = { ...this?.config, ...configOverride };
+  updateConfig<T extends Partial<Config>>(configOverride: T): void {
+    this.config = { ...this.config, ...configOverride };
   }
 
   // Must pass this to be able to call forward()

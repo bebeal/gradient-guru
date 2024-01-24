@@ -17,11 +17,15 @@ export const HiddenKeyInput = (props: HiddenKeyInputProps) => {
     modelClient,
   } = useModel();
 
+  const updateModelClient = useCallback((apiKey: string) => {
+    (modelClient as OpenAIModelClient).updateConfig({ apiKey });
+  }, [modelClient]);
+
   // Store the API key locally
 	const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		localStorage.setItem(localStorageKey, e.target.value);
-    (modelClient as OpenAIModelClient).updateConfig({ apiKey: e.target.value });
-	}, [localStorageKey, modelClient]);
+    updateModelClient(e.target.value);
+	}, [localStorageKey, updateModelClient]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {

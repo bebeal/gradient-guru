@@ -12,9 +12,9 @@ export const getApiKey = () => {
 export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAIModelInput, OpenAIModelOutput> {
   constructor(config: OpenAIModelConfig) {
     super(config);
-    if (isDevEnv && !config.apiKey) {
-      this.updateConfig({ apiKey: getApiKey() });
-    }
+    // if (isDevEnv && !config.apiKey) {
+    //   this.updateConfig({ apiKey: getApiKey() });
+    // }
   }
 
   async forwardPrecondition(input: any) {
@@ -27,12 +27,10 @@ export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAI
   async callApi(input: OpenAIModelInput): Promise<OpenAIModelOutput> {
     // filter modelInput for only allowed keys, cause openai api is picky
     const modelInput = filterObjectByKeys({ ...this.config, messages: input }, ValidApiKeys);
-    console.log('modelInput', modelInput);
     return await this.chatCompletion(modelInput);
   }
 
   private async chatCompletion(body: Record<string, any>): Promise<OpenAI.ChatCompletion> {
-    console.log("API Key:", this.config.apiKey);
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
