@@ -163,7 +163,7 @@ export const ModelFormItem = forwardRef<any, any>((props, ref) => {
   const { field, schema, placeholder, readOnly, form, item, className='' } = props;
 
   if (item === 'apiKey') {
-    return <HiddenKeyInput />;
+    return <HiddenKeyInput onChange={field.onChange} />;
   } else if (item === 'modality') {
     const values = form.getValues();
     const modalities = values?.modalities;

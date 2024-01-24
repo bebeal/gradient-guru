@@ -23,7 +23,7 @@ export const ModelTab = () => {
   return (
     <FlowTab title="Model" className="h-full flex flex-col justify-between">
       <div className="flex flex-col h-auto w-full overflow-auto">
-        <Form object={modelClient.config} schema={yup.object().shape({ ...ModelConfigSchemas })} onSubmit={onSubmit} labels={ModelConfigLabels as any} ItemRenderer={ModelFormItem} />
+        <Form object={modelClient.config} schema={yup.object().shape(ModelConfigSchemas)} onSubmit={onSubmit} labels={ModelConfigLabels as any} ItemRenderer={ModelFormItem} />
       </div>
     </FlowTab>
   );

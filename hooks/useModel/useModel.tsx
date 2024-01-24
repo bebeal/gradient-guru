@@ -35,7 +35,6 @@ export const useModel = () => {
 
   const getPrompt = useCallback((extracted: ExtractedState, key: PromptName) => {
     const prompt = Prompts[key]({ extracted, config: modelClient.config });
-    console.log('config:', modelClient.config);
     return prompt;
   }, [modelClient.config]);
 
