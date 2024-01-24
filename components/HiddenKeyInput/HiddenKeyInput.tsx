@@ -46,6 +46,7 @@ export const HiddenKeyInput = (props: HiddenKeyInputProps) => {
 						onChange={handleChange}
 						onKeyDown={handleKeyDown}
 						spellCheck={false}
+            autoComplete="off"
 						autoCapitalize="off"
 					/>
 				</div>

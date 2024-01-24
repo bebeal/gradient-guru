@@ -165,12 +165,12 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   }, [label]);
 
   return (
-    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-center p-1 gap-px`, isObject && 'col-span-2', shouldSpan2 && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`, !isBoolean && `px-1.5`)}>
+    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-center p-1 gap-px`, isObject && 'col-span-2', shouldSpan2 && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
       {(description || !isObject) && (<div className={cn("flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start")}>
         {!isObject && !noLabel && (<FormLabel className={cn("text-xs", selected && `text-accent`)}>{Label}</FormLabel>)}
         {description && (<FormDescription>{description}</FormDescription>)}
       </div>)}
-      <div className={cn("flex-col flex w-full h-auto justify-center items-center", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end')}>
+      <div className={cn("flex-col flex w-full h-auto justify-center items-center", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end', !isBoolean && `px-1.5`)}>
         <FormSlot>
           <ItemRenderer {...props} {...useForm} className={cn(className, 'text-xs placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error' )} />
         </FormSlot>

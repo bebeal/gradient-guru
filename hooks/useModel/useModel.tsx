@@ -2,10 +2,10 @@
 
 import { BaseModelClient, OpenAIModelClient } from '@/clients/Models';
 import { formatNodeId, makeEmptyResponseNode, PreviewNode, zoomToFitNewNode } from '@/components';
-import { ExtractedState, useApi, useContentExtractor } from '@/hooks';
+import { ExtractedState, useApi, useContentExtractor, useToasts } from '@/hooks';
 import { DefaultModelConfig, getHTMLFromOpenAIResponse, ModelConfig, PromptName, Prompts } from '@/utils';
 import { useMutation } from '@tanstack/react-query';
-import { TLShapeId, useEditor } from '@tldraw/tldraw';
+import { TLShapeId, uniqueId, useEditor } from '@tldraw/tldraw';
 import { useCallback } from 'react';
 import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
@@ -31,6 +31,7 @@ export const useModel = () => {
   const setSystemPromptName = useModelClientStore(useShallow((state) => state.setSystemPromptName));
   const editor = useEditor();
   const api = useApi();
+  const toast = useToasts();
   const { imageExtractorConfig, extractAll, getNodeIds } = useContentExtractor();
 
   const getPrompt = useCallback((extracted: ExtractedState, key: PromptName) => {
@@ -43,26 +44,29 @@ export const useModel = () => {
     const previousPreviews = extracted?.previousPreviews;
     let responseNodeId: TLShapeId;
     let version = 0;
+    let updatingExisting = false;
     if (previousPreviews?.length !== 1) {
       // make a new node if 0 or more than 1 previews exist
       responseNodeId = makeEmptyResponseNode(editor);
       zoomToFitNewNode(editor);
     } else {
+      updatingExisting = true;
       // version on existing preview if only 1 exists
       responseNodeId = previousPreviews[0].id;
       if (!responseNodeId.includes('shape:')) {
         responseNodeId = `shape:${responseNodeId}` as TLShapeId;
       }
-      if (previousPreviews[0].props.version) {
-        version = previousPreviews[0].props.version + 1;
+      if (previousPreviews[0].props.version !== undefined) {
+        const listedVersions = await api.listVersions({ id: formatNodeId(responseNodeId)} );
+        const numVersions = listedVersions?.length;
+        version = numVersions ? numVersions : 1;
       }
-      console.log('Updating existing preview node:', responseNodeId);
       editor.updateShape<PreviewNode>({
         id: responseNodeId,
         type: 'preview',
         props: {
           html: '',
-          version: undefined,
+          version: undefined
         },
       });
     }
@@ -77,6 +81,17 @@ export const useModel = () => {
         // No HTML? Something went wrong
         if (html.length < 100) {
           console.warn(response.choices[0].message.content);
+          toast?.addToast({
+            id: `model-query-${uniqueId()}`,
+            title: 'Model Query Error',
+            description: (
+              <pre className="w-auto max-h-[500px] overflow-auto rounded p-1">
+                <code className="whitespace-pre-wrap break-words rounded leading-none">
+                  {JSON.stringify('Could not generate a design from those wireframes. Try again with a different seed.', null, 2)}
+                </code>
+              </pre>
+            ),
+          });
           throw Error('Could not generate a design from those wireframes.');
         }
         // Upload the HTML to S3
@@ -93,8 +108,8 @@ export const useModel = () => {
             dateCreated: body.dateCreated,
           },
         });
-        return response;
-      });
+      return response;
+    });
     } catch (error) {
       // If anything went wrong, delete the shape.
       editor.deleteShape(responseNodeId);

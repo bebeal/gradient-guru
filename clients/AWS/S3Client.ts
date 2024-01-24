@@ -80,12 +80,12 @@ export class S3Client {
 
     const response = await this.client.send(request);
     const unsortedVersions = response?.Versions || [];
-    // const sortedVersions = unsortedVersions.sort((a, b) => {
-    //   const dateA = a.LastModified ? new Date(a.LastModified).getTime() : 0;
-    //   const dateB = b.LastModified ? new Date(b.LastModified).getTime() : 0;
-    //   return dateA - dateB;
-    // });
-    return unsortedVersions;
+    const sortedVersions = unsortedVersions.sort((a, b) => {
+      const dateA = a.LastModified ? new Date(a.LastModified).getTime() : 0;
+      const dateB = b.LastModified ? new Date(b.LastModified).getTime() : 0;
+      return dateA - dateB;
+    });
+    return sortedVersions;
   }
 
   // puts a new object in the bucket, returns the versionId of the object if bucket versioning is enabled

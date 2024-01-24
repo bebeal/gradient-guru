@@ -55,6 +55,8 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
         return getRotatedBoxShadow(rotation);
     }, [this.editor]);
 
+    const versionParam = version !== undefined ? `&version=${version}` : '';
+
     return (
       <HTMLContainer className="tl-embed-container bg-primary w-full h-full flex justify-center items-center pointer-events-auto" id={`html-container-${id}`}>
         {isLoading ? (
@@ -71,7 +73,7 @@ export class PreviewNodeUtil extends BaseBoxShapeUtil<PreviewNode> {
           <Suspense fallback={<Loading />}>
             <iframe
               id={`iframe-preview-${id}-${version}`}
-              src={`${uploadUrl}?preview=1&version=${version}`}
+              src={`${uploadUrl}?preview=1${versionParam}`}
               width={toDomPrecision(w)}
               height={toDomPrecision(h)}
               draggable={false}

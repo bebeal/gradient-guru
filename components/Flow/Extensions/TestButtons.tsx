@@ -136,7 +136,6 @@ export const TestExtractionButton = () => {
         id: `extract-all-${uniqueId()}`,
         title: 'Extract All Results',
         description: <ExtractAllToast message={message} />,
-        keepOpen: true,
       });
     });
   }, [extractAll, toast]);
@@ -178,7 +177,6 @@ export const TestModelButton = (props: any) => {
             </code>
           </pre>
         ),
-        keepOpen: true,
       });
     });
   }, [modelQueryMutation, toast]);
@@ -228,7 +226,6 @@ export const TestDisplayInfoButton = () => {
       id: `display-info-${uniqueId()}`,
       title: 'Display Info',
       description: <div className="relative flex flex-col gap-1 w-full pointer-events-auto overflow-auto !text-[8px] max-h-[200px]">{JSON.stringify(message, null, 2)}</div>,
-      keepOpen: true,
     });
   
   }, [canvasExtractorConfig, imageExtractorConfig, modelClient.config, nodesExtractorConfig, systemPromptName, toast, uiExtractorConfig]);

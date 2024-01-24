@@ -49,18 +49,21 @@ export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAI
   override async mockApi(input: OpenAIModelInput): Promise<OpenAIModelOutput> {
     // mock response ChatCompletion
     return await new Promise((resolve, reject) => {
-      resolve({
-        choices: [
-          {
-            finish_reason: 'stop',
-            index: 0,
-            logprobs: null,
-            message: {
-              content: InvalidIdFallbackHtml('Mocked OpenAIModelClient Response', ''),
+      const random = Math.random() * 1000;
+      setTimeout(() => {
+        resolve({
+          choices: [
+            {
+              finish_reason: 'stop',
+              index: 0,
+              logprobs: null,
+              message: {
+                content: InvalidIdFallbackHtml(`Mocked OpenAIModelClient Response ${random}`, ''),
+              },
             },
-          },
-        ],
-      } as any);
+          ],
+        } as any);
+      }, 1000);
     });
   }
 }

@@ -1,9 +1,8 @@
 "use client";
 
-import { Erroring, Form, Loading } from "@/components";
+import { Erroring } from "@/components";
 import { useApi } from "@/hooks";
-import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
-import * as yup from "yup";
+import { useCallback, useEffect, useState } from "react";
 import { renderToStaticMarkup } from "next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.production";
 
 export const InvalidIdFallbackHtml = (
@@ -63,21 +62,10 @@ export interface SharedPreviewNodeProps {
 }
 
 export const SharedPreviewNode = (props: SharedPreviewNodeProps) => {
-  const { id, version: initialVersion, preview = false, ...rest } = props;
+  const { id, version, preview = false, ...rest } = props;
   const [mounted, setMounted] = useState(false);
   const [html, setHtml] = useState<string>("");
-  const [version, setVersion] = useState<number | undefined>(initialVersion);
-  const [source, setSource] = useState<string>("");
-  const [dateCreated, setDateCreated] = useState<any>(0);
-  const [versionIds, setVersionIds] = useState<string[]>([]);
-  const [versions, setVersions] = useState<any[]>([]);
-  const api = useApi();
-
-  useEffect(() => {
-    if (initialVersion !== undefined) {
-      setVersion(initialVersion);
-    }
-  }, [initialVersion]);
+  const { getS3 } = useApi();
 
   const injectHtml = useCallback((response: any) => {
     // Inject script just after the opening body tag
@@ -136,85 +124,41 @@ export const SharedPreviewNode = (props: SharedPreviewNodeProps) => {
     };
   }, []);
 
-  const fetchVersions = useCallback(async () => {
-    if (versions.includes(version)) return;
-    const versionsArray = await api.listVersions({ id });
-    // 0...n for length of versionsArray
-    const versionsIndexArray = Array.from(Array(versionsArray.length).keys());
-    setVersions(versionsIndexArray);
-  }, [api, id, versions, version, setVersions]);
-
-  const fetchData = useCallback(async (versionOverride?: number) => {
-    if (!id) return;
-    const versionToFetch =
-      versionOverride !== undefined ? versionOverride : version;
-    if (versionToFetch !== undefined) {
-      const response = await api.getS3({ id, version: versionToFetch });
-      setSource(response?.source);
-      setDateCreated(response?.dateCreated);
-      injectHtml(response);
+  // fetch specific version of node from S3
+  const fetchData = useCallback(async () => {
+    if (!id) {
+      console.error("No id provided");
+      return;
     }
-  }, [id, version, api, injectHtml],);
-
-  const onChange = useCallback((data: any, e?: any) => {
-    setVersion((oldVersion) => {
-      const newVersion = data.version;
-      if (newVersion !== oldVersion) {
-        fetchData(newVersion);
-      }
-      return newVersion;
-    });
-  }, [fetchData],);
+    if (version === undefined) {
+      console.error("No version provided");
+      return;
+    }
+    const response = await getS3({ id, version: version });
+    injectHtml(response);
+  }, [id, version, getS3, injectHtml]);
 
   useEffect(() => {
     if (!mounted) {
       setMounted(true);
-      fetchVersions();
       fetchData();
     }
-  }, [mounted, fetchVersions, setMounted, fetchData]);
-
-  const MetaDataSchema = useMemo(() => {
-    const versionOptions = versions.includes(version) ? versions : [version];
-    return yup.object().shape({
-      id: yup.string().meta({ label: "ID", item: "readonly" }),
-      version: yup
-        .number()
-        .oneOf(versionOptions, `Invalid Version: ${version}`)
-        .meta({ item: "select", label: "Version" }),
-      // source: yup.string().meta({ label: 'Source', item: 'readonly' }),
-      dateCreated: yup
-        .string()
-        .meta({ label: "Date Created", item: "displayDate" }),
-    }).meta({ item: "object" });
-  }, [versions, version]);
+  }, [mounted, fetchData]);
 
   return (
-    <Suspense fallback={<Loading />}>
-      <div className="relative w-full h-full bg-primary">
-        <div key={`form-share-node-${id}-${version}`} className="absolute flex flex-col gap-1 max-w-[150px] top-0 left-0 text-primary font-semibold p-2 rounded z-10 text-xs flex-wrap text-pretty overflow-auto">
-          <Form
-            key={JSON.stringify({ id, version, source, dateCreated })}
-            className="bg-primary/90"
-            fieldClassName="grid-cols-1"
-            object={{ id, version, source, dateCreated }}
-            schema={MetaDataSchema}
-            onSubmit={onChange}
-          />
-        </div>
-        <iframe
-          id={`iframe-share-node-${id}-${version}`}
-          srcDoc={html}
-          draggable={false}
-          style={{
-            position: "fixed",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            border: "none",
-          }}
-        />
-      </div>
-    </Suspense>
+    <div className="relative w-full h-full bg-primary">
+      <iframe
+        id={`iframe-share-node-${id}-${version}`}
+        srcDoc={html}
+        draggable={false}
+        style={{
+          position: "fixed",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          border: "none",
+        }}
+      />
+    </div>
   );
 };
