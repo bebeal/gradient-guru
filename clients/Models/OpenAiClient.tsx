@@ -27,6 +27,7 @@ export class OpenAIModelClient extends BaseModelClient<OpenAIModelConfig, OpenAI
   async callApi(input: OpenAIModelInput): Promise<OpenAIModelOutput> {
     // filter modelInput for only allowed keys, cause openai api is picky
     const modelInput = filterObjectByKeys({ ...this.config, messages: input }, ValidApiKeys);
+    console.log('modelInput', modelInput);
     return await this.chatCompletion(modelInput);
   }
 

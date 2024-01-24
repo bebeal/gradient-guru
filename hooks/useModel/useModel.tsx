@@ -72,6 +72,7 @@ export const useModel = () => {
       const prompt = getPrompt(extracted, systemPromptName);
       // query model
       // return await modelClient.mockApi(prompt).then((response: any) => {
+      console.log('Prompt:', prompt);
       return await modelClient.callApi(prompt).then((response: any) => {
         const html = getHTMLFromOpenAIResponse(response);
         // No HTML? Something went wrong

@@ -42,7 +42,6 @@ export class BaseModelClient<Config extends ModelConfig, Input = ModelInput, Out
   // One forward pass of the model
   async forward(input: Input): Promise<Output> {
     this.forwardPrecondition(input);
-    console.log('ModelClient.forward()', input);
     this.state = 'inference';
     try {
       const response = await this.callApi(input);
