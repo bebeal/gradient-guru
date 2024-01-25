@@ -1,5 +1,7 @@
 # gradient-guru
 
+* [https://www.gradient-guru.com](https://www.gradient-guru.com)
+
 ## Demos
 
 * [https://www.gradient-guru.com/demos](https://www.gradient-guru.com/demos)
