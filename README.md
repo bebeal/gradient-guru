@@ -11,6 +11,10 @@
 
 ## Features
 
+### "Make Real" Content Generation w/ Versioning
+
+https://github.com/bebeal/gradient-guru/assets/42706447/27a89f1e-0e00-48bd-aad9-8b12c3c588e3
+
 ### Custom Nodes (Plotly & TipTap Shown Here)
 
 https://github.com/bebeal/gradient-guru/assets/42706447/d5c65cb2-96eb-4666-8fa8-fb6eb348b470
