@@ -68,20 +68,20 @@ export const useContentRecorderStore = create<ContentRecorderState>((set, get) =
     const { added, updated, removed } = eventInfo;
     for (const record of Object.values(added) as any) {
       if (record.typeName === 'shape') {
-        events.push(`user created shape [${record.type}] - ${formatNodeId(record.id)}`)
+        events.push(`user created node [${record.type}] - ${formatNodeId(record.id)}`)
       }
     }
     for (const [from, to] of Object.values(updated) as any) {
       if ( from.typeName === 'shape' || to.typeName === 'shape') {
         // collpase when pushing this event only if its different from last event in arary
-        if (events.length > 0 && !events[events.length - 1].includes(`user updated shape [${to.type}] - ${formatNodeId(to.id)}`)) {
-          events.push(`user updated shape [${to.type}] - ${formatNodeId(to.id)}`)
+        if (events.length > 0 && !events[events.length - 1].includes(`user updated node [${to.type}] - ${formatNodeId(to.id)}`)) {
+          events.push(`user updated node [${to.type}] - ${formatNodeId(to.id)}`)
         }
       }
     }
     for (const record of Object.values(removed) as any) {
       if (record.typeName === 'shape') {
-        events.push(`user deleted shape [${record.type}] - ${formatNodeId(record.id)}`)
+        events.push(`user deleted node [${record.type}] - ${formatNodeId(record.id)}`)
       }
     }
     const newReadableRecords = [

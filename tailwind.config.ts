@@ -7,7 +7,7 @@ import { AceternityTailwindcssPlugin, addVariablesForColors } from './utils/styl
 const config: Config = {
   safelist: [
     ...[...Array(100).keys()].flatMap(i => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`, `h-[${i+100}px]`, `w-[${i+100}px]`,  `h-[${i+200}px]`, `w-[${i+200}px]`, `grid-cols-${i}`, `grid-rows-${i}`]),
-    `radix-state-open:rounded-t-lg radix-state-closed:rounded-lg rounded-b-lg rounded-t-lg`,
+    `radix-state-open:rounded-t-lg radix-state-closed:rounded-lg rounded-b-lg rounded-t-lg rounded-lg radix-state-open:rounded-lg`,
     `radix-state-open:rounded-t-xl radix-state-closed:rounded-xl rounded-b-xl rounded-t-xl`,
     `text-accent-500 text-accent-400`, `!rounded !rounded-full !rounded-sm !rounded-md !rounded-lg !rounded-xl`,
     'text-red text-ruby text-crimson text-pink text-plum text-purple text-violet text-iris text-indigo text-blue text-cyan text-teal text-jade text-green text-grass text-brown text-orange text-sky text-mint text-lime text-yellow text-amber text-gold text-bronze text-gray',

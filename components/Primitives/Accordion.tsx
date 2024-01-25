@@ -31,6 +31,7 @@ export interface AccordionProps extends AccordionPrimitiveProps {
 
 const getRoundedClass = (index: number, total: number, spaceBetween: number, radius: Radius = 'medium') => {
   if (spaceBetween !== 0) return `rounded-${ConvertRadiusClass(radius)}`;
+  if (spaceBetween === 0 && index === 0 && total === 1) return `rounded-${ConvertRadiusClass(radius)}`;
   if (index === 0) return `rounded-t-${ConvertRadiusClass(radius)}`;
   if (index === total - 1) return `rounded-b-${ConvertRadiusClass(radius)}`;
   return '';
