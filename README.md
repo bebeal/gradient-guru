@@ -23,5 +23,11 @@ https://github.com/bebeal/gradient-guru/assets/42706447/d5c65cb2-96eb-4666-8fa8-
 
 https://github.com/bebeal/gradient-guru/assets/42706447/ef5f150e-2d67-42a9-b919-c1e8fdd834f0
 
+### Scratch Pad
+
+https://github.com/bebeal/gradient-guru/assets/42706447/dbee7dd0-ae8b-49be-8a97-88c055e50233
+
+
+
 
 
