@@ -11,7 +11,7 @@
 
 ## Features
 
-### "Make Real" Content Generation w/ Versioning
+### "[Make Real](https://github.com/tldraw/make-real)" Content Generation w/ Versioning
 
 https://github.com/bebeal/gradient-guru/assets/42706447/27a89f1e-0e00-48bd-aad9-8b12c3c588e3
 
