@@ -6,4 +6,10 @@
   </a>
 </div>
 
-https://github.com/bebeal/gradient-guru/assets/42706447/fa0f0606-f56d-411d-b2a6-8529ef1b4a71
+
+## Features
+
+### Custom Nodes (Plotly & TipTap Shown Here)
+
+https://github.com/bebeal/gradient-guru/assets/42706447/d5c65cb2-96eb-4666-8fa8-fb6eb348b470
+
