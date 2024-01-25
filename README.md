@@ -1,5 +1,7 @@
 # gradient-guru
 
+* https://www.gradient-guru.com/
+
 <div style="display: flex; align-items: center; justify-content: center; gap:4px; height:100%;">
   <a href="https://github.com/sponsors/bebeal">
     <img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white" />        
