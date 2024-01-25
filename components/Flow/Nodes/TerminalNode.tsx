@@ -39,7 +39,7 @@ export class TerminalNodeUtil extends FlowNodeUtil<TerminalNode> {
   component(node: TerminalNode) {
     const isEditing = useIsEditing(node.id);
     return (
-      <HTMLContainer id={node.id} className="relative tl-embed-container flex w-auto h-full justify-center items-center overflow-hidden text-xs cursor-auto" >
+      <HTMLContainer id={node.id} className="relative tl-embed-container flex w-auto h-auto justify-center items-center overflow-hidden text-xs cursor-auto" >
         <Terminal editable showLineNumbers={node.props.showLineNumbers} wrapLongLines={node.props.wrapLongLines} language={node?.props?.language} code={node.props.text} className="h-full w-full" />
         <EditingIndicator isEditing={isEditing} />
       </HTMLContainer>

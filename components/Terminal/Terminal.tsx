@@ -71,7 +71,7 @@ export const Terminal = memo((props: TerminalProps) => {
           className="relative flex bg-[#1e1e1e] rounded-t-0 !rounded-b-lg h-full"
         >
           <textarea
-            className="absolute inset-0 resize-none bg-transparent p-[1em] text-transparent dark:caret-white caret-black outline-none text-[12px]"
+            className="absolute inset-0 resize-none bg-transparent p-[1.25em] text-transparent dark:caret-white caret-black outline-none text-[12px] ml-3 leading flex items-center"
             ref={textareaRef}
             value={codeContent}
             onChange={(e) => setCodeContent(e.target.value)}
