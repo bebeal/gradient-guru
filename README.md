@@ -2,7 +2,7 @@
 
 ## Demos
 
-* [https://www.gradient-guru.com/](https://www.gradient-guru.com/demos)
+* [https://www.gradient-guru.com/demos](https://www.gradient-guru.com/demos)
 
 <div style="display: flex; align-items: center; justify-content: center; gap:4px; height:100%;">
   <a href="https://github.com/sponsors/bebeal">
