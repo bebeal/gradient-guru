@@ -87,7 +87,7 @@ export const useModel = () => {
             description: (
               <pre className="w-auto max-h-[500px] overflow-auto rounded p-1">
                 <code className="whitespace-pre-wrap break-words rounded leading-none">
-                  {JSON.stringify('Could not generate a design from those wireframes. Try again with a different seed.', null, 2)}
+                  {JSON.stringify('Could not generate a design from those wireframes.', null, 2)}
                 </code>
               </pre>
             ),

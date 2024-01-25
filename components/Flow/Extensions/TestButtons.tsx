@@ -171,12 +171,13 @@ export const TestModelButton = (props: any) => {
         id: `model-query-${uniqueId()}`,
         title: 'Model Query Results',
         description: (
-          <pre className="w-auto max-h-[500px] overflow-auto rounded p-1">
-            <code className="whitespace-pre-wrap break-words rounded leading-none">
+          <pre className="w-auto max-h-[400px] overflow-auto rounded p-1">
+            <code className="whitespace-pre-wrap break-words rounded leading-none text-xs bg-secondary">
               {JSON.stringify(message, null, 2)}
             </code>
           </pre>
         ),
+        
       });
     });
   }, [modelQueryMutation, toast]);

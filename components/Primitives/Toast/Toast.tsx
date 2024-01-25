@@ -11,6 +11,7 @@ export interface TLUiToast {
 	description?: any | ReactNode | string;
 	actions?: TLUiToastAction[];
 	keepOpen?: boolean;
+  duration?: number;
 	closeLabel?: string;
 }
 
@@ -33,7 +34,7 @@ export const Toast = ({ toast }: ToastProps) => {
 		<T.Root
 			onOpenChange={onOpenChange}
 			className="tlui-toast__container flex !flex-col"
-			duration={toast.keepOpen ? Infinity : 2000}
+			duration={toast.keepOpen ? Infinity : toast?.duration || 2000}
 		>
 			{toast.icon && (
 				<div className="tlui-toast__icon">
