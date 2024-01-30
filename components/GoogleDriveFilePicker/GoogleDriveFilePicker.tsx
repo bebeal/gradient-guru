@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { Button, IconSetCache, RadiusClasses } from "@/components";
 import { signIn, useSession } from "next-auth/react";
 import { cn } from "@/utils";
@@ -100,11 +100,34 @@ export const GoogleDriveUtility = (props: GoogleDriveUtilityProps) => {
     createPicker,
   } = useDrivePicker({ googleDriveApiKey });
 
+  const authenticate = useCallback(() => {
+    return new Promise((resolve, reject) => {
+      // if not authenticated, popup window
+      if (session.status === "unauthenticated") {
+        const result = signIn('google');
+        resolve(result);
+      }
+      // if authenticated, resolve
+      if (session.status === "authenticated") {
+        resolve(session);
+      }
+    });
+  }, [session]);
+
+  const buttonClicked = useCallback(() => {
+    authenticate().then((result: any) => {
+      if (result.status === "authenticated") {
+        createPicker();
+      }
+    });
+  }, [authenticate, createPicker]);
+
+
   return (
     <div className="flex flex-col gap-1 w-auto h-auto justify-center items-center">
       {debug && <DebugComponent session={session} gapiLoaded={gapiLoaded} pickerApiLoaded={pickerApiLoaded} />}
       <GoogleApiScript />
-      <Button variant="outline" onClick={createPicker}>
+      <Button variant="outline" onClick={buttonClicked}>
         <IconSetCache.Logos.GoogleDrive className="w-6 h-6" />
         Open Google Drive Picker
       </Button>
