@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ForwardedRef, forwardRef, useCallback, useMemo } from 'react';
+import React, { ForwardedRef, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 import { CaretSortIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import * as SelectPrimitive from '@radix-ui/react-select';
@@ -84,8 +84,8 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>((props, for
     readOnly = false,
     ...rest
   } = props;
-  const [scrollParent, setScrollParent] = React.useState<HTMLElement>();
-  const virtuoso = React.useRef<VirtuosoHandle>(null);
+  const [scrollParent, setScrollParent] = useState<HTMLElement>();
+  const virtuoso = useRef<VirtuosoHandle>(null);
 
   return (
     <SelectPrimitive.Portal>
@@ -217,6 +217,16 @@ export const SelectTrigger = forwardRef<any, SelectTriggerProps>((props, ref) =>
 });
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
+const mapItems = (initialItems: SelectItemProps[] | string[]) => {
+  const newItems = initialItems.map((item) => {
+    if (typeof item === 'string' || typeof item === 'number') {
+      return { value: item, children: item };
+    }
+    return item;
+  });
+  return newItems;
+};
+
 // ***********************
 //         Select
 // ***********************
@@ -245,7 +255,7 @@ export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) =>
     placeholder = '',
     onChange: onChangeCallback,
     defaultValue,
-    value,
+    value: initialValue,
     onValueChange: onValueChangeCallback,
     defaultOpen = false,
     open,
@@ -257,13 +267,15 @@ export const Select = forwardRef((props: SelectProps, ref: ForwardedRef<any>) =>
     readOnly = false,
     ...rest
   } = props;
-  const items = useMemo(() => {
-    return initialItems.map((item) => {
-      if (typeof item === 'string' || typeof item === 'number') {
-        return { value: item, children: item };
-      }
-      return item;
-    });
+  const [value, setValue] = useState(initialValue || defaultValue);
+  const [items, setItems] = useState(mapItems(initialItems));
+
+  useEffect(() => {
+    setValue(initialValue || defaultValue);
+  }, [defaultValue, initialValue]);
+
+  useEffect(() => {
+    setItems(mapItems(initialItems));
   }, [initialItems]);
 
   // radix doesn't expose the actual event so we have to create a synthetic one for it to work with react-hook-form

@@ -113,7 +113,7 @@ export const SharedPreviewNode = (props: SharedPreviewNodeProps) => {
     const handleAlertMessage = (event: MessageEvent) => {
       if (event.data.type === "iframe-alert") {
         // Start the log group on the first alert and set the flag
-        console.log(`Iframe Alert: ${event.data.message}`);
+        console.groupCollapsed(`Iframe Alert: ${event.data.message}`);
       }
     };
     window.addEventListener("message", handleAlertMessage);

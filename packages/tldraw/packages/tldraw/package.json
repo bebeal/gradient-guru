@@ -58,7 +58,7 @@
 		"clsx": "^2.1.0",
 		"hotkeys-js": "^3.11.2",
 		"lz-string": "^1.4.4",
-		"tailwind-merge": "^2.2.0"
+		"tailwind-merge": "^2.2.1"
 	},
 	"peerDependencies": {
 		"react": "^18",

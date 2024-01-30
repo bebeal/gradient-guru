@@ -1,9 +1,9 @@
 'use client'
 
 import { useContentExtractor, useToasts, useModel } from "@/hooks";
-import { uniqueId } from "@tldraw/tldraw";
+import { uniqueId, useEditor } from "@tldraw/tldraw";
 import { cn } from "@/utils";
-import { Button, CopyButton, DownloadButton, IconSetCache, Separator } from "@/components"
+import { Button, CopyButton, DownloadButton, IconSetCache, Separator, zoomToFitNewNode } from "@/components"
 import { useCallback } from "react";
 
 export const ExtractAllToast: React.FC<any> = ({ message }) => {
@@ -162,6 +162,7 @@ export const TestModelButton = (props: any) => {
     setSystemPromptName,
   } = useModel();
   const toast = useToasts();
+  const editor = useEditor();
 
   const onClick = useCallback(async () => {
     // Use mutateAsync instead of mutate
@@ -179,8 +180,11 @@ export const TestModelButton = (props: any) => {
         ),
         
       });
+      setTimeout(() => {
+        zoomToFitNewNode(editor);
+      }, 0);
     });
-  }, [modelQueryMutation, toast]);
+  }, [editor, modelQueryMutation, toast]);
 
   return (
     <Button variant={variant} className={cn(className)} containerClassName={cn(containerClassName)} onClick={onClick}>

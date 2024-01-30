@@ -30,7 +30,7 @@ export const FormItemToItemMap: Record<BasicFormItem, BasicItem[]> = {
 };
 
 export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
-  const { field, schema, placeholder, readOnly, form, item, className, } = props;
+  const { field, schema, placeholder, readOnly, form, item, className, ItemRenderer } = props;
   const hasMin = schema?.exclusiveTests?.min;
   const hasMax = schema?.exclusiveTests?.max;
   let min = Infinity;
@@ -74,9 +74,9 @@ export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
         highlightActive={false}
         className="text-xs w-full"
         triggerClassName="px-2 py-1 font-semibold text-xs text-primary"
-        items={[ 
-          {name: field?.label || field?.name, open: false, content: (
-            <div ref={ref} className="w-auto h-full grid grid-cols-2 col-span-2 gap-1 p-2 overflow-auto rounded items-center">
+        items={[
+          {name: field?.label || field?.name, open: true, content: (
+            <div ref={ref} className="w-auto h-auto grid grid-cols-2 col-span-2 gap-1 p-2 rounded items-center">
               <FormFields form={form} schema={schema} prefix={`${field?.name}.`} readOnly={readOnly} />
             </div>
           )} 
@@ -103,8 +103,8 @@ export const DefaultFormItem = forwardRef<any, any>((props, ref) => {
     )
   } else if (item === 'select') {
     return (
-      <Select ref={ref} className={cn(`text-xs`, className)} items={Array.from(schema?._whitelist)} {...field} readOnly={readOnly} />
-    )
+      <Select ref={ref} className={cn(`text-xs`, className)} items={Array.from(schema?._whitelist)} {...field} value={field?.value} onChange={field?.onChange} readOnly={readOnly} />
+    );
   } else if (FormItemToItemMap['boolean'].includes(item)) {
     
     const value: boolean = field?.value;
@@ -165,14 +165,14 @@ export const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) =
   }, [label]);
 
   return (
-    <div ref={ref} className={cn(`w-full h-full grid overflow-auto rounded items-center p-1 gap-px`, isObject && 'col-span-2', shouldSpan2 && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
+    <div ref={ref} className={cn(`w-full h-auto grid rounded items-center p-1 gap-px`, isObject && 'col-span-2', shouldSpan2 && 'col-span-2', isBoolean && `grid-cols-[auto_1fr] items-center`)}>
       {(description || !isObject) && (<div className={cn("flex flex-col text-left h-auto w-auto flex-wrap self-justify-left self-start")}>
         {!isObject && !noLabel && (<FormLabel className={cn("text-xs", selected && `text-accent`)}>{Label}</FormLabel>)}
         {description && (<FormDescription>{description}</FormDescription>)}
       </div>)}
-      <div className={cn("flex-col flex w-full h-auto justify-center items-center", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end', !isBoolean && `px-1.5`)}>
+      <div className={cn("flex-col flex w-auto h-auto justify-center items-center", isObject && 'col-span-2', isBoolean && 'w-auto justify-self-end', !isBoolean && `px-1.5`)}>
         <FormSlot>
-          <ItemRenderer {...props} {...useForm} className={cn(className, 'text-xs placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error' )} />
+          <ItemRenderer {...useForm} ItemRenderer={ItemRenderer} className={cn(className, 'text-xs placeholder:text-secondary/80 disabled:cursor-not-allowed disabled:opacity-50', fieldState.error && 'border-error' )} />
         </FormSlot>
       </div>
       {!isObject && (<FormMessage />)}
@@ -212,7 +212,7 @@ export const FormField = (props: FormFieldProps) => {
     field,
     fieldState,
     formState, 
-  } = useController({ name });
+  } = useController({ name, ...rest });
 
   return (
     <FormFieldContext.Provider value={{ schema, field, fieldState, formState, label, description, placeholder, readOnly }}>

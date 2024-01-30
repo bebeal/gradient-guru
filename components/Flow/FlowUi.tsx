@@ -1,16 +1,12 @@
 'use client';
 
+import { memo, useCallback, useEffect, useState } from 'react';
 import { setUserPreferences, TLAnyShapeUtilConstructor, TldrawUiProps, TLShape, useEditor, useValue } from '@tldraw/tldraw';
 import { BackToContent } from '@tldraw/tldraw/src/lib/ui/components/BackToContent';
 import { DebugPanel } from '@tldraw/tldraw/src/lib/ui/components/DebugPanel';
 import { Dialogs } from '@tldraw/tldraw/src/lib/ui/components/Dialogs';
 import { FollowingIndicator } from '@tldraw/tldraw/src/lib/ui/components/FollowingIndicator';
-import { memo, useCallback, useEffect, useState } from 'react';
 import { HelpMenu } from '@tldraw/tldraw/src/lib/ui/components/HelpMenu';
-// import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
-import { Toasts, ToastViewport, zoomToFitNewNode } from '@/components';
-import { ToastsProvider, useContentRecorder, useModel } from '@/hooks';
-import { cn } from '@/utils';
 import { NavigationZone } from '@tldraw/tldraw/src/lib/ui/components/NavigationZone/NavigationZone';
 import { ExitPenMode } from '@tldraw/tldraw/src/lib/ui/components/PenModeToggle';
 import { Button } from '@tldraw/tldraw/src/lib/ui/components/primitives/Button';
@@ -23,10 +19,14 @@ import { useEditorEvents } from '@tldraw/tldraw/src/lib/ui/hooks/useEditorEvents
 import { useKeyboardShortcuts } from '@tldraw/tldraw/src/lib/ui/hooks/useKeyboardShortcuts';
 import { useTranslation } from '@tldraw/tldraw/src/lib/ui/hooks/useTranslation/useTranslation';
 import { TldrawUiContextProvider } from '@tldraw/tldraw/src/lib/ui/TldrawUiContextProvider';
-import { FlowMenu, FlowToolbar, ScratchPanel } from './Extensions';
-import { TestButtons } from './Extensions/TestButtons';
-import { FlowTabPanel } from './TabPanel';
+// import { MenuZone } from '@tldraw/tldraw/src/lib/ui/components/MenuZone';
 import { OpenAIModelClient } from '@/clients';
+import { Toasts, ToastViewport, zoomToFitNewNode } from '@/components';
+import { ToastsProvider, useContentRecorder, useModel } from '@/hooks';
+import { cn } from '@/utils';
+import { FlowMenu, FlowToolbar, ScratchPanel } from './Extensions';
+import { TestButtons } from './Extensions/FlowButtons';
+import { FlowTabPanel } from './TabPanel';
 
 export type FlowUiProps = TldrawUiProps & {
   initialShapes?: TLShape[];
@@ -42,7 +42,7 @@ export const FlowUi = memo((props: FlowUiProps) => {
       recordUiEvent?.(name, data);
       onUiEventCallback?.(name, data);
     },
-    [onUiEventCallback, recordUiEvent]
+    [onUiEventCallback, recordUiEvent],
   );
 
   return (
@@ -78,9 +78,7 @@ const FlowUiContent = memo((props: FlowUiProps) => {
   const isReadonlyMode = useValue('isReadonlyMode', () => editor.getInstanceState().isReadonly, [editor]);
   const isFocusMode = useValue('focus', () => editor.getInstanceState().isFocusMode, [editor]);
   const isDebugMode = useValue('debug', () => editor.getInstanceState().isDebugMode, [editor]);
-  const {
-    modelClient
-  } = useModel();
+  const { modelClient } = useModel();
 
   useKeyboardShortcuts();
   useNativeClipboardEvents();
@@ -117,54 +115,54 @@ const FlowUiContent = memo((props: FlowUiProps) => {
   return (
     <div className="w-full h-full flex flex-col">
       <div className="w-full h-full flex flex-row">
-      <FlowTabPanel />
-      <div
-        className={cn('tlui-layout', {
-          'tlui-layout__mobile': breakpoint < 5,
-        })}
-        data-breakpoint={breakpoint}
-      >
-        {isFocusMode ? (
-          <div className={cn('tlui-layout__top')}>
-            <Button type="icon" className={cn('tlui-focus-button')} title={`${msg('focus-mode.toggle-focus-mode')}`} icon="dot" onClick={() => toggleFocus.onSelect('menu')} />
-          </div>
-        ) : (
-          <>
+        <FlowTabPanel />
+        <div
+          className={cn('tlui-layout', {
+            'tlui-layout__mobile': breakpoint < 5,
+          })}
+          data-breakpoint={breakpoint}
+        >
+          {isFocusMode ? (
             <div className={cn('tlui-layout__top')}>
-              <div className={cn('tlui-layout__top__left')}>
-                <FlowMenu />
-                <div className={cn('tlui-helper-buttons')}>
-                  <ExitPenMode />
-                  <BackToContent />
-                  <StopFollowing />
+              <Button type="icon" className={cn('tlui-focus-button')} title={`${msg('focus-mode.toggle-focus-mode')}`} icon="dot" onClick={() => toggleFocus.onSelect('menu')} />
+            </div>
+          ) : (
+            <>
+              <div className={cn('tlui-layout__top')}>
+                <div className={cn('tlui-layout__top__left')}>
+                  <FlowMenu />
+                  <div className={cn('tlui-helper-buttons')}>
+                    <ExitPenMode />
+                    <BackToContent />
+                    <StopFollowing />
+                  </div>
+                </div>
+                <div className={cn('tlui-layout__top__center')}></div>
+                <div className={cn('tlui-layout__top__right')}>
+                  {shareZone}
+                  {breakpoint >= 5 && !isReadonlyMode && (
+                    <div className={cn('tlui-style-panel__wrapper')}>
+                      <StylePanel />
+                    </div>
+                  )}
+                  <ScratchPanel scratchNodeUtils={scratchNodeUtils || []} />
                 </div>
               </div>
-              <div className={cn('tlui-layout__top__center')}></div>
-              <div className={cn('tlui-layout__top__right')}>
-                {shareZone}
-                {breakpoint >= 5 && !isReadonlyMode && (
-                  <div className={cn('tlui-style-panel__wrapper')}>
-                    <StylePanel />
-                  </div>
-                )}
-                <ScratchPanel scratchNodeUtils={scratchNodeUtils || []} />
+              <div className={cn('tlui-layout__bottom')}>
+                <div className={cn('tlui-layout__bottom__main')}>
+                  <NavigationZone />
+                  <FlowToolbar />
+                  <HelpMenu />
+                </div>
+                {isDebugMode && <DebugPanel renderDebugMenuItems={() => <TestButtons />} />}
               </div>
-            </div>
-            <div className={cn('tlui-layout__bottom')}>
-              <div className={cn('tlui-layout__bottom__main')}>
-                <NavigationZone />
-                <FlowToolbar />
-                <HelpMenu />
-              </div>
-              {isDebugMode && <DebugPanel renderDebugMenuItems={() => <TestButtons />} />}
-            </div>
-          </>
-        )}
-        <Toasts />
-        <Dialogs />
-        <ToastViewport />
-        <FollowingIndicator />
-      </div>
+            </>
+          )}
+          <Toasts />
+          <Dialogs />
+          <ToastViewport />
+          <FollowingIndicator />
+        </div>
       </div>
     </div>
   );

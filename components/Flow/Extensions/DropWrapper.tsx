@@ -3,7 +3,6 @@
 import { TLShape, createShapeId, useEditor } from "@tldraw/tldraw";
 import React, { useCallback } from "react";
 import styled from "styled-components";
-import { zoomToFitNewNode } from "..";
 
 export const DropWrapperContainer = styled.div<any>`
   position: absolute;
@@ -24,9 +23,6 @@ export const DropWrapper = (props: DropWrapperProps) => {
 
   const dropNode = useCallback((node: TLShape) => {
     editor.createShape(node);
-    setTimeout(() => {
-      zoomToFitNewNode(editor);
-    }, 0);
   }, [editor]);
 
   const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {

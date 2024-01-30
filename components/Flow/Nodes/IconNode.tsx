@@ -33,7 +33,6 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
 
   component(node: IconNode) {
     const Icon = IconSetCache?.[node.props.iconSet]?.[node.props.icon];
-
     return (
       <HTMLContainer id={node.id}>
         {Icon && <Icon width="100%" height="100%" />}
@@ -92,7 +91,7 @@ export class IconNodeUtil extends FlowNodeUtil<IconNode> {
     const validIcons: readonly string[] = Array.from([...Object.keys(IconSetCache?.[node.props.iconSet])]);
     return {
       ...baseSchema,
-      props: yup.object().shape({
+      "props": yup.object().shape({
         ...baseSchemaProps,
         'iconSet': yup.string().oneOf(Object.keys(IconSetCache)).meta({ item: 'select', label: 'Set' }),
         'icon': yup.string().oneOf(validIcons, `Invalid Icon: ${node.props.icon}`).meta({ item: 'select', label: 'Icon' }),

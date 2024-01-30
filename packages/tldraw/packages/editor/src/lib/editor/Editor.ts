@@ -3040,11 +3040,10 @@ export class Editor extends EventEmitter<TLEventMap> {
 	}
 
   /**
-	 * Get the shapes that should be displayed in the current viewport.
-	 *
-	 * @public
-	 */
-	@computed getUnorderedRenderingShapes(
+   * 
+   * @public
+   */
+	getUnorderedRenderingShapes(
 		// The rendering state. We use this method both for rendering, which
 		// is based on other state, and for computing order for SVG export,
 		// which should work even when things are for example off-screen.
@@ -5138,7 +5137,7 @@ export class Editor extends EventEmitter<TLEventMap> {
 
 		for (const id of ids) {
 			const shape = this.getShape(id)!
-			const localDelta = Vec.Cast(offset)
+			const localDelta = Vec.From(offset)
 			const parentTransform = this.getShapeParentTransform(shape)
 			if (parentTransform) localDelta.rot(-parentTransform.rotation())
 

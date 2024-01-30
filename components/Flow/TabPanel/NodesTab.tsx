@@ -1,8 +1,8 @@
 'use client'
 
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import * as yup from 'yup';
-import { useEditor, useValue } from '@tldraw/tldraw';
+import { Editor, useEditor, useValue } from '@tldraw/tldraw';
 import {
   Accordion,
   FlowTab,
@@ -15,18 +15,10 @@ import {
 } from '@/components';
 import { cn, filterObject } from '@/utils';
 
-const buildNodeSchema = (editor: any, node: any) => {
-  const nodeSchema =
-    editor.getShapeUtil(node.type) instanceof FlowNodeUtil
-      ? (editor.getShapeUtil(node.type) as FlowNodeUtil<any>).getSchema(node)
-      : NodeSchemaMappings;
-    return yup.object().shape(nodeSchema).meta({ item: 'object' });
-};
-
 export interface NodesTabProps {}
 
 export const NodesTab = () => {
-  const editor = useEditor();
+  const editor: Editor = useEditor();
   const currentPageShapesSorted: any = useValue('current page shapes', () => editor.getCurrentPageShapesSorted(), [editor]);
   const selectedShapeIds: any = useValue('selected shape ids', () => editor.getSelectedShapeIds(), [editor]);
 
@@ -34,31 +26,38 @@ export const NodesTab = () => {
     if (!editor) return;
     if (newNodeProperties.type === 'icon') {
       const id = newNodeProperties.id;
-      const currentNode: any = editor.getShape(id);
+      const currentNode: any = currentPageShapesSorted.find((node: any) => node.id === id);
       if (currentNode.props.iconSet !== newNodeProperties.props.iconSet) {
-        console.log('iconSet changed', currentNode.props.iconSet, newNodeProperties.props.iconSet);
         // update icon if iconSet has changed
-        newNodeProperties.props.icon = Object.keys(IconSetCache?.[newNodeProperties.props.iconSet])[0];
+        const newIcon = Object.keys(IconSetCache?.[newNodeProperties.props.iconSet])[0];
+        newNodeProperties.props.icon = newIcon;
       }
     }
     editor.updateShape({...newNodeProperties});
+  }, [currentPageShapesSorted, editor]);
+
+  const buildNodeSchema = useCallback((node: any) => {
+    const nodeSchema = editor.getShapeUtil(node.type) instanceof FlowNodeUtil
+      ? (editor.getShapeUtil(node.type) as FlowNodeUtil<any>).getSchema(node)
+      : NodeSchemaMappings;
+    return yup.object().shape(nodeSchema).meta({ item: 'object' });
   }, [editor]);
 
-  const items = useMemo(() => {
+  const items = useCallback(() => {
     return currentPageShapesSorted.map((node: any, index: number) => {
       // check if node is selected
       const selected = selectedShapeIds.includes(node.id);
+      const obj = filterObject(node, KeysToIgnore);
       return {
-        key: `${node.id}-${index}-${selected}`,
         name: getNodeNameComponent(node, selected ? `text-accent`: ``),
         content: (
-          <div className={cn(`w-full h-full flex flex-col justify-stretch items-center p-1`)}>
-            <Form object={filterObject(node, KeysToIgnore)} schema={buildNodeSchema(editor, node)} SchemaMap={NodeSchemaMappings} onSubmit={onNodeChange} />
+          <div className={cn(`w-full flex flex-col justify-stretch items-center p-1`)}>
+            <Form object={obj} schema={buildNodeSchema(obj)} SchemaMap={NodeSchemaMappings} onSubmit={onNodeChange} />
           </div>
         ),
       };
-    }) ?? []
-  }, [currentPageShapesSorted, selectedShapeIds, editor, onNodeChange]);
+    }) ?? [];
+  }, [currentPageShapesSorted, selectedShapeIds, buildNodeSchema, onNodeChange]);
 
   return (
     <FlowTab title="Nodes">
@@ -66,7 +65,7 @@ export const NodesTab = () => {
         spaceBetween={0}
         className="w-full text-xs p-1"
         triggerClassName="w-full flex justify-center items-center"
-        items={items}
+        items={items()}
       />
     </FlowTab>
   );

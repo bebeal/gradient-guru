@@ -75,6 +75,9 @@ import { useValue } from '@tldraw/state';
 import { VecModel } from '@tldraw/tlschema';
 import { whyAmIRunning } from '@tldraw/state';
 
+// @public
+export function angleDistance(fromAngle: number, toAngle: number, direction: number): number;
+
 // @internal (undocumented)
 export const ANIMATION_MEDIUM_MS = 320;
 
@@ -198,6 +201,8 @@ export class Box {
     expandBy(n: number): this;
     // (undocumented)
     static From(box: BoxModel): Box;
+    // (undocumented)
+    static FromCenter(center: VecLike, size: VecLike): Box;
     // (undocumented)
     static FromPoints(points: VecLike[]): Box;
     // (undocumented)
@@ -340,6 +345,9 @@ export { computed }
 export const coreShapes: readonly [typeof GroupShapeUtil];
 
 // @public
+export function counterClockwiseAngleDist(a0: number, a1: number): number;
+
+// @public
 export function createSessionStateSnapshotSignal(store: TLStore): Signal<null | TLSessionStateSnapshot>;
 
 // @public
@@ -413,6 +421,7 @@ export const debugFlags: {
     pointerCaptureTrackingObject: DebugFlag<Map<Element, number>>;
     elementRemovalLogging: DebugFlag<boolean>;
     debugSvg: DebugFlag<boolean>;
+    showFps: DebugFlag<boolean>;
     throwToBlob: DebugFlag<boolean>;
     logMessages: DebugFlag<any[]>;
     resetConnectionEveryPing: DebugFlag<boolean>;
@@ -754,6 +763,7 @@ export class Editor extends EventEmitter<TLEventMap> {
     // @internal (undocumented)
     getStyleForNextShape<T>(style: StyleProp<T>): T;
     getSvg(shapes: TLShape[] | TLShapeId[], opts?: Partial<TLSvgOptions>): Promise<SVGSVGElement | undefined>;
+    // (undocumented)
     getUnorderedRenderingShapes(useEditorState: boolean): {
         id: TLShapeId;
         shape: TLShape;
@@ -970,7 +980,9 @@ export const EVENT_NAME_MAP: Record<Exclude<TLEventName, TLPinchEventName>, keyo
 export function extractSessionStateFromLegacySnapshot(store: Record<string, UnknownRecord>): null | TLSessionStateSnapshot;
 
 // @internal (undocumented)
-export const featureFlags: Record<string, DebugFlag<boolean>>;
+export const featureFlags: {
+    canMoveArrowLabel: DebugFlag<boolean>;
+};
 
 // @public (undocumented)
 export type GapsSnapLine = {
@@ -997,6 +1009,8 @@ export abstract class Geometry2d {
     // (undocumented)
     get center(): Vec;
     // (undocumented)
+    debugColor?: string;
+    // (undocumented)
     distanceToLineSegment(A: Vec, B: Vec): number;
     // (undocumented)
     distanceToPoint(point: Vec, hitInside?: boolean): number;
@@ -1010,6 +1024,8 @@ export abstract class Geometry2d {
     hitTestLineSegment(A: Vec, B: Vec, distance?: number): boolean;
     // (undocumented)
     hitTestPoint(point: Vec, margin?: number, hitInside?: boolean): boolean;
+    // (undocumented)
+    ignore?: boolean;
     // (undocumented)
     isClosed: boolean;
     // (undocumented)
@@ -1088,7 +1104,7 @@ export function getPointerInfo(e: PointerEvent | React.PointerEvent): {
 };
 
 // @public
-export function getPointOnCircle(cx: number, cy: number, r: number, a: number): Vec;
+export function getPointOnCircle(center: VecLike, r: number, a: number): Vec;
 
 // @public (undocumented)
 export function getPolygonVertices(width: number, height: number, sides: number): Vec[];
@@ -1128,6 +1144,8 @@ export class Group2d extends Geometry2d {
     hitTestLineSegment(A: Vec, B: Vec, zoom: number): boolean;
     // (undocumented)
     hitTestPoint(point: Vec, margin: number, hitInside: boolean): boolean;
+    // (undocumented)
+    ignoredChildren: Geometry2d[];
     // (undocumented)
     nearestPoint(point: Vec): Vec;
     // (undocumented)
@@ -1653,7 +1671,9 @@ export abstract class ShapeUtil<Shape extends TLUnknownShape = TLUnknownShape> {
     }>;
     onDropShapesOver?: TLOnDragHandler<Shape>;
     onEditEnd?: TLOnEditEndHandler<Shape>;
-    onHandleChange?: TLOnHandleChangeHandler<Shape>;
+    onHandleDrag?: TLOnHandleDragHandler<Shape>;
+    onHandleDragEnd?: TLOnHandleDragStartHandler<Shape>;
+    onHandleDragStart?: TLOnHandleDragStartHandler<Shape>;
     onResize?: TLOnResizeHandler<Shape>;
     onResizeEnd?: TLOnResizeEndHandler<Shape>;
     onResizeStart?: TLOnResizeStartHandler<Shape>;
@@ -2043,6 +2063,13 @@ export type TLCommandHandler<Data> = {
 };
 
 // @public (undocumented)
+export type TLCommandHistoryOptions = Partial<{
+    squashing: boolean;
+    ephemeral: boolean;
+    preservesRedoStack: boolean;
+}>;
+
+// @public (undocumented)
 export type TLCompleteEvent = (info: TLCompleteEventInfo) => void;
 
 // @public (undocumented)
@@ -2360,11 +2387,14 @@ export type TLOnDragHandler<T extends TLShape, R = void> = (shape: T, shapes: TL
 export type TLOnEditEndHandler<T extends TLShape> = (shape: T) => void;
 
 // @public (undocumented)
-export type TLOnHandleChangeHandler<T extends TLShape> = (shape: T, info: {
+export type TLOnHandleDragHandler<T extends TLShape> = (shape: T, info: {
     handle: TLHandle;
     isPrecise: boolean;
     initial?: T | undefined;
 }) => TLShapePartial<T> | void;
+
+// @public (undocumented)
+export type TLOnHandleDragStartHandler<T extends TLShape> = (shape: T) => TLShapePartial<T> | void;
 
 // @public
 export type TLOnMountHandler = (editor: Editor) => (() => undefined | void) | undefined | void;
@@ -2803,7 +2833,6 @@ export class Vec {
     static Clockwise(A: VecLike, B: VecLike, C: VecLike): boolean;
     // (undocumented)
     clone(): Vec;
-    // (undocumented)
     static Cpr(A: VecLike, B: VecLike): number;
     // (undocumented)
     cpr(V: VecLike): number;
@@ -2831,7 +2860,6 @@ export class Vec {
     static DivV(A: VecLike, B: VecLike): Vec;
     // (undocumented)
     divV(V: VecLike): this;
-    // (undocumented)
     static Dpr(A: VecLike, B: VecLike): number;
     // (undocumented)
     dpr(V: VecLike): number;
@@ -2857,7 +2885,6 @@ export class Vec {
     static Len2(A: VecLike): number;
     // (undocumented)
     len2(): number;
-    // (undocumented)
     static Lrp(A: VecLike, B: VecLike, t: number): Vec;
     // (undocumented)
     lrp(B: VecLike, t: number): Vec;
@@ -2888,14 +2915,12 @@ export class Vec {
     static Nudge(A: VecLike, B: VecLike, distance: number): Vec;
     // (undocumented)
     nudge(B: VecLike, distance: number): this;
-    // (undocumented)
     static Per(A: VecLike): Vec;
     // (undocumented)
     per(): this;
     static PointsBetween(A: VecModel, B: VecModel, steps?: number): Vec[];
     // (undocumented)
     get pressure(): number;
-    // (undocumented)
     static Pry(A: VecLike, B: VecLike): number;
     // (undocumented)
     pry(V: VecLike): number;
@@ -2965,7 +2990,6 @@ export class Vec {
     static ToString(A: VecLike): string;
     // (undocumented)
     toString(): string;
-    // (undocumented)
     static Uni(A: VecLike): Vec;
     // (undocumented)
     uni(): Vec;

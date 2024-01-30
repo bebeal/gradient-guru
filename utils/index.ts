@@ -17,3 +17,4 @@ export * from './svg';
 export * from './models';
 export * from './export';
 export * from './images';
+export * from './stream';

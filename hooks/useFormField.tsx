@@ -55,7 +55,7 @@ export const useFormField = () => {
       ...meta,
       disabled,
       name,
-      id
+      id,
     },
     fieldState,
     formState,

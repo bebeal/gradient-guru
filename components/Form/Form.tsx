@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, forwardRef, memo, useEffect, useState } from "react";
+import { ReactNode, forwardRef, memo, useCallback, useEffect, useState } from "react";
 import * as FormPrimitive from '@radix-ui/react-form';
 import { FormProvider, UseFormProps, UseFormReturn, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,7 +8,6 @@ import * as yup from "yup";
 import { inferSchema } from "./shared";
 import { arrayToObject, cn } from "@/utils";
 import { FormFields } from "./FormFields";
-import { isEqual } from "lodash";
 
 // Custom meta properties I'm defining for each field to specify how it should be rendered
 export type SchemaMeta = {
@@ -36,8 +35,8 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
     object: initialObject = {},
     schema: schemaFromProps,
     readOnly = false,
-    onSubmit,
-    onError,
+    onSubmit: onSubmitCallback,
+    onError: onErrorCallback,
     mode = 'all',
     labels={},
     className = '',
@@ -48,25 +47,20 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
     fieldClassName='',
     ...rest
   } = props;
-  const [initialized, setInitialized] = useState(false);
   const object = Array.isArray(initialObject) ? arrayToObject(initialObject) : initialObject;
   // if schema is not provided, infer it based on types
-  const schema: any = schemaFromProps || inferSchema(object, SchemaMap);
+  const [schema, setSchema]: any = useState(schemaFromProps || inferSchema(object, SchemaMap));
   const fromArray = schema?.spec?.meta?.item === 'from-array';
   type FormSchema = yup.InferType<typeof schema>;
   const [values, setValues] = useState<FormSchema>(schema.cast(object));
 
   useEffect(() => {
-    const newobj = schema.cast(object);
-    if (!isEqual(newobj, values)) {
-      setValues(newobj);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [object, schema]);
+    const newSchema = schemaFromProps || inferSchema(object, SchemaMap);
+    setSchema(newSchema);
+  }, [object, schemaFromProps, SchemaMap]);
 
   const form: UseFormReturn = useForm<FormSchema>({
     resolver: yupResolver(schema),
-    // cast initial values to conform to schema
     values: values,
     defaultValues: values,
     mode,
@@ -75,27 +69,31 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
     ...rest,
   });
 
-  // run validation on initial mount
-  useEffect(() => {
-    if (form && !initialized) {
-      setInitialized(true);
-      form.trigger();
-    }
-  }, [form, initialized]);
+  const onError = useCallback((errors: any) => {
+    onErrorCallback?.(errors);
+  }, [onErrorCallback]);
+
+  const onSubmit = useCallback((data: any) => {
+    const castedNewValues = schema.cast(data);
+    setValues(castedNewValues);
+    onSubmitCallback?.(castedNewValues);
+  }, [onSubmitCallback, schema]);
 
   useEffect(() => {
     const subscription = form.watch((newValues: any) => {
-      setValues(newValues);
-      form.handleSubmit(() => onSubmit(schema.cast(newValues), form), onError)();
+      onSubmit(newValues);
     });
-    return () => subscription.unsubscribe();
-  }, [form, onError, onSubmit, schema]);
+    return () => {
+      subscription.unsubscribe();
+    }
+  }, [form, onSubmit]);
 
   return (
     <FormProvider {...rest} {...form}>
       <FormPrimitive.Root
         ref={ref}
-        className={cn(`w-full h-auto p-2 overflow-auto rounded items-center`, readOnly && 'bg-primary/90', className)}
+        className={cn(`w-full h-full p-2 rounded items-center`, readOnly && 'bg-primary/90', className)}
+        onChange={() => form.handleSubmit((data) => onSubmit(data), onError)()}
       > 
         <div className={cn("w-full h-auto grid gap-px rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`, fieldClassName)}>
           <FormFields ItemRenderer={ItemRenderer} form={form} schema={schema} labels={labels} readOnly={readOnly} />

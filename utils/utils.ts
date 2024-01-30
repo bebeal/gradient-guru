@@ -118,3 +118,5 @@ export const formatTime = (date?: Date | number): string => {
   }
   return (date || new Date()).toISOString().slice(0, 19).replace("T", " ") || '';
 };
+
+export const sleep = (ms: number = 0) => new Promise(resolve => setTimeout(resolve, ms));
