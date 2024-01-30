@@ -25,9 +25,9 @@ export const getEnvVariable = (key: string, nextPublic: boolean = false): string
     }
     return null;
   }
+
   // Server-side: Access both public and server-side env vars
   const value = nextPublic ? process.env[`NEXT_PUBLIC_${key}`] : process.env[key];
-  
 
   if (!value) {
     console.warn(

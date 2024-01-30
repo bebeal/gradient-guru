@@ -104,11 +104,6 @@ export const authConfig = {
   }
 } satisfies NextAuthConfig;
 
-export const {
-  handlers: { GET, POST },
-  auth,
-}: any = NextAuth(authConfig);
-
 export const getSessionServerSide = async (...args: [GetServerSidePropsContext] | [NextApiRequest, NextApiResponse] | []) => {
   return await auth(...args);
 };
@@ -122,3 +117,9 @@ export const NextAuthProvider = ({
 }) => {
   return <SessionProvider session={session}>{children}</SessionProvider>;
 };
+
+
+export const {
+  handlers: { GET, POST },
+  auth,
+}: any = NextAuth(authConfig);

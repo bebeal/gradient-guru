@@ -120,3 +120,30 @@ export const formatTime = (date?: Date | number): string => {
 };
 
 export const sleep = (ms: number = 0) => new Promise(resolve => setTimeout(resolve, ms));
+
+export const loadScript = (src: string, id?: string, onload?: () => void, onerror?: () => void) => {
+  return new Promise<void>((resolve, reject) => {
+    // if script already exists, resolve
+    if (id && document.getElementById(id)) {
+      resolve();
+      return;
+    }
+    // create script element
+    const script = document.createElement('script');
+    if (id) {
+      script.id = id;
+    }
+    script.src = src;
+    // add onload and onerror handlers
+    script.onload = () => {
+      onload?.();
+      resolve();
+    }
+    script.onerror = () => {
+      onerror?.();
+      reject(new Error(`Failed to load script ${src}`));
+    }
+    // append script to head
+    document.head.appendChild(script);
+  });
+};
