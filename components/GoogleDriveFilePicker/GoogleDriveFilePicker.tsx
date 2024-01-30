@@ -1,10 +1,10 @@
 'use client'
 
-import Script from 'next/script'
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button, IconSetCache, RadiusClasses } from "@/components";
 import { signIn, useSession } from "next-auth/react";
 import { cn } from "@/utils";
+import { useDrivePicker } from '@/hooks';
 
 // Declare types for Google Picker
 declare global {
@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-const DebugComponent = ({ session, gapiLoaded }: { session: any, gapiLoaded: boolean }) => {
+const DebugComponent = ({ session, gapiLoaded, pickerApiLoaded }: { session: any, gapiLoaded: boolean, pickerApiLoaded: boolean }) => {
   return (
     <div className="absolute top-0 left-0 w-auto h-auto bg-tertiary border border-primary flex justify-center items-center m-2 rounded p-1 text-xs">
       <div className="grid grid-cols-2 gap-1 w-full p-2 rounded">
@@ -24,6 +24,10 @@ const DebugComponent = ({ session, gapiLoaded }: { session: any, gapiLoaded: boo
         <strong>GAPI Loaded:</strong>
         <div className="flex justify-end">
           {gapiLoaded ? 'Yes' : 'No'}
+        </div>
+        <strong>Picker API Loaded:</strong>
+        <div className="flex justify-end">
+          {pickerApiLoaded ? 'Yes' : 'No'}
         </div>
       </div>
     </div>
@@ -88,87 +92,19 @@ export const GoogleDriveUtility = (props: GoogleDriveUtilityProps) => {
     debug=true,
     googleDriveApiKey,
   } = props;
-  const session: any = useSession();
-  const [gapiLoaded, setGapiLoaded] = useState(false);
-  const [pickerApiLoaded, setPickerApiLoaded] = useState(false);
-
-  const pickerCallback = useCallback((data: any) => {
-    if (data[window.gapi.picker.api.Response.ACTION] == window.gapi.picker.api.Action.PICKED) {
-      const docs: any = data[window.gapi.picker.api.Response.DOCUMENTS];
-      console.log('Picked Docs', docs);
-
-    }
-  }, []);
-
-  const createPicker = useCallback(() => {
-    if (!googleDriveApiKey || !gapiLoaded || !pickerApiLoaded || !session) {
-      console.error('Missing required parameters or APIs not loaded');
-      return;
-    }
-    
-    const pickerApi = window.gapi.picker.api;
-
-    const preSearchedView = new pickerApi.View(pickerApi.ViewId.DOCS)
-      .setQuery('.tldr');
-
-    const googleDriveViewGroup = new pickerApi.ViewGroup(preSearchedView);
-    
-
-    const picker = new pickerApi.PickerBuilder()
-        .addViewGroup(googleDriveViewGroup)
-        .setOAuthToken(session.data.account.access_token)
-        .setDeveloperKey(googleDriveApiKey)
-        .setCallback(pickerCallback)
-        .enableFeature(pickerApi.Feature.MULTISELECT_ENABLED)
-        .enableFeature(pickerApi.Feature.SIMPLE_UPLOAD_ENABLED)
-        .build();
-  
-    picker.setVisible(true);
-  }, [gapiLoaded, googleDriveApiKey, pickerApiLoaded, pickerCallback, session]);
-
-  const loadGoogleApi = useCallback(() => {
-    if (!window.gapi) {
-      console.error('Google API script not loaded');
-      return;
-    }
-    if (gapiLoaded) {
-      console.log('Google API already loaded');
-      return;
-    }
-    window.gapi.load('auth', {
-      callback: () => {
-        setGapiLoaded(true);
-        // Load Picker API only after Google API is successfully loaded
-        window.gapi.load('picker', {
-          callback: () => setPickerApiLoaded(true),
-          onerror: () => console.error('Error loading Picker API')
-        });
-      },
-      onerror: () => console.error('Error loading Google API')
-    });
-  }, [gapiLoaded]);
-
-  const handleOpenPicker = () => {
-    createPicker();
-  };
-
-  useEffect(() => {
-    if (window.gapi && gapiLoaded) {
-      window.gapi.load('picker', { callback: () => setPickerApiLoaded(true) });
-    }
-  }, [gapiLoaded]);
+  const {
+    GoogleApiScript,
+    session,
+    gapiLoaded,
+    pickerApiLoaded,
+    createPicker,
+  } = useDrivePicker({ googleDriveApiKey });
 
   return (
     <div className="flex flex-col gap-1 w-auto h-auto justify-center items-center">
-       <Script
-        id="google-drive-api"
-        src="https://apis.google.com/js/api.js" 
-        onLoad={loadGoogleApi} 
-        strategy="afterInteractive"
-      />
-      {debug && <DebugComponent session={session} gapiLoaded={gapiLoaded} />}
-      <AuthenticatePortal />
-      <Button variant="outline" onClick={handleOpenPicker}>
+      {debug && <DebugComponent session={session} gapiLoaded={gapiLoaded} pickerApiLoaded={pickerApiLoaded} />}
+      <GoogleApiScript />
+      <Button variant="outline" onClick={createPicker}>
         <IconSetCache.Logos.GoogleDrive className="w-6 h-6" />
         Open Google Drive Picker
       </Button>
