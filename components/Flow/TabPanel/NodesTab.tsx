@@ -52,7 +52,7 @@ export const NodesTab = () => {
         name: getNodeNameComponent(node, selected ? `text-accent`: ``),
         content: (
           <div className={cn(`w-full flex flex-col justify-stretch items-center p-1`)}>
-            <Form object={obj} schema={buildNodeSchema(obj)} SchemaMap={NodeSchemaMappings} onSubmit={onNodeChange} />
+            <Form object={obj} schema={buildNodeSchema(obj)} SchemaMap={NodeSchemaMappings} onSubmit={(newNodeProperties: any) => onNodeChange(newNodeProperties)} />
           </div>
         ),
       };

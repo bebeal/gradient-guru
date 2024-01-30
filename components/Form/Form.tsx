@@ -8,6 +8,7 @@ import * as yup from "yup";
 import { inferSchema } from "./shared";
 import { arrayToObject, cn } from "@/utils";
 import { FormFields } from "./FormFields";
+import { isEqual } from "lodash";
 
 // Custom meta properties I'm defining for each field to specify how it should be rendered
 export type SchemaMeta = {
@@ -81,19 +82,21 @@ export const Form = memo(forwardRef<HTMLFormElement, FormProps>((props, ref) => 
 
   useEffect(() => {
     const subscription = form.watch((newValues: any) => {
-      onSubmit(newValues);
+      if (!isEqual(newValues, values)) {
+        onSubmit(newValues);
+      }
     });
     return () => {
       subscription.unsubscribe();
     }
-  }, [form, onSubmit]);
+  }, [form, onSubmit, values]);
 
   return (
     <FormProvider {...rest} {...form}>
       <FormPrimitive.Root
         ref={ref}
         className={cn(`w-full h-full p-2 rounded items-center`, readOnly && 'bg-primary/90', className)}
-        onChange={() => form.handleSubmit((data) => onSubmit(data), onError)()}
+        onSubmit={() => form.handleSubmit((data) => onSubmit(data), onError)()}
       > 
         <div className={cn("w-full h-auto grid gap-px rounded items-center", Object.keys(schema.fields)?.length > 1 ? 'grid-cols-2' : 'grid-cols-1', (Array.isArray(initialObject) || fromArray) && `flex flex-col`, fieldClassName)}>
           <FormFields ItemRenderer={ItemRenderer} form={form} schema={schema} labels={labels} readOnly={readOnly} />
