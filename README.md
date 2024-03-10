@@ -5,7 +5,8 @@ A feature rich Nextjs project template.
 ## Features
 
 * Next.js 14 Framework with App Router
-* React
+* React 18
+* Node.js 20
 * TypeScript
 * Tailwind CSS
 * ESLint
@@ -21,16 +22,16 @@ yarn build
 yarn dev
 ```
 
-## Build Log
+## Build Log & Notes
 
 ---
 
 * Initialize Next.js project with TypeScript, Tailwind CSS, ESLint, Yarn, and without import alias.
 
-```bash
-npx create-next-app@latest nextjs-template --app --no-src-dir --ts --tailwind --eslint --use-yarn --no-import-alias
-cd nextjs-template
-```
+  ```bash
+  npx create-next-app@latest nextjs-template --app --no-src-dir --ts --tailwind --eslint --use-yarn --no-import-alias
+  cd nextjs-template
+  ```
 
 ---
 
@@ -81,3 +82,27 @@ cd nextjs-template
 
 ---
 
+* Build chores:
+  * Add clean, linting, port, and other scripts to `package.json`
+  * Add optimizations, experiementals and other things to `next.config.mjs`
+    * Install packages
+
+    ```bash
+    yarn add critters sharp @swc/core webpack json5 fs-extra encoding -D
+    ```
+
+  * Configure `.eslintrc.json`, `.eslintignore`
+    * Install packages
+
+    ```bash
+    yarn add @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react-hooks eslint-plugin-react eslint-config-next eslint-plugin-unused-imports -D
+    ```
+
+  * Configure `prettier.config.cjs`, `.prettierignore`
+    * Install packages
+
+    ```bash
+    yarn add prettier prettier-plugin-organize-imports eslint-config-prettier @ianvs/prettier-plugin-sort-imports prettier-plugin-organize-imports prettier-plugin-tailwindcss -D
+    ```
+
+---
