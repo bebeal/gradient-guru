@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Robots } from 'next/dist/lib/metadata/types/metadata-types';
+import { DocTitleConfig } from '@/app/doc-config';
 import Providers from '@/app/providers';
 
 const robots: string | Robots | null | undefined = {
@@ -17,44 +18,22 @@ const robots: string | Robots | null | undefined = {
 };
 
 export const metadata: Metadata = {
-  // metadataBase: new URL(SITE_URL),
-  // title: {
-  // 	default: TITLE,
-  // 	template: `${TITLE} • %s`,
-  // },
-  // description: DESCRIPTION,
-  // applicationName: TITLE,
   robots,
+  title: {
+    default: DocTitleConfig.title,
+    template: `${DocTitleConfig.title} • %s`,
+  },
+  description: DocTitleConfig?.description || '',
+  applicationName: DocTitleConfig.title,
   appleWebApp: {
+    title: DocTitleConfig.title,
     capable: true,
-    // title: TITLE,
     statusBarStyle: 'black',
   },
   formatDetection: {
     telephone: false,
   },
-  icons: [
-    // { rel: 'mask-icon', url: 'safari-pinned-tab.svg', color: THEME_COLOR },
-    { rel: 'shortcut icon', url: '/favicon.ico' },
-    // { rel: 'icon', url: 'favicon-32x32.svg', sizes: '32x32' },
-    // { rel: 'icon', url: 'favicon-16x16.svg', sizes: '16x16' },
-    // { rel: 'apple-touch-icon', url: 'touch-icon-iphone.png' },
-    // {
-    // 	rel: 'apple-touch-icon',
-    // 	url: 'apple-touch-icon-152x152.png',
-    // 	sizes: '152x152',
-    // },
-    // {
-    // 	rel: 'apple-touch-icon',
-    // 	url: 'apple-touch-icon-180x180.png',
-    // 	sizes: '180x180',
-    // },
-    // {
-    // 	rel: 'apple-touch-icon',
-    // 	url: 'apple-touch-icon-167x167.png',
-    // 	sizes: '167x167',
-    // },
-  ],
+  icons: [{ rel: 'shortcut icon', url: '/favicon.ico' }],
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
@@ -65,7 +44,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </head>
       <body suppressHydrationWarning={true} className="p-0 m-0 h-screen w-screen min-h-[-webkit-fill-available] touch-none overscroll-none leading-none antialiased overflow-hidden">
         <Providers>
-          <main className="relative h-screen w-screen overflow-auto">{children}</main>
+          <main className="relative h-screen w-screen overflow-auto bg-primary text-primary">{children}</main>
         </Providers>
       </body>
     </html>

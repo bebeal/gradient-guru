@@ -34,3 +34,22 @@
     @apply text-[#1976d2] no-underline	hover:underline;
   }
 }
+
+/* Reference from tailwind context via `text-primary`, `bg-secondary` */
+:root {
+  --muted: 85 85 85;
+  --success: 52 168 83;
+  --error: 255 69 58;
+
+  --text-primary: 0 0 0;
+  --text-secondary: 85 85 85;
+  --text-tertiary: 153 153 153;
+
+  --background-primary: 255 255 255;
+  --background-secondary: 242 242 242;
+  --background-tertiary: 229 229 229;
+
+  --border-primary: 0 0 0;
+  --border-secondary: 220 220 220;
+  --border-tertiary: 229 229 229;
+}
