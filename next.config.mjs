@@ -13,7 +13,7 @@ const nextConfig = {
   optimizeFonts: true,
   excludeDefaultMomentLocales: true,
   reactProductionProfiling: false,
-  reactStrictMode: true,
+  reactStrictMode: false,
   outputFileTracing: true,
   staticPageGenerationTimeout: 60,
   swcMinify: true,

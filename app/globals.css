@@ -1,33 +1,36 @@
+/* tailwindcss */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* https://tailwindcss.com/docs/preflight */
+@layer base {
+  html,
+  body {
+    overscroll-behavior-x: none;
+    overflow: hidden;
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+  -webkit-scrollbar {
+    height: 8px;
+    width: 4px;
+    background: transparent;
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  -webkit-scrollbar-thumb {
+    background: hsl(0 0% 40%);
+    border-radius: 999px;
+  }
+
+  -webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  * {
+    @apply box-border font-mono;
+  }
+
+  a {
+    @apply text-[#1976d2] no-underline	hover:underline;
   }
 }

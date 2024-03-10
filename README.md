@@ -106,3 +106,12 @@ yarn dev
     ```
 
 ---
+
+* Add basic structure for app
+  * Setup top level directories for `hooks`, `utils`, `public`
+    * Add generic utils
+    * Add `useDynamicDocTitle.tsx` hook
+  * Setup [tailwind preflights](https://tailwindcss.com/docs/preflight)
+  * Setup global app provider, layout, and styles
+
+---
