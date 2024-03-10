@@ -2,6 +2,17 @@
   "name": "nextjs-template",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Benjamin Noah Beal",
+    "email": "bnoahbeal@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bebeal/nextjs-template"
+  },
+  "bugs": {
+    "url": "https://github.com/bebeal/nextjs-template/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,19 +20,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "next": "14.1.3",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.1.3"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.3",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
-    "eslint": "^8",
-    "eslint-config-next": "14.1.3"
-  }
+    "typescript": "^5"
+  },
+  "packageManager": "yarn@4.1.1"
 }

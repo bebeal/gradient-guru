@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# nextjs-template
 
-## Getting Started
+A feature rich Nextjs project template.
 
-First, run the development server:
+## Features
+
+* Next.js 14 Framework with App Router
+* Tailwind CSS
+* TypeScript
+* ESLint
+* Yarn 4 Package Manager
+
+## Usage
 
 ```bash
-npm run dev
-# or
+git clone https://github.com/bebeal/nextjs-template
+cd nextjs-template
+yarn
+yarn build
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build Log
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* Initialize Next.js project with TypeScript, Tailwind CSS, ESLint, Yarn, and without import alias.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+npx create-next-app@latest nextjs-template --app --no-src-dir --ts --tailwind --eslint --use-yarn --no-import-alias
+cd nextjs-template
+```
 
-## Learn More
+* Update [Yarn](https://yarnpkg.com/cli)
 
-To learn more about Next.js, take a look at the following resources:
+  * Enable [Corepack](https://yarnpkg.com/corepack)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  ```bash
+  corepack enable
+  ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  * Set the the the package manager in `package.json`:
 
-## Deploy on Vercel
+  ```json
+  "packageManager": "yarn@4.1.1"
+  ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  * Create `.yarnrc.yml` file:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  ```yaml
+  nodeLinker: node-modules
+  ```
