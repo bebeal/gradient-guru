@@ -8,9 +8,12 @@ A feature rich Nextjs project template.
 * React 18
 * Node.js 20
 * TypeScript
-* Tailwind CSS
-* ESLint
 * Yarn 4 Package Manager
+* ESLint
+* Prettier
+* Tailwind CSS
+* Styled Components
+* Bundle Analyzer
 
 ## Usage
 
@@ -114,4 +117,26 @@ yarn dev
   * Setup [tailwind preflights](https://tailwindcss.com/docs/preflight)
   * Setup global app provider, layout, and styles
 
+---
+
+* Add basic structure for components
+  * Setup top level directories for `components`
+    * Add `LinkList` component
+  * Setup `styled-components` for components
+    * Install packages
+
+    ```bash
+    yarn add styled-components -D
+    ```
+
+    * Update `next.config.js`:
+
+    ```mjs
+    compiler: {
+      styledComponents: true,
+    }
+    ```
+
+    * Add `StyledComponentRegistry` to `providers` (See [Next.js: Configuring CSS-in-JS in](https://nextjs.org/docs/app/building-your-application/styling/css-in-js#configuring-css-in-js-in-app))
+  
 ---

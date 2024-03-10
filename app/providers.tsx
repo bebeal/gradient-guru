@@ -1,6 +1,7 @@
 'use client';
 
 import { IDocTitleConfig, useDynamicDocTitle } from '@/hooks';
+import { StyledComponentsRegistry } from '@/utils';
 
 // import global styles
 import '@/app/globals.css';
@@ -15,7 +16,7 @@ const DocTitleConfig: IDocTitleConfig = {
 const Providers = ({ children }: any) => {
   useDynamicDocTitle(DocTitleConfig);
 
-  return <>{children}</>;
+  return <StyledComponentsRegistry>{children}</StyledComponentsRegistry>;
 };
 
 export default Providers;

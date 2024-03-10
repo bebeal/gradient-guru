@@ -58,6 +58,7 @@
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.12",
     "sharp": "^0.33.2",
+    "styled-components": "^6.1.8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5",
     "webpack": "^5.90.3"

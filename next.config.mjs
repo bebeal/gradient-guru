@@ -2,6 +2,9 @@ import NextBundleAnalyzer from '@next/bundle-analyzer';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compiler: {
+    styledComponents: true,
+  },
   distDir: '.next',
   cleanDistDir: true,
   configOrigin: 'default',
