@@ -17,6 +17,23 @@ export const getEncodedSVGUrl = (svg: any): string => {
   return `url("${typeof svg === 'string' ? svgToDataUri(svg) : getURISVG(svg)}")`;
 };
 
+// Animate a continuous dashed path of an svg
+export const AnimatedDashedPath = styled.div<any>`
+display: flex;
+height: 100%;
+width: auto;
+
+path {
+  z-index: 1;
+  stroke-dasharray: 50;
+  animation: dash 5s linear infinite;
+  @keyframes dash {
+    to {
+      stroke-dashoffset: 100;
+    }
+  }
+}
+`;
 // Animate a single path of an svg as if it were being drawn
 export const AnimatedLinePath = styled.div<any>`
   display: flex;
@@ -35,7 +52,7 @@ export const AnimatedLinePath = styled.div<any>`
 
     --pathLength: 100;
     stroke-dasharray: var(--pathLength);
-    animation: dash-stroke 3s linear forwards alternate infinite;
+    animation: dash-stroke 6s linear forwards alternate infinite;
     @keyframes dash-stroke {
       to {
         stroke-dashoffset: 500;
@@ -44,7 +61,7 @@ export const AnimatedLinePath = styled.div<any>`
   }
 `;
 export const AnimatedLineSVG = (props: any) => {
-  const { children, width = '100%', height = '100%', className, ...rest } = props;
+  const { children, width = '100%', height = '100%', type='line', className, ...rest } = props;
 
   // set pathLength on all path children
   const ref = useRef<HTMLDivElement>(null);
@@ -58,7 +75,8 @@ export const AnimatedLineSVG = (props: any) => {
     }
   }, [ref]);
 
-  const colors = ['#38C9EA', '#db258f', '#FFA93A', '#6D3DFC']; 
+  const colors = ['#38C9EA', '#db258f', '#FFA93A', '#6D3DFC'];
+  const AnimatedPath = type === 'dashed' ? AnimatedDashedPath : AnimatedLinePath;
 
   return (
     <DynamicGradientBackground
@@ -72,9 +90,9 @@ export const AnimatedLineSVG = (props: any) => {
       }}
       className={cn(`relative w-auto h-full justify-center items-center flex after:w-auto after:h-auto after:flex after:items-center after:justify-center`, className)}
     >
-      <AnimatedLinePath ref={ref} className={className} {...rest}>
+      <AnimatedPath ref={ref} className={className} {...rest}>
         {children}
-      </AnimatedLinePath>
+      </AnimatedPath>
     </DynamicGradientBackground>
   );
 };
