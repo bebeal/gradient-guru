@@ -255,3 +255,21 @@ yarn dev
   ```
 
 ---
+
+- Add `assets` directory to support larger sets of fonts, icons, images, etc.
+  - Deliberately not using `public` since I don't want to load all assets on every page load.
+  - Add `Carbon`, `Tldraw`, icon-sets
+  - Add sample images
+
+---
+
+- Add new asset `fonts`
+  - Add `Berkely Mono` (tailwind: `font-mono`)
+  - Add `Monaspace` fonts
+    - `Argon` family (tailwind: `font-argon`)
+    - `Krypton` family (tailwind: `font-krypton`)
+    - `Neon` family (tailwind: `font-neon`)
+    - `Radon` family (tailwind: `font-radon`)
+    - `Xenon` family (tailwind: `font-xenon`)
+
+---

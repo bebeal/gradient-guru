@@ -59,6 +59,14 @@ const config: Config = {
         tertiary: 'rgb(var(--border-tertiary) / <alpha-value>)',
       },
     },
+    fontFamily: {
+      mono: ['Berkeley Mono', 'monospace'],
+      argon: ['Argon', 'monospace'],
+      krypton: ['Krypton', 'monospace'],
+      neon: ['Neon', 'monospace'],
+      radon: ['Radon', 'monospace'],
+      xenon: ['Xenon', 'monospace']
+    },
   },
   plugins: [
     typographyPlugin,
