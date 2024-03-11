@@ -1,8 +1,8 @@
 'use client';
 
-import { DocTitleConfig } from '@/app/doc-config';
-import { useDynamicDocTitle } from '@/hooks';
+import { ThemeProvider, useDynamicDocTitle } from '@/hooks';
 import { StyledComponentsRegistry } from '@/utils';
+import { DocTitleConfig } from '@/app/doc-config';
 
 // import global styles
 import '@/app/globals.css';
@@ -11,7 +11,13 @@ import '@/app/globals.css';
 const Providers = ({ children }: any) => {
   useDynamicDocTitle(DocTitleConfig);
 
-  return <StyledComponentsRegistry>{children}</StyledComponentsRegistry>;
+  return (
+    <StyledComponentsRegistry>
+      <ThemeProvider>
+        {children}
+      </ThemeProvider>
+    </StyledComponentsRegistry>
+  );
 };
 
 export default Providers;

@@ -1,20 +1,24 @@
 import type { Config } from 'tailwindcss';
+import { radixThemePreset } from 'radix-themes-tw';
 import typographyPlugin from '@tailwindcss/typography';
-import formsPlugin from '@tailwindcss/forms';
 import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
 import containerQueriesPlugin from '@tailwindcss/container-queries';
 
 const config: Config = {
+  darkMode: ['class'],
   content: [
+    './app/**/*.{js,jsx,ts,tsx,md,mdx}',
     './pages/**/*.{js,jsx,ts,tsx,md,mdx}',
     './hooks/**/*.{js,jsx,ts,tsx,md,mdx}',
     './components/**/*.{js,jsx,ts,tsx,md,mdx}',
-    './app/**/*.{js,jsx,ts,tsx,md,mdx}',
     './utils/**/*.{js,jsx,ts,tsx,md,mdx}',
   ],
+  preset: [radixThemePreset],
   theme: {
     extend: {
       colors: {
+        transparent: 'transparent',
+        current: 'currentColor',  
         muted: 'rgb(var(--muted) / <alpha-value>)',
         success: 'rgb(var(--success) / <alpha-value>)',
         error: 'rgb(var(--error) / <alpha-value>)'
@@ -57,7 +61,6 @@ const config: Config = {
     },
   },
   plugins: [
-    formsPlugin,
     typographyPlugin,
     aspectRatioPlugin,
     containerQueriesPlugin

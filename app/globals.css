@@ -53,3 +53,17 @@
   --border-secondary: 220 220 220;
   --border-tertiary: 229 229 229;
 }
+
+.dark {
+  --text-primary: 249 249 249;
+  --text-secondary: 187 187 187;
+  --text-tertiary: 153 153 153;
+
+  --background-primary: 30 31 33;
+  --background-secondary: 35 37 41;
+  --background-tertiary: 26 26 26;
+
+  --border-primary: 73 85 95;
+  --border-secondary: 85 95 105;
+  --border-tertiary: 73 85 95;
+}

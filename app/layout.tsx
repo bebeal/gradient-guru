@@ -38,13 +38,13 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html suppressHydrationWarning lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
       </head>
-      <body suppressHydrationWarning={true} className="p-0 m-0 h-screen w-screen min-h-[-webkit-fill-available] touch-none overscroll-none leading-none antialiased overflow-hidden">
+      <body suppressHydrationWarning className="p-0 m-0 h-screen min-h-[-webkit-fill-available] touch-none overscroll-none leading-none antialiased overflow-hidden">
         <Providers>
-          <main className="relative h-screen w-screen overflow-auto bg-primary text-primary">{children}</main>
+          <main className="relative h-screen w-full overflow-auto bg-primary text-primary">{children}</main>
         </Providers>
       </body>
     </html>

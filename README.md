@@ -13,6 +13,7 @@ A feature rich Nextjs project template.
 - Prettier
 - Tailwind CSS
 - Styled Components
+- Radix UI Themes
 - Bundle Analyzer
 
 ## Usage
@@ -152,27 +153,30 @@ yarn dev
   - Install packages
 
   ```bash
-  yarn add clsx tailwind-merge @tailwindcss/typography @tailwindcss/forms @tailwindcss/aspect-ratio @tailwindcss/container-queries -D
+  yarn add clsx tailwind-merge tailwindcss-typography tailwindcss-aspect-ratio tailwindcss-container-queries -D
   ```
 
   - Add plugins to `tailwind.config.ts`
 
   ```ts
-  import aspectRatioPlugin from '@tailwindcss/aspect-ratio';
-  import containerQueriesPlugin from '@tailwindcss/container-queries';
-  import formsPlugin from '@tailwindcss/forms';
-  import typographyPlugin from '@tailwindcss/typography';
   import type { Config } from 'tailwindcss';
+  import typographyPlugin from '@tailwindcss/typography';
+  import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
+  import containerQueriesPlugin from '@tailwindcss/container-queries';
 
   const config: Config = {
-    plugins: [typographyPlugin, formsPlugin, aspectRatioPlugin, containerQueriesPlugin],
+    plugins: [
+      typographyPlugin,
+      aspectRatioPlugin,
+      containerQueriesPlugin,
+    ],
   };
 
   export default config;
   ```
 
 - Extend tailwind theme
-  - Support for `muted`, `success`, `error` colora
+  - Support for `transparent`, `current`, `muted`, `success`, `error` colora
   - Support for `(bg|text|border)-(primary|secondary|tertiary)` colors
     - Map `(fill|stroke|outline|ring)-(primary|secondary|tertiary)` colors using the same `(bg|text|border)` colors
   - Define css vars in `globals.css` so we can eventually extend with other themes (e.g. dark mode)
@@ -201,5 +205,36 @@ yarn dev
     },
   };
   ```
+
+---
+
+- Adding light, dark, system themes with `next-themes`, and radix-ui themes with `@radix-ui/themes`
+  - Install packages
+
+  ```bash
+  yarn add next-themes @radix-ui/themes @radix-ui/icons radix-themes-tw dlv -D
+  ```
+
+  - Add dark mode support, and radix tokens from (`radix-themes-tw`) to `tailwind.config.ts`
+
+  ```ts
+  import { radixThemePreset } from 'radix-themes-tw';
+
+  const config: Config = {
+    darkMode: ['class'],
+    presets: [radixThemePreset],
+    ...
+  };
+  ```
+
+  - Import Radix Theme CSS
+
+  ```tsx
+  import '@radix-ui/themes/styles.css';
+  ```
+
+  - Define a `ThemeProvider` in `hooks/useTheme.tsx` and use it in `providers.tsx`.
+    - Consolidates theming for `next-themes`, `@radi-ui/themes` to serve a single source of truth for theming for the app.
+    - This also sets up the native radix theme panel as a popup controlled via shortcut: `Ctrl + C` by default.
 
 ---

@@ -61,6 +61,7 @@ const nextConfig = {
     ],
   },
   experimental: {
+    scrollRestoration: true,
     webpackBuildWorker: true,
     serverMinification: true,
     clientRouterFilter: true,
