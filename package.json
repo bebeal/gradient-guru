@@ -20,7 +20,7 @@
     "build:no-mangle": "next build --no-mangle",
     "build:debug": "next build --debug",
     "build:analyze": "ANALYZE=true next build",
-    "clean": "rm -rf yarn.lock && rm -rf node_modules && rm -rf .next && yarn",
+    "clean": "rm -rf yarn.lock && rm -rf node_modules && rm -rf .next",
     "dev": "PORT=3407 next dev",
     "info": "next info --verbose",
     "lint": "next lint",
