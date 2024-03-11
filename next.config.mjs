@@ -1,4 +1,5 @@
 import NextBundleAnalyzer from '@next/bundle-analyzer';
+import withSVGR from './utils/SVGR.mjs';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -84,4 +85,4 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 });
 
 
-export default withBundleAnalyzer(nextConfig);
+export default withBundleAnalyzer(withSVGR(nextConfig));

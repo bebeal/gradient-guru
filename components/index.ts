@@ -1,2 +1,2 @@
-export * from './ColorPalette';
-export * from './Links';
+export * from './color-palette';
+export * from './links';

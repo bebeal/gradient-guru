@@ -238,3 +238,20 @@ yarn dev
     - This also sets up the native radix theme panel as a popup controlled via shortcut: `Ctrl + C` by default.
 
 ---
+
+- Add assets and support to import svgs as react components with `@svgr/webpack`
+  - Install packages
+
+  ```bash
+  yarn add @svgr/webpack -D
+  ```
+
+  - Define `SVGR.mjs` in `utils` which is a simple wrapper for `next.config.js` to enable `@svgr/webpack`
+  - Wrap next config with `withSVGR`
+
+  ```mjs
+  import withSVGR from './utils/SVGR.mjs';
+  export default withSVGR(nextConfig);
+  ```
+
+---

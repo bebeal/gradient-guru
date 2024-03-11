@@ -37,7 +37,7 @@ const StyledComponentsTest = () => {
           return (
             <div key={key} className="flex flex-col rounded items-center justify-center w-full h-full overflow-auto bg-primary text-primary gap-2 border border-primary p-2">
               <div className="flex flex-col items-center justify-center w-full h-auto gap-1 text-sm">
-                <h1 className="text-md font-bold text-center">{key.replace('Demo', '')}</h1>
+                <h1 className="text-md font-bold text-center">{key}</h1>
                 <Component />
               </div>
             </div>

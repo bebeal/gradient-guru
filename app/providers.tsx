@@ -1,9 +1,8 @@
 'use client';
 
+import { DocTitleConfig } from '@/app/doc-config';
 import { ThemeProvider, useDynamicDocTitle } from '@/hooks';
 import { StyledComponentsRegistry } from '@/utils';
-import { DocTitleConfig } from '@/app/doc-config';
-
 // import global styles
 import '@/app/globals.css';
 
@@ -13,9 +12,7 @@ const Providers = ({ children }: any) => {
 
   return (
     <StyledComponentsRegistry>
-      <ThemeProvider>
-        {children}
-      </ThemeProvider>
+      <ThemeProvider>{children}</ThemeProvider>
     </StyledComponentsRegistry>
   );
 };

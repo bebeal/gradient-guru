@@ -57,7 +57,7 @@ const config: Config = {
         primary: 'rgb(var(--border-primary) / <alpha-value>)',
         secondary: 'rgb(var(--border-secondary) / <alpha-value>)',
         tertiary: 'rgb(var(--border-tertiary) / <alpha-value>)',
-      }
+      },
     },
   },
   plugins: [
