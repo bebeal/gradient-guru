@@ -159,23 +159,20 @@ yarn dev
   - Add plugins to `tailwind.config.ts`
 
   ```ts
-  import type { Config } from 'tailwindcss';
-  import typographyPlugin from '@tailwindcss/typography';
-  import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
+  import aspectRatioPlugin from '@tailwindcss/aspect-ratio';
   import containerQueriesPlugin from '@tailwindcss/container-queries';
+  import typographyPlugin from '@tailwindcss/typography';
+  import type { Config } from 'tailwindcss';
 
   const config: Config = {
-    plugins: [
-      typographyPlugin,
-      aspectRatioPlugin,
-      containerQueriesPlugin,
-    ],
+    plugins: [typographyPlugin, aspectRatioPlugin, containerQueriesPlugin],
   };
 
   export default config;
   ```
 
 - Extend tailwind theme
+
   - Support for `transparent`, `current`, `muted`, `success`, `error` colora
   - Support for `(bg|text|border)-(primary|secondary|tertiary)` colors
     - Map `(fill|stroke|outline|ring)-(primary|secondary|tertiary)` colors using the same `(bg|text|border)` colors
@@ -209,6 +206,7 @@ yarn dev
 ---
 
 - Adding light, dark, system themes with `next-themes`, and radix-ui themes with `@radix-ui/themes`
+
   - Install packages
 
   ```bash
@@ -240,6 +238,7 @@ yarn dev
 ---
 
 - Add assets and support to import svgs as react components with `@svgr/webpack`
+
   - Install packages
 
   ```bash
@@ -251,6 +250,7 @@ yarn dev
 
   ```mjs
   import withSVGR from './utils/SVGR.mjs';
+
   export default withSVGR(nextConfig);
   ```
 
@@ -271,5 +271,16 @@ yarn dev
     - `Neon` family (tailwind: `font-neon`)
     - `Radon` family (tailwind: `font-radon`)
     - `Xenon` family (tailwind: `font-xenon`)
+
+---
+
+- Adding React Query & Devtools
+
+  - Install packages
+
+  ```bash
+  yarn add @tanstack/react-query
+  yarn add @tanstack/eslint-plugin-query -D
+  ```
 
 ---
