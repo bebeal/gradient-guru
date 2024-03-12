@@ -284,3 +284,16 @@ yarn dev
   ```
 
 ---
+
+- Adding React Query Devtools and App Debugger
+  - Install packages
+
+  ```bash
+  yarn add @tanstack/react-query-devtools
+  ```
+
+  - Define a `DebuggerProvider` in `hooks/useDebugger.tsx` and use it in `providers.tsx`.
+    - Consolidates debugging for `@tanstack/react-query-devtools` to serve a single source of truth for debugging for the app.
+    - This sets up the native `ReactQueryDevtools` as a popup.
+
+---

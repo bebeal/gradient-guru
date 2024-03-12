@@ -1,4 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
+import { lazy } from 'react';
 
 export const makeQueryClient = (overrideOptions?: any) => {
   return new QueryClient({
@@ -10,3 +11,11 @@ export const makeQueryClient = (overrideOptions?: any) => {
     ...overrideOptions,
   });
 };
+
+const ReactQueryDevtoolsProduction = lazy(() =>
+  import('@tanstack/react-query-devtools/build/modern/production.js').then(
+    (d) => ({
+      default: d.ReactQueryDevtools,
+    }),
+  ),
+)

@@ -3466,6 +3466,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/eslint-plugin-query@npm:^5.20.1":
+  version: 5.20.1
+  resolution: "@tanstack/eslint-plugin-query@npm:5.20.1"
+  dependencies:
+    "@typescript-eslint/utils": "npm:^6.20.0"
+  peerDependencies:
+    eslint: ^8.0.0
+  checksum: 10c0/318bdc734497a126873ac92f6f61b0e2f771b4d339edbc6d9c28c00852a100aba7b424213fb639bbbc6f9768cf1b75392d5c802afa9c1e82567d65fe8d217aeb
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-core@npm:5.26.3":
   version: 5.26.3
   resolution: "@tanstack/query-core@npm:5.26.3"
@@ -3798,6 +3809,23 @@ __metadata:
   peerDependencies:
     eslint: ^8.56.0
   checksum: 10c0/3e70834c5b49e4643ec8da63fa2acaab54283a566af2cedcd4c2f4210833a59bf71c459dde69e738115633c7de9f1339130552ff246e8e1bb4db26910685408b
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/utils@npm:^6.20.0":
+  version: 6.21.0
+  resolution: "@typescript-eslint/utils@npm:6.21.0"
+  dependencies:
+    "@eslint-community/eslint-utils": "npm:^4.4.0"
+    "@types/json-schema": "npm:^7.0.12"
+    "@types/semver": "npm:^7.5.0"
+    "@typescript-eslint/scope-manager": "npm:6.21.0"
+    "@typescript-eslint/types": "npm:6.21.0"
+    "@typescript-eslint/typescript-estree": "npm:6.21.0"
+    semver: "npm:^7.5.4"
+  peerDependencies:
+    eslint: ^7.0.0 || ^8.0.0
+  checksum: 10c0/ab2df3833b2582d4e5467a484d08942b4f2f7208f8e09d67de510008eb8001a9b7460f2f9ba11c12086fd3cdcac0c626761c7995c2c6b5657d5fa6b82030a32d
   languageName: node
   linkType: hard
 
@@ -7139,6 +7167,7 @@ __metadata:
     "@tailwindcss/container-queries": "npm:^0.1.1"
     "@tailwindcss/forms": "npm:^0.5.7"
     "@tailwindcss/typography": "npm:^0.5.10"
+    "@tanstack/eslint-plugin-query": "npm:^5.20.1"
     "@tanstack/react-query": "npm:^5.26.3"
     "@tanstack/react-query-devtools": "npm:^5.27.0"
     "@types/dlv": "npm:^1"

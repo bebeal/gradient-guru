@@ -2,7 +2,7 @@
 
 import { QueryClientProvider } from '@tanstack/react-query';
 import { DocTitleConfig } from '@/app/doc-config';
-import { ThemeProvider, useDynamicDocTitle } from '@/hooks';
+import { DebugToolsProvider, ThemeProvider, useDynamicDocTitle } from '@/hooks';
 import { makeQueryClient, StyledComponentsRegistry } from '@/utils';
 // import global styles
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
@@ -17,7 +17,11 @@ const Providers = ({ children }: any) => {
   return (
     <StyledComponentsRegistry>
       <ThemeProvider>
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          <DebugToolsProvider>
+            {children}
+          </DebugToolsProvider>
+        </QueryClientProvider>
       </ThemeProvider>
     </StyledComponentsRegistry>
   );

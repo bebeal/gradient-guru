@@ -3,8 +3,10 @@ import { radixThemePreset } from 'radix-themes-tw';
 import typographyPlugin from '@tailwindcss/typography';
 import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
 import containerQueriesPlugin from '@tailwindcss/container-queries';
+import tailwindGlassPlugin from './utils/tailwind-plugins/tailwind-glass';
 
 const config: Config = {
+  safelist: ["glass"],
   darkMode: ['class'],
   content: [
     './app/**/*.{js,jsx,ts,tsx,md,mdx}',
@@ -71,7 +73,8 @@ const config: Config = {
   plugins: [
     typographyPlugin,
     aspectRatioPlugin,
-    containerQueriesPlugin
+    containerQueriesPlugin,
+    tailwindGlassPlugin
   ],
 };
 
