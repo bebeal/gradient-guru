@@ -292,8 +292,9 @@ yarn dev
   yarn add @tanstack/react-query-devtools
   ```
 
-  - Define a `DebuggerProvider` in `hooks/useDebugger.tsx` and use it in `providers.tsx`.
+  - Define a `DebugToolsProvider` in `hooks/useDebugTools.tsx` and use it in `providers.tsx`.
     - Consolidates debugging for `@tanstack/react-query-devtools` to serve a single source of truth for debugging for the app.
     - This sets up the native `ReactQueryDevtools` as a popup.
+      - Overwrites the native button with a custom one.
 
 ---
