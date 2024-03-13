@@ -6,6 +6,7 @@ import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { IconButton } from '@radix-ui/themes';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createGlobalStyle } from 'styled-components';
+import { Geiger } from 'react-geiger';
 
 // Hide React Query Devtools Button
 const OverrideReactQueryStyles = createGlobalStyle`
@@ -22,6 +23,7 @@ const OverrideReactQueryStyles = createGlobalStyle`
 
 export interface DebugToolsProps {
   reactQueryDevTools?: boolean;
+  geiger?: boolean;
   // Define props for additional debug tools here
 }
 
@@ -30,26 +32,32 @@ export interface DebugToolsProps {
 export const DebugTools: FunctionComponent<DebugToolsProps> = ({ reactQueryDevTools }) => {
   const { showReactQueryDevTools, toggleReactQueryDevTools } = useContext(DebugToolsContext);
 
+  const reactQueryDevToolsComponent: ReactNode = reactQueryDevTools ? (
+    <>
+      <IconButton className="p-2 m-2 hover:cursor-pointer" color="indigo" radius="large" variant="surface" onPointerDown={toggleReactQueryDevTools}>
+        <MagnifyingGlassIcon width="18" height="18" />
+      </IconButton>
+      <ReactQueryDevtools
+        key={showReactQueryDevTools ? 'open' : 'closed'} // hack to force re-render
+        initialIsOpen={false}
+        position="top"
+        buttonPosition="top-left"
+      />
+      <OverrideReactQueryStyles />
+    </>
+  ) : null;
+
+  const BaseDebugToolsComponent = () => {
+    return (
+      <div className="fixed top-0 left-0 z-50 pointer-events-auto cursor-auto">
+        {reactQueryDevToolsComponent}
+      </div>
+    );
+  };
+
   // Use React Portal to render the debug button directly into the body or another predefined element
   // This ensures it is always accessible and not affected by other layout styles
-  return createPortal(
-    <div className="fixed top-0 left-0 z-50 pointer-events-auto cursor-auto">
-      {reactQueryDevTools && (
-        <IconButton className="p-2 m-2 hover:cursor-pointer" color="indigo" radius="large" variant="surface" onPointerDown={toggleReactQueryDevTools}>
-          <MagnifyingGlassIcon width="18" height="18" />
-        </IconButton>
-      )}
-      {reactQueryDevTools && (
-        <ReactQueryDevtools
-          key={showReactQueryDevTools ? 'open' : 'closed'} // hack to force re-render on toggle
-          initialIsOpen={false}
-          position="top"
-          buttonPosition="top-left"
-        />
-      )}
-    </div>,
-    document.body,
-  );
+  return createPortal(<BaseDebugToolsComponent />, document.body, );
 };
 
 export type DebugToolsContextType = DebugToolsProps & {
@@ -67,7 +75,7 @@ export type DebugToolsProviderProps = DebugToolsProps & {
 
 export const DebugToolsProvider: FunctionComponent<DebugToolsProviderProps> = (props) => {
   
-  const { reactQueryDevTools = true, children } = props;
+  const { reactQueryDevTools=false, geiger=false, children } = props;
   const [showDebugPanel, setShowDebugPanel] = useState<boolean>(false);
   const [showReactQueryDevTools, setShowReactQueryDevTools] = useState<boolean>(false);
   const [mounted, setMounted] = useState(false);
@@ -127,9 +135,14 @@ export const DebugToolsProvider: FunctionComponent<DebugToolsProviderProps> = (p
 
   return (
     <DebugToolsContext.Provider value={contextValue}>
-      {showDebugPanel && <OverrideReactQueryStyles />}
-      {children}
-      {showDebugPanel && mounted && <DebugTools reactQueryDevTools={reactQueryDevTools} />}
+      <Geiger
+        profilerId={'Geiger'}
+        renderTimeThreshold={0}
+        enabled={geiger}
+      >
+        {children}
+      </Geiger>
+      {mounted && showDebugPanel && <DebugTools reactQueryDevTools={reactQueryDevTools} />}
     </DebugToolsContext.Provider>
   );
 };

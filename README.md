@@ -94,7 +94,8 @@ yarn dev
     - Install packages
 
     ```bash
-    yarn add critters sharp @swc/core webpack json5 fs-extra encoding -D
+    yarn add critters sharp @swc/core webpack json5 fs-extra encoding @types/lodash -D
+    yarn add lodash
     ```
 
   - Configure `.eslintrc.json`, `.eslintignore`
@@ -296,5 +297,17 @@ yarn dev
     - Consolidates debugging for `@tanstack/react-query-devtools` to serve a single source of truth for debugging for the app.
     - This sets up the native `ReactQueryDevtools` as a popup.
       - Overwrites the native button with a custom one.
+
+---
+
+- Add [`react-geiger`](https://github.com/kristiandupont/react-geiger) as a non-serious debugging tool
+
+  - Install packages
+
+  ```bash
+  yarn add react-geiger lodash
+  ```
+
+  - Add `GeigerProvider` to `DebugToolsProvider`
 
 ---
