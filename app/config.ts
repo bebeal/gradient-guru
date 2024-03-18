@@ -1,6 +1,6 @@
-import { IDocTitleConfig } from '@/hooks';
+import { IDocConfig } from '@/hooks';
 
-export const DocTitleConfig: IDocTitleConfig = {
+export const DocConfig: IDocConfig = {
   title: 'App',
   shorthand: 'app',
   separator: '•',

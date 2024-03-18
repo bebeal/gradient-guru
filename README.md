@@ -15,6 +15,7 @@ A feature rich Nextjs project template.
 - Styled Components
 - Radix UI Themes
 - Bundle Analyzer
+- React Query
 
 ## Usage
 
@@ -293,14 +294,15 @@ yarn dev
   yarn add @tanstack/react-query-devtools
   ```
 
-  - Define a `DebugToolsProvider` in `hooks/useDebugTools.tsx` and use it in `providers.tsx`.
+  - Define a `DevToolsProvider` in `hooks/useDevTools.tsx` and use it in `providers.tsx`.
     - Consolidates debugging for `@tanstack/react-query-devtools` to serve a single source of truth for debugging for the app.
-    - This sets up the native `ReactQueryDevtools` as a popup.
+    - This sets up various dev tools, all which can be optionally enabled/disabled and for dev tools with components optionally visible/hidden.
+    - Add `ReactQueryDevtools`.
       - Overwrites the native button with a custom one.
 
 ---
 
-- Add [`react-geiger`](https://github.com/kristiandupont/react-geiger) as a non-serious debugging tool
+- Add [`react-geiger`](https://github.com/kristiandupont/react-geiger) as a non-serious debugging tool to `DevToolsProvider`
 
   - Install packages
 

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Robots } from 'next/dist/lib/metadata/types/metadata-types';
-import { DocTitleConfig } from '@/app/doc-config';
+import { DocConfig } from '@/app/config';
 import Providers from '@/app/providers';
 
 const robots: string | Robots | null | undefined = {
@@ -20,13 +20,13 @@ const robots: string | Robots | null | undefined = {
 export const metadata: Metadata = {
   robots,
   title: {
-    default: DocTitleConfig.title,
-    template: `${DocTitleConfig.title} • %s`,
+    default: DocConfig.title,
+    template: `${DocConfig.title} • %s`,
   },
-  description: DocTitleConfig?.description || '',
-  applicationName: DocTitleConfig.title,
+  description: DocConfig?.description || '',
+  applicationName: DocConfig.title,
   appleWebApp: {
-    title: DocTitleConfig.title,
+    title: DocConfig.title,
     capable: true,
     statusBarStyle: 'black',
   },
@@ -44,7 +44,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </head>
       <body suppressHydrationWarning className="p-0 m-0 h-screen min-h-[-webkit-fill-available] touch-none overscroll-none leading-none antialiased overflow-hidden">
         <Providers>
-          <main className="relative h-screen w-full overflow-auto bg-primary text-primary">{children}</main>
+          <main className="relative h-screen w-screen overflow-auto bg-primary text-primary">{children}</main>
         </Providers>
       </body>
     </html>

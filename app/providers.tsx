@@ -1,26 +1,24 @@
 'use client';
 
 import { QueryClientProvider } from '@tanstack/react-query';
-import { DocTitleConfig } from '@/app/doc-config';
-import { DebugToolsProvider, ThemeProvider, useDynamicDocTitle } from '@/hooks';
+import { DocConfig } from '@/app/config';
+import { DevToolsProvider, ThemeProvider, useDynamicDocTitle } from '@/hooks';
 import { makeQueryClient, StyledComponentsRegistry } from '@/utils';
 // import global styles
+import '@/app/globals.css';
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
 import '@/assets/fonts/Monaspace/Monaspace.css';
-import '@/app/globals.css';
 
 // Global level providers
 const Providers = ({ children }: any) => {
   const queryClient = makeQueryClient();
-  useDynamicDocTitle(DocTitleConfig);
+  useDynamicDocTitle(DocConfig);
 
   return (
     <StyledComponentsRegistry>
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
-          <DebugToolsProvider>
-            {children}
-          </DebugToolsProvider>
+          <DevToolsProvider>{children}</DevToolsProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </StyledComponentsRegistry>

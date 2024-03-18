@@ -57,7 +57,7 @@ const LinearGradients = () => {
         <div className={cn(`text-xs`)}>CSS Linear Gradient</div>
       </div>
       <div className={cn(`flex items-center gap-2`)}>
-        <svg width="200" height="20" className="border border-black dark:border-white"> <defs> <linearGradient id={`test-svg-gradient`} x1="0%" y1="0%" x2="100%" y2="0%">{spectrum.map((color: string, index: number) => (<stop key={index} offset={`${index * 100 / (spectrum.length - 1)}%`} stopColor={color} />))}</linearGradient></defs><rect width="200" height="20" fill="url(#test-svg-gradient)" /></svg>
+        <svg width="200" height="20" className="border border-black dark:border-white"> <defs> <linearGradient id={`test-svg-gradient`} x1="0%" y1="0%" x2="100%" y2="0%">{spectrum.map((color: string, index: number) => (<stop key={color} offset={`${index * 100 / (spectrum.length - 1)}%`} stopColor={color} />))}</linearGradient></defs><rect width="200" height="20" fill="url(#test-svg-gradient)" /></svg>
         <div className={cn(`text-xs`)}>SVG Linear Gradient with color stops</div>
       </div>
     </div>
@@ -129,7 +129,7 @@ const TextOnBackground = () => {
 const ColorPaletteReference = ({ colors=[] }: {colors?: string[]}) => {
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-x-2 gap-y-8 sm:grid-cols-1">
-      {colors.map((color, i) => {
+      {colors.map((color) => {
         const title = Array.isArray(color) ? color[0] : kebabToTitleCase(color)
         const value = Array.isArray(color) ? color[1] : color
 
@@ -152,8 +152,8 @@ const ColorPaletteReference = ({ colors=[] }: {colors?: string[]}) => {
                 .join('')}
             </div>
             <div className="grid mt-3 grid-cols-1 sm:grid-cols-11 gap-y-3 gap-x-2 sm:mt-2 2xl:mt-0">
-              {palette.map((props: any, j: number) => (
-                <ColorPalette key={j} {...props} />
+              {palette.map((props: any) => (
+                <ColorPalette key={JSON.stringify(props)} {...props} />
               ))}
             </div>
           </div>

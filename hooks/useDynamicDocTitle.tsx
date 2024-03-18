@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { matchesPath, objectIsEmpty } from '@/utils';
 
-export interface IDocTitleConfig {
+export interface IDocConfig {
   title: string;
   shorthand?: string;
   separator?: string;
@@ -11,7 +11,7 @@ export interface IDocTitleConfig {
 // Updates the document title dynamically, based on the current path and the given config,
 //or optionally provide an overrides object which has the most priority
 export const useDynamicDocTitle = (
-  config: IDocTitleConfig,
+  config: IDocConfig,
   overrides?: { [key: string]: string }, // path -> title
 ) => {
   // the default doc title pattern is:
