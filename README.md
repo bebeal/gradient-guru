@@ -320,7 +320,7 @@ yarn dev
   - Install packages
 
   ```bash
-  yarn add remark-gfm next-mdx-remote
+  yarn add next-mdx-remote remark-gfm remark-directive remark-math rehype-katex
   yarn add @types/mdx -D
   ```
 
@@ -329,9 +329,12 @@ yarn dev
   ```bash
   const mdxOptions = {
     remarkPlugins: [
-      remarkGfm
+      remarkGfm,
+      remarkMath
     ],
-    rehypePlugins: [],
+    rehypePlugins: [
+      rehypeKatex
+    ],
   };
   ```
 
