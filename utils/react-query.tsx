@@ -1,8 +1,9 @@
-import { useDevTools } from '@/hooks';
+'use client'
+
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { IconButton } from '@radix-ui/themes';
 import { QueryClient } from '@tanstack/react-query';
-import { Suspense, createContext, lazy, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 export const makeQueryClient = (overrideOptions?: any) => {

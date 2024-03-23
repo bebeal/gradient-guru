@@ -4,10 +4,11 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { DocConfig } from '@/app/config';
 import { DevToolsProvider, ThemeProvider, useDynamicDocTitle } from '@/hooks';
 import { makeQueryClient, StyledComponentsRegistry } from '@/utils';
+
 // import global styles
-import '@/app/globals.css';
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
 import '@/assets/fonts/Monaspace/Monaspace.css';
+import '@/app/globals.css';
 
 // Global level providers
 const Providers = ({ children }: any) => {

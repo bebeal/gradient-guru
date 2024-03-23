@@ -288,6 +288,7 @@ yarn dev
 ---
 
 - Adding React Query Devtools and App Debugger
+
   - Install packages
 
   ```bash
@@ -311,5 +312,35 @@ yarn dev
   ```
 
   - Add `GeigerProvider` to `DebugToolsProvider`
+
+---
+
+- Adding MDX Support to handle `.md` and `.mdx` files. [`MDX`](https://nextjs.org/docs/app/building-your-application/configuring/mdx#:~:text=%3E%3C/p%3E-,MDX,-is%20a%20superset) is a superset of markdown that lets you write [`JSX`](https://react.dev/learn/writing-markup-with-jsx) directly in your markdown files.
+  - Good Reference: https://github.com/leerob/leerob.io/tree/main
+  - Install packages
+
+  ```bash
+  yarn add remark-gfm next-mdx-remote
+  yarn add @types/mdx -D
+  ```
+
+  - Add `mdx-options.mjs` to specify mdx options
+
+  ```bash
+  const mdxOptions = {
+    remarkPlugins: [
+      remarkGfm
+    ],
+    rehypePlugins: [],
+  };
+  ```
+
+  - Use like so:
+
+  ```tsx
+  import MDXOptions from '@/mdx-options.mjs';
+  ...
+   <MDXRemote source={content} components={components} options={{mdxOptions: MDXOptions}} />
+   ```
 
 ---

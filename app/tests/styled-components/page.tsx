@@ -25,7 +25,6 @@ const Demos: any = {
   }
 };
 
-
 const StyledComponentsTest = () => {
   const title = 'Styled Components';
   return (

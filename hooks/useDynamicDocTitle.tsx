@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { matchesPath, objectIsEmpty } from '@/utils';
+import { isEmptyObject, matchesPath } from '@/utils';
 
 export interface IDocConfig {
   title: string;
@@ -17,16 +17,19 @@ export const useDynamicDocTitle = (
   // the default doc title pattern is:
   // '/' -> full title
   // '/some/path' -> 'shorthand separator /some/path'
-  const formatTitle = useCallback((path: string): string => {
-    return path && path.length > 1 ? `${config.shorthand} ${config.separator || '•'} ${path}` : `${config.title}`;
-  }, [config]);
+  const formatTitle = useCallback(
+    (path: string): string => {
+      return path && path.length > 1 ? `${config.shorthand} ${config.separator || '•'} ${path}` : `${config.title}`;
+    },
+    [config],
+  );
 
   useEffect(() => {
     // Only run on client-side.
     if (typeof window === 'undefined') return;
     const path = window.location.pathname;
     let title: string = formatTitle(path);
-    if (overrides && !objectIsEmpty(overrides)) {
+    if (overrides && !isEmptyObject(overrides)) {
       title = matchesPath(overrides, path) || title;
     }
     document.title = title;

@@ -2,7 +2,6 @@
 
 import { cn } from "@/utils";
 
-
 const FontDemo = ({ fontClassName, className }: { fontClassName: string; className?: string }) => (
   <div className={cn(`flex flex-col items-center justify-center p-1 ${fontClassName}`, className)}>
     <p className="p-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>

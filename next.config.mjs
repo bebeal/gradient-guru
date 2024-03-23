@@ -11,7 +11,7 @@ const nextConfig = {
   configOrigin: 'default',
   useFileSystemPublicRoutes: true,
   generateEtags: true,
-  pageExtensions: ['js', 'jsx', 'mjs', 'cjs', 'ts', 'tsx', 'mts', 'cts'],
+  pageExtensions: ['js', 'jsx', 'mjs', 'cjs', 'ts', 'tsx', 'mts', 'cts', 'md', 'mdx'],
   poweredByHeader: true,
   compress: true,
   optimizeFonts: true,
@@ -52,12 +52,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '**/*',
-        pathname: '**/*'
+        pathname: '**/*',
       },
       {
         protocol: 'http',
         hostname: '**/*',
-        pathname: '**/*'
+        pathname: '**/*',
       },
     ],
   },
@@ -76,13 +76,13 @@ const nextConfig = {
     swcTraceProfiling: false,
     forceSwcTransforms: false,
     swcPlugins: undefined,
-    webVitalsAttribution: ["CLS", "FCP", "FID", "INP", "LCP", "TTFB"],
-  }
+    webVitalsAttribution: ['CLS', 'FCP', 'FID', 'INP', 'LCP', 'TTFB'],
+    mdxRs: false, // experimental rust-based mdx compiler
+  },
 };
 
 const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
-
 
 export default withBundleAnalyzer(withSVGR(nextConfig));
