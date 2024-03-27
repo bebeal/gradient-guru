@@ -107,7 +107,7 @@ export const ReactQueryDevTool = (props: any) => {
   }, [toggle]);
 
   return (
-    <div ref={ref} className="fixed top-0 left-0 z-50 pointer-events-auto cursor-auto w-full h-full">
+    <div ref={ref} className="fixed top-0 left-0 pointer-events-auto cursor-auto w-auto h-auto">
       <ReactQueryDevToolToggle visible={visible} setVisible={setVisible} toggle={toggle} />
       <ReactQueryDevToolPanel visible={visible} setVisible={setVisible} toggle={toggle} {...rest} />
       <OverrideReactQueryStyles />
