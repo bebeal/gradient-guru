@@ -4,6 +4,7 @@
 // This will strictly be from client side (bundled and optimized by webpack)
 import NextImage from 'next/image';
 import PNGTest from '@/assets/images/panda-adversarial.png';
+import { FC } from 'react';
 
 // 3 common ways to use pngs:
 // 1. direct import -> react component
@@ -16,7 +17,7 @@ const PNG_wrapped_in_next_image = () => {
   return <NextImage src={PNGTest.src} alt="panda" width={200} height={200} />;
 };
 
-const AssetsToRender: any = {
+const AssetsToRender: Record<string, FC> = {
   PNG_wrapped_in_img,
   PNG_wrapped_in_next_image,
 };

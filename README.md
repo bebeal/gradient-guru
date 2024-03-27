@@ -272,10 +272,11 @@ yarn dev
 
 ---
 
-- Add `assets` directory to support larger sets of fonts, icons, images, etc.
-  - Deliberately not using `public` since I don't want to load all assets on every page load.
-  - Add `Carbon`, `Tldraw`, icon-sets
-  - Add sample images
+- Add `assets` directory to support larger sets of `fonts`, `icons`, `images`, etc.
+  - Deliberately not using `public` since I don't want to load all assets on every page load (nextjs maybe does this already, but idc to look)
+  - Add icons, icon-sets
+  - Add images
+  - Add fonts
 
 ---
 

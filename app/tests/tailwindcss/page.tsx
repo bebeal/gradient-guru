@@ -1,7 +1,7 @@
 'use client'
 
 import { cn, spectrum } from "@/utils";
-import React from 'react';
+import React, { FC } from 'react';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '@/tailwind.config';
 import colorPalette from 'tailwindcss/colors'
@@ -163,7 +163,7 @@ const ColorPaletteReference = ({ colors=[] }: {colors?: string[]}) => {
   )
 }
 
-const Tests: any = {
+const Tests: Record<string, FC> = {
   TailwindColors,
   LinearGradients,
   ExtendedTailwind,

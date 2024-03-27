@@ -1,5 +1,6 @@
 'use client'
 
+import { FC } from "react";
 import styled from "styled-components";
 
 const StyledButton = styled.button<any>`
@@ -15,8 +16,8 @@ const StyledButton = styled.button<any>`
   }
 `;
 
-const Demos: any = {
-  StyledButton: () => {
+const Demos: Record<string, FC> = {
+  StyledButtonDemo: () => {
     return (
       <StyledButton>
         Styled Button

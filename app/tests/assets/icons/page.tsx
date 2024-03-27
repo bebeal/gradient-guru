@@ -2,7 +2,7 @@
 
 // assets page to show various ways you can import and use svgs, images.
 // This will strictly be from client side (bundled and optimized by webpack)
-import { useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import MachineLeaerningIcon from '@/assets/icons/Carbon/MachineLearning.svg';
 import SendIcon from '@/assets/icons/Carbon/Send.svg';
 import { AnimatedDashedPath, AnimatedLineSVG, MissingNoSprite, WildMissingNoAppeaered } from '@/components';
@@ -84,7 +84,7 @@ const SVGs_animated_on_hover = () => {
   );
 };
 
-const AssetsToRender: any = {
+const AssetsToRender: Record<string, FC> = {
   SVG_from_direct_import,
   SVG_from_direct_import_with_props,
   SVG_from_pure_react_component,
