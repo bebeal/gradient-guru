@@ -52,9 +52,11 @@ export const ReactQueryDevToolPanel: React.FC<any> = ({ visible, setVisible, tog
 
 const ReactQueryDevToolToggle: React.FC<any> = ({ visible, setVisible, toggle }: { visible: boolean, setVisible: (value: boolean) => void, toggle: () => void }) => {
   return (
-    <IconButton className="p-2 m-2 hover:cursor-pointer" color="indigo" radius="large" variant="surface" onPointerDown={toggle}>
-      <MagnifyingGlassIcon width="18" height="18" />
-    </IconButton>
+    <div className="p-2 w-auto h-auto flex">
+      <IconButton className="p-2 hover:cursor-pointer text-[1em]" color="indigo" radius="large" variant="surface" onPointerDown={toggle}>
+        <MagnifyingGlassIcon />
+      </IconButton>
+    </div>
   );
 };
 
@@ -78,7 +80,7 @@ export const ReactQueryDevTool = (props: any) => {
       toggleCallback?.(newValue);
       return newValue;
     });
-  }, []);
+  }, [toggleCallback]);
 
   // listen for closes on the devtools panel and update the state
   useEffect(() => {
@@ -102,15 +104,13 @@ export const ReactQueryDevTool = (props: any) => {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [toggle]);
 
   return (
-    <div ref={ref} className="fixed top-0 left-0 z-50 pointer-events-auto cursor-auto">
-      <Suspense fallback={null}>
-        <OverrideReactQueryStyles />
-        <ReactQueryDevToolToggle visible={visible} setVisible={setVisible} toggle={toggle} />
-        <ReactQueryDevToolPanel visible={visible} setVisible={setVisible} toggle={toggle} {...rest} />
-      </Suspense>
+    <div ref={ref} className="fixed top-0 left-0 z-50 pointer-events-auto cursor-auto w-full h-full">
+      <ReactQueryDevToolToggle visible={visible} setVisible={setVisible} toggle={toggle} />
+      <ReactQueryDevToolPanel visible={visible} setVisible={setVisible} toggle={toggle} {...rest} />
+      <OverrideReactQueryStyles />
     </div>
   );
 };

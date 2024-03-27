@@ -6,14 +6,13 @@ import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
 import { cn, ReactQueryDevTool } from '@/utils';
 
-// Define interfaces for dev tools and their context
+// Define interfaces/types for dev tools and their context
 export interface DevTool {
   enabled: boolean;
   visible?: boolean;
   toggle?: (override?: boolean) => void;
   [key: string]: any; // allow for anything else to be passed
 }
-
 export interface DevToolsStoreState {
   reactQueryDevTool: DevTool;
   geiger: DevTool;
@@ -23,6 +22,7 @@ export type DevToolsStoreActions = {
   isDevToolEnabled: (tool: keyof DevToolsStoreState) => boolean;
   toggleDevTool: (tool: keyof DevToolsStoreState, override?: boolean) => void;
 };
+
 export const useDevToolsStore = create<DevToolsStoreState & DevToolsStoreActions>((set, get) => ({
   reactQueryDevTool: {
     enabled: true,
@@ -43,7 +43,7 @@ export const DevToolsContext = createContext<DevToolsStoreState & DevToolsStoreA
 export interface DevToolsProviderProps {
   children: ReactNode;
   className?: string;
-};
+}
 export const DevToolsProvider: FC<DevToolsProviderProps> = ({ children, className }) => {
   const reactQueryDevTool = useDevToolsStore(useShallow((state) => state.reactQueryDevTool));
   const geiger = useDevToolsStore(useShallow((state) => state.geiger));
@@ -59,8 +59,8 @@ export const DevToolsProvider: FC<DevToolsProviderProps> = ({ children, classNam
     );
   };
 
-  // add other dev tools which need to wrap around the entire app
-  const DevToolWrappers = ({ children }: { children: ReactNode }) => {
+  // add other dev tools which need to wrap around the entire app (e.g. providers, profilers)
+  const DevToolsComponent = ({ children }: { children: ReactNode }) => {
     return (
       <Geiger profilerId={'Geiger'} renderTimeThreshold={0} {...geiger}>
         <AppWithDevToolPanels>{children}</AppWithDevToolPanels>
@@ -76,7 +76,7 @@ export const DevToolsProvider: FC<DevToolsProviderProps> = ({ children, classNam
       isDevToolEnabled,
       toggleDevTool,
     }}>
-      <DevToolWrappers>{children}</DevToolWrappers>
+      <DevToolsComponent>{children}</DevToolsComponent>
     </DevToolsContext.Provider>
   );
 };

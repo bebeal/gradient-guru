@@ -1,6 +1,8 @@
-# nextjs-template
+# gradient-guru
 
-A feature rich Nextjs project template.
+My personal site which I often change and perterb to learn new things and paradigms. 
+
+Currently, this is a Next.js 14 project with (way too fucking much tbh) ...
 
 ## Features
 
@@ -14,8 +16,20 @@ A feature rich Nextjs project template.
 - Tailwind CSS
 - Styled Components
 - Radix UI Themes
+- Radix UI Primitives
+- Radix UI Icons
+- Carbon Icons
+- Lucide Icons
+- Tldraw Icons
+- Logo Icons
+- Weird/Dumb/Custom Icons
+- Code Language Icons
+- Berkeley Mono Font
+- Monaspace Font
 - Bundle Analyzer
 - React Query
+- MDX support
+- 
 
 ## Usage
 
@@ -345,5 +359,16 @@ yarn dev
   ...
    <MDXRemote source={content} components={components} options={{mdxOptions: MDXOptions}} />
    ```
+
+---
+
+- Add Radix UI Primitives
+  - Install packages
+
+    ```bash
+    yarn add @radix-ui/react-accordion @radix-ui/react-alert-dialog @radix-ui/react-aspect-ratio @radix-ui/react-avatar @radix-ui/react-checkbox @radix-ui/react-collapsible @radix-ui/react-context-menu @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-hover-card @radix-ui/react-label @radix-ui/react-menubar @radix-ui/react-navigation-menu @radix-ui/react-popover @radix-ui/react-progress @radix-ui/react-radio-group @radix-ui/react-select @radix-ui/react-separator @radix-ui/react-slider @radix-ui/react-switch @radix-ui/react-tabs @radix-ui/react-toast @radix-ui/react-toggle @radix-ui/react-toggle-group @radix-ui/react-toolbar @radix-ui/react-tooltip
+    ```
+
+  - Implement in `@/components/primitivs/*`
 
 ---

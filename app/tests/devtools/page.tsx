@@ -5,7 +5,7 @@ import { IconButton } from "@radix-ui/themes";
 import { throttle } from "lodash";
 import { useState } from "react";
 
-// Test for react-gieger
+// Test for react-gieger (set to true in dev tool config)
 const ExcessiveRerenderComponent = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const handleMouseMove = throttle((event: any) => {
@@ -23,14 +23,19 @@ const ExcessiveRerenderComponent = () => {
   );
 };
 
-const DebugPage = () => {
-  const title = "Debug Page";
+const DevToolsPage = () => {
+  const title = 'Dev Tools';
   return (
-      <div className="flex flex-col w-auto h-auto justify-center items-center gap-1 p-2 overflow-auto bg-primary">
-        <div className="text-2xl font-bold text-center underline">{title}</div>
-        <ExcessiveRerenderComponent />
+    <div className="flex flex-col w-auto h-auto justify-center items-center gap-1 p-2 overflow-auto bg-primary">
+      <div className="text-2xl font-bold text-center underline">{title}</div>
+      <div className="flex flex-col gap-10 w-full h-full justify-center items-center p-10">
+        <div className="border border-primary p-4">
+          <ExcessiveRerenderComponent />
+        </div>
       </div>
+    </div>
   );
 };
 
-export default DebugPage;
+
+export default DevToolsPage;
