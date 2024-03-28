@@ -8,6 +8,7 @@ import GradientGuru from '@/assets/icons/GradientGuru.svg';
 import { cn } from '@/utils';
 import { ThreeFanGpu } from '../CustomIcons/ThreeFanGpu';
 import UnknownSprite from '@/assets/icons/201-question.svg';
+import { IconSetMap } from '../IconSet';
 
 export const DotDotDot = forwardRef((props: any, ref: any) => {
   const { className = '', vertical = false, bounce = false, width, height, ...rest } = props;
@@ -19,7 +20,7 @@ export const DotDotDot = forwardRef((props: any, ref: any) => {
         stroke={'currentColor'}
         strokeWidth={'1'}
         viewBox="0 0 32 32"
-        className={cn('currentColor rounded-full flex w-auto h-auto', bounce && 'animate-bigger-bounce anim-duration-1000 anim-delay-300')}
+        className={cn('currentColor rounded-full flex w-auto h-auto', bounce && 'animate-dot-bounce anim-duration-1000 anim-delay-300')}
       />
       <DotMark
         width={'1em'}
@@ -27,7 +28,7 @@ export const DotDotDot = forwardRef((props: any, ref: any) => {
         stroke={'currentColor'}
         strokeWidth={'1'}
         viewBox="0 0 32 32"
-        className={cn('currentColor rounded-full flex w-auto h-auto', bounce && 'animate-bigger-bounce anim-duration-1000 anim-delay-500')}
+        className={cn('currentColor rounded-full flex w-auto h-auto', bounce && 'animate-dot-bounce anim-duration-1000 anim-delay-500')}
       />
       <DotMark
         width={'1em'}
@@ -35,7 +36,7 @@ export const DotDotDot = forwardRef((props: any, ref: any) => {
         stroke={'currentColor'}
         strokeWidth={'1'}
         viewBox="0 0 32 32"
-        className={cn('currentColor rounded-full flex w-auto h-auto', bounce && 'animate-bigger-bounce anim-duration-1000 anim-delay-700')}
+        className={cn('currentColor rounded-full flex w-auto h-auto', bounce && 'animate-dot-bounce anim-duration-1000 anim-delay-700')}
       />
     </div>
   );
@@ -222,7 +223,7 @@ export const Indeterminate = forwardRef((props?: any, ref?: any) => {
   );
 });
 
-export const CustomIconSet = {
+export const CustomIconSet: IconSetMap = {
   HorizontalDots,
   VerticalDots,
   DotsLoader,

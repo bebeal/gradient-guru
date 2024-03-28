@@ -11,6 +11,7 @@ export interface IconProps extends SVGProps<SVGSVGElement> {
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(({ set = 'Custom', icon = 'UnknownSprite', ...rest }, ref) => {
   const fetchIcon = (set: string, icon: string): JSX.Element => {
+    // console.log('iconsets: ', IconSets, '\nset: ', set, '\nicon: ', icon)
     const iconSet: IconSet = IconSets[set];
     const mergedIconProps = { ...(iconSet?.iconProps || defaultIconProps), ...rest };
     if (!iconSet) {

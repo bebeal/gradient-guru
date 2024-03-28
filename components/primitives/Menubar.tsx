@@ -4,6 +4,7 @@ import React, { forwardRef, useCallback } from 'react';
 import * as MenubarPrimitive from '@radix-ui/react-menubar';
 import { cn, Radius, RadiusClasses } from '@/utils';
 import { Kbd } from './Kbd';
+import { Icon } from './Icons';
 
 // --------------------------------------------------
 // MenubarShortcut

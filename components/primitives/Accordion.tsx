@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { useRippleEffect } from '@/hooks';
 import { cn, ConvertRadiusClass, Radius, RadiusClasses } from '@/utils';
+import { Icon } from './Icons';
 
 export type AccordionPrimitiveProps = Omit<AccordionPrimitive.AccordionSingleProps, 'type'> & Omit<AccordionPrimitive.AccordionMultipleProps, 'type'>;
 

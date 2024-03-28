@@ -19,7 +19,7 @@ export const isSVG = (svg: ReactElement): boolean => {
   if (!svg || !svg?.props) return false;
   return (
     (isValidElement(svg) && (svg.type === 'svg' || (typeof svg.type === 'function' && svg.type.name.includes('Svg')))) ||
-    (svg.type as any)?.displayName?.includes('IconSetCache') ||
+    (svg.type as any)?.displayName?.includes('Icon') ||
     'viewBox' in svg.props ||
     'd' in svg.props ||
     'fill' in svg.props ||

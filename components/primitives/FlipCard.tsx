@@ -3,6 +3,7 @@
 import { ReactNode, useCallback, useState } from 'react';
 import { cn } from '@/utils';
 import { Button } from './Button';
+import { Icon } from './Icons';
 
 export interface CardSideProps {
   className?: string;

@@ -1,5 +1,5 @@
 import { Camera, Heading, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6 } from 'lucide-react';
-import { IconSet } from '../IconSet';
+import { IconSetMap } from '../IconSet';
 
 const HeadingIcons = {
   Heading,
@@ -19,7 +19,7 @@ const ObjectIcons = {
   Camera,
 };
 
-export const LucideIconSet: IconSet = {
+export const LucideIconSet: IconSetMap = {
   ...TextIcons,
   ...ObjectIcons,
 };

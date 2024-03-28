@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { IconSet } from '../IconSet';
+import { IconSetMap } from '../IconSet';
 
 const AlignBottom = dynamic(() => import('@/assets/icons/Tldraw/AlignBottom.svg'));
 const AlignBottomCenter = dynamic(() => import('@/assets/icons/Tldraw/AlignBottomCenter.svg'));
@@ -168,7 +168,7 @@ const WarningTriangle = dynamic(() => import('@/assets/icons/Tldraw/WarningTrian
 const ZoomIn = dynamic(() => import('@/assets/icons/Tldraw/ZoomIn.svg'));
 const ZoomOut = dynamic(() => import('@/assets/icons/Tldraw/ZoomOut.svg'));
 
-export const TldrawIconSet: IconSet = {
+export const TldrawIconSet: IconSetMap = {
   AlignBottom,
   AlignBottomCenter,
   AlignBottomLeft,

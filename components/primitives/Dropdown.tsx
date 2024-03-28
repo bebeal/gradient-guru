@@ -5,6 +5,7 @@ import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { cn, Radius, RadiusClasses } from '@/utils';
 import { Kbd } from './Kbd';
 import { Separator } from './Separator';
+import { Icon } from './Icons';
 
 // --------------------------------------------------
 // DropdownMenu

@@ -1,4 +1,5 @@
 import { cn } from '@/utils';
+import { Icon } from './Icons';
 
 export interface LoadingProps {
   spinner?: boolean;
@@ -58,7 +59,7 @@ export const UnderConstruction = (props: UnderConstructionProps) => {
   return (
     <div className={cn('absolute w-full h-full flex justify-center items-center rounded-lg pointer-events-none overflow-visible', className)}>
       <div className="absolute w-full h-full left-0 top-0 bg-black opacity-50 rounded-lg pointer-events-none overflow-visible z-[9]" />
-      <div className="top-0 left-1/2 -translate-x-1/2 bg-primary text-primary shadow-2xl shadow-black text-base px-1 py-1 rounded-lg border-2 border-solid border-primary animate-banner-pulse w-full z-[10] text-center [transform:scale(0.85)]">
+      <div className="top-0 left-1/2 -translate-x-1/2 bg-primary text-primary shadow-2xl shadow-black text-base px-1 py-1 rounded-lg border-2 border-solid border-primary animate-grow w-full z-[10] text-center [transform:scale(0.85)]">
         🚧 Under Construction 🚧
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import { Spinner } from "./Icons";
+import { cn } from "@/utils";
 
 export const Loader = forwardRef((props?: any, ref?: any) => {
   const { className = '', ...rest } = props;
