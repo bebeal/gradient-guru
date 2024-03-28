@@ -1,7 +1,7 @@
 'use client'
 
 const PrimitivesPage = () => {
-  const primitives = ['accordion', 'checkbox', 'dropdown', 'flip-card', 'kbd', 'menubar', 'progress', 'side-panel', 'slider', 'switch', 'textarea', 'tooltip'];
+  const primitives = ['accordion', 'card', 'checkbox', 'dropdown', 'kbd', 'menubar', 'progress', 'side-panel', 'slider', 'switch', 'textarea', 'tooltip'];
 
   return (
     <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">

@@ -5,7 +5,7 @@ export * from './Avatar';
 export * from './Button';
 export * from './Checkbox';
 export * from './Dropdown';
-export * from './FlipCard';
+export * from './Card';
 export * from './HoverCard';
 export * from './Input';
 export * from './Kbd';

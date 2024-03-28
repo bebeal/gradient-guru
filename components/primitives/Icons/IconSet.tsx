@@ -1,6 +1,8 @@
 // import { AcademiconsIconSet, CarbonIconSet, CustomIconSet, DevIconSet, EntypoPlusIconSet, EntypoSocialIconSet, FlagIconSet, FontAudioIconSet, FontAwesomeRegularIconSet, FontGISIconSet, GameIconSet, GeoglyphsIconSet, HeroiconsSolidIconSet, LogosIconSet, LucideIconSet, MapIconSet, MedicalIconSet, MuiLineIconSet, RadixIconSet, SkillIconSet, SpinnerIconSet, TldrawIconSet, VSCodeIconSet } from './IconSets';
-import { CarbonIconSet, TldrawIconSet, CodeLanguagesIconSet, LogosIconSet, CustomIconSet, LucideIconSet, RadixIconSet } from "./IconSets";
+import { ComponentType, forwardRef, ReactNode } from 'react';
+import { MapCache } from '@/utils';
 import { IconProps } from './Icon';
+import { CarbonIconSet, CodeLanguagesIconSet, CustomIconSet, LogosIconSet, LucideIconSet, RadixIconSet, TldrawIconSet } from './IconSets';
 
 // IconSetMap: simple mapping from name of the icon to something that can be rendered
 // 'example-icon-name': IconComponent (React.FC)
@@ -13,14 +15,15 @@ export interface IconSet {
   iconProps?: IconProps;
 }
 
+// IconSets object containing all available icon sets
 export const IconSets: Record<string, IconSet> = {
-  'Carbon': {icons: CarbonIconSet},
-  'Tldraw': {icons: TldrawIconSet, iconProps: {stroke: 'black'}},
-  'CodeLanguages': {icons: CodeLanguagesIconSet},
-  'Logos': {icons: LogosIconSet},
-  'Custom': {icons: CustomIconSet},
-  'Lucide': {icons: LucideIconSet, iconProps: {stroke: 'currentColor', fill: 'none'}},
-  'Radix': {icons: RadixIconSet},
+  Carbon: { icons: CarbonIconSet },
+  Tldraw: { icons: TldrawIconSet, iconProps: { stroke: 'black' } },
+  CodeLanguages: { icons: CodeLanguagesIconSet },
+  Logos: { icons: LogosIconSet },
+  Custom: { icons: CustomIconSet },
+  Lucide: { icons: LucideIconSet, iconProps: { stroke: 'currentColor', fill: 'none' } },
+  Radix: { icons: RadixIconSet },
 };
 export const IconSetNames: string[] = Object.keys(IconSets) || [];
 export type IconSetNames = keyof typeof IconSets;
@@ -29,5 +32,24 @@ export const defaultIconProps = {
   width: '1em',
   height: '100%',
   fill: 'currentColor',
-  stroke: 'none'
+  stroke: 'none',
 } satisfies IconProps;
+
+// IconCache: A cache to store and reuse icon component instances.
+// This prevents re-creating icon components on every render, which can
+// improve performance in scenarios where icons are dynamically chosen
+// and rendered throughout the application.
+const IconCache = new MapCache<string, ComponentType<any>>();
+export const CachedIcons: IconSetMap = IconSetNames.reduce((iconSetsMap: any, IconSetName: string) => {
+  const { icons, iconProps = defaultIconProps } = IconSets[IconSetName];
+  iconSetsMap[IconSetName] = Object.keys(icons).reduce((iconSetMap: any, IconName: string) => {
+    const iconDisplayName = `IconCache.${IconSetName}.${IconName}`;
+    iconSetMap[IconName] = IconCache.get(iconDisplayName, () => forwardRef((props: any, ref: any) => {
+      const IconComponent = icons[IconName];
+      return <IconComponent {...iconProps} {...props} ref={ref} />;
+    }));
+    iconSetMap[IconName].displayName = iconDisplayName;
+    return iconSetMap;
+  }, {} as IconSet);
+  return iconSetsMap;
+}, {} as IconSetMap);

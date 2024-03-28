@@ -1,3 +1,5 @@
+'use client'
+
 import { LinkList } from "@/components";
 
 const AppPage = () => {

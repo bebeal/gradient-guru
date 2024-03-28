@@ -1,17 +1,29 @@
 
 // Simple weakmap cache for objects
-export class MapCache<T extends object, K> {
-	cache = new WeakMap<T, K>()
+export class MapCache<K, V> {
+  private objectCache = new WeakMap<object, V>();
+  private primitiveCache = new Map<string | number | symbol, V>();
 
   constructor() {
-    this.cache = new WeakMap();
+    this.objectCache = new WeakMap();
+    this.primitiveCache = new Map();
   }
 
-	get<P extends T>(item: P, cb: (item: P) => K) {
-    if (!this.cache.has(item)) {
-      this.cache.set(item, cb(item));
+  get(item: K, cb: (item: K) => V): V {
+    if (typeof item === 'object' && item !== null) {
+        // Handling for objects
+        if (!this.objectCache.has(item)) {
+            this.objectCache.set(item, cb(item));
+        }
+        return this.objectCache.get(item)!;
+    } else if (typeof item === 'string' || typeof item === 'number' || typeof item === 'symbol') {
+        // Handling for primitives
+        if (!this.primitiveCache.has(item)) {
+            this.primitiveCache.set(item, cb(item));
+        }
+        return this.primitiveCache.get(item)!;
+    } else {
+        throw new Error('Unsupported key type');
     }
-
-		return this.cache.get(item)!
-	}
+  }
 }
