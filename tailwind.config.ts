@@ -169,14 +169,6 @@ const config: Config = {
         '50%': { opacity: "0.5", transform: "translateX(-10%)" },
         '100%': { opacity: "1", transform: "translateX(0)" },
       },
-      "full-rotation": {
-        "0%": {
-          transform: "rotate(0deg)",
-        },
-        "100%": {
-          transform: "rotate(360deg)",
-        }
-      },
       "pulsate": {
         "0%": {
           'box-shadow': "0 0 5px #FFFFFF, 0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF, 0 0 40px #FFFFFF",
@@ -211,8 +203,8 @@ const config: Config = {
       "slide-right-fade": "slide-right-fade 0.3s ease-in-out",
       "slide-down-fade": "slide-down-fade 0.3s ease-in-out",
       "slide-left-fade": "slide-left-fade 0.3s ease-in-out",
-      "rotate-clockwise": "full-rotation 2s linear infinite forwards",
-      "rotate-counter-clockwise": "full-rotation 2s linear infinite reverse",
+      "spin-cw": "spin 2s linear infinite forwards",
+      "spin-ccw": "spin 2s linear infinite reverse",
       "pulsate": "pulsate 2s infinite",
       "ripple": 'ripple 1.2s infinite ease-in-out',
       "ripple-pause": 'ripple-pause 2s backwards infinite ease-in-out',

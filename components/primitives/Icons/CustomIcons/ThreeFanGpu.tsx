@@ -56,7 +56,7 @@ export interface ThreeFanGpuProps {
   className?: string;
 }
 export const ThreeFanGpu = forwardRef((props: ThreeFanGpuProps, ref?: any) => {
-  const { variant = 'realistic', spinFans = true, outline = false, spinAnimation = 'animate-rotate-counter-clockwise', className = '', ...rest } = props;
+  const { variant = 'realistic', spinFans = true, outline = false, spinAnimation = 'animate-spin-ccw', className = '', ...rest } = props;
   const internalRef: any = useRef<any>(undefined);
 
   const getPartProperties = useCallback(
