@@ -62,7 +62,6 @@ export const DynamicGradientBackground = styled.div<{
   `}
 `;
 
-
 export interface GradientDivProps {
   colors?: string[];
   radius?: Radius;

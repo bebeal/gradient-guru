@@ -1,15 +1,15 @@
 'use client'
 
+import { LinkList } from "@/components";
+
 const PrimitivesPage = () => {
-  const primitives = ['accordion', 'card', 'checkbox', 'dropdown', 'kbd', 'menubar', 'progress', 'side-panel', 'slider', 'switch', 'textarea', 'tooltip'];
+  const title = 'Primitives';
+  const pages: string[] = ['accordion', 'card', 'checkbox', 'dropdown', 'kbd', 'menubar', 'progress', 'select', 'side-panel', 'slider', 'switch', 'textarea', 'tooltip'];
 
   return (
     <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">
-      {primitives.map((primitive) => (
-        <div key={primitive}>
-          <a href={`/tests/primitives/${primitive}`} rel="noopener noreferrer" target="_blank" className="text-lg font-bold">{primitive}</a>
-        </div>
-      ))}  
+      <div className="text-2xl font-bold text-center underline">{title}</div>
+      <LinkList links={pages} prefix="/tests/primitives/" />
     </div>
   );
 };

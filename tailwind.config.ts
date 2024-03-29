@@ -106,6 +106,36 @@ const config: Config = {
         'from': { maxWidth: 'var(--radix-accordion-content-width)' },
         'to': { maxWidth: '0' }
       },
+      "slide-up-fade": {
+        '0%': { opacity: "0", transform: "translateY(100%)" },
+        '50%': { opacity: "0.5", transform: "translateY(-10%)" },
+        '100%': { opacity: "1", transform: "translateY(0)" },
+      },
+      "slide-right-fade": {
+        '0%': { opacity: "0", transform: "translateX(-100%)" },
+        '50%': { opacity: "0.5", transform: "translateX(10%)" },
+        '100%': { opacity: "1", transform: "translateX(0)" },
+      },
+      "slide-down-fade": {
+        '0%': { opacity: "0", transform: "translateY(-100%)" },
+        '50%': { opacity: "0.5", transform: "translateY(10%)" },
+        '100%': { opacity: "1", transform: "translateY(0)" },
+      },
+      "slide-left-fade": {
+        '0%': { opacity: "0", transform: "translateX(100%)" },
+        '50%': { opacity: "0.5", transform: "translateX(-10%)" },
+        '100%': { opacity: "1", transform: "translateX(0)" },
+      },
+      // Avatar
+      "ripple": {
+        '0%': { transform: 'scale(0.8)', opacity: '1' },
+        '100%': { transform: 'scale(2.4)', opacity: '0' },
+      },
+      "ripple-pause": {
+        '0%': { transform: 'scale(2.4)', opacity: '0' },
+        '25%': { transform: 'scale(0.8)', opacity: '1' },
+        '100%': { transform: 'scale(2.4)', opacity: '0' },
+      },
       "dot-bounce": {
         '0%': {
           transform: "translateY(-40%)",
@@ -149,26 +179,6 @@ const config: Config = {
           transform: 'scale(1)'
         }
       },
-      "slide-up-fade": {
-        '0%': { opacity: "0", transform: "translateY(100%)" },
-        '50%': { opacity: "0.5", transform: "translateY(-10%)" },
-        '100%': { opacity: "1", transform: "translateY(0)" },
-      },
-      "slide-right-fade": {
-        '0%': { opacity: "0", transform: "translateX(-100%)" },
-        '50%': { opacity: "0.5", transform: "translateX(10%)" },
-        '100%': { opacity: "1", transform: "translateX(0)" },
-      },
-      "slide-down-fade": {
-        '0%': { opacity: "0", transform: "translateY(-100%)" },
-        '50%': { opacity: "0.5", transform: "translateY(10%)" },
-        '100%': { opacity: "1", transform: "translateY(0)" },
-      },
-      "slide-left-fade": {
-        '0%': { opacity: "0", transform: "translateX(100%)" },
-        '50%': { opacity: "0.5", transform: "translateX(-10%)" },
-        '100%': { opacity: "1", transform: "translateX(0)" },
-      },
       "pulsate": {
         "0%": {
           'box-shadow': "0 0 5px #FFFFFF, 0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF, 0 0 40px #FFFFFF",
@@ -180,34 +190,24 @@ const config: Config = {
           'box-shadow': "0 0 5px #FFFFFF, 0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF, 0 0 40px #FFFFFF",
         }
       },
-      // Avatar
-      "ripple": {
-        '0%': { transform: 'scale(0.8)', opacity: '1' },
-        '100%': { transform: 'scale(2.4)', opacity: '0' },
-      },
-      "ripple-pause": {
-        '0%': { transform: 'scale(2.4)', opacity: '0' },
-        '25%': { transform: 'scale(0.8)', opacity: '1' },
-        '100%': { transform: 'scale(2.4)', opacity: '0' },
-      },
     },
     animation: {
       "accordion-down": "accordion-down 0.3s ease-in-out both",
       "accordion-up": "accordion-up 0.3s ease-in-out both",
       "accordion-out": "accordion-out 0.3s ease-in-out both",
       "accordion-in": "accordion-in 0.3s ease-in-out both",
-      "dot-bounce": "dot-bounce 1s infinite",
-      "focus-chat": "focus-chat 3s infinite cubic-bezier(0.8, 0, 1, 1)",
-      "grow": "grow 5s infinite linear",
       "slide-up-fade": "slide-up-fade 0.3s ease-in-out",
       "slide-right-fade": "slide-right-fade 0.3s ease-in-out",
       "slide-down-fade": "slide-down-fade 0.3s ease-in-out",
       "slide-left-fade": "slide-left-fade 0.3s ease-in-out",
+      "ripple": 'ripple 1.2s infinite ease-in-out',
+      "ripple-pause": 'ripple-pause 2s backwards infinite ease-in-out',
+      "dot-bounce": "dot-bounce 1s infinite",
+      "focus-chat": "focus-chat 3s infinite cubic-bezier(0.8, 0, 1, 1)",
+      "grow": "grow 5s infinite linear",
       "spin-cw": "spin 2s linear infinite forwards",
       "spin-ccw": "spin 2s linear infinite reverse",
       "pulsate": "pulsate 2s infinite",
-      "ripple": 'ripple 1.2s infinite ease-in-out',
-      "ripple-pause": 'ripple-pause 2s backwards infinite ease-in-out',
     }
   },
   plugins: [
