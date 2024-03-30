@@ -1,3 +1,4 @@
+export * from './auth';
 export * from './basic';
 export * from './canvas';
 export * from './colors';
@@ -11,6 +12,7 @@ export * from './mdx';
 export * from './objects';
 export * from './path';
 export * from './react-query';
+export * from './stream';
 export * from './strings';
 export * from './tailwind-plugins';
 export * from './StyledComponentRegistry';

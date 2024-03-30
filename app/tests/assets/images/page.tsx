@@ -4,7 +4,9 @@
 // This will strictly be from client side (bundled and optimized by webpack)
 import NextImage from 'next/image';
 import PNGTest from '@/assets/images/panda-adversarial.png';
+import mountains from "@/assets/images/mountains.jpg";
 import { FC } from 'react';
+import { getShimmerPlaceholder } from '@/utils';
 
 // 3 common ways to use pngs:
 // 1. direct import -> react component
@@ -17,7 +19,51 @@ const PNG_wrapped_in_next_image = () => {
   return <NextImage src={PNGTest.src} alt="panda" width={200} height={200} />;
 };
 
+// Hint to test these, throttle the network speed to slow 3G in devtools
+const Image_With_Shimmer_Placeholder = () => {
+  return (
+    <div className="flex flex-col w-full h-full gap-2 justify-center items-center">
+      <h1>Image Component With Shimmer Data URL Placeholder</h1>
+      <NextImage
+        src={mountains}
+        alt="Mountains w/ Shimmer Placeholder"
+        placeholder={getShimmerPlaceholder(700, 475)}
+        loading="lazy"
+        width={700}
+        height={475}
+        style={{
+          maxWidth: "100%",
+          height: "auto",
+        }}
+      />
+    </div>
+  );
+};
+
+const Image_With_Blur_Placeholder = () => {
+  return (
+    <div className="flex flex-col w-full h-full gap-2 justify-center items-center">
+      <h1>Image Component With Blur Placeholder</h1>
+      <NextImage
+        alt="Mountains w/ Blur Placeholder"
+        src={mountains}
+        placeholder="blur"
+        loading="lazy"
+        quality={100}
+        width={700}
+        height={475}
+        style={{
+          maxWidth: "100%",
+          height: "auto",
+        }}
+      />
+    </div>
+  );
+};
+
 const AssetsToRender: Record<string, FC> = {
+  Image_With_Shimmer_Placeholder,
+  Image_With_Blur_Placeholder,
   PNG_wrapped_in_img,
   PNG_wrapped_in_next_image,
 };

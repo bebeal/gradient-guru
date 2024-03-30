@@ -3,8 +3,7 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { DocConfig } from '@/app/config';
 import { ThemeProvider, useDynamicDocTitle } from '@/hooks';
-import { makeQueryClient, StyledComponentsRegistry } from '@/utils';
-import { NextAuthProvider } from '@/clients';
+import { makeQueryClient, StyledComponentsRegistry, NextAuthProvider } from '@/utils';
 
 // import global styles
 import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';

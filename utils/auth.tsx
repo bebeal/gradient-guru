@@ -1,14 +1,13 @@
-import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next';
-import type { NextAuthOptions as NextAuthConfig } from 'next-auth';
-import NextAuth, { getServerSession } from 'next-auth';
-import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
-import Logo from '@/public/favicon.ico';
-import { getEnvVariables, isDevEnv } from '@/utils';
-import { GoogleAuth } from './Google/GoogleAuth';
-import { GithubAuth } from './Github/GithubAuth';
-import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
+import type { NextAuthOptions as NextAuthConfig } from 'next-auth';
+import NextAuth from 'next-auth';
+import GithubProvider from 'next-auth/providers/github';
+import GoogleProvider from 'next-auth/providers/google';
+import { SessionProvider } from 'next-auth/react';
+import { GithubAuth } from '@/clients/Github/GithubAuth';
+import { GoogleAuth } from '@/clients/Google/GoogleAuth';
+import Logo from '@/public/favicon.ico';
+import { getEnvVariables, isDevEnv } from './environment';
 
 export const getNextAuth = (): any => {
   return getEnvVariables({
@@ -18,10 +17,7 @@ export const getNextAuth = (): any => {
 };
 
 // OAuth Providers
-export const providers: any = [
-  ...(GoogleAuth ? [GoogleProvider(GoogleAuth)] : []),
-  ...(GithubAuth ? [GithubProvider(GithubAuth)] : []),
-];
+export const providers: any = [...(GoogleAuth ? [GoogleProvider(GoogleAuth)] : []), ...(GithubAuth ? [GithubProvider(GithubAuth)] : [])];
 
 export const nextAuthConfig = {
   theme: {
