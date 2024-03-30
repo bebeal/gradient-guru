@@ -1,3 +1,2 @@
 export * from './auth';
-export * from './Github';
-export * from './Google';
+export * from './providers';

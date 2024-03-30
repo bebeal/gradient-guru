@@ -1,10 +1,23 @@
 export const env = process.env.NODE_ENV || process.env.NEXT_PUBLIC_ENV || 'development';
 export const isDevEnv = env === 'development';
 
+export const isPublicEnvVariable = (key: string): boolean => {
+  return key.startsWith('NEXT_PUBLIC_');
+};
+
+export const isOnClientSide = (): boolean => {
+  return typeof window !== 'undefined';
+};
+
 export const getEnvVariable = (key: string): string | null => {
+  // ignore client side request for non-public env variables
+  if (isOnClientSide() && !isPublicEnvVariable(key)) {
+    return null;
+  }
   const value: string | undefined = process.env[key];
 
   if (!value) {
+    // const isClientSide = typeof window !== 'undefined';
     console.warn(`Missing environment variable: ${key}`);
     return null;
   }

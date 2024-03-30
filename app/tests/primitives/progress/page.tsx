@@ -1,6 +1,17 @@
 'use client';
 
-import { Progress, useDownloader } from '@/components';
+import { Progress } from '@/components';
+
+const useDownloader = ({ url, onDownloadProgress }: { url: string; onDownloadProgress: (downloadPercentage: number, bytes: number, total: number | undefined) => void }) => {
+  
+  return {
+    downloader: undefined,
+    downloadPercentage: 0,
+    bytesDownloaded: 0,
+    total: undefined,
+    url,
+  } as any;
+}
 
 const DownloadComponent = () => {
   const { downloader, downloadPercentage, bytesDownloaded, total, url } = useDownloader({
@@ -12,7 +23,7 @@ const DownloadComponent = () => {
 
   return (
     <div className="w-full flex h-auto flex-col flex-nowrap text-xs">
-      <button className="bg-gray-400 hover:bg-gray-500" onClick={() => downloader.mutate()}>
+      <button className="bg-gray-400 hover:bg-gray-500" onClick={() => downloader?.mutate()}>
         Download {url}
       </button>
       <div>Progress: {downloadPercentage.toFixed(2)}%</div>

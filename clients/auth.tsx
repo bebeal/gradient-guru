@@ -1,23 +1,17 @@
-import { ReactNode } from 'react';
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next';
 import type { NextAuthOptions as NextAuthConfig } from 'next-auth';
 import NextAuth from 'next-auth';
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import { SessionProvider } from 'next-auth/react';
 import Logo from '@/public/favicon.ico';
 import { getEnvVariables, isDevEnv } from '@/utils';
-import { GoogleAuth } from './Google';
-import { GithubAuth } from './Github';
+import { GoogleAuth } from './Google/GoogleAuth';
+import { GithubAuth } from './Github/GithubAuth';
 
 export const NextAuthEnvVars = getEnvVariables({
   secret: 'NEXTAUTH_SECRET',
   url: 'NEXTAUTH_URL',
 });
-
-export const NextAuthProvider = ({ children, session }: { children: ReactNode; session?: any }) => {
-  return <SessionProvider session={session}>{children}</SessionProvider>;
-};
 
 // OAuth Providers
 export const providers: any = [

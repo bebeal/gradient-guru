@@ -40,8 +40,11 @@
   --error: 255 69 58;
   --muted: 85 85 85;
   --success: 52 168 83;
-
   --kbd-foreground: 161 161 170;
+
+  --accent-400: 72 216 255;
+  --accent-500: 0 140 255;
+  --accent-600: 6 159 255;
 }
 
 .light {

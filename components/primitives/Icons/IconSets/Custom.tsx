@@ -1,14 +1,15 @@
 'use client';
 
 import { forwardRef } from 'react';
+import UnknownSprite from '@/assets/icons/201-question.svg';
 import CenterCircle from '@/assets/icons/Carbon/CenterCircle.svg';
 import DotMark from '@/assets/icons/Carbon/DotMark.svg';
 import StatusPartialFail from '@/assets/icons/Carbon/StatusPartialFail.svg';
 import GradientGuru from '@/assets/icons/GradientGuru.svg';
 import { cn } from '@/utils';
 import { ThreeFanGpu } from '../CustomIcons/ThreeFanGpu';
-import UnknownSprite from '@/assets/icons/201-question.svg';
 import { IconSetMap } from '../IconSet';
+import { Spinner } from '../CustomIcons';
 
 export const DotDotDot = forwardRef((props: any, ref: any) => {
   const { className = '', vertical = false, bounce = false, width, height, ...rest } = props;
@@ -40,6 +41,11 @@ export const DotDotDot = forwardRef((props: any, ref: any) => {
       />
     </div>
   );
+});
+
+export const Loader = forwardRef((props?: any, ref?: any) => {
+  const { className = '', ...rest } = props;
+  return <Spinner ref={ref} className={cn('animate-spin', className)} {...rest} />;
 });
 
 export const HorizontalDots = forwardRef((props?: any, ref?: any) => {
@@ -227,6 +233,7 @@ export const CustomIconSet: IconSetMap = {
   HorizontalDots,
   VerticalDots,
   DotsLoader,
+  Loader,
   ExternalLink,
   Share,
   EmptyClipboard,
@@ -246,5 +253,5 @@ export const CustomIconSet: IconSetMap = {
   Indeterminate,
   ThreeFanGpu,
   GradientGuru,
-  UnknownSprite
+  UnknownSprite,
 };
