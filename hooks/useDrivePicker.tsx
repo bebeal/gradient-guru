@@ -43,6 +43,10 @@ export const useDrivePicker = ({ googleDriveApiKey }: DrivePickerProps) => {
   }, [gapiLoaded, pickerApiLoaded, pickerCallback, session, googleDriveApiKey]);
 
   const loadGoogleApi = useCallback(() => {
+    if (typeof window === 'undefined') {
+      console.error('Window object not found');
+      return;
+    }
     if (!window.gapi) {
       console.error('Google API script not loaded');
       return;

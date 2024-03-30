@@ -6,6 +6,7 @@ export interface IDocConfig {
   shorthand?: string;
   separator?: string;
   description?: string;
+  url?: string;
 }
 
 // Updates the document title dynamically, based on the current path and the given config,

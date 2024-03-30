@@ -7,11 +7,15 @@ import Logo from '@/public/favicon.ico';
 import { getEnvVariables, isDevEnv } from '@/utils';
 import { GoogleAuth } from './Google/GoogleAuth';
 import { GithubAuth } from './Github/GithubAuth';
+import { SessionProvider } from 'next-auth/react';
+import { ReactNode } from 'react';
 
-export const NextAuthEnvVars = getEnvVariables({
-  secret: 'NEXTAUTH_SECRET',
-  url: 'NEXTAUTH_URL',
-});
+export const getNextAuth = (): any => {
+  return getEnvVariables({
+    secret: 'NEXTAUTH_SECRET',
+    url: 'NEXTAUTH_URL',
+  });
+};
 
 // OAuth Providers
 export const providers: any = [
@@ -26,7 +30,7 @@ export const nextAuthConfig = {
   session: {
     strategy: 'jwt',
   },
-  secret: NextAuthEnvVars.secret,
+  secret: getNextAuth().secret,
   debug: isDevEnv,
   providers,
   callbacks: {
@@ -46,6 +50,10 @@ export const nextAuthConfig = {
 } satisfies NextAuthConfig;
 
 export const handler: any = NextAuth(nextAuthConfig);
+
+export const NextAuthProvider = ({ children, session }: { children: ReactNode; session?: any }) => {
+  return <SessionProvider session={session}>{children}</SessionProvider>;
+};
 
 export const getSessionServerSide = async (...args: [GetServerSidePropsContext] | [NextApiRequest, NextApiResponse] | []) => {
   return await handler?.auth(...args);

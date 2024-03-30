@@ -5,4 +5,5 @@ export const DocConfig: IDocConfig = {
   shorthand: 'app',
   separator: '•',
   description: 'App Description',
+  url: 'http://localhost:3407',
 };

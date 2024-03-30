@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Robots } from 'next/dist/lib/metadata/types/metadata-types';
 import { DocConfig } from '@/app/config';
 import Providers from '@/app/providers';
+import { getEnvVariable } from '@/utils';
 
 const robots: string | Robots | null | undefined = {
   index: false,
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
     template: `${DocConfig.title} • %s`,
   },
   description: DocConfig?.description || '',
+  metadataBase: new URL(DocConfig?.url || ''),
   applicationName: DocConfig.title,
   appleWebApp: {
     title: DocConfig.title,

@@ -50,15 +50,15 @@ const nextConfig = {
     contentDispositionType: 'inline',
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**/*',
-        pathname: '**/*',
-      },
-      {
         protocol: 'http',
         hostname: '**/*',
         pathname: '**/*',
       },
+      {
+        protocol: 'https',
+        hostname: '**/*',
+        pathname: '**/*'
+      }
     ],
   },
   experimental: {
@@ -78,6 +78,7 @@ const nextConfig = {
     swcPlugins: undefined,
     webVitalsAttribution: ['CLS', 'FCP', 'FID', 'INP', 'LCP', 'TTFB'],
     mdxRs: false, // experimental rust-based mdx compiler
+    nextScriptWorkers: false,
   },
 };
 
