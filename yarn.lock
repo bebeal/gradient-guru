@@ -3638,6 +3638,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/canvas-size@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@types/canvas-size@npm:1.2.2"
+  checksum: 10c0/d79fb9fda90d6783b69f56f1b286f57e7c079a1a548b09caf43435232d7df0c575daedece50a197d8dcf77ba288b8db4a0241233e1c7a3b0c959593fd5afa892
+  languageName: node
+  linkType: hard
+
 "@types/debug@npm:^4.0.0":
   version: 4.1.12
   resolution: "@types/debug@npm:4.1.12"
@@ -4855,6 +4862,13 @@ __metadata:
   version: 1.0.30001600
   resolution: "caniuse-lite@npm:1.0.30001600"
   checksum: 10c0/b4f764db5d4f8cb3eb2827a170a20e6b2f4b8c3d80169efcf56bf3d6b8b3e6dd1c740141f0d0b10b2233f49ee8b496e2d1e044a36c54750a106bad2f6477f2db
+  languageName: node
+  linkType: hard
+
+"canvas-size@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "canvas-size@npm:2.0.0"
+  checksum: 10c0/9bb9134fb8c59036937d0fee258676553fbf1e97ef74c516c1277934e58dc4f463dd4a15b5edf57f50a2f3ef7d2e6f04e316cdb85b8fbcdd21050433df507657
   languageName: node
   linkType: hard
 
@@ -8910,6 +8924,7 @@ __metadata:
     "@tanstack/eslint-plugin-query": "npm:^5.20.1"
     "@tanstack/react-query": "npm:^5.26.3"
     "@tanstack/react-query-devtools": "npm:^5.27.0"
+    "@types/canvas-size": "npm:^1.2.2"
     "@types/dlv": "npm:^1"
     "@types/fs-extra": "npm:^11"
     "@types/gapi": "npm:^0.0.47"
@@ -8922,6 +8937,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.1.1"
     "@typescript-eslint/parser": "npm:^7.1.1"
     autoprefixer: "npm:^10.0.1"
+    canvas-size: "npm:^2.0.0"
     clsx: "npm:^2.1.0"
     critters: "npm:^0.0.22"
     dlv: "npm:^1.1.3"

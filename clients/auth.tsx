@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next';
 import type { NextAuthOptions as NextAuthConfig } from 'next-auth';
-import NextAuth from 'next-auth';
+import NextAuth, { getServerSession } from 'next-auth';
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import Logo from '@/public/favicon.ico';
@@ -53,8 +53,4 @@ export const handler: any = NextAuth(nextAuthConfig);
 
 export const NextAuthProvider = ({ children, session }: { children: ReactNode; session?: any }) => {
   return <SessionProvider session={session}>{children}</SessionProvider>;
-};
-
-export const getSessionServerSide = async (...args: [GetServerSidePropsContext] | [NextApiRequest, NextApiResponse] | []) => {
-  return await handler?.auth(...args);
 };

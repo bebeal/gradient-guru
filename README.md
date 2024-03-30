@@ -1,6 +1,6 @@
 # gradient-guru
 
-My personal site which I often change and perterb to learn new things and paradigms. 
+My personal site which I often change and perterb to learn new things and paradigms.
 
 Currently, this is a Next.js 14 project with (way too fucking much tbh) ...
 
@@ -29,7 +29,7 @@ Currently, this is a Next.js 14 project with (way too fucking much tbh) ...
 - Bundle Analyzer
 - React Query
 - MDX support
-- 
+-
 
 ## Usage
 
@@ -331,6 +331,7 @@ yarn dev
 ---
 
 - Adding MDX Support to handle `.md` and `.mdx` files. [`MDX`](https://nextjs.org/docs/app/building-your-application/configuring/mdx#:~:text=%3E%3C/p%3E-,MDX,-is%20a%20superset) is a superset of markdown that lets you write [`JSX`](https://react.dev/learn/writing-markup-with-jsx) directly in your markdown files.
+
   - Good Reference: https://github.com/leerob/leerob.io/tree/main
   - Install packages
 
@@ -359,11 +360,12 @@ yarn dev
   import MDXOptions from '@/mdx-options.mjs';
   ...
    <MDXRemote source={content} components={components} options={{mdxOptions: MDXOptions}} />
-   ```
+  ```
 
 ---
 
 - Add Radix UI Primitives
+
   - Install packages
 
     ```bash
@@ -371,5 +373,63 @@ yarn dev
     ```
 
   - Implement in `@/components/primitivs/*`
+
+---
+
+- Add NextAuth.js for authentication
+
+  - Install packages
+
+    ```bash
+    yarn add next-auth
+    ```
+
+  - Add `pages/api/auth/[...nextauth].ts` to handle authentication
+  - Add `clients/auth.ts` for auth boilerplate
+  - Define Env Variables in `.env.local`
+
+    ```bash
+    # next-auth (see https://authjs.dev/reference/nextjs#environment-variable-inferrence)
+    PORT=3047
+    NEXTAUTH_URL=http://localhost:${PORT}
+    NEXTAUTH_SECRET=...
+    ```
+
+---
+
+- Add Google OAuthProvider
+- Add Env Variables in `.env.local`
+
+  ```bash
+  # Google Auth (OAuth 2.0 + APIs)
+  GOOGLE_CLIENT_ID=....apps.googleusercontent.com
+  GOOGLE_CLIENT_SECRET=...
+  GOOGLE_REDIRECT_URI=${NEXTAUTH_URL}/api/auth/callback/google
+  ```
+
+- Add GitHub OAuthProvider
+- Add Env Variables in `.env.local`
+
+  ```bash
+  # Github Auth see https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app
+  GITHUB_CLIENT_ID=...
+  GITHUB_CLIENT_SECRET=...
+  ```
+
+---
+
+- Add GoogleDriveAPI and GoogleDriveUtility Component to interact with Google Drive
+- Install packages
+
+  ```bash
+  yarn add googleapis
+  ```
+
+- Add Env Variables in `.env.local`
+
+  ```bash
+  # Google Drive API
+  GOOGLE_DRIVE_API_KEY=...
+  ```
 
 ---
