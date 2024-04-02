@@ -233,6 +233,7 @@ export const CustomIconSet: IconSetMap = {
   HorizontalDots,
   VerticalDots,
   DotsLoader,
+  Spinner,
   Loader,
   ExternalLink,
   Share,

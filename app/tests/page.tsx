@@ -4,7 +4,7 @@ import { LinkList } from "@/components";
 const TestsPage = () => {
   // TODO: dynamically fetch this? then just provide a way to filter it for easy control
   const title = 'Tests';
-  const pages: string[] = ['assets', 'auth', 'devtools', 'google-drive', 'icon-sets', 'mdx', 'primitives', 'radix-themed-components', 'styled-components', 'tailwindcss'];
+  const pages: string[] = ['assets', 'auth', 'buttons', 'devtools', 'google-drive', 'icon-sets', 'mdx', 'primitives', 'radix-themed-components', 'styled-components', 'tailwindcss', 'terminal'];
 
   return (
     <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">

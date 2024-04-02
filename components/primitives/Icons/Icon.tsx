@@ -9,6 +9,7 @@ export interface IconProps extends SVGProps<SVGSVGElement> {
   set?: string;
   icon?: string;
   classNames?: string;
+  [key: string]: any;
 }
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(({ set = 'Custom', icon = 'UnknownSprite', ...rest }, ref?) => {
