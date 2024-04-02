@@ -433,3 +433,23 @@ yarn dev
   ```
 
 ---
+
+- Add AWS S3 Client
+- Install packages
+
+  ```bash
+  yarn add @aws-sdk/client-s3
+  yarn add @types/aws-sdk -D
+  ```
+
+  -- Add Env Variables in `.env.local`
+
+  ```bash
+  # _ underscore prefix to prevent collision with aws services (aws-sdk, amplify, etc)
+  _AWS_ACCESS_KEY_ID=...
+  _AWS_SECRET_ACCESS_KEY=...
+  _AWS_REGION=us-west-2
+  _AWS_BUCKET=node-...
+  ```
+
+---
