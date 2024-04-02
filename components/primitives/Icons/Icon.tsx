@@ -2,7 +2,7 @@
 
 import { forwardRef, SVGProps, useCallback } from 'react';
 import UnknownSprite from '@/assets/icons/201-question.svg';
-import { CachedIcons, defaultIconProps } from './IconSet';
+import { CachedIcons } from './IconSet';
 
 // just make optional for now to make things run, will make stricter later (I'm never actually gonna fucking do this - feel free to yourself)
 export interface IconProps extends SVGProps<SVGSVGElement> {
