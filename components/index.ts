@@ -7,3 +7,4 @@ export * from './Links';
 export * from './MDX';
 export * from './Primitives';
 export * from './Terminal';
+export * from './TipTap';

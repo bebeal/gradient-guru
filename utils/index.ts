@@ -17,6 +17,7 @@ export * from './objects';
 export * from './path';
 export * from './png';
 export * from './react-query';
+export * from './regex';
 export * from './stream';
 export * from './strings';
 export * from './StyledComponentRegistry';
