@@ -1,6 +1,6 @@
 
 import { GoogleProfile } from "next-auth/providers/google";
-import { OAuthUserConfig } from "next-auth/providers/oauth";
+import { OAuth2Config } from "next-auth/providers";
 import { getEnvVariable, getEnvVariables } from "@/utils/environment";
 
 export const getGoogleAuth = () => {
@@ -8,7 +8,7 @@ export const getGoogleAuth = () => {
     clientId: 'GOOGLE_CLIENT_ID',
     clientSecret: 'GOOGLE_CLIENT_SECRET',
     redirectUri: 'GOOGLE_REDIRECT_URI',
-  }) as OAuthUserConfig<GoogleProfile>;
+  }) as OAuth2Config<GoogleProfile>;
 };
 
 export const getGoogleDriveAPIKey = () => getEnvVariable('GOOGLE_DRIVE_API_KEY');

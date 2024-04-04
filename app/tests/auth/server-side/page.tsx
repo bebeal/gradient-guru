@@ -1,13 +1,13 @@
 
-import { getServerSession } from "next-auth/next";
-import { nextAuthConfig } from "@/utils/auth";
+import { getSessionServerSide } from "@/utils";
 
 const AuthStatus = async () => {
-  const session = await getServerSession(nextAuthConfig);
+  const session = await getSessionServerSide();
+
   return session ? (
-    <div className="w-full h-full flex flex-wrap whitespace-pre break-words overflow-auto">{JSON.stringify(session, null, 2)}</div>
+      <div className="w-full h-full flex flex-wrap whitespace-pre break-words overflow-auto">{JSON.stringify(session, null, 2)}</div>
   ) : <p>Access Denied</p>;
-};
+}
 
 const ClientSideAuthTestPage = () => {
   return (
