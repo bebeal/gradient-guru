@@ -41,6 +41,10 @@ yarn build
 yarn dev
 ```
 
+### Env Variables
+
+Use `.env.example` as a template to fill out necessary environment variables which are required for various clients and services
+
 ## Build Log & Notes
 
 ---
@@ -451,5 +455,9 @@ yarn dev
   _AWS_REGION=us-west-2
   _AWS_BUCKET=node-...
   ```
+
+---
+
+Add fun components ([Aceternity](https://ui.aceternity.com/), ...)
 
 ---

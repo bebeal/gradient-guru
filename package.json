@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-template",
+  "name": "gradient-guru",
   "version": "0.1.0",
   "private": true,
   "author": {
@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bebeal/nextjs-template"
+    "url": "https://github.com/bebeal/gradient-guru"
   },
   "bugs": {
-    "url": "https://github.com/bebeal/nextjs-template/issues"
+    "url": "https://github.com/bebeal/gradient-guru/issues"
   },
   "scripts": {
     "build": "next build",
