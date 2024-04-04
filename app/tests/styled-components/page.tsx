@@ -1,5 +1,6 @@
 'use client'
 
+import { ComponentMap, ComponentMapper } from "@/components";
 import { FC } from "react";
 import styled from "styled-components";
 
@@ -16,7 +17,7 @@ const StyledButton = styled.button<any>`
   }
 `;
 
-const Demos: Record<string, FC> = {
+const StyledComponents: ComponentMap = {
   StyledButtonDemo: () => {
     return (
       <StyledButton>
@@ -26,26 +27,10 @@ const Demos: Record<string, FC> = {
   }
 };
 
-const StyledComponentsTest = () => {
-  const title = 'Styled Components';
+const StyledComponentsPage: FC = () => {
   return (
-    <div className="flex flex-col w-auto h-auto justify-center items-center gap-1 p-2 overflow-auto bg-primary">
-      <div className="text-2xl font-bold text-center underline">{title}</div>
-      <div className="flex flex-col gap-10 w-full h-full justify-center items-center p-10">
-        {Object.keys(Demos).map((key: any) => {
-          const Component: any = Demos[key];
-          return (
-            <div key={key} className="flex flex-col rounded items-center justify-center w-full h-full overflow-auto bg-primary text-primary gap-2 border border-primary p-2">
-              <div className="flex flex-col items-center justify-center w-full h-auto gap-1 text-sm">
-                <h1 className="text-md font-bold text-center">{key}</h1>
-                <Component />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <ComponentMapper title="Styled Components" components={StyledComponents} />
   );
 };
 
-export default StyledComponentsTest;
+export default StyledComponentsPage;

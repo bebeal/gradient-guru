@@ -1,45 +1,25 @@
 'use client'
-// source: https://github.com/leerob/leerob.io/blob/main/app/components/tweet.tsx
 
-import { getTweet } from 'react-tweet/api';
-import {
-  EmbeddedTweet,
-  TweetNotFound,
-  type TweetProps,
-} from 'react-tweet';
+import { EmbeddedTweet, TweetNotFound, TweetSkeleton, useTweet, type TweetProps } from 'react-tweet';
+
 import './tweet.css';
 
-const TweetContent = async ({ id, components, onError }: TweetProps) => {
-  let error;
-  const tweet = id
-    ? await getTweet(id).catch((err) => {
-        if (onError) {
-          error = onError(err);
-        } else {
-          console.error(err);
-          error = err;
-        }
-      })
-    : undefined;
+export const Tweet = (props: TweetProps) => {
+  const { id, components, ...rest } = props;
+  const { data, error, isLoading } = useTweet(id, `/api/tweet/${id}`);
 
-  if (!tweet) {
+  if (error) {
     const NotFound = components?.TweetNotFound || TweetNotFound;
     return <NotFound error={error} />;
   }
-
-  return <EmbeddedTweet tweet={tweet} components={components} />;
-};
-
-export const ReactTweet = (props: TweetProps) => <TweetContent {...props} />;
-
-export async function Tweet({ id }: { id: string }) {
+  if (isLoading || !data) {
+    return <TweetSkeleton />;
+  }
   return (
     <div className="tweet my-6">
       <div className={`flex justify-center`}>
-        {/* <Suspense fallback={<TweetSkeleton />}> */}
-        <ReactTweet id={id} />
-        {/* </Suspense> */}
+        <EmbeddedTweet tweet={data} components={components} {...rest} />
       </div>
     </div>
   );
-}
+};

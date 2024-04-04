@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import dlv from 'dlv';
 import colorPalette from 'tailwindcss/colors';
 import resolveConfig from 'tailwindcss/resolveConfig';
-import { ColorPalette } from '@/components';
+import { ColorPalette, ComponentMap, ComponentMapper } from '@/components';
 import tailwindConfig from '@/tailwind.config';
 import { cn, kebabToTitleCase, spectrum } from '@/utils';
 
@@ -213,7 +213,7 @@ const GlassDemo = () => {
   );
 };
 
-const Tests: Record<string, FC> = {
+const TailwindComponents: ComponentMap = {
   GridDemo,
   GridSmallDemo,
   DotDemo,
@@ -224,29 +224,13 @@ const Tests: Record<string, FC> = {
   TextOnBackground,
 };
 
-const TailwindCSSPage = () => {
-  const title = 'Tailwind CSS';
+const TailwindPage: FC = () => {
   return (
-    <div className="flex flex-col w-auto h-auto justify-center items-center gap-1 p-2 overflow-auto bg-primary">
-      <div className="text-2xl font-bold text-center underline">{title}</div>
-      <div className="flex flex-col gap-10 w-full h-full justify-center items-center p-10">
-        {Object.keys(Tests).map((key: any) => {
-          const Component: any = Tests[key];
-          return (
-            <div key={key} className="flex flex-col rounded items-center justify-center w-full h-full overflow-auto bg-primary text-primary gap-2 border border-primary p-2">
-              <div className="flex flex-col items-center justify-center w-full h-auto gap-1 text-sm">
-                <h1 className="text-md font-bold text-center">{key.replace('Demo', '')}</h1>
-                <Component />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <ComponentMapper title="TailwindCSS Components" components={TailwindComponents} />
   );
 };
 
-export default TailwindCSSPage;
+export default TailwindPage;
 
 // pseudo safelist: bg-primary bg-secondary bg-accent bg-muted bg-error text-primary text-secondary text-accent text-muted text-error border-primary border-secondary border-accent border-muted border-error [background-image:linear-gradient(to_right,#FF1834,#FFC900,#00E0D9,#0074E0,#7F00DE,#FF007E)] w-[200px] h-[20px]
 // bg-slate-100 bg-slate-200 bg-slate-300 bg-slate-400 bg-slate-500 bg-slate-600 bg-slate-700 bg-slate-800 bg-slate-900

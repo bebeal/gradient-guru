@@ -1,5 +1,6 @@
 export * from './Buttons';
 export * from './ColorPalette';
+export * from './ComponentMapper';
 export * from './Fun';
 export * from './GoogleDriveUtility';
 export * from './Highlighter';

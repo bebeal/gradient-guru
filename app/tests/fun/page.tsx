@@ -1,9 +1,9 @@
 'use client'
 
-import { useRef } from "react";
+import { FC, useRef } from "react";
 import Image from 'next/image';
 import { motion,  useScroll, useTransform } from "framer-motion";
-import { Demo, BackgroundCellAnimation, BackgroundBeams, LampContainer, PinContainer, EvervaultSvg, EvervaultCard, GoogleGeminiEffect, GlowingStarsBackgroundCard, GlowingStarsTitle, GlowingStarsDescription, SparklesCore, TextRevealCardTitle, TextRevealCard, TextRevealCardDescription, TracingBeam, TypewriterEffectSmooth, PulseBeams } from "@/components";
+import { Demo, BackgroundCellAnimation, BackgroundBeams, LampContainer, PinContainer, EvervaultSvg, EvervaultCard, GoogleGeminiEffect, GlowingStarsBackgroundCard, GlowingStarsTitle, GlowingStarsDescription, SparklesCore, TextRevealCardTitle, TextRevealCard, TextRevealCardDescription, TracingBeam, TypewriterEffectSmooth, PulseBeams, ComponentMap, ComponentMapper } from "@/components";
 import { cn } from "@/utils";
 import { mockData } from "./mockData";
 
@@ -277,12 +277,11 @@ const DemoCardDemo = () => {
   )
 };
 
-const Demos: any = {
+const FunComponents: ComponentMap = {
   PinDemo,
   TypewriterEffectDemo,
   TracingBeamDemo,
   BackgroundBeamsDemo,
-  // BackgroundCellAnimationDemo,
   EvervaultCardDemo,
   GoogleGeminiEffectDemo,
   GlowingStarsDemo,
@@ -293,23 +292,9 @@ const Demos: any = {
   DemoCardDemo
 };
 
-const FunPage = () => {
+const FunPage: FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-auto overflow-auto bg-primary text-primary gap-2">
-      <div className="flex flex-col gap-10 w-full h-auto justify-center items-center p-10">
-        {Object.keys(Demos).map((key: any) => {
-          const Component: any = Demos[key];
-          return (
-            <div key={key} className="flex flex-col rounded items-center justify-center w-full h-auto overflow-auto bg-primary text-primary gap-2 border border-primary p-2">
-              <div className="flex flex-col items-center justify-center w-full h-auto gap-1">
-                <h1 className="text-2xl font-bold text-center">{key.replace('Demo', '')}</h1>
-                <Component />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <ComponentMapper title="Fun Components" components={FunComponents} />
   );
 };
 
