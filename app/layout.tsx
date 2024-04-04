@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import { Robots } from 'next/dist/lib/metadata/types/metadata-types';
 import { DocConfig } from '@/app/config';
 import Providers from '@/app/providers';
-import { getEnvVariable } from '@/utils';
 
-const robots: string | Robots | null | undefined = {
+// A robots.txt file tells search engine crawlers which URLs the crawler can access on your site. This is used mainly to avoid overloading your site with requests.
+// See https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots https://developers.google.com/search/docs/crawling-indexing/robots/intro#:~:text=A%20robots.txt%20file%20tells,web%20page%20out%20of%20Google
+const robots: Robots | string | null | undefined = {
   index: false,
   follow: true,
   nocache: true,
@@ -18,24 +19,47 @@ const robots: string | Robots | null | undefined = {
   },
 };
 
+export const icons = [
+  // { rel: 'mask-icon', url: 'safari-pinned-tab.svg', color: THEME_COLOR },
+  { rel: 'shortcut icon', url: 'favicon.ico' },
+  { rel: 'icon', url: 'favicon-32x32.svg', sizes: '32x32' },
+  { rel: 'icon', url: 'favicon-16x16.svg', sizes: '16x16' },
+  // { rel: 'apple-touch-icon', url: 'touch-icon-iphone.png' },
+  {
+    rel: 'apple-touch-icon',
+    url: 'apple-touch-icon-152x152.png',
+    sizes: '152x152',
+  },
+  {
+    rel: 'apple-touch-icon',
+    url: 'apple-touch-icon-180x180.png',
+    sizes: '180x180',
+  },
+  {
+    rel: 'apple-touch-icon',
+    url: 'apple-touch-icon-167x167.png',
+    sizes: '167x167',
+  },
+];
+
 export const metadata: Metadata = {
   robots,
+  icons,
+  applicationName: DocConfig.title,
+  appleWebApp: {
+		capable: true,
+		title: DocConfig.title,
+		statusBarStyle: 'black',
+	},
+  description: DocConfig?.description || '',
+  formatDetection: {
+    telephone: false,
+  },
+  metadataBase: new URL(DocConfig?.url || ''),
   title: {
     default: DocConfig.title,
     template: `${DocConfig.title} • %s`,
   },
-  description: DocConfig?.description || '',
-  metadataBase: new URL(DocConfig?.url || ''),
-  applicationName: DocConfig.title,
-  appleWebApp: {
-    title: DocConfig.title,
-    capable: true,
-    statusBarStyle: 'black',
-  },
-  formatDetection: {
-    telephone: false,
-  },
-  icons: [{ rel: 'shortcut icon', url: '/favicon.ico' }],
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {

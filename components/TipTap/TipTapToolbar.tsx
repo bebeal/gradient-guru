@@ -2,7 +2,7 @@
 
 import { cn } from "@/utils";
 import { Loading } from '@/components';
-import { Editor } from "@tiptap/react";
+import { Editor } from "@tiptap/core";
 import { Icon, Toolbar } from "@/components";
 
 export interface TipTapToolbarProps {

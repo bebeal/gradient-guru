@@ -46,6 +46,7 @@ export const nextAuthConfig = {
 } satisfies NextAuthConfig;
 
 export const handler: any = NextAuth(nextAuthConfig);
+// export const { handlers, auth } = NextAuth(nextAuthConfig);
 
 export const NextAuthProvider = ({ children, session }: { children: ReactNode; session?: any }) => {
   return <SessionProvider session={session}>{children}</SessionProvider>;

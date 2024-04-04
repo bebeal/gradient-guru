@@ -1,8 +1,12 @@
 import { LinkList } from "@/components";
+import { isDevEnv } from "@/utils";
 
 const AppPage = () => {
   const title = 'Root App Page';
-  const pages: string[] = ['tests'];
+  const pages: string[] = ['api'];
+  if (isDevEnv) {
+    pages.push('tests');
+  }
 
   return (
     <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">
