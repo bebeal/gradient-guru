@@ -3,7 +3,7 @@ import ContainerQueriesPlugin from '@tailwindcss/container-queries';
 import TypographyPlugin from '@tailwindcss/typography';
 import { radixThemePreset } from 'radix-themes-tw';
 import TailwindCSSRadixPlugin from 'tailwindcss-radix';
-import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin } from './utils/tailwind-plugins';
+import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors } from './utils/tailwind-plugins';
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
@@ -221,13 +221,14 @@ const config: Config = {
     },
   },
   plugins: [
+    VariablesForColors,
+    TailwindCSSRadixPlugin,
     TypographyPlugin,
     AspectRatioPlugin,
     ContainerQueriesPlugin,
     AnimationTailwindcssPlugin,
     TailwindGlassPlugin,
     TailwindGridPlugin,
-    TailwindCSSRadixPlugin
   ],
 };
 

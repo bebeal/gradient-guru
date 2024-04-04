@@ -14,17 +14,6 @@ export const flattenColorPalette: any = (colors: any) => {
   )
 };
 
-// This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
-export const addVariablesForColors: any = ({ addBase, theme }: any) => {
-  const allColors = flattenColorPalette(theme("colors"));
-  const newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-  );
-
-  addBase({
-    ":root": newVars,
-  });
-}
 
 export const TailwindGridPlugin = ({ matchUtilities, theme }: any) => {
   matchUtilities(
