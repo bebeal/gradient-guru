@@ -1,4 +1,4 @@
-import { cn } from "./basic";
+import { cn } from './utils';
 
 export const DisabledClasses = cn(`disabled:opacity-60 disabled:cursor-not-allowed disabled:pointer-events-none`);
 

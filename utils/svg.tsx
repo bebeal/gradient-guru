@@ -1,7 +1,7 @@
+import { isValidElement, ReactElement } from 'react';
 import ReactDOMServer from 'next/dist/compiled/react-dom/cjs/react-dom-server-legacy.browser.production';
 import svgToDataUri from 'mini-svg-data-uri';
-import { isValidElement, ReactElement } from 'react';
-import { cn } from './basic';
+import { cn } from './utils';
 
 // Encode SVG given as a React functional component as a data URL encoded string
 export const getURISVG = (svg: any): string => {
@@ -84,7 +84,7 @@ export const addGridToSvg = (
     color?: string;
     size?: number;
     labels?: boolean;
-  }
+  },
 ) => {
   const { color = '#00F', size = 100, labels = true } = opts;
 

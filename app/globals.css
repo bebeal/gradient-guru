@@ -42,9 +42,18 @@
   --success: 52 168 83;
   --kbd-foreground: 161 161 170;
 
-  --accent-400: 72 216 255;
+  /* https://www.colorhexa.com/33a3ff */
+  --accent-50: 229 244 255;
+  --accent-100: 204 232 255;
+  --accent-200: 153 209 255;
+  --accent-300: 102 186 255;
+  --accent-400: 51 163 255;
   --accent-500: 0 140 255;
-  --accent-600: 6 159 255;
+  --accent-600: 0 112 204;
+  --accent-700: 0 84 153;
+  --accent-800: 0 56 102;
+  --accent-900: 0 28 51;
+  --accent-950: 0 14 25;
 }
 
 .light {
@@ -52,9 +61,9 @@
   --text-secondary: 85 85 85;
   --text-tertiary: 153 153 153;
 
-  --background-primary: 255 255 255;
-  --background-secondary: 242 242 242;
-  --background-tertiary: 229 229 229;
+  --background-primary: 196 197 201;
+  --background-secondary: 190 193 200;
+  --background-tertiary: 193 193 193;
 
   --border-primary: 0 0 0;
   --border-secondary: 220 220 220;

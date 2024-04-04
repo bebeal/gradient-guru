@@ -1,14 +1,14 @@
 'use client'
 
 import { createContext, useCallback, useContext, useState } from "react";
-import { Toast } from "@/components";
+import { IToast } from '@/components';
 import { nanoid } from "nanoid";
 
 export type ToastContextType = {
-	addToast: (toast: Omit<Toast, 'id'> & { id?: string }) => string
-	removeToast: (id: Toast['id']) => string
+	addToast: (toast: Omit<IToast, 'id'> & { id?: string }) => string
+	removeToast: (id: IToast['id']) => string
 	clearToasts: () => void
-	toasts: Toast[]
+	toasts: IToast[]
 };
 export const ToastsContext = createContext({} as ToastContextType);
 
@@ -16,9 +16,9 @@ export type ToastsProviderProps = {
 	children: any;
 };
 export const ToastsProvider = ({ children }: ToastsProviderProps) => {
-	const [toasts, setToasts] = useState<Toast[]>([]);
+	const [toasts, setToasts] = useState<IToast[]>([]);
 
-	const addToast = useCallback((toast: Omit<Toast, 'id'> & { id?: string }) => {
+	const addToast = useCallback((toast: Omit<IToast, 'id'> & { id?: string }) => {
 		const id = toast.id ?? nanoid();
 		setToasts((d) => [...d.filter((m) => m.id !== toast.id), { ...toast, id }]);
 		return id;

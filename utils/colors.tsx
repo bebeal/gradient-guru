@@ -1,12 +1,39 @@
-'use client'
+'use client';
 
-import styled from "styled-components";
-import { Radius, RadiusClasses } from "./styles";
-import { cn } from "./basic";
-import React from "react";
-import { getEncodedSVGUrl, isSVG } from "./svg";
+import React from 'react';
+import styled from 'styled-components';
+import { Radius, RadiusClasses } from './styles';
+import { getEncodedSVGUrl, isSVG } from './svg';
+import { cn } from './utils';
 
-export type Color = "ruby" | "tomato" | "red" | "crimson" | "pink" | "plum" | "purple" | "violet" | "iris" | "indigo" | "blue" | "cyan" | "teal" | "jade" | "green" | "grass" | "brown" | "orange" | "sky" | "mint" | "lime" | "yellow" | "amber" | "gold" | "bronze" | "gray" | undefined;
+export type Color =
+  | 'ruby'
+  | 'tomato'
+  | 'red'
+  | 'crimson'
+  | 'pink'
+  | 'plum'
+  | 'purple'
+  | 'violet'
+  | 'iris'
+  | 'indigo'
+  | 'blue'
+  | 'cyan'
+  | 'teal'
+  | 'jade'
+  | 'green'
+  | 'grass'
+  | 'brown'
+  | 'orange'
+  | 'sky'
+  | 'mint'
+  | 'lime'
+  | 'yellow'
+  | 'amber'
+  | 'gold'
+  | 'bronze'
+  | 'gray'
+  | undefined;
 
 // Convert an RGB color to hex (e.g. rgb(255 255 255) => #ffffff)
 export const stringToColor = (string: string): string => {
@@ -90,7 +117,7 @@ export const GradientDiv = (props: GradientDivProps) => {
         // 2. Drop the background clip so that the gradient shows as the background now of the outer div
         isHovered ? 'text-[rgb(var(--background-primary))]' : 'bg-clip-text text-transparent',
         RadiusClasses(radius),
-        className
+        className,
       )}
       {...rest}
     >
