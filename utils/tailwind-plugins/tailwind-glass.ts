@@ -2,17 +2,14 @@
 // tailwind-glass.ts
 import plugin from 'tailwindcss/plugin';
 
-const glassPlugin = plugin(function({ addUtilities }) {
-  const newUtilities = {
-    'glass': {
-      backdropFilter: 'blur(16px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
-      backgroundColor: 'rgba(17, 25, 40, 0.75)',
-      borderRadius: '12px',
-      border: '1px solid rgba(255, 255, 255, 0.125)',
+export const TailwindGlassPlugin = plugin(({ addComponents }) => {
+  addComponents({
+    '.glass': {
+      'backdrop-filter': 'blur(18px) saturate(180%)',
+      '-webkit-backdrop-filter': 'blur(18px) saturate(180%)',
+      'box-shadow': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+      'background': 'rgba(17, 25, 40, 0.50)',
     },
-  };
-  addUtilities(newUtilities);
+  })
 });
 
-export default glassPlugin;

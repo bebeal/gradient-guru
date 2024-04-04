@@ -1,14 +1,13 @@
-import aspectRatioPlugin from '@tailwindcss/aspect-ratio';
-import containerQueriesPlugin from '@tailwindcss/container-queries';
-import typographyPlugin from '@tailwindcss/typography';
+import AspectRatioPlugin from '@tailwindcss/aspect-ratio';
+import ContainerQueriesPlugin from '@tailwindcss/container-queries';
+import TypographyPlugin from '@tailwindcss/typography';
 import { radixThemePreset } from 'radix-themes-tw';
-import tailwindCSSRadixPlugin from 'tailwindcss-radix';
-import tailwindGlassPlugin from './utils/tailwind-plugins/tailwind-glass';
+import TailwindCSSRadixPlugin from 'tailwindcss-radix';
+import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin } from './utils/tailwind-plugins';
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
   safelist: [
-    'glass',
     '!cursor-pointer w-[10px] h-[10px]',
     ...[...Array(100).keys()].flatMap((i) => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`, `h-[${i + 100}px]`, `w-[${i + 100}px]`, `h-[${i + 200}px]`, `w-[${i + 200}px]`, `grid-cols-${i}`, `grid-rows-${i}`]),
     ...[...Array(10).keys()].flatMap((i) => [`space-y-[${i}px]`, `space-x-[${i}px]`, `w-[${i * 100}px]`, `h-[${i + 100}px]`]),
@@ -92,6 +91,9 @@ const config: Config = {
         neon: ['Neon', 'monospace'],
         radon: ['Radon', 'monospace'],
         xenon: ['Xenon', 'monospace'],
+      },
+      backgroundImage: {
+        'mountain': `url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1124&q=100')`,
       },
       boxShadow: {
         kbd: 'inset 0 0.05em hsla(0,0%,100%,.372),inset 0 0.25em 0.5em rgba(121,121,250,.031),inset 0 0 rgba(0,0,0,.875),inset 0 0 0 0.075em rgba(222,243,255,.334),inset 0 0.08em 0.17em rgba(0,0,0,.875)',
@@ -218,7 +220,15 @@ const config: Config = {
       },
     },
   },
-  plugins: [typographyPlugin, aspectRatioPlugin, containerQueriesPlugin, tailwindGlassPlugin, tailwindCSSRadixPlugin],
+  plugins: [
+    TypographyPlugin,
+    AspectRatioPlugin,
+    ContainerQueriesPlugin,
+    AnimationTailwindcssPlugin,
+    TailwindGlassPlugin,
+    TailwindGridPlugin,
+    TailwindCSSRadixPlugin
+  ],
 };
 
 export default config;

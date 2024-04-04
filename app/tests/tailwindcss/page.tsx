@@ -1,13 +1,12 @@
-'use client'
+'use client';
 
-import { cn, spectrum } from "@/utils";
 import React, { FC } from 'react';
-import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '@/tailwind.config';
-import colorPalette from 'tailwindcss/colors'
-import { kebabToTitleCase } from '@/utils';
 import dlv from 'dlv';
+import colorPalette from 'tailwindcss/colors';
+import resolveConfig from 'tailwindcss/resolveConfig';
 import { ColorPalette } from '@/components';
+import tailwindConfig from '@/tailwind.config';
+import { cn, kebabToTitleCase, spectrum } from '@/utils';
 
 const fixColor = (color: string) => color.replace('<alpha-value>', '1');
 
@@ -32,7 +31,10 @@ const Samples: React.FC<SamplesProps> = ({ bgColorName, bgColor, textColors }: a
         return (
           <div key={textColorKey} className={`flex flex-col items-center justify-center w-full h-auto text-base gap-1 p-2`}>
             <div className="w-full h-full">
-              <code className="font-bold" style={{ color: textColor }}>{textColorKey}</code> on <code className="font-bold">bg-{bgColorName}</code>:
+              <code className="font-bold" style={{ color: textColor }}>
+                {textColorKey}
+              </code>{' '}
+              on <code className="font-bold">bg-{bgColorName}</code>:
             </div>
             <div className="flex flex-row items-center justify-center w-full min-p-px0" style={{ color: textColor }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -47,7 +49,7 @@ const Samples: React.FC<SamplesProps> = ({ bgColorName, bgColor, textColors }: a
 
 const TailwindColors = () => {
   return <ColorPaletteReference colors={tailwindColors} />;
-}
+};
 
 const LinearGradients = () => {
   return (
@@ -57,7 +59,18 @@ const LinearGradients = () => {
         <div className={cn(`text-xs`)}>CSS Linear Gradient</div>
       </div>
       <div className={cn(`flex items-center gap-2`)}>
-        <svg width="200" height="20" className="border border-black dark:border-white"> <defs> <linearGradient id={`test-svg-gradient`} x1="0%" y1="0%" x2="100%" y2="0%">{spectrum.map((color: string, index: number) => (<stop key={color} offset={`${index * 100 / (spectrum.length - 1)}%`} stopColor={color} />))}</linearGradient></defs><rect width="200" height="20" fill="url(#test-svg-gradient)" /></svg>
+        <svg width="200" height="20" className="border border-black dark:border-white">
+          {' '}
+          <defs>
+            {' '}
+            <linearGradient id={`test-svg-gradient`} x1="0%" y1="0%" x2="100%" y2="0%">
+              {spectrum.map((color: string, index: number) => (
+                <stop key={color} offset={`${(index * 100) / (spectrum.length - 1)}%`} stopColor={color} />
+              ))}
+            </linearGradient>
+          </defs>
+          <rect width="200" height="20" fill="url(#test-svg-gradient)" />
+        </svg>
         <div className={cn(`text-xs`)}>SVG Linear Gradient with color stops</div>
       </div>
     </div>
@@ -84,7 +97,7 @@ const ExtendedTailwind = () => {
       })}
       <div className="flex flex-row items-start justify-start p-2 flex-wrap">
         {extendedColors.map((key) => {
-          return <ColorPalette key={key} name={key} value={fixColor(theme['backgroundColor'][key])} />
+          return <ColorPalette key={key} name={key} value={fixColor(theme['backgroundColor'][key])} />;
         })}
       </div>
     </div>
@@ -126,12 +139,12 @@ const TextOnBackground = () => {
   );
 };
 
-const ColorPaletteReference = ({ colors=[] }: {colors?: string[]}) => {
+const ColorPaletteReference = ({ colors = [] }: { colors?: string[] }) => {
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-x-2 gap-y-8 sm:grid-cols-1">
       {colors.map((color) => {
-        const title = Array.isArray(color) ? color[0] : kebabToTitleCase(color)
-        const value = Array.isArray(color) ? color[1] : color
+        const title = Array.isArray(color) ? color[0] : kebabToTitleCase(color);
+        const value = Array.isArray(color) ? color[1] : color;
 
         const palette =
           typeof value === 'string'
@@ -139,7 +152,7 @@ const ColorPaletteReference = ({ colors=[] }: {colors?: string[]}) => {
                 name: variant,
                 value: dlv(colorPalette, [value, variant]),
               }))
-            : Object.keys(value).map((name) => ({ name, value: value[name] }))
+            : Object.keys(value).map((name) => ({ name, value: value[name] }));
 
         return (
           <div key={title} className="2xl:contents">
@@ -147,7 +160,7 @@ const ColorPaletteReference = ({ colors=[] }: {colors?: string[]}) => {
               {title
                 .split('')
                 .flatMap((l: any, i: number) => {
-                  return i !== 0 && l.toUpperCase() === l ? [' ', l] : [l]
+                  return i !== 0 && l.toUpperCase() === l ? [' ', l] : [l];
                 })
                 .join('')}
             </div>
@@ -157,13 +170,54 @@ const ColorPaletteReference = ({ colors=[] }: {colors?: string[]}) => {
               ))}
             </div>
           </div>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
+
+const GridDemo = () => {
+  return (
+    <div className="h-[450px] w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex items-center justify-center">
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+      <p className="text-4xl sm:text-2xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">bg-grid</p>
+    </div>
+  );
+};
+
+const GridSmallDemo = () => {
+  return (
+    <div className="h-[450px] w-full dark:bg-black bg-white  dark:bg-grid-sm-white/[0.2] bg-grid-sm-black/[0.2] relative flex items-center justify-center">
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+      <p className="text-4xl sm:text-2xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">bg-grid-sm</p>
+    </div>
+  );
+};
+
+const DotDemo = () => {
+  return (
+    <div className="h-[450px] w-full dark:bg-black bg-white  dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center">
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+      <p className="text-4xl sm:text-2xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">bg-dot</p>
+    </div>
+  );
+};
+
+const GlassDemo = () => {
+  return (
+    <div className="bg-mountain bg-contain bg-no-repeat bg-center h-[450px] w-full flex justify-center items-center">
+      <div className="glass h-[15rem] w-[25rem] text-[#b5b5b5] font-bold rounded-md text-2xl flex items-center justify-center">
+        glass
+      </div>
+    </div>
+  );
+};
 
 const Tests: Record<string, FC> = {
+  GridDemo,
+  GridSmallDemo,
+  DotDemo,
+  GlassDemo,
   TailwindColors,
   LinearGradients,
   ExtendedTailwind,
@@ -200,7 +254,7 @@ export default TailwindCSSPage;
 // bg-zinc-100 bg-zinc-200 bg-zinc-300 bg-zinc-400 bg-zinc-500 bg-zinc-600 bg-zinc-700 bg-zinc-800 bg-zinc-900
 // bg-neutral-100 bg-neutral-200 bg-neutral-300 bg-neutral-400 bg-neutral-500 bg-neutral-600 bg-neutral-700 bg-neutral-800 bg-neutral-900
 // bg-stone-100 bg-stone-200 bg-stone-300 bg-stone-400 bg-stone-500 bg-stone-600 bg-stone-700 bg-stone-800 bg-stone-900
-// bg-red-100 bg-red-200 bg-red-300 bg-red-400 bg-red-500 bg-red-600 bg-red-700 bg-red-800 bg-red-900 
+// bg-red-100 bg-red-200 bg-red-300 bg-red-400 bg-red-500 bg-red-600 bg-red-700 bg-red-800 bg-red-900
 // bg-orange-100 bg-orange-200 bg-orange-300 bg-orange-400 bg-orange-500 bg-orange-600 bg-orange-700 bg-orange-800 bg-orange-900
 // bg-amber-100 bg-amber-200 bg-amber-300 bg-amber-400 bg-amber-500 bg-amber-600 bg-amber-700 bg-amber-800 bg-amber-900
 // bg-yellow-100 bg-yellow-200 bg-yellow-300 bg-yellow-400 bg-yellow-500 bg-yellow-600 bg-yellow-700 bg-yellow-800 bg-yellow-900
