@@ -30,7 +30,7 @@ export const ToastViewport = () => {
         if (!cancelled) {
           setHasToasts(false);
         }
-      }, 1000);
+      }, 800);
     }
 
     return () => {
@@ -62,7 +62,6 @@ export const ToastsProvider = ({ children }: ToastsProviderProps) => {
 
   const addToast = useCallback((toast: Omit<IToast, 'id'> & { id?: string }) => {
     const id = toast.id ?? nanoid();
-    console.log('id', id);
     setToasts((d) => [...d.filter((m) => m.id !== toast.id), { ...toast, id }]);
     return id;
   }, []);
