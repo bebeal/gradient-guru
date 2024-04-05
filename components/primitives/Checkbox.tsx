@@ -84,7 +84,7 @@ export const Checkbox = forwardRef((props: CheckboxProps, ref: ForwardedRef<any>
       onChange={noop}
       onCheckedChange={onCheckedChange}
     >
-      <CheckboxPrimitive.Indicator className={cn(`flex h-full justify-center items-center animate-slide-up-fade`, RadiusClasses(radius))}>
+      <CheckboxPrimitive.Indicator className={cn(`flex h-full justify-center items-center animate-fade-up`, RadiusClasses(radius))}>
         {internalChecked === undefined || (internalChecked === 'indeterminate' && <Icon set="Custom" icon="Indeterminate" className={cn(`w-full h-full text-[rgb(var(--border-primary))]`)} />)}
         {internalChecked === true && children}
       </CheckboxPrimitive.Indicator>

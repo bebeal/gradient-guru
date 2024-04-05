@@ -35,7 +35,7 @@ export const PinContainer = ({
       target="_blank"
       referrerPolicy="no-referrer"
       className={cn(
-        "relative group/pin z-50 cursor-pointer flex overflow-hidden h-auto w-auto min-w-[400px] min-h-[400px]",
+        "relative group/pin z-[var(--layer-toasts)] cursor-pointer flex overflow-hidden h-auto w-auto min-w-[400px] min-h-[400px]",
         containerClassName
       )}
       onMouseEnter={onMouseEnter}
@@ -54,7 +54,7 @@ export const PinContainer = ({
           }}
           className="absolute left-1/2 p-4 top-1/2 flex justify-start items-start rounded-2xl shadow-[0_8px_16px_rgb(0_0_0/0.4)] bg-black border border-white/[0.1] group-hover/pin:border-white/[0.2] transition duration-700 overflow-hidden"
         >
-          <div className={cn(" relative z-50 ", className)}>{children}</div>
+          <div className={cn(" relative z-[var(--layer-toasts)]", className)}>{children}</div>
         </div>
       </div>
       <PinPerspective title={title} />

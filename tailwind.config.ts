@@ -8,7 +8,7 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
   safelist: [
-    '!cursor-pointer w-[10px] h-[10px]',
+    '!cursor-pointer w-[10px] h-[10px] animate-slide-right',
     ...[...Array(100).keys()].flatMap((i) => [`space-y-[${i}px]`, `space-x-[${i}px]`, `h-[${i}px]`, `w-[${i}px]`, `h-[${i + 100}px]`, `w-[${i + 100}px]`, `h-[${i + 200}px]`, `w-[${i + 200}px]`, `grid-cols-${i}`, `grid-rows-${i}`]),
     ...[...Array(10).keys()].flatMap((i) => [`space-y-[${i}px]`, `space-x-[${i}px]`, `w-[${i * 100}px]`, `h-[${i + 100}px]`]),
     `radix-state-open:rounded-t-lg radix-state-closed:rounded-lg rounded-b-lg rounded-t-lg rounded-lg radix-state-open:rounded-lg`,
@@ -93,13 +93,14 @@ const config: Config = {
         xenon: ['Xenon', 'monospace'],
       },
       backgroundImage: {
-        'mountain': `url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1124&q=100')`,
+        mountain: `url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1124&q=100')`,
       },
       boxShadow: {
         kbd: 'inset 0 0.05em hsla(0,0%,100%,.372),inset 0 0.25em 0.5em rgba(121,121,250,.031),inset 0 0 rgba(0,0,0,.875),inset 0 0 0 0.075em rgba(222,243,255,.334),inset 0 0.08em 0.17em rgba(0,0,0,.875)',
         'kbd-hover': 'inset 0 0.05em white,inset 0 0.25em 0.5em rgba(121,121,250,.031),inset 0 0 rgba(0,0,0,.875),inset 0 0 0 0.075em rgb(var(--text-secondary)),inset 0 0.08em 0.17em rgba(0,0,0,.875)',
       },
       keyframes: {
+        // Supports accordion rollout animations of the rest of the accordion
         'accordion-down': {
           from: { maxHeight: '0' },
           to: { maxHeight: 'var(--radix-accordion-content-height)' },
@@ -116,27 +117,54 @@ const config: Config = {
           from: { maxWidth: 'var(--radix-accordion-content-width)' },
           to: { maxWidth: '0' },
         },
-        'slide-up-fade': {
+        // Slides support toast swiping animations: https://www.radix-ui.com/primitives/docs/components/toast#animating-swipe-gesture
+        'swipe-down': {
+          from: { transform: 'translateY(var(--radix-toast-swipe-end-y))' },
+          to: { transform: `translateY(calc(100% + 18px))` },
+        },
+        'swipe-up': {
+          from: { transform: 'translateY(var(--radix-toast-swipe-end-y))' },
+          to: { transform: 'translateY(calc(-100% - 18px))' },
+        },
+        'swipe-left': {
+          from: { transform: 'translateX(var(--radix-toast-swipe-end-x))' },
+          to: { transform: 'translateX(calc(-100% - 8px))' },
+        },
+        'swipe-right': {
+          from: { transform: 'translateX(var(--radix-toast-swipe-end-x))' },
+          to: { transform: 'translateX(calc(100% + 8px))' },
+        },
+        'slide-in': {
+          from: { transform: 'translateX(calc(100% + 8px))' },
+          to: { transform: 'translateX(0))' },
+        },
+        'hide': {
+          from: { 'opacity': '1' },
+          to: { 'opacity': '0' },
+        },
+        // Support tooltip hiding/showing animations
+        'fade-up': {
           '0%': { opacity: '0', transform: 'translateY(100%)' },
           '50%': { opacity: '0.5', transform: 'translateY(-10%)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        'slide-right-fade': {
+        'fade-right': {
           '0%': { opacity: '0', transform: 'translateX(-100%)' },
           '50%': { opacity: '0.5', transform: 'translateX(10%)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
-        'slide-down-fade': {
+        'fade-down': {
           '0%': { opacity: '0', transform: 'translateY(-100%)' },
           '50%': { opacity: '0.5', transform: 'translateY(10%)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        'slide-left-fade': {
+        'fade-left': {
           '0%': { opacity: '0', transform: 'translateX(100%)' },
           '50%': { opacity: '0.5', transform: 'translateX(-10%)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
-        'ripple': {
+        // supports ripple like animation on all clickbles
+        ripple: {
           '0%': { transform: 'scale(0.8)', opacity: '1' },
           '100%': { transform: 'scale(2.4)', opacity: '0' },
         },
@@ -145,6 +173,7 @@ const config: Config = {
           '25%': { transform: 'scale(0.8)', opacity: '1' },
           '100%': { transform: 'scale(2.4)', opacity: '0' },
         },
+        // for animating DotDotDot svg to create a simple loading animation
         'dot-bounce': {
           '0%': {
             transform: 'translateY(-40%)',
@@ -162,6 +191,7 @@ const config: Config = {
             animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
           },
         },
+        // single specific case use for FocusChat custom icon which shows an arcade like crosshair moving around randomly inside of a speech bubble
         'focus-chat': {
           '0%': { transform: 'translate(0, 0)' },
           '5%': { transform: 'translate(0, 0)' },
@@ -177,7 +207,8 @@ const config: Config = {
           '90%': { transform: 'translate(0, 0)' },
           '100%': { transform: 'translate(0, 0)' },
         },
-        'grow': {
+        // to make components slightly grow and shrink to grab attention
+        grow: {
           '0%': {
             transform: 'scale(1)',
           },
@@ -188,7 +219,8 @@ const config: Config = {
             transform: 'scale(1)',
           },
         },
-        'pulsate': {
+        // pulse animation but don't call it pulse cause tailwind already defines a pulse animation which might be useful to have?
+        pulsate: {
           '0%': {
             'box-shadow': '0 0 5px #FFFFFF, 0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF, 0 0 40px #FFFFFF',
           },
@@ -205,31 +237,28 @@ const config: Config = {
         'accordion-up': 'accordion-up 0.3s ease-in-out both',
         'accordion-out': 'accordion-out 0.3s ease-in-out both',
         'accordion-in': 'accordion-in 0.3s ease-in-out both',
-        'slide-up-fade': 'slide-up-fade 0.3s ease-in-out',
-        'slide-right-fade': 'slide-right-fade 0.3s ease-in-out',
-        'slide-down-fade': 'slide-down-fade 0.3s ease-in-out',
-        'slide-left-fade': 'slide-left-fade 0.3s ease-in-out',
-        'ripple': 'ripple 1.2s infinite ease-in-out',
+        'swipe-down': 'swipe-down 0.1s ease-out',
+        'swipe-up': 'swipe-up 0.1s ease-out',
+        'swipe-left': 'swipe-left 0.1s ease-out',
+        'swipe-right': 'swipe-right 0.1s ease-out',
+        'slide-in': 'slide-in 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
+        'hide': 'hide 0.1s ease-in-out',
+        'fade-up': 'fade-up 0.3s ease-in-out',
+        'fade-right': 'fade-right 0.3s ease-in-out',
+        'fade-down': 'fade-down 0.3s ease-in-out',
+        'fade-left': 'fade-left 0.3s ease-in-out',
+        ripple: 'ripple 1.2s infinite ease-in-out',
         'ripple-pause': 'ripple-pause 2s backwards infinite ease-in-out',
         'dot-bounce': 'dot-bounce 1s infinite',
         'focus-chat': 'focus-chat 3s infinite cubic-bezier(0.8, 0, 1, 1)',
-        'grow': 'grow 5s infinite linear',
+        grow: 'grow 5s infinite linear',
         'spin-cw': 'spin 2s linear infinite forwards',
         'spin-ccw': 'spin 2s linear infinite reverse',
-        'pulsate': 'pulsate 2s infinite',
+        pulsate: 'pulsate 2s infinite',
       },
     },
   },
-  plugins: [
-    VariablesForColors,
-    TailwindCSSRadixPlugin,
-    TypographyPlugin,
-    AspectRatioPlugin,
-    ContainerQueriesPlugin,
-    AnimationTailwindcssPlugin,
-    TailwindGlassPlugin,
-    TailwindGridPlugin,
-  ],
+  plugins: [VariablesForColors, TailwindCSSRadixPlugin, TypographyPlugin, AspectRatioPlugin, ContainerQueriesPlugin, AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin],
 };
 
 export default config;

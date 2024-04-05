@@ -29,7 +29,6 @@ export type IconSetNames = keyof typeof IconSets;
 
 export const defaultIconProps = {
   width: '1em',
-  height: '100%',
   fill: 'currentColor',
   stroke: 'none',
 } satisfies IconProps;
@@ -40,12 +39,12 @@ export const defaultIconProps = {
 // and rendered throughout the application.
 const IconCache = new MapCache<string, ComponentType<any>>();
 export const CachedIcons: IconSetMap = IconSetNames.reduce((iconSetsMap: any, IconSetName: string) => {
-  const { icons, iconProps = defaultIconProps } = IconSets[IconSetName];
+  const { icons, iconProps } = IconSets[IconSetName];
   iconSetsMap[IconSetName] = Object.keys(icons).reduce((iconSetMap: any, IconName: string) => {
     const iconDisplayName = `IconCache.${IconSetName}.${IconName}`;
     iconSetMap[IconName] = IconCache.get(iconDisplayName, () => forwardRef((props: any, ref: any) => {
       const IconComponent = icons[IconName];
-      return <IconComponent {...iconProps} {...props} ref={ref} />;
+      return <IconComponent {...defaultIconProps} {...iconProps} {...props} ref={ref} />;
     }));
     iconSetMap[IconName].displayName = iconDisplayName;
     return iconSetMap;

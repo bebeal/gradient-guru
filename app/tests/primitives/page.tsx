@@ -4,7 +4,7 @@ import { LinkList } from "@/components";
 
 const PrimitivesPage = () => {
   const title = 'Primitives';
-  const pages: string[] = ['accordion', 'card', 'checkbox', 'dropdown', 'kbd', 'menubar', 'progress', 'select', 'side-panel', 'slider', 'switch', 'textarea', 'tooltip'];
+  const pages: string[] = ['accordion', 'card', 'checkbox', 'dropdown', 'kbd', 'menubar', 'progress', 'select', 'side-panel', 'slider', 'switch', 'textarea', 'toasts', 'tooltip'];
 
   return (
     <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">

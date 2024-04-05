@@ -37,6 +37,9 @@
 
 /* Reference from tailwind context via `text-primary`, `bg-secondary` */
 :root {
+  --layer-overlays: 25;
+	--layer-toasts: 25;
+
   --error: 255 69 58;
   --muted: 85 85 85;
   --success: 52 168 83;

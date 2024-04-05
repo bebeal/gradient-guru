@@ -2,7 +2,7 @@
 
 import { QueryClientProvider } from '@tanstack/react-query';
 import { DocConfig } from '@/app/config';
-import { DevToolsProvider, ThemeProvider, useDynamicDocTitle } from '@/hooks';
+import { DevToolsProvider, ThemeProvider, useDynamicDocTitle, ToastsProvider } from '@/hooks';
 import { makeQueryClient, StyledComponentsRegistry, NextAuthProvider } from '@/utils';
 
 // import global styles
@@ -21,7 +21,9 @@ const Providers = ({ children }: any) => {
         <QueryClientProvider client={queryClient}>
           <NextAuthProvider>
             <DevToolsProvider>
-              {children}
+              <ToastsProvider>
+                {children}
+              </ToastsProvider>
             </DevToolsProvider>
           </NextAuthProvider>
         </QueryClientProvider>

@@ -49,21 +49,14 @@ export const DevToolsProvider: FC<DevToolsProviderProps> = ({ children, classNam
   const geiger = useDevToolsStore(useShallow((state) => state.geiger));
   const [setDevTool, isDevToolEnabled, toggleDevTool] = useDevToolsStore(useShallow((state) => [state.setDevTool, state.isDevToolEnabled, state.toggleDevTool]));
 
-  // add other dev tools which need to be nested beside the entire app (e.g. for overlays)
-  const AppWithDevToolPanels = ({ children }: { children: ReactNode }) => {
-    return (
-      <div className={cn('fixed top-0 left-0 z-50 pointer-events-auto cursor-auto', className)}>
-        {children}
-        {reactQueryDevTool?.enabled && <ReactQueryDevTool {...reactQueryDevTool} toggle={() => toggleDevTool('reactQueryDevTool')} />}
-      </div>
-    );
-  };
-
   // add other dev tools which need to wrap around the entire app (e.g. providers, profilers)
   const DevToolsComponent = ({ children }: { children: ReactNode }) => {
     return (
       <Geiger profilerId={'Geiger'} renderTimeThreshold={0} {...geiger}>
-        <AppWithDevToolPanels>{children}</AppWithDevToolPanels>
+        {children}
+        <div className={cn('fixed top-0 left-0 pointer-events-auto cursor-auto z-[var(--layer-overlays)]', className)}>
+          {reactQueryDevTool?.enabled && <ReactQueryDevTool {...reactQueryDevTool} toggle={() => toggleDevTool('reactQueryDevTool')} />}
+        </div>
       </Geiger>
     );
   };

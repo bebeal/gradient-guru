@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, SVGProps, useCallback } from 'react';
+import { forwardRef, Suspense, SVGProps, useCallback } from 'react';
 import UnknownSprite from '@/assets/icons/201-question.svg';
 import { CachedIcons } from './IconSet';
 
@@ -34,5 +34,9 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(({ set = 'Custom', icon
       return <IconComponent {...rest} ref={ref} />;
   }, [icon, ref, rest, set]);
 
-  return fetchIcon();
+  return (
+    <Suspense fallback={<div className="w-[1rem] h-[1rem]" />}>
+      {fetchIcon()}
+    </Suspense>
+  );
 });

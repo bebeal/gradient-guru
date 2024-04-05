@@ -44,10 +44,10 @@ export const HoverCard: React.FC<HoverCardProps> = ({
           collisionPadding={20}
           sticky="always"
           className={cn(
-            'w-auto h-auto flex-1 radix-side-top:animate-slide-down-fade',
-            'radix-side-right:animate-slide-left-fade',
-            'radix-side-bottom:animate-slide-up-fade',
-            'radix-side-left:animate-slide-right-fade',
+            'w-auto h-auto flex-1 radix-side-top:animate-fade-down',
+            'radix-side-right:animate-fade-left',
+            'radix-side-bottom:animate-fade-up',
+            'radix-side-left:animate-fade-right',
             'drop-shadow-xl',
             'fade-in-0 zoom-in-95',
             'rounded-md border bg-secondary px-3 py-1.5 text-sm text-secondary shadow-md',

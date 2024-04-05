@@ -20,7 +20,6 @@ const FontDemos = ({ fontClassName }: { fontClassName: string }) => (
   </div>
 );
 
-
 const FontsPage = () => {
   const tailwindFonts = [
     "font-mono",
@@ -45,4 +44,5 @@ const FontsPage = () => {
     </div>
   );
 };
+
 export default FontsPage;

@@ -52,7 +52,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
   }, [createRippleEffect, onClickCallback, ripple, variant]);
 
   return isDefaultVariant(variant) ? (
-    <ThemedButton ref={ref} size={size} className={cn(`pointer-events-all !cursor-pointer`, disabled && DisabledClasses, `!${RadiusClasses(radius)}`, className)} color={color} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
+    <ThemedButton ref={ref} size={size} className={cn(`pointer-events-all !cursor-pointer`, disabled && DisabledClasses, `!${RadiusClasses(radius)}`, className)} disabled={disabled} color={color} onClick={onClick} variant={variant} {...rest}>{children}</ThemedButton>
   ) : (
     <div className={cn("relative w-auto h-auto", RadiusClasses(radius), containerClassName)}>
       <button
