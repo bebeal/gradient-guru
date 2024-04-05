@@ -25,7 +25,7 @@ export type DevToolsStoreActions = {
 
 export const useDevToolsStore = create<DevToolsStoreState & DevToolsStoreActions>((set, get) => ({
   reactQueryDevTool: {
-    enabled: true,
+    enabled: false,
     visible: false,
   },
   geiger: {

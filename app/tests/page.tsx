@@ -1,10 +1,12 @@
+'use client'
+
 import { LinkList } from "@/components";
 
 // Generate links to all other test pages from here
 const TestsPage = () => {
   // TODO: dynamically fetch this? then just provide a way to filter it for easy control
   const title = 'Tests';
-  const pages: string[] = ['assets', 'auth', 'buttons', 'devtools', 'fun', 'google-drive', 'icon-sets', 'mdx', 'plotly', 'primitives', 'radix-themed-components', 'styled-components', 'tailwindcss', 'terminal', 'tiptap', 'tweet'];
+  const pages: string[] = ['assets', 'auth', 'buttons', 'devtools', 'fun', 'google-drive', 'hidden-input', 'icon-sets', 'mdx', 'plotly', 'primitives', 'radix-themed-components', 'styled-components', 'syntax-highlighter', 'tailwindcss', 'terminal', 'tiptap', 'tweet'];
 
   return (
     <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">

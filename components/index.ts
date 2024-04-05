@@ -3,6 +3,7 @@ export * from './ColorPalette';
 export * from './ComponentMapper';
 export * from './Fun';
 export * from './GoogleDriveUtility';
+export * from './HiddenInput';
 export * from './Highlighter';
 export * from './Links';
 export * from './MDX';
