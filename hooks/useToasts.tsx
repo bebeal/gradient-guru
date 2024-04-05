@@ -6,15 +6,15 @@ import { nanoid } from 'nanoid';
 import { IToast, Toast } from '@/components';
 
 export const Toasts = memo(() => {
-	const { toasts } = useToasts();
+  const { toasts } = useToasts();
 
-	return (
-		<>
-			{toasts.map((toast) => (
-				<Toast key={toast.id} toast={toast} />
-			))}
-		</>
-	)
+  return (
+    <>
+      {toasts.map((toast) => (
+        <Toast key={toast.id} toast={toast} />
+      ))}
+    </>
+  );
 });
 
 export const ToastViewport = () => {
@@ -40,9 +40,7 @@ export const ToastViewport = () => {
 
   if (!hasToasts) return null;
 
-  return (
-    <ToastPrimitive.ToastViewport className="absolute inset-0 m-0 flex items-end justify-end flex-col gap-3 [&>*]:pointer-events-auto p-[0px_8px_18px_0px] z-[var(--layer-toasts)] pointer-events-none" />
-  );
+  return <ToastPrimitive.ToastViewport className="absolute inset-0 m-0 flex items-end justify-end flex-col gap-3 [&>*]:pointer-events-auto p-[0px_8px_18px_0px] z-[var(--layer-toasts)] pointer-events-none" />;
 };
 
 export type ToastContextType = {
@@ -55,7 +53,7 @@ export type ToastContextType = {
 export const ToastsContext = createContext({} as ToastContextType);
 
 export type ToastsProviderProps = {
-  children: any;
+  children: ReactNode;
 };
 export const ToastsProvider = ({ children }: ToastsProviderProps) => {
   const [toasts, setToasts] = useState<IToast[]>([]);
@@ -66,28 +64,34 @@ export const ToastsProvider = ({ children }: ToastsProviderProps) => {
     return id;
   }, []);
 
-  const removeToast = useCallback((id?: string) => {
-    // if id not provided, assume remove the oldest toast
-    const idToRemove = id || toasts[0]?.id;
-    setToasts((d) => d.filter((m) => m.id !== idToRemove));
-    return idToRemove; // return id of the removed toast
-  }, [toasts]);
+  const removeToast = useCallback(
+    (id?: string) => {
+      // if id not provided, assume remove the oldest toast
+      const idToRemove = id || toasts[0]?.id;
+      setToasts((d) => d.filter((m) => m.id !== idToRemove));
+      return idToRemove; // return id of the removed toast
+    },
+    [toasts],
+  );
 
   // alternative way to remove toasts with exit animation
-  const simulateSwipeRightGesture = useCallback((id?: string): string | undefined | null => {
-    const idToRemove = id || toasts[0]?.id;
-    if (!idToRemove) return null; // Early return if no ID is determined
-    const toastToRemove = document.getElementById(idToRemove);
-    if (toastToRemove) {
-      // Simulate a swipe right gesture
-      toastToRemove?.setAttribute('data-swipe', 'end');
-      // on animation end then remove toast
-      toastToRemove?.addEventListener('animationend', () => {
-        removeToast(idToRemove);
-      });
-    }
-    return idToRemove;
-  }, [removeToast, toasts]);
+  const simulateSwipeRightGesture = useCallback(
+    (id?: string): string | undefined | null => {
+      const idToRemove = id || toasts[0]?.id;
+      if (!idToRemove) return null; // Early return if no ID is determined
+      const toastToRemove = document.getElementById(idToRemove);
+      if (toastToRemove) {
+        // Simulate a swipe right gesture
+        toastToRemove?.setAttribute('data-swipe', 'end');
+        // on animation end then remove toast
+        toastToRemove?.addEventListener('animationend', () => {
+          removeToast(idToRemove);
+        });
+      }
+      return idToRemove;
+    },
+    [removeToast, toasts],
+  );
 
   const clearToasts = useCallback(() => {
     setToasts([]);
@@ -97,7 +101,7 @@ export const ToastsProvider = ({ children }: ToastsProviderProps) => {
     <ToastPrimitive.ToastProvider swipeDirection="right">
       <ToastsContext.Provider value={{ toasts, addToast, removeToast, clearToasts, simulateSwipeRightGesture }}>
         {children}
-				<Toasts />
+        <Toasts />
         <ToastViewport />
       </ToastsContext.Provider>
     </ToastPrimitive.ToastProvider>
