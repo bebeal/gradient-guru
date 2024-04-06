@@ -1,45 +1,141 @@
 # gradient-guru
 
-My personal site which I often change and perterb to learn new things and paradigms.
+My personal site which I often change and perterb to learn new libraries, frameworks, and tools.
 
-Currently, this is a Next.js 14 project with (way too fucking much tbh) ...
+The plot was lost a long time ago
 
-## Features
+## Setup
 
-- Next.js 14 Framework with App Router
-- React 18
-- Node.js 20
-- TypeScript
-- Yarn 4 Package Manager
-- ESLint
-- Prettier
-- Tailwind CSS
-- Styled Components
-- Radix UI Themes
-- Radix UI Primitives
-- Radix UI Icons
-- Carbon Icons
-- Lucide Icons
-- Tldraw Icons
-- Logo Icons
-- Weird/Dumb/Custom Icons
-- Code Language Icons
-- Berkeley Mono Font
-- Monaspace Font
-- Bundle Analyzer
-- React Query
-- MDX support
--
-
-## Usage
+- Clone the repository
 
 ```bash
-git clone https://github.com/bebeal/nextjs-template
-cd nextjs-template
-yarn
+git clone https://github.com/bebeal/gradient-guru
+cd gradient-guru
+```
+
+- Install dependencies and build the project (cdk + app)
+
+```bash
+yarn install
 yarn build
+```
+
+### CDK Build
+
+```bash
+yarn build:cdk
+```
+
+### App Build
+
+```bash
+yarn build:app
+```
+
+### Run Dev Server
+
+- To run the development server on `localhost:3407`
+
+```bash
 yarn dev
 ```
+
+### Clean Artifacts
+
+- Clean up build artifacts
+
+```bash
+yarn clean
+```
+
+## Info
+
+All the bloat:
+
+- Infrastructure:
+  - [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/home.html)
+  - [AWS Amplify](https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html)
+
+- Frameworks:
+  - [React 18](https://github.com/facebook/react)
+    - [React Docs](https://react.dev/)
+  - [TypeScript v5+](https://github.com/microsoft/TypeScript)
+    - [TypeScript Docs](https://www.typescriptlang.org/docs/)
+  - [Next.js 14 (App Router)](https://github.com/vercel/next.js/): Used for the static site, server-side rendering, API support
+    - [Next.js Docs](https://nextjs.org/docs)
+  - [Yarn 4](https://github.com/yarnpkg/yarn)
+    - [Yarn CLI Docs](https://yarnpkg.com/cli)
+  - [Node.js 20](https://github.com/nodejs/node)
+    - [Node.js Docs](https://nodejs.org/en/docs/)
+
+- Testing:
+  - [Jest](https://github.com/jestjs/jest)
+
+- Linting & Formatting:
+  - [ESLint](https://github.com/eslint/eslint)
+  - [Prettier](https://github.com/prettier/prettier)
+
+- Components:
+  - [Radix Primitives](radix-ui.com/docs/primitives)
+  - [Radix Themes](radix-ui.com/themes/docs)
+
+- Styling:
+  - [next-themes](https://github.com/pacocoursey/next-themes)
+  - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)
+    - [Tailwind CSS Docs](https://tailwindcss.com)
+    - Plugins:
+      - [tailwindcss-animate](https://github.com/jamiebuilds/tailwindcss-animate)
+      - [@tailwindcss/typography](https://github.com/tailwindlabs/tailwindcss-typography)
+      - [@tailwindcss/aspect-ratio](https://github.com/tailwindlabs/tailwindcss-aspect-ratio)
+      - [tailwindcss-radix](https://github.com/ecklf/tailwindcss-radix)
+  - [Styled Components](https://github.com/styled-components)
+    - [Styled Components Docs](https://styled-components.com/docs)
+
+- Assets:
+  - Icons:
+    - [Carbon](https://github.com/carbon-design-system/carbon)
+      - [Carbon Icon Docs](https://github.com/carbon-design-system/carbon)
+    - [Tldraw](https://github.com/tldraw/tldraw/tree/main/assets/icons/icon)
+    - [Lucide](https://github.com/lucide-icons/lucide)
+      - [Lucide Icon Docs](https://lucide.dev/icons/)
+    - [Radix](https://github.com/radix-ui/icons)
+      - [Radix Icon Docs](https://www.radix-ui.com/icons)
+    - [Logos](https://github.com/gilbarbara/logos)
+    - Weird/Dumb/Custom Icons
+  - Fonts:
+    - [Berkeley Mono](https://berkeleygraphics.com/typefaces/berkeley-mono/)
+    - [Monaspace](https://github.com/githubnext/monaspace)
+      - [Monaspace Docs](https://monaspace.githubnext.com/)
+      - Variants:
+        - [Argon](https://github.com/githubnext/monaspace/blob/main/fonts/variable/MonaspaceArgonVarVF%5Bwght%2Cwdth%2Cslnt%5D.ttf)
+        - [Krypton](https://github.com/githubnext/monaspace/blob/main/fonts/variable/MonaspaceKryptonVarVF%5Bwght%2Cwdth%2Cslnt%5D.ttf)
+        - [Neon](https://github.com/githubnext/monaspace/blob/main/fonts/variable/MonaspaceNeonVarVF%5Bwght%2Cwdth%2Cslnt%5D.ttf)
+        - [Radon](https://github.com/githubnext/monaspace/blob/main/fonts/variable/MonaspaceRadonVarVF%5Bwght%2Cwdth%2Cslnt%5D.ttf)
+        - [Xenon](https://github.com/githubnext/monaspace/blob/main/fonts/variable/MonaspaceXenonVarVF%5Bwght%2Cwdth%2Cslnt%5D.ttf)
+    - ["Tldrawish"](https://github.com/tldraw/tldraw/tree/main/assets/fonts)
+    - [Raleway](https://fonts.google.com/specimen/Raleway)
+
+- Features:
+  - [tlraw](https://github.com/tldraw/tldraw)
+    - [Tldraw Docs](https://tldraw.dev/docs)
+  - [tiptap](https://github.com/ueberdosis/tiptap)
+    - [tiptap Docs](https://www.tiptap.dev/)
+    - [tiptap templates](https://github.com/ueberdosis/tiptap-templates)
+    - [sereneinserenade extensions](https://github.com/sereneinserenade?tab=repositories&q=tiptap&type=&language=&sort=)
+  - [yup](https://github.com/jquense/yup)
+    - [yup Docs](https://github.com/jquense/yup)
+  - [react-query](https://github.com/TanStack/query)
+    - [react-query Docs](https://tanstack.com/query/v3/docs/react/overview)
+  - [zustand](https://github.com/pmndrs/zustand)
+    - [zustand Docs](https://docs.pmnd.rs/zustand/getting-started/introduction)
+  - [react-syntax-highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter)
+    - [vscDarkPlus](https://github.com/react-syntax-highlighter/react-syntax-highlighter/blob/b0d771441590ff06eda265488bbf011a0140fbf4/src/styles/prism/vsc-dark-plus.js)
+  - [plotly.js](https://github.com/plotly/plotly.js)
+    - [plotly.js Docs](https://plotly.com/javascript/)
+  - [aceternity](https://www.aceternity.com/components)
+  - [framer-motion](https://github.com/framer/motion)
+    - [framer-motion Docs](https://www.framer.com/motion/)
+  - [tsparticles](https://github.com/tsparticles/tsparticles)
 
 ### Env Variables
 
@@ -54,6 +150,7 @@ Use `.env.example` as a template to fill out necessary environment variables whi
   ```bash
   npx create-next-app@latest nextjs-template --app --no-src-dir --ts --tailwind --eslint --use-yarn --no-import-alias
   cd nextjs-template
+  yarn next telemetry disable
   ```
 
 ---
@@ -336,7 +433,7 @@ Use `.env.example` as a template to fill out necessary environment variables whi
 
 - Adding MDX Support to handle `.md` and `.mdx` files. [`MDX`](https://nextjs.org/docs/app/building-your-application/configuring/mdx#:~:text=%3E%3C/p%3E-,MDX,-is%20a%20superset) is a superset of markdown that lets you write [`JSX`](https://react.dev/learn/writing-markup-with-jsx) directly in your markdown files.
 
-  - Good Reference: https://github.com/leerob/leerob.io/tree/main
+  - Good Reference: <https://github.com/leerob/leerob.io/tree/main>
   - Install packages
 
   ```bash
@@ -458,10 +555,6 @@ Use `.env.example` as a template to fill out necessary environment variables whi
 
 ---
 
-- Add fun components ([Aceternity](https://ui.aceternity.com/), ...)
-
----
-
 - Add TipTap component
   - set `TIPTAP_PRO_TOKEN` in `.env.local` to be your personal registry token (see [TipTap Pro Extensions](https://cloud.tiptap.dev/pro-extensions))
   - edit `.yarnrc.yml` to configure TipTap Pro Registry (necessary to install tiptap pro extensions from package registry)
@@ -481,5 +574,23 @@ Use `.env.example` as a template to fill out necessary environment variables whi
 
   - Add `TipTap` directory in `@/components/` and export `TipTap` and `TipTapToolbar` components. Use internally onlly `Extensions` to define define custom extensions.
     - TODO: Simplify the above to leverage [tiptap-templates](`https://github.com/ueberdosis/tiptap-templates`) as much as possible instead of custom defined extensions.
+
+---
+
+- Add Jest testing framework
+  - Install jest and setup testing environment
+
+  ```bash
+  yarn add jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom -D
+  ```
+
+  - Setup `jext.setup.js` (this seems kinda useless is it really needed?)
+
+  ```js
+  // Learn more: https://github.com/testing-library/jest-dom
+  import '@testing-library/jest-dom'
+  ```
+
+  - Setup `jest.config.ts` per your needs
 
 ---

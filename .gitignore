@@ -45,4 +45,15 @@ next-env.d.ts
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# https cert
 certificates
+
+# aws cdk
+**/cdk.out
+**/cdk.js
+**/*.cdk.staging
+
+# TEMP
+cdk
+cdk.json
