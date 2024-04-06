@@ -35,7 +35,7 @@ export const PinContainer = ({
       target="_blank"
       referrerPolicy="no-referrer"
       className={cn(
-        "relative group/pin z-[var(--layer-toasts)] cursor-pointer flex overflow-hidden h-auto w-auto min-w-[400px] min-h-[400px]",
+        "relative group/pin z-[var(--layer-toasts)] cursor-pointer flex overflow-hidden h-auto w-auto min-w-[400px] min-h-[460px]",
         containerClassName
       )}
       onMouseEnter={onMouseEnter}

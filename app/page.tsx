@@ -3,7 +3,9 @@ import { isDevEnv } from "@/utils";
 
 const AppPage = () => {
   const title = 'Root App Page';
-  const pages: string[] = ['api', 'about', 'privacy-policy', 'terms-of-service', 'tests'];
+  const pages: string[] = ['api', 'demos', 'about', 'privacy-policy', 'terms-of-service', 'tests'];
+
+  // to only render certain links in dev env (note: the endpoints will still exists, just not linked to from here)
   // if (isDevEnv) {
   //   pages.push('tests');
   // }
