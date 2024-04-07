@@ -53,8 +53,3 @@ certificates
 **/cdk.out
 **/cdk.js
 **/*.cdk.staging
-
-# TEMP
-cdk
-app/cdk
-cdk.json
