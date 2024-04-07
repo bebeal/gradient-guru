@@ -29,8 +29,8 @@ const config: Config = {
     './hooks/**/*.{js,jsx,ts,tsx,md,mdx}',
     './components/**/*.{js,jsx,ts,tsx,md,mdx}',
     './utils/**/*.{js,jsx,ts,tsx,md,mdx}',
-    './content/**/*.{js,jsx,ts,tsx,md,mdx}',
     './clients/**/*.{js,jsx,ts,tsx,md,mdx}',
+    './assets/**/*.{js,jsx,ts,tsx,md,mdx}',
   ],
   preset: [radixThemePreset],
   theme: {

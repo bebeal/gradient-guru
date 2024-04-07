@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, memo, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, memo, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import * as ToastPrimitive from '@radix-ui/react-toast';
 import { nanoid } from 'nanoid';
 import { IToast, Toast } from '@/components';

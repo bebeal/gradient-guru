@@ -1,6 +1,6 @@
 # `assets`
 
-* static assets such as fonts, images, etc.
+* static assets such as fonts, images, mdx, etc.
 
 ## Fonts
 
@@ -58,3 +58,7 @@ Then use the fonts in your components:
 ## Images
 
 * `images/` contains various images
+
+## MDX
+
+* `mdx/` contains various mdx files. Typically imported and used in app router directory.

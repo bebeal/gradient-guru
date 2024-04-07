@@ -56,4 +56,5 @@ certificates
 
 # TEMP
 cdk
+app/cdk
 cdk.json

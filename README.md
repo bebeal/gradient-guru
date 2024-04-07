@@ -455,14 +455,6 @@ Use `.env.example` as a template to fill out necessary environment variables whi
   };
   ```
 
-  - Use like so:
-
-  ```tsx
-  import MDXOptions from '@/mdx-options.mjs';
-  ...
-   <MDXRemote source={content} components={components} options={{mdxOptions: MDXOptions}} />
-  ```
-
 ---
 
 - Add Radix UI Primitives

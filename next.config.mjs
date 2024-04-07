@@ -1,5 +1,14 @@
+import createMDX from '@next/mdx';
 import NextBundleAnalyzer from '@next/bundle-analyzer';
 import withSVGR from './utils/SVGR.mjs';
+import mdxOptions from './mdx-options.mjs';
+
+// import postgres from 'postgres';
+
+// export const sql = postgres(process.env.POSTGRES_URL, {
+//   ssl: 'allow',
+// });
+
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -11,7 +20,7 @@ const nextConfig = {
   configOrigin: 'default',
   useFileSystemPublicRoutes: true,
   generateEtags: true,
-  pageExtensions: ['js', 'jsx', 'mjs', 'cjs', 'ts', 'tsx', 'mts', 'cts', 'md', 'mdx'],
+  pageExtensions: ['js', 'jsx', 'mjs', 'ts', 'tsx', 'md', 'mdx', 'mjs', 'cjs', 'mts', 'cts'],
   poweredByHeader: true,
   compress: true,
   optimizeFonts: true,
@@ -86,4 +95,11 @@ const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
-export default withBundleAnalyzer(withSVGR(nextConfig));
+const withMDX = createMDX({
+  extension: /\.(md|mdx)$/,
+  options: mdxOptions,
+});
+ 
+const config = withBundleAnalyzer(withMDX(withSVGR(nextConfig)));
+
+export default config;

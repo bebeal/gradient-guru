@@ -1,7 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import type { MDXComponents } from 'mdx/types';
 import Image, { ImageProps } from 'next/image';
+import type { MDXComponents } from 'mdx/types';
+
+export const ASSETS_DIR = 'assets/mdx';
 
 export const parseFrontmatter = (fileContent: string) => {
   const frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
@@ -19,16 +21,16 @@ export const parseFrontmatter = (fileContent: string) => {
   });
 
   return { frontMatter, content };
-}
+};
 
 export const getMDXFiles = (dir: string) => {
   return fs.readdirSync(dir).filter((file) => ['.mdx', '.md'].includes(path.extname(file)));
-}
+};
 
 export const readMDXFile = (filePath: string) => {
   const rawContent = fs.readFileSync(filePath, 'utf-8');
   return parseFrontmatter(rawContent);
-}
+};
 
 export const getMDXData = (dir: string) => {
   const mdxFiles = getMDXFiles(dir);
@@ -41,28 +43,10 @@ export const getMDXData = (dir: string) => {
       frontMatter,
     };
   });
-}
+};
 
-export const getContent = () => {
-  return getMDXData(path.join(process.cwd(), 'content'));
-}
-
-// Pass a layout (using the special `'wrapper'` key).
-export const CustomMDXComponents: MDXComponents = {
-  img: (props: any) => (
-    <div className="relative w-full h-auto border border-primary">
-      <Image
-        fill
-        priority
-        sizes="100vw"
-        style={{
-          objectFit: 'contain',
-        }}
-        {...(props as ImageProps)}
-        alt={props.alt || ''}
-      />
-    </div>
-  ),
+export const getMDX = () => {
+  return getMDXData(path.join(process.cwd(), ASSETS_DIR));
 };
 
 // The components you can overwrite use their standard HTML names. Normally, in markdown, those names are:

@@ -1,25 +1,30 @@
 'use client'
 
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Icon } from "@/components";
 import { cn } from "@/utils";
 
 export interface HiddenInputProps {
   localStorageKey?: string;
   onChange?: (key: string) => void;
+	value?: string;
 }
 
 export const HiddenInput = (props: HiddenInputProps) => {
   const {
     localStorageKey="gg_api_key",
     onChange,
+		value,
   } = props;
   const [cooldown, setCooldown] = useState<boolean>(false);
+	const [defaultValue, setDefaultValue] = useState<string | undefined>(value);
 
   // Store the API key locally
 	const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-		localStorage.setItem(localStorageKey, e.target.value);
-    onChange?.(e.target.value);
+		if (typeof window !== 'undefined') {
+			localStorage.setItem(localStorageKey, e.target.value);
+			onChange?.(e.target.value);
+		}
 	}, [localStorageKey, onChange]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -31,6 +36,17 @@ export const HiddenInput = (props: HiddenInputProps) => {
 			setTimeout(() => setCooldown(false), 1200);
 		}
 	}, []);
+
+	useEffect(() => {
+		if  (typeof window !== 'undefined') {
+			setDefaultValue((currentDefaultValue) => {
+				if (!currentDefaultValue) {
+					return localStorage.getItem(localStorageKey) ?? ''
+				}
+				return currentDefaultValue;
+			});
+		}
+	}, [localStorageKey]);
 
   return (
 		<div className={cn(
@@ -44,8 +60,9 @@ export const HiddenInput = (props: HiddenInputProps) => {
         )}>
 					<input
             id="api-key"
+						value={value}
             className="rounded text-transparent bg-primary w-full h-8 focus:text-primary px-2 py-3 overflow-x-auto"
-						defaultValue={localStorage.getItem(localStorageKey) ?? ''}
+						defaultValue={defaultValue}
 						onChange={handleChange}
 						onKeyDown={handleKeyDown}
 						spellCheck={false}
