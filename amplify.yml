@@ -23,7 +23,7 @@ frontend:
         - env | grep -e GOOGLE_CLIENT_ID -e GOOGLE_CLIENT_SECRET -e GOOGLE_REDIRECT_URI >> .env.production
         # Google API Key
         - env | grep -e GOOGLE_DRIVE_API_KEY >> .env.production
-        - yarn run build
+        - yarn build
   artifacts:
     baseDirectory: .next
     files:
