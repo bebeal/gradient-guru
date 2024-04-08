@@ -30,13 +30,13 @@ export const nextAuthConfig = {
   debug: isDevEnv,
   providers,
   callbacks: {
-    async session({ session, token }: any) {
+    session: async ({ session, token }: any) => {
       if (token.account) {
         session.account = token.account;
       }
       return session;
     },
-    async jwt({ token, account }: any) {
+    jwt: async ({ token, account }: any) => {
       if (account) {
         token.account = account;
       }

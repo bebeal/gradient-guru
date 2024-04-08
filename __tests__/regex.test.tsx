@@ -1,4 +1,4 @@
-import { dateRegex, emailRegex, phoneNumberRegex, postalCodeRegex, urlRegex } from "@/utils";
+import { dateRegex, emailRegex, phoneNumberRegex, postalCodeRegex, urlRegex } from "@/utils/regex";
 
 describe('Regular Expression Tests', () => {
   // Test data for Date Regex

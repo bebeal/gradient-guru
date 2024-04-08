@@ -23,7 +23,7 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "types": ["node", "react", "react-dom", "@types/mdx", "jest", "@testing-library/jest-dom"],
+    "types": ["node", "react", "react-dom", "@types/mdx", "@types/jest", "jest", "@testing-library/jest-dom"],
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "assets/**/*.ts", "utils/types/**/*.ts", "jest.config.ts"],
   "exclude": ["node_modules", "packages", "cdk.out"]

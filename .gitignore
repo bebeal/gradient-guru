@@ -1,5 +1,18 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Editor directories and files
+__pycache__
+.vscode/*
+!.vscode/extensions.json
+.idea
+.pytest_cache
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 # dependencies
 /node_modules
 /.pnp
@@ -7,11 +20,16 @@
 .yarn/install-state.gz
 
 # testing
+coverage
 /coverage
 
-# next.js
+# output
 /.next/
 /out/
+dist
+dist-cjs
+dist-esm
+.lazy
 
 # production
 /build
@@ -21,14 +39,23 @@
 *.pem
 
 # debug
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # vercel
 .vercel
+/vercel.json
+
+# turborepo
+.turborepo
 
 # typescript
+*.tsbuild
 *.tsbuildinfo
 next-env.d.ts
 
@@ -53,3 +80,6 @@ certificates
 **/cdk.out
 **/cdk.js
 **/*.cdk.staging
+
+# @swc/jest
+.swc
