@@ -1,2 +1,13 @@
 node_modules
 assets
+**/*.json
+**/lazy.config.ts
+**/next.config.js
+**/setupTests.js
+**/setupJest.js
+**/jestResolver.js
+**/jestResolver.ts
+**/jest.config.js
+**/jest.config.ts
+**/jest.setup.js
+**/jest.setup.ts

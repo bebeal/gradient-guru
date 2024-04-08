@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
-import { Button, IconSet, IconSets, Input } from '@/components';
+import { Button, Icon, IconSet, IconSets, Input } from '@/components';
 
-const ICONS_PER_PAGE = 50;
+const ICON_PAGINATION = 50;
 
 const IconSetPage = () => {
   const { set } = useParams<{ set: string }>();
@@ -16,7 +16,7 @@ const IconSetPage = () => {
 
   const handlePageChange = (newPage: number) => {
     const totalIcons = Object.keys(iconSet.icons).length;
-    const totalPages = Math.ceil(totalIcons / ICONS_PER_PAGE);
+    const totalPages = Math.ceil(totalIcons / ICON_PAGINATION);
 
     if (newPage < 0) {
       newPage = totalPages - 1;
@@ -29,13 +29,13 @@ const IconSetPage = () => {
 
   const getPageDisplay = (): string => {
     const totalIcons = Object.keys(iconSet.icons).length;
-    const totalPages = Math.ceil(totalIcons / ICONS_PER_PAGE);
+    const totalPages = Math.ceil(totalIcons / ICON_PAGINATION);
     return `Page ${currentPage + 1} of ${totalPages}`;
   };
 
-  const filteredIcons = Object.entries(iconSet.icons)
-    .filter(([iconName]) => iconName.toLowerCase().includes(localSearchQuery.toLowerCase()))
-    .slice(currentPage * ICONS_PER_PAGE, (currentPage + 1) * ICONS_PER_PAGE);
+  const filteredIcons = Object.keys(iconSet.icons)
+    .filter((icon) => icon.toLowerCase().includes(localSearchQuery.toLowerCase()))
+    .slice(currentPage * ICON_PAGINATION, (currentPage + 1) * ICON_PAGINATION);
 
   let iconProps = {};
   if (typeof width === 'number') {
@@ -53,11 +53,11 @@ const IconSetPage = () => {
         <Input extraCharWidth={10} type="text" placeholder="Height" value={height} onChange={(e) => setHeight(e.target.value)} className="w-auto ml-2 border border-gray-300 rounded" />
       </div>
       <div className="grid grid-cols-6 gap-2 w-full h-auto justify-center items-stretch auto-rows-fr overflow-auto">
-        {filteredIcons.map(([IconName, IconFromSet]: [string, any]) => (
-          <div key={IconName} className="flex flex-col bg-gray-600 bg-opacity-50 border border-gray-400 rounded shadow-2xl overflow-auto h-full justify-center">
+        {filteredIcons.map((icon: string) => (
+          <div key={icon} className="flex flex-col bg-gray-600 bg-opacity-50 border border-gray-400 rounded shadow-2xl overflow-auto h-full justify-center">
             <div className="flex flex-col items-center w-full h-full p-1 overflow-hidden">
-              {IconFromSet && <IconFromSet {...iconProps} />}
-              <div className="text-xs w-full flex text-center justify-center items-end">{IconName}</div>
+              <Icon set={set} icon={icon} {...iconProps} className="min-h-[1em]" />
+              <div className="text-xs w-full flex text-center justify-center items-end">{icon}</div>
             </div>
           </div>
         ))}

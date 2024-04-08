@@ -10,15 +10,15 @@ const ToastsPage: FC = () => {
   // make buttons for each of these
   const AddToastButton = (...args: any) => {
     const defaultArgs = {
-      icon: <div className="min-w-[1rem] min-h-[1rem]"><Icon set="Carbon" icon="DataEnrichmentAdd" /></div>,
+      icon: <Icon set="Carbon" icon="DataEnrichmentAdd" />,
       title: 'Example Title',
       description: 'Example Description',
       keepOpen: true,
       closeLabel: 'Close',
     };
     return (
-      <Button variant="classic" onClick={() => addToast({ ...defaultArgs, ...args })}>
-        Add Toast
+      <Button className="w-[180px] [justify-content:flex-start_!important]" variant="classic" onClick={() => addToast({ ...defaultArgs, ...args })}>
+        <Icon set="Carbon" icon="DataEnrichmentAdd" /> Add Toast
       </Button>
     );
   };
@@ -28,23 +28,23 @@ const ToastsPage: FC = () => {
       highContrast: disabled,
     }
     return (
-      <Button variant={"classic"} {...optionalProps} onClick={() => simulateSwipeRightGesture(id)} disabled={disabled}>
-        Remove Toast
+      <Button className="w-[180px] [justify-content:flex-start_!important]" variant={"classic"} {...optionalProps} onClick={() => simulateSwipeRightGesture(id)} disabled={disabled}>
+        <Icon set="Carbon" icon="TrashCan" /> Remove Toast
       </Button>
     );
   };
 
   const ClearToastsButton = () => {
     return (
-      <Button variant="classic" onClick={() => clearToasts()}>
-        Clear Toasts
+      <Button className="w-[180px] [justify-content:flex-start_!important]" variant="classic" onClick={() => clearToasts()}>
+       <Icon set="Carbon" icon="MisuseOutline" /> Clear Toasts
       </Button>
     );
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-full bg-primary text-primary">
-      <div className="flex flex-col items-center justify-center gap-4 w-[150px] h-[400px]">
+      <div className="flex flex-col items-center justify-center gap-4 w-full h-[400px]">
         <ClearToastsButton />
         <AddToastButton />
         <RemoveToastButton disabled={toasts.length === 0} />

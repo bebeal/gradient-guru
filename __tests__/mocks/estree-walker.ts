@@ -1,10 +1,12 @@
 
 /**
+ * The existence of this file prevents the following error:
  * Cannot find module 'estree-walker' from 'node_modules/@mdx-js/mdx/lib/plugin/recma-document.js'
 
     Require stack:
       node_modules/@mdx-js/mdx/lib/plugin/recma-document.js
 
+Which has the following decorators:
  * @typedef {import('estree-jsx').CallExpression} CallExpression
  * @typedef {import('estree-jsx').Directive} Directive
  * @typedef {import('estree-jsx').ExportAllDeclaration} ExportAllDeclaration

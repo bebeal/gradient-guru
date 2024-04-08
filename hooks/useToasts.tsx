@@ -98,7 +98,7 @@ export const ToastsProvider = ({ children }: ToastsProviderProps) => {
   }, []);
 
   return (
-    <ToastPrimitive.ToastProvider swipeDirection="right">
+    <ToastPrimitive.ToastProvider swipeDirection="right" swipeThreshold={150}>
       <ToastsContext.Provider value={{ toasts, addToast, removeToast, clearToasts, simulateSwipeRightGesture }}>
         {children}
         <Toasts />

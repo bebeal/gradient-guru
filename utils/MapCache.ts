@@ -1,29 +1,12 @@
 
-// Simple weakmap cache for objects
+// Simple cache to store and reuse values based on a key.
 export class MapCache<K, V> {
-  private objectCache = new WeakMap<object, V>();
-  private primitiveCache = new Map<string | number | symbol, V>();
+  private cache = new Map<K, V>();
 
-  constructor() {
-    this.objectCache = new WeakMap();
-    this.primitiveCache = new Map();
-  }
-
-  get(item: K, cb: (item: K) => V): V {
-    if (typeof item === 'object' && item !== null) {
-        // Handling for objects
-        if (!this.objectCache.has(item)) {
-            this.objectCache.set(item, cb(item));
-        }
-        return this.objectCache.get(item)!;
-    } else if (typeof item === 'string' || typeof item === 'number' || typeof item === 'symbol') {
-        // Handling for primitives
-        if (!this.primitiveCache.has(item)) {
-            this.primitiveCache.set(item, cb(item));
-        }
-        return this.primitiveCache.get(item)!;
-    } else {
-        throw new Error('Unsupported key type');
+  get(key: K, factory: () => V): V {
+    if (!this.cache.has(key)) {
+      this.cache.set(key, factory());
     }
+    return this.cache.get(key)!;
   }
 }

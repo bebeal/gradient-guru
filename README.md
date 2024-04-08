@@ -441,7 +441,7 @@ Use `.env.example` as a template to fill out necessary environment variables whi
   yarn add @types/mdx -D
   ```
 
-  - Add `mdx-options.mjs` to specify mdx options
+  - Add `utils/mdx-options.mjs` to specify mdx options
 
   ```bash
   const mdxOptions = {
@@ -576,13 +576,13 @@ Use `.env.example` as a template to fill out necessary environment variables whi
   yarn add jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom -D
   ```
 
-  - Setup `jext.setup.js` (this seems kinda useless is it really needed?)
+  - Setup `jext.setup.ts` (this seems kinda useless is it really needed?)
 
   ```js
   // Learn more: https://github.com/testing-library/jest-dom
   import '@testing-library/jest-dom'
   ```
 
-  - Setup `jest.config.ts` per your needs
+  - Setup `jest.config.ts`
 
 ---

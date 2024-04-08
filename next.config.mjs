@@ -1,7 +1,7 @@
 import createMDX from '@next/mdx';
 import NextBundleAnalyzer from '@next/bundle-analyzer';
 import withSVGR from './utils/SVGR.mjs';
-import mdxOptions from './mdx-options.mjs';
+import mdxOptions from './utils/mdx-options.mjs';
 
 // import postgres from 'postgres';
 

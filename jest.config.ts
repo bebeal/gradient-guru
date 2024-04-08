@@ -62,7 +62,7 @@ const config: Config = {
 const jestConfig = async () => {
   const nextJestConfig: any = await createJestConfig(config)();
   // /node_modules/ is the first pattern
-  nextJestConfig.transformIgnorePatterns[0] = '/node_modules/(?!nanoid)/';
+  nextJestConfig.transformIgnorePatterns[0] = '/node_modules/(?!(nanoid||nanoevents))/';
   return nextJestConfig;
 }
 

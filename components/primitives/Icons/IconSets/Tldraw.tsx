@@ -1,7 +1,5 @@
-'use client';
-
+'use client'
 import dynamic from 'next/dynamic';
-import { IconSetMap } from '../IconSet';
 
 const AlignBottom = dynamic(() => import('@/assets/icons/Tldraw/AlignBottom.svg'));
 const AlignBottomCenter = dynamic(() => import('@/assets/icons/Tldraw/AlignBottomCenter.svg'));
@@ -33,6 +31,7 @@ const Blob = dynamic(() => import('@/assets/icons/Tldraw/Blob.svg'));
 const BringForward = dynamic(() => import('@/assets/icons/Tldraw/BringForward.svg'));
 const BringToFront = dynamic(() => import('@/assets/icons/Tldraw/BringToFront.svg'));
 const Check = dynamic(() => import('@/assets/icons/Tldraw/Check.svg'));
+const CheckCircle = dynamic(() => import('@/assets/icons/Tldraw/CheckCircle.svg'));
 const CheckboxChecked = dynamic(() => import('@/assets/icons/Tldraw/CheckboxChecked.svg'));
 const CheckboxEmpty = dynamic(() => import('@/assets/icons/Tldraw/CheckboxEmpty.svg'));
 const ChevronDown = dynamic(() => import('@/assets/icons/Tldraw/ChevronDown.svg'));
@@ -49,6 +48,7 @@ const Color = dynamic(() => import('@/assets/icons/Tldraw/Color.svg'));
 const Comment = dynamic(() => import('@/assets/icons/Tldraw/Comment.svg'));
 const Cross = dynamic(() => import('@/assets/icons/Tldraw/Cross.svg'));
 const Cross2 = dynamic(() => import('@/assets/icons/Tldraw/Cross2.svg'));
+const CrossCircle = dynamic(() => import('@/assets/icons/Tldraw/CrossCircle.svg'));
 const DashDashed = dynamic(() => import('@/assets/icons/Tldraw/DashDashed.svg'));
 const DashDotted = dynamic(() => import('@/assets/icons/Tldraw/DashDotted.svg'));
 const DashDraw = dynamic(() => import('@/assets/icons/Tldraw/DashDraw.svg'));
@@ -62,6 +62,7 @@ const DotsVertical = dynamic(() => import('@/assets/icons/Tldraw/DotsVertical.sv
 const DragHandleDots = dynamic(() => import('@/assets/icons/Tldraw/DragHandleDots.svg'));
 const Duplicate = dynamic(() => import('@/assets/icons/Tldraw/Duplicate.svg'));
 const Edit = dynamic(() => import('@/assets/icons/Tldraw/Edit.svg'));
+const Error = dynamic(() => import('@/assets/icons/Tldraw/Error.svg'));
 const ExternalLink = dynamic(() => import('@/assets/icons/Tldraw/ExternalLink.svg'));
 const File = dynamic(() => import('@/assets/icons/Tldraw/File.svg'));
 const FillNone = dynamic(() => import('@/assets/icons/Tldraw/FillNone.svg'));
@@ -168,172 +169,10 @@ const WarningTriangle = dynamic(() => import('@/assets/icons/Tldraw/WarningTrian
 const ZoomIn = dynamic(() => import('@/assets/icons/Tldraw/ZoomIn.svg'));
 const ZoomOut = dynamic(() => import('@/assets/icons/Tldraw/ZoomOut.svg'));
 
+import { IconSetMap } from '../IconSet';
 export const TldrawIconSet: IconSetMap = {
-  AlignBottom,
-  AlignBottomCenter,
-  AlignBottomLeft,
-  AlignBottomRight,
-  AlignCenterCenter,
-  AlignCenterHorizontal,
-  AlignCenterLeft,
-  AlignCenterRight,
-  AlignCenterVertical,
-  AlignLeft,
-  AlignRight,
-  AlignTop,
-  AlignTopCenter,
-  AlignTopLeft,
-  AlignTopRight,
-  ArrowLeft,
-  ArrowheadArrow,
-  ArrowheadBar,
-  ArrowheadDiamond,
-  ArrowheadDot,
-  ArrowheadNone,
-  ArrowheadSquare,
-  ArrowheadTriangle,
-  ArrowheadTriangleInverted,
-  AspectRatio,
-  Avatar,
-  Blob,
-  BringForward,
-  BringToFront,
-  Check,
-  CheckboxChecked,
-  CheckboxEmpty,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  ChevronsNe,
-  ChevronsSw,
-  ClipboardCopied,
-  ClipboardCopy,
-  Code,
-  Collab,
-  Color,
-  Comment,
-  Cross,
-  Cross2,
-  DashDashed,
-  DashDotted,
-  DashDraw,
-  DashSolid,
-  Discord,
-  DistributeHorizontal,
-  DistributeVertical,
-  Dot,
-  DotsHorizontal,
-  DotsVertical,
-  DragHandleDots,
-  Duplicate,
-  Edit,
-  ExternalLink,
-  File,
-  FillNone,
-  FillPattern,
-  FillSemi,
-  FillSolid,
-  Follow,
-  Following,
-  FontDraw,
-  FontMono,
-  FontSans,
-  FontSerif,
-  GeoArrowDown,
-  GeoArrowLeft,
-  GeoArrowRight,
-  GeoArrowUp,
-  GeoCheckBox,
-  GeoCloud,
-  GeoDiamond,
-  GeoEllipse,
-  GeoHexagon,
-  GeoOctagon,
-  GeoOval,
-  GeoPentagon,
-  GeoRectangle,
-  GeoRhombus,
-  GeoRhombus2,
-  GeoStar,
-  GeoTrapezoid,
-  GeoTriangle,
-  GeoXBox,
-  Github,
-  Group,
-  Hidden,
-  Image,
-  InfoCircle,
-  Leading,
-  Link,
-  Lock,
-  LockSmall,
-  Menu,
-  Minus,
-  Mixed,
-  Pack,
-  Page,
-  Plus,
-  QuestionMark,
-  QuestionMarkCircle,
-  Redo,
-  ResetZoom,
-  RotateCcw,
-  RotateCw,
-  Ruler,
-  Search,
-  SendBackward,
-  SendToBack,
-  SettingsHorizontal,
-  SettingsVertical,
-  SettingsVertical1,
-  Share1,
-  Share2,
-  SizeExtraLarge,
-  SizeLarge,
-  SizeMedium,
-  SizeSmall,
-  SplineCubic,
-  SplineLine,
-  StackHorizontal,
-  StackVertical,
-  StatusOffline,
-  StatusOnline,
-  StretchHorizontal,
-  StretchVertical,
-  TextAlignCenter,
-  TextAlignJustify,
-  TextAlignLeft,
-  TextAlignRight,
-  ToolArrow,
-  ToolEmbed,
-  ToolEraser,
-  ToolFrame,
-  ToolHand,
-  ToolHighlight,
-  ToolLaser,
-  ToolLine,
-  ToolMedia,
-  ToolNote,
-  ToolPencil,
-  ToolPointer,
-  ToolText,
-  Trash,
-  TriangleDown,
-  TriangleUp,
-  Twitter,
-  Undo,
-  Ungroup,
-  Unlock,
-  UnlockSmall,
-  VerticalAlignCenter,
-  VerticalAlignEnd,
-  VerticalAlignStart,
-  Visible,
-  WarningTriangle,
-  ZoomIn,
-  ZoomOut,
+  AlignBottom, AlignBottomCenter, AlignBottomLeft, AlignBottomRight, AlignCenterCenter, AlignCenterHorizontal, AlignCenterLeft, AlignCenterRight, AlignCenterVertical, AlignLeft, AlignRight, AlignTop, AlignTopCenter, AlignTopLeft, AlignTopRight, ArrowLeft, ArrowheadArrow, ArrowheadBar, ArrowheadDiamond, ArrowheadDot, ArrowheadNone, ArrowheadSquare, ArrowheadTriangle, ArrowheadTriangleInverted, AspectRatio, Avatar, Blob, BringForward, BringToFront, Check, CheckCircle, CheckboxChecked, CheckboxEmpty, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, ChevronsNe, ChevronsSw, ClipboardCopied, ClipboardCopy, Code, Collab, Color, Comment, Cross, Cross2, CrossCircle, DashDashed, DashDotted, DashDraw, DashSolid, Discord, DistributeHorizontal, DistributeVertical, Dot, DotsHorizontal, DotsVertical, DragHandleDots, Duplicate, Edit, Error, ExternalLink, File, FillNone, FillPattern, FillSemi, FillSolid, Follow, Following, FontDraw, FontMono, FontSans, FontSerif, GeoArrowDown, GeoArrowLeft, GeoArrowRight, GeoArrowUp, GeoCheckBox, GeoCloud, GeoDiamond, GeoEllipse, GeoHexagon, GeoOctagon, GeoOval, GeoPentagon, GeoRectangle, GeoRhombus, GeoRhombus2, GeoStar, GeoTrapezoid, GeoTriangle, GeoXBox, Github, Group, Hidden, Image, InfoCircle, Leading, Link, Lock, LockSmall, Menu, Minus, Mixed, Pack, Page, Plus, QuestionMark, QuestionMarkCircle, Redo, ResetZoom, RotateCcw, RotateCw, Ruler, Search, SendBackward, SendToBack, SettingsHorizontal, SettingsVertical, SettingsVertical1, Share1, Share2, SizeExtraLarge, SizeLarge, SizeMedium, SizeSmall, SplineCubic, SplineLine, StackHorizontal, StackVertical, StatusOffline, StatusOnline, StretchHorizontal, StretchVertical, TextAlignCenter, TextAlignJustify, TextAlignLeft, TextAlignRight, ToolArrow, ToolEmbed, ToolEraser, ToolFrame, ToolHand, ToolHighlight, ToolLaser, ToolLine, ToolMedia, ToolNote, ToolPencil, ToolPointer, ToolText, Trash, TriangleDown, TriangleUp, Twitter, Undo, Ungroup, Unlock, UnlockSmall, VerticalAlignCenter, VerticalAlignEnd, VerticalAlignStart, Visible, WarningTriangle, ZoomIn, ZoomOut
 };
 export const TldrawIconNames = Object.keys(TldrawIconSet);
 export type TldrawIcon = keyof typeof TldrawIconSet;
-// Tldraw - https://github.com/tldraw/tldraw - 164 Icons
+// Tldraw - https://github.com/tldraw/tldraw - 167 Icons
