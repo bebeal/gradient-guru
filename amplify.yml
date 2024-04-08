@@ -1,0 +1,33 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm use 20
+        - corepack enable
+        - yarn instal
+    build:
+      commands:
+        # Injecting env variables to prod build (see https://docs.aws.amazon.com/amplify/latest/userguide/environment-variables.html#access-env-vars)
+        # HOST NEXT_PUBLIC_HOST (used by other env variables)
+        - env | grep e PORT -e NEXT_PUBLIC_HOST >> .env.production
+        # Tiptap Pro Registry (see: https://cloud.tiptap.dev/pro-extensions)
+        - env | grep -e TIPTAP_PRO_TOKEN >> .env.production
+        # AWS for S3
+        - env | grep -e _AWS_ACCESS_KEY_ID -e _AWS_SECRET_ACCESS_KEY -e _AWS_REGION -e _AWS_BUCKET >> .env.production
+        # next-auth (see https://authjs.dev/reference/nextjs#environment-variable-inferrence)
+        - env | grep -e NEXTAUTH_URL -e NEXTAUTH_SECRET -e AUTH_REDIRECT_PROXY_URL >> .env.production
+        # Github Auth
+        - env | grep -e GITHUB_CLIENT_ID -e GITHUB_CLIENT_SECRET >> .env.production
+        # Google Auth
+        - env | grep -e GOOGLE_CLIENT_ID -e GOOGLE_CLIENT_SECRET -e GOOGLE_REDIRECT_URI >> .env.production
+        # Google API Key
+        - env | grep -e GOOGLE_DRIVE_API_KEY >> .env.production
+        - yarn run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
