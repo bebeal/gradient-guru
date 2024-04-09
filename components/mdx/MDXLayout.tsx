@@ -11,7 +11,6 @@ import { CustomMDXComponents } from './MDXComponents';
 import 'katex/dist/katex.min.css';
 
 export interface MDXLayoutProps {
-  content?: any;
   children?: any;
   slug?: any;
   frontMatter?: Record<string, any>;
@@ -21,12 +20,11 @@ export interface MDXLayoutProps {
 }
 
 export const MDXLayout: React.FC<MDXLayoutProps> = (props: MDXLayoutProps) => {
-  const { content, children, slug, frontMatter, showFrontMatter = true, useRemote=true, ...rest } = props;
-
+  const { children, slug, frontMatter, showFrontMatter = true, useRemote=true, ...rest } = props;
   const mdxContent = useRemote ? (
     <MDXRemote
       {...rest}
-      source={content || children}
+      source={children}
       options={{
         mdxOptions: {
           ...(MDXOptions as any),
@@ -39,7 +37,7 @@ export const MDXLayout: React.FC<MDXLayoutProps> = (props: MDXLayoutProps) => {
         ...(props.components || {}),
       }}
     />
-  ) : content || children;
+  ) : children;
 
   return (
     <section>

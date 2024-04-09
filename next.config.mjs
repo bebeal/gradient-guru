@@ -2,6 +2,8 @@ import createMDX from '@next/mdx';
 import NextBundleAnalyzer from '@next/bundle-analyzer';
 import withSVGR from './utils/SVGR.mjs';
 import mdxOptions from './utils/mdx-options.mjs';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
+import remarkFrontmatter from 'remark-frontmatter'
 
 // import postgres from 'postgres';
 
@@ -97,7 +99,16 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 
 const withMDX = createMDX({
   extension: /\.(md|mdx)$/,
-  options: mdxOptions,
+  options: {
+    remarkPlugins: [
+      remarkFrontmatter,
+      remarkMdxFrontmatter,
+      ...mdxOptions.remarkPlugins,
+    ],
+    rehypePlugins: [
+      ...mdxOptions.rehypePlugins,
+    ]
+  }
 });
  
 const config = withBundleAnalyzer(withMDX(withSVGR(nextConfig)));

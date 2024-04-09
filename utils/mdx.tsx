@@ -38,7 +38,7 @@ export const getMDXData = (dir: string) => {
     const { frontMatter, content } = readMDXFile(path.join(dir, file));
     const slug = path.basename(file, path.extname(file));
     return {
-      content,
+      children: content,
       slug,
       frontMatter,
     };

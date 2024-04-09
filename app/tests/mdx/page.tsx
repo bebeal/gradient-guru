@@ -4,7 +4,7 @@ import { LinkList } from "@/components";
 
 const MDXPage = () => {
   const title = 'Tests';
-  const pages: string[] = ['example'];
+  const pages: string[] = ['example', 'raw'];
 
   return (
     <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">
