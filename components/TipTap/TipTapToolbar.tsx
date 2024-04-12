@@ -20,7 +20,7 @@ export const TipTapToolbar = (props: TipTapToolbarProps) => {
         variant: 'none',
         children: item.icon,
         onClick: item.onClick,
-        className: cn(`flex items-center justify-center text-primary bg-secondary rounded-sm border border-transparent hover:bg-tertiary hover:border-accent hover:text-accent p-1`, item.isActive),
+        className: cn(`flex w-auto h-auto text-primary bg-secondary rounded-sm border border-transparent hover:bg-tertiary hover:border-accent hover:text-accent p-px`, item.isActive),
       };
     });
 
@@ -30,7 +30,7 @@ export const TipTapToolbar = (props: TipTapToolbarProps) => {
   return (
     <Toolbar
       items={ToolbarItems}
-      className="flex w-auto h-auto items-center gap-1 rounded-sm [background-image:linear-gradient(to_bottom,rgb(var(--background-secondary)/1),rgb(var(--background-secondary)/1))] p-1 border-b border-primary"
+      className="flex flex-row w-full h-auto gap-[0.5px] rounded-sm [background-image:linear-gradient(to_bottom,rgb(var(--background-secondary)/1),rgb(var(--background-secondary)/1))] p-1 border-b border-primary"
     />
   );
 };

@@ -1,3 +1,5 @@
+'use client'
+
 export const ItalicString = `*Italic*	_Italic_`;
 export const BoldString = `**Bold**	__Bold__`;
 export const BoldItalicString = `***BoldItalic***	___BoldItalic___`;
