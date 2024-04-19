@@ -1,0 +1,68 @@
+
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build files
+node_modules
+dist
+dist-ssr
+dist-cjs
+dist-esm
+*.local
+/.pnp/
+.pnp.js
+.yarn/install-state.gz
+/.next/
+/.lazy/
+/out/
+
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+__pycache__
+.pytest_cache
+
+# testing
+coverage
+/coverage
+
+# typescript
+*.tsbuild
+*.tsbuildinfo
+
+# aws cdk
+**/cdk.out
+**/cdk.js
+**/*.cdk.staging
+
+# @swc/jest
+.swc
+
+# ignore html git node_modules
+**/*.html
+**/.git
+**/node_modules
+
+# Other files I don't want formatted
+README.md
+vite.config.ts
+.eslintrc.cjs
+tsconfig.json
+tsconfig.node.json
+package.json
+*.d.ts
