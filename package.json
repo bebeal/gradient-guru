@@ -1,12 +1,12 @@
 {
-  "name": "vite-app",
+  "name": "app-name",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "clean": "rm -rf dist && rm -rf node_modules && yarn.lock",
+    "clean": "rm -rf dist && rm -rf node_modules && rm -rf yarn.lock",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --write --cache '**/*.{yml,yaml,json,md,mdx,html,css,js,jsx,ts,tsx,cjs,mjs}'"
@@ -32,14 +32,15 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "mini-svg-data-uri": "^1.4.4",
     "postcss": "^8.4.38",
     "postcss-import": "^16.1.0",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
-    "url": "^0.11.3",
     "vite": "^5.2.0",
-    "vite-tsconfig-paths": "^4.3.2"
+    "vite-tsconfig-paths": "^4.3.2",
+    "zustand": "^4.5.2"
   },
   "engines": {
     "node": ">=20"

@@ -1,11 +1,17 @@
+/* import fonts */
+@import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
+
+/* import tailwindcss base styles: https://tailwindcss.com/docs/installation */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* https://tailwindcss.com/docs/preflight */
+/* tailwind preflight https://tailwindcss.com/docs/preflight */
 @layer base {
-  * {
-    @apply box-border;
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
   }
 
   #root,
@@ -29,18 +35,18 @@
     line-height: 1;
   }
 
-  -webkit-scrollbar {
+  ::-webkit-scrollbar {
     height: 8px;
     width: 4px;
     background: transparent;
   }
 
-  -webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     background: hsl(0 0% 40%);
     border-radius: 999px;
   }
 
-  -webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     background: transparent;
   }
 
@@ -49,13 +55,78 @@
   }
 }
 
+/* global root styles */
 :root {
+  @apply font-mono bg-primary text-primary;
   color-scheme: light dark;
-  font-family: monospace;
-  display: relative;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   overflow: auto;
-  background-color: var(--background-primary, #333333);
-  color: var(--text-primary, #FFFFFF);
+
+  /* Custom properties for z-index layering */
+  --layer-overlays: 25;
+	--layer-toasts: 25;
+
+  /* Custom properties used in tailwind config */
+  --error: 255 69 58;
+  --muted: 85 85 85;
+  --success: 52 168 83;
+  --kbd-foreground: 161 161 170;
+
+  /* https://www.colorhexa.com/33a3ff */
+  --accent-50: 229 244 255;
+  --accent-100: 204 232 255;
+  --accent-200: 153 209 255;
+  --accent-300: 102 186 255;
+  --accent-400: 51 163 255;
+  --accent-500: 0 140 255;
+  --accent-600: 0 112 204;
+  --accent-700: 0 84 153;
+  --accent-800: 0 56 102;
+  --accent-900: 0 28 51;
+  --accent-950: 0 14 25;
+}
+
+/* Define light theme */
+.light {
+  --text-primary: 0 0 0;
+  --text-secondary: 85 85 85;
+  --text-tertiary: 153 153 153;
+
+  --background-primary: 238 238 238;
+  --background-secondary: 190 193 200;
+  --background-tertiary: 193 193 193;
+
+  --border-primary: 0 0 0;
+  --border-secondary: 220 220 220;
+  --border-tertiary: 229 229 229;
+}
+
+/* Define dark theme */
+.dark {
+  --text-primary: 249 249 249;
+  --text-secondary: 187 187 187;
+  --text-tertiary: 153 153 153;
+
+  --background-primary: 30 31 33;
+  --background-secondary: 35 37 41;
+  --background-tertiary: 26 26 26;
+
+  --border-primary: 73 85 95;
+  --border-secondary: 85 95 105;
+  --border-tertiary: 73 85 95;
+}
+
+/* Apply light theme per user preference */
+@media (prefers-color-scheme: light) {
+  :root {
+    @apply light;
+  }
+}
+
+/* Apply dark theme per user preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    @apply dark;
+  }
 }
