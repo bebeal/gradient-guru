@@ -1,3 +1,5 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # Logs
 logs
 *.log
@@ -7,10 +9,20 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Build files
 node_modules
 dist
 dist-ssr
+dist-cjs
+dist-esm
 *.local
+/.pnp/
+.pnp.js
+.yarn/install-state.gz
+/.next/
+/.lazy/
+/out/
+
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +34,21 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+__pycache__
+.pytest_cache
+
+# testing
+coverage
+/coverage
+
+# typescript
+*.tsbuild
+*.tsbuildinfo
+
+# aws cdk
+**/cdk.out
+**/cdk.js
+**/*.cdk.staging
+
+# @swc/jest
+.swc
