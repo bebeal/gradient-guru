@@ -60,9 +60,6 @@ coverage
 
 # Other files I don't want formatted
 README.md
-vite.config.ts
 .eslintrc.cjs
-tsconfig.json
-tsconfig.node.json
-package.json
 *.d.ts
+src/assets

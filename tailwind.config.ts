@@ -1,6 +1,7 @@
 import AspectRatioPlugin from '@tailwindcss/aspect-ratio';
 import ContainerQueriesPlugin from '@tailwindcss/container-queries';
 import TypographyPlugin from '@tailwindcss/typography';
+
 import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors } from './src/utils/tailwind-plugins';
 import type { Config } from 'tailwindcss';
 
@@ -19,13 +20,10 @@ const config: Config = {
     `bg-red-500 bg-error-500 bg-green-500 bg-success-500 bg-primary-500 bg-accent-500`,
     'prose prose-sm prose-base prose-slate dark:prose-invert focus:outline-none',
     `object-fit object-contain object-cover max-w-full !max-w-full text-error bg-[rgb(0, 0, 0)] bg-[rgb(var(--accent-500))]`,
-    'text-[#00000] text-primary'
+    'text-[#00000] text-primary',
   ],
   darkMode: ['class'],
-  content: [
-    './index.html',
-    './src/**/*.{js,jsx,ts,tsx,md,mdx,html}',
-  ],
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx,md,mdx,html}'],
   preset: [],
   theme: {
     extend: {
@@ -132,9 +130,9 @@ const config: Config = {
           from: { transform: 'translateX(calc(100% + 8px))' },
           to: { transform: 'translateX(0))' },
         },
-        'hide': {
-          from: { 'opacity': '1' },
-          to: { 'opacity': '0' },
+        hide: {
+          from: { opacity: '1' },
+          to: { opacity: '0' },
         },
         // Support tooltip hiding/showing animations
         'fade-up': {
@@ -236,7 +234,7 @@ const config: Config = {
         'swipe-left': 'swipe-left 0.1s ease-out',
         'swipe-right': 'swipe-right 0.1s ease-out',
         'slide-in': 'slide-in 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
-        'hide': 'hide 0.1s ease-in-out',
+        hide: 'hide 0.1s ease-in-out',
         'fade-up': 'fade-up 0.3s ease-in-out',
         'fade-right': 'fade-right 0.3s ease-in-out',
         'fade-down': 'fade-down 0.3s ease-in-out',
@@ -252,15 +250,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [
-    VariablesForColors,
-    TypographyPlugin,
-    AspectRatioPlugin,
-    ContainerQueriesPlugin,
-    AnimationTailwindcssPlugin,
-    TailwindGlassPlugin,
-    TailwindGridPlugin
-  ],
+  plugins: [VariablesForColors, TypographyPlugin, AspectRatioPlugin, ContainerQueriesPlugin, AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin],
 };
 
 export default config;

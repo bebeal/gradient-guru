@@ -16,7 +16,7 @@
     "allowJs": true,
 
     /* Types */
-    "types":  ["node", "react", "react-dom", "vite/client"],
+    "types": ["node", "react", "react-dom", "vite/client"],
 
     /* Linting */
     "strict": true,
@@ -28,7 +28,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"],

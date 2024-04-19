@@ -37,5 +37,5 @@ module.exports = {
   ],
   importOrderMergeDuplicateImports: true, // merge duplicate imports
   importOrderCombineTypeAndValueImports: true, // combine type and value imports
-  plugins: ['@ianvs/prettier-plugin-sort-imports'],
+  plugins: ['prettier-plugin-tailwindcss', '@ianvs/prettier-plugin-sort-imports'],
 };

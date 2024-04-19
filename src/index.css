@@ -51,13 +51,13 @@
   }
 
   a {
-    @apply text-[#646cff] no-underline	hover:underline hover:text-[#535bf2];
+    @apply text-[#646cff] no-underline	hover:text-[#535bf2] hover:underline;
   }
 }
 
 /* global root styles */
 :root {
-  @apply font-mono bg-primary text-primary;
+  @apply bg-primary font-mono text-primary;
   color-scheme: light dark;
   height: 100%;
   width: 100%;
@@ -65,7 +65,7 @@
 
   /* Custom properties for z-index layering */
   --layer-overlays: 25;
-	--layer-toasts: 25;
+  --layer-toasts: 25;
 
   /* Custom properties used in tailwind config */
   --error: 255 69 58;
