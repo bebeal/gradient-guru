@@ -15,9 +15,6 @@
     "jsx": "react-jsx",
     "allowJs": true,
 
-    /* Types */
-    "types": ["node", "react", "react-dom", "vite/client"],
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
@@ -29,8 +26,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    /* Types */
+    "types": ["node", "react", "react-dom", "vite/client", "@types/jest", "jest", "@testing-library/jest-dom"],
   },
-  "include": ["src"],
+  "include": ["src", "jest.config.ts"],
+  "exclude": ["node_modules", "dist", "build", "cdk", "cdk.out"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

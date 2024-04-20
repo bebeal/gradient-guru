@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"target": "ES2018",
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"esModuleInterop": true,
+		"allowJs": true,
+		"skipLibCheck": true,
+		"allowSyntheticDefaultImports": true,
+		"strictPropertyInitialization": false,
+		"experimentalDecorators": true,
+		"inlineSourceMap": true,
+		"inlineSources": true,
+		"declaration": true,
+		"strict": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"types": ["node"],
+		"typeRoots": ["../node_modules/@types"]
+	},
+	"exclude": [
+		"cdk.out"
+	]
+}
