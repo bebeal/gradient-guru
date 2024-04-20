@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "NODE_ENV=development vite",
     "build": "tsc && vite build",
     "clean": "rm -rf dist && rm -rf node_modules && rm -rf yarn.lock",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
