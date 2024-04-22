@@ -3,6 +3,7 @@ import ContainerQueriesPlugin from '@tailwindcss/container-queries';
 import TypographyPlugin from '@tailwindcss/typography';
 import { radixThemePreset } from 'radix-themes-tw';
 import TailwindCSSRadixPlugin from 'tailwindcss-radix';
+
 import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors } from './src/utils/tailwind-plugins';
 import type { Config } from 'tailwindcss';
 
