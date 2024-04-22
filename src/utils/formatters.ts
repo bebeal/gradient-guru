@@ -1,4 +1,3 @@
-
 // Format the given date (uses current one if not provided) to YYYY-MM-DD
 export const formatDate = (date?: Date | number): string => {
   if (typeof date === 'number') {

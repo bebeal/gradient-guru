@@ -1,4 +1,1 @@
-
-export const CountryCodes: { [key: string]: string } = {
-
-};
+export const CountryCodes: { [key: string]: string } = {};

@@ -1,8 +1,7 @@
-;
+import { CSSProperties, forwardRef, TextareaHTMLAttributes, useCallback, useEffect, useRef } from 'react';
 
 import { Radius, RadiusClasses } from '@/utils/styles';
 import { cn } from '@/utils/utils';
-import { CSSProperties, forwardRef, TextareaHTMLAttributes, useCallback, useEffect, useRef } from 'react';
 
 export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   className?: string;

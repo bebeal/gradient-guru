@@ -1,27 +1,24 @@
-
-
-import { MouseEvent, useCallback } from "react";
+import { MouseEvent, useCallback } from 'react';
 
 // ripple flash effect for clickables
 
 export const useRippleEffect = () => {
-
   const createRipple = (width: number, height: number, offsetX: number, offsetY: number) => {
     const ripple = document.createElement('span');
     const diameter = Math.max(width, height);
     const radius = diameter / 2;
-  
+
     // Access the native event to use offsetX and offsetY
     const x = offsetX - radius;
     const y = offsetY - radius;
-  
+
     ripple.style.width = ripple.style.height = `${diameter}px`;
     ripple.style.left = `${x}px`;
     ripple.style.top = `${y}px`;
     ripple.classList.add('ripple-effect');
 
     return ripple;
-  }
+  };
 
   const createRippleEffect = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     const target = event.currentTarget;
@@ -35,7 +32,7 @@ export const useRippleEffect = () => {
     const rippleY = event.clientY - rect.top;
 
     const ripple = createRipple(target.clientWidth, target.clientHeight, rippleX, rippleY);
-    target.appendChild(ripple);  
+    target.appendChild(ripple);
     ripple.addEventListener('animationend', () => {
       ripple.remove();
     });
@@ -43,5 +40,5 @@ export const useRippleEffect = () => {
 
   return {
     createRippleEffect,
-  }
+  };
 };

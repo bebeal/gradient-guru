@@ -1,5 +1,6 @@
-import { cn } from "@/utils/utils";
-import { forwardRef } from "react";
+import { forwardRef } from 'react';
+
+import { cn } from '@/utils/utils';
 
 export interface IconLinkProps {
   icon?: any;

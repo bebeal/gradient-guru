@@ -2163,7 +2163,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.24.1, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.23.8, @babel/runtime@npm:^7.24.1, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.24.4
   resolution: "@babel/runtime@npm:7.24.4"
   dependencies:
@@ -4682,6 +4682,13 @@ __metadata:
   version: 2.0.2
   resolution: "@remirror/core-constants@npm:2.0.2"
   checksum: 10c0/928d12cc5df4fd5638980652a3aa398fa4a967fc4704f19eb717eb0fd60dd0e2ae5957a77ea0f6d42340b4c63839f311c54b49be56fba2bc24f102263498e4f8
+  languageName: node
+  linkType: hard
+
+"@remix-run/router@npm:1.15.3":
+  version: 1.15.3
+  resolution: "@remix-run/router@npm:1.15.3"
+  checksum: 10c0/aea197447cee21e137d70f0c93e00de70c64fcfae20ae349ade9dc4202e782bd94dbc88be7302d13b6aa6cde38a701b074cd8e09a161d14cecda832a36dd2695
   languageName: node
   linkType: hard
 
@@ -7371,6 +7378,13 @@ __metadata:
   version: 7.5.8
   resolution: "@types/semver@npm:7.5.8"
   checksum: 10c0/8663ff927234d1c5fcc04b33062cb2b9fcfbe0f5f351ed26c4d1e1581657deebd506b41ff7fdf89e787e3d33ce05854bc01686379b89e9c49b564c4cfa988efa
+  languageName: node
+  linkType: hard
+
+"@types/sort-by@npm:^1":
+  version: 1.2.3
+  resolution: "@types/sort-by@npm:1.2.3"
+  checksum: 10c0/ca4b3b7bde43848f78ec379ddcf4dbd28d93de0a6db2b422b4860f103dd63522d5cacc12ccc381c2dffc8093b4d340e355db0ef78d0673fc631c71f7958ddb5e
   languageName: node
   linkType: hard
 
@@ -11972,6 +11986,7 @@ __metadata:
     "@types/react-dom": "npm:^18"
     "@types/react-plotly.js": "npm:^2"
     "@types/react-syntax-highlighter": "npm:^15"
+    "@types/sort-by": "npm:^1"
     "@types/source-map-support": "npm:^0.5.10"
     "@typescript-eslint/eslint-plugin": "npm:^7.2.0"
     "@typescript-eslint/parser": "npm:^7.2.0"
@@ -12007,6 +12022,7 @@ __metadata:
     katex: "npm:^0.16.10"
     lodash: "npm:^4.17.21"
     lucide-react: "npm:^0.363.0"
+    match-sorter: "npm:^6.3.4"
     mini-svg-data-uri: "npm:^1.4.4"
     papaparse: "npm:^5.4.1"
     plotly.js: "npm:^2.30.1"
@@ -12022,6 +12038,7 @@ __metadata:
     react-dom: "npm:^18"
     react-geiger: "npm:^1.0.2"
     react-plotly.js: "npm:^2.6.0"
+    react-router-dom: "npm:^6.22.3"
     react-syntax-highlighter: "npm:^15.5.0"
     react-tweet: "npm:^3.2.0"
     react-virtuoso: "npm:^4.7.4"
@@ -12032,6 +12049,7 @@ __metadata:
     remark-math: "npm:^6.0.0"
     remark-mdx-frontmatter: "npm:^4.0.0"
     rimraf: "npm:^5.0.5"
+    sort-by: "npm:^1.2.0"
     source-map-support: "npm:^0.5.21"
     styled-components: "npm:^6.1.8"
     tailwind-merge: "npm:^2.2.2"
@@ -14258,6 +14276,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"match-sorter@npm:^6.3.4":
+  version: 6.3.4
+  resolution: "match-sorter@npm:6.3.4"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.8"
+    remove-accents: "npm:0.5.0"
+  checksum: 10c0/35d2a6b6df003c677d9ec87ecd4683657638f5bce856f43f9cf90b03e357ed2f09813ebbac759defa7e7438706936dd34dc2bfe1a18771f7d2541f14d639b4ad
+  languageName: node
+  linkType: hard
+
 "math-log2@npm:^1.0.1":
   version: 1.0.1
   resolution: "math-log2@npm:1.0.1"
@@ -15570,6 +15598,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"object-path@npm:0.6.0":
+  version: 0.6.0
+  resolution: "object-path@npm:0.6.0"
+  checksum: 10c0/3a2708f6eef295e600e2d28f4854c1cee0ded6040425b50af164449adcf61ca873a024fff59b0a8b36c02dfd22d9148e4821302292a24ff0ddcd51194fde8338
+  languageName: node
+  linkType: hard
+
 "object.assign@npm:^4.1.4, object.assign@npm:^4.1.5":
   version: 4.1.5
   resolution: "object.assign@npm:4.1.5"
@@ -16760,6 +16795,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-router-dom@npm:^6.22.3":
+  version: 6.22.3
+  resolution: "react-router-dom@npm:6.22.3"
+  dependencies:
+    "@remix-run/router": "npm:1.15.3"
+    react-router: "npm:6.22.3"
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 10c0/39b0472db5d153cbbbf4f5df5c0b26f2b75ffd7b857d7b67d17e03f4618d806b957cf033fbeb265bb317ade951e6ce0d576311bdf6eb15a7013203079cfadf03
+  languageName: node
+  linkType: hard
+
+"react-router@npm:6.22.3":
+  version: 6.22.3
+  resolution: "react-router@npm:6.22.3"
+  dependencies:
+    "@remix-run/router": "npm:1.15.3"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 10c0/a2c85c3d1fa93585e312b1f7e6e21d1ca421875013a8d879e109d3ed41fb035bc93faef4cd42b354ea18d039bc50b679bf752679ad83ac26a986e3432fbd0462
+  languageName: node
+  linkType: hard
+
 "react-style-singleton@npm:^2.2.1":
   version: 2.2.1
   resolution: "react-style-singleton@npm:2.2.1"
@@ -17184,6 +17243,13 @@ __metadata:
     mdast-util-to-markdown: "npm:^2.0.0"
     unified: "npm:^11.0.0"
   checksum: 10c0/0cdb37ce1217578f6f847c7ec9f50cbab35df5b9e3903d543e74b405404e67c07defcb23cd260a567b41b769400f6de03c2c3d9cd6ae7a6707d5c8d89ead489f
+  languageName: node
+  linkType: hard
+
+"remove-accents@npm:0.5.0":
+  version: 0.5.0
+  resolution: "remove-accents@npm:0.5.0"
+  checksum: 10c0/a75321aa1b53d9abe82637115a492770bfe42bb38ed258be748bf6795871202bc8b4badff22013494a7029f5a241057ad8d3f72adf67884dbe15a9e37e87adc4
   languageName: node
   linkType: hard
 
@@ -17707,6 +17773,15 @@ __metadata:
     ip-address: "npm:^9.0.5"
     smart-buffer: "npm:^4.2.0"
   checksum: 10c0/d54a52bf9325165770b674a67241143a3d8b4e4c8884560c4e0e078aace2a728dffc7f70150660f51b85797c4e1a3b82f9b7aa25e0a0ceae1a243365da5c51a7
+  languageName: node
+  linkType: hard
+
+"sort-by@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "sort-by@npm:1.2.0"
+  dependencies:
+    object-path: "npm:0.6.0"
+  checksum: 10c0/cd88745e6ae33fce8f836955102398fed1adbbee8ee33e20d91ab713625a4e70da91036e866a3c348dbc6a99141215c9718727d53c2e62e6658cf2cde6352892
   languageName: node
   linkType: hard
 

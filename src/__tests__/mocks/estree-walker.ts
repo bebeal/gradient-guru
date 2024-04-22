@@ -1,4 +1,3 @@
-
 /**
  * The existence of this file prevents the following error:
  * Cannot find module 'estree-walker' from 'node_modules/@mdx-js/mdx/lib/plugin/recma-document.js'

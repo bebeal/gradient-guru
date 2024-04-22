@@ -1,5 +1,3 @@
-;
-
 import { IconSetMap } from '../IconSet';
 
 const Accessibility = import('@/assets/icons/Carbon/Accessibility.svg');

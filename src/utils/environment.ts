@@ -28,8 +28,8 @@ export const getEnvVariable = (key: string): string | null => {
 
 // Input: { Variable Name -> Environment Variable Name, ... }
 // Output: { Variable Name -> Environment Variable Value, ... }
-export const getEnvVariables = (envVars: Record<string, string>): Record<string, any> => {
-  return Object.keys(envVars).reduce<Record<string, any>>((acc, key) => {
+export const getEnvVariables = (envVars: Record<string, string>): Record<string, string> => {
+  return Object.keys(envVars).reduce<Record<string, string>>((acc, key) => {
     const value = process.env[envVars[key]];
     if (value) {
       acc[key] = value;
@@ -37,4 +37,3 @@ export const getEnvVariables = (envVars: Record<string, string>): Record<string,
     return acc;
   }, {});
 };
-

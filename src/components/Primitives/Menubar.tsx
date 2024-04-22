@@ -1,9 +1,9 @@
-;
+import React, { forwardRef, useCallback } from 'react';
+import * as MenubarPrimitive from '@radix-ui/react-menubar';
 
 import { Radius, RadiusClasses } from '@/utils/styles';
 import { cn } from '@/utils/utils';
-import * as MenubarPrimitive from '@radix-ui/react-menubar';
-import React, { forwardRef, useCallback } from 'react';
+
 import { Icon } from './Icons';
 import { Kbd } from './Kbd';
 

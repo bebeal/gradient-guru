@@ -1,4 +1,4 @@
-import { Button } from "@/components/Primitives/Button";
+import { Button } from '@/components/Primitives/Button';
 
 export const App = () => {
   return (

@@ -1,9 +1,9 @@
-;
+import { ReactNode, useCallback, useState } from 'react';
+import * as ToastPrimitive from '@radix-ui/react-toast';
 
 import { useToasts } from '@/hooks/useToasts';
 import { cn } from '@/utils/utils';
-import * as ToastPrimitive from '@radix-ui/react-toast';
-import { ReactNode, useCallback, useState } from 'react';
+
 import { Button } from './Button';
 
 export const defaultToastTimeout = 3000;
@@ -46,39 +46,39 @@ export const Toast = ({ toast }: ToastProps) => {
     setPointerDownTime(null); // Reset the pointer down time
   };
 
-  const onOpenChange = useCallback((isOpen: boolean) => {
-    if (!isOpen) {
-      removeToast(toast.id);
-    }
-  }, [toast, removeToast]);
+  const onOpenChange = useCallback(
+    (isOpen: boolean) => {
+      if (!isOpen) {
+        removeToast(toast.id);
+      }
+    },
+    [toast, removeToast],
+  );
   // const hasActions = toast.actions && toast.actions.length > 0;
 
   return (
     <ToastPrimitive.Root
-      
       id={toast.id}
       onOpenChange={onOpenChange}
       className={cn(
-        "relative min-w-[200px] flex flex-row bg-secondary border border-primary shadow-md rounded h-auto",
-        "cursor-pointer",
-        "data-[state=open]:animate-slide-in",
-        "data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)]",
-        "data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out]",
-        "data-[swipe=end]:animate-swipe-right",
+        'relative min-w-[200px] flex flex-row bg-secondary border border-primary shadow-md rounded h-auto',
+        'cursor-pointer',
+        'data-[state=open]:animate-slide-in',
+        'data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)]',
+        'data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out]',
+        'data-[swipe=end]:animate-swipe-right',
         // doesn't do anyting rn cause swipeDirection on provider is `right`
         // this will work for now but idk why their provider can only accept one swipe direction, I wanna just make possible to swipe-to-dismiss in all 4 directions, prob would be easy to tweak it
         // "data-[swipe=end]:[&[data-swipe-direction=left]]:animate-swipe-left",
         // "data-[swipe=end]:[&[data-swipe-direction=up]]:animate-swipe-up",
         // "data-[swipe=end]:[&[data-swipe-direction=down]]:animate-swipe-down",
-        "data-[state=closed]:animate-hide",
+        'data-[state=closed]:animate-hide',
       )}
       duration={toast.keepOpen ? Infinity : toast?.duration || defaultToastTimeout}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
     >
-      {toast.icon && <div className="pl-2 pt-2 text-primary h-auto flex align-top justify-start">
-        {toast.icon}
-      </div>}
+      {toast.icon && <div className="pl-2 pt-2 text-primary h-auto flex align-top justify-start">{toast.icon}</div>}
       <div className="flex-grow-[2] max-w-[280px]">
         <div className="p-3 flex flex-col gap-3">
           {toast.title && <ToastPrimitive.Title className="text-sm font-bold">{toast.title}</ToastPrimitive.Title>}
@@ -114,4 +114,3 @@ export const Toast = ({ toast }: ToastProps) => {
     </ToastPrimitive.Root>
   );
 };
-

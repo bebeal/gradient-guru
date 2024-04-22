@@ -1,7 +1,8 @@
 import AspectRatioPlugin from '@tailwindcss/aspect-ratio';
 import ContainerQueriesPlugin from '@tailwindcss/container-queries';
 import TypographyPlugin from '@tailwindcss/typography';
-
+import { radixThemePreset } from 'radix-themes-tw';
+import TailwindCSSRadixPlugin from 'tailwindcss-radix';
 import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors } from './src/utils/tailwind-plugins';
 import type { Config } from 'tailwindcss';
 
@@ -24,7 +25,7 @@ const config: Config = {
   ],
   darkMode: ['class'],
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx,md,mdx,html}'],
-  preset: [],
+  preset: [radixThemePreset],
   theme: {
     extend: {
       colors: {
@@ -250,7 +251,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [VariablesForColors, TypographyPlugin, AspectRatioPlugin, ContainerQueriesPlugin, AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin],
+  plugins: [VariablesForColors, TailwindCSSRadixPlugin, TypographyPlugin, AspectRatioPlugin, ContainerQueriesPlugin, AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin],
 };
 
 export default config;

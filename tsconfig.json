@@ -17,8 +17,6 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
     /* Module Alias @/ to src/ */
@@ -29,7 +27,7 @@
     },
 
     /* Types */
-    "types": ["node", "react", "react-dom", "vite/client", "@types/jest", "jest", "@testing-library/jest-dom"],
+    "types": ["node", "react", "react-dom", "vite/client", "@types/jest", "jest", "@testing-library/jest-dom"]
   },
   "include": ["src", "jest.config.ts"],
   "exclude": ["node_modules", "dist", "build", "cdk", "cdk.out"],

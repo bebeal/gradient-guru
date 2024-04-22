@@ -1,8 +1,7 @@
-;
+import React, { forwardRef } from 'react';
 
 import { KeyMap } from '@/utils/keymap';
 import { cn } from '@/utils/utils';
-import React, { forwardRef } from 'react';
 
 export interface KbdProps {
   children?: any;

@@ -1,4 +1,3 @@
-
 // Simple cache to store and reuse values based on a key.
 export class MapCache<K, V> {
   private cache = new Map<K, V>();

@@ -1,4 +1,4 @@
-import { cn } from "@/utils/utils";
+import { cn } from '@/utils/utils';
 
 export interface SpinnerProps extends React.ComponentProps<'svg'> {
   active?: boolean;

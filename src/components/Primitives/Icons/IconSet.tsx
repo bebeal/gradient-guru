@@ -1,5 +1,7 @@
 import { ComponentType, forwardRef } from 'react';
+
 import { MapCache } from '@/utils/MapCache';
+
 import { defaultProps, IconProps } from './Icon';
 import { CarbonIconSet, CodeLanguagesIconSet, CustomIconSet, LogosIconSet, LucideIconSet, RadixIconSet, TldrawIconSet } from './IconSets';
 
@@ -17,7 +19,7 @@ export interface IconSet {
 // IconSets object containing all available icon sets
 export const IconSets: Record<string, IconSet> = {
   Carbon: { icons: CarbonIconSet },
-  Tldraw: { icons: TldrawIconSet, iconProps: { stroke: 'none', fill: 'none' }},
+  Tldraw: { icons: TldrawIconSet, iconProps: { stroke: 'none', fill: 'none' } },
   CodeLanguages: { icons: CodeLanguagesIconSet },
   Logos: { icons: LogosIconSet },
   Custom: { icons: CustomIconSet },
@@ -36,10 +38,12 @@ export const IconCache: IconSetMap = IconSetNames.reduce((iconSetsMap: any, Icon
   const { icons, iconProps } = IconSets[IconSetName];
   iconSetsMap[IconSetName] = Object.keys(icons).reduce((iconSetMap: any, icon: string) => {
     const iconDisplayName = `Icon.${IconSetName}.${icon}`;
-    iconSetMap[icon] = Cache.get(iconDisplayName, () => forwardRef((props: any, ref: any) => {
-      const IconComponent = icons[icon];
-      return <IconComponent {...defaultProps} {...iconProps} {...props} ref={ref} />;
-    }));
+    iconSetMap[icon] = Cache.get(iconDisplayName, () =>
+      forwardRef((props: any, ref: any) => {
+        const IconComponent = icons[icon];
+        return <IconComponent {...defaultProps} {...iconProps} {...props} ref={ref} />;
+      }),
+    );
     iconSetMap[icon].displayName = iconDisplayName;
     return iconSetMap;
   }, {} as IconSet);

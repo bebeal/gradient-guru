@@ -1,4 +1,3 @@
-
 /**
  * Cannot find module 'periscopic' from 'node_modules/@mdx-js/mdx/lib/plugin/recma-document.js'
 

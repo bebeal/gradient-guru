@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+
 export const ASSETS_DIR = 'assets/mdx';
 
 export const parseFrontmatter = (fileContent: string) => {
