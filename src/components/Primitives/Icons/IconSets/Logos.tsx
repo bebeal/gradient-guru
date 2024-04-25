@@ -94,9 +94,8 @@ import {
   Windows,
   Youtube,
 } from '../CustomIcons/Logos';
-import { IconSetMap } from '../IconSet';
 
-export const LogosIconSet: IconSetMap = {
+export const LogosIconSet = {
   Airbnb,
   Apple,
   AppleAppStore,

@@ -36,7 +36,7 @@ const jestConfig: Config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(css|less|scss|sass|gif|png)$': 'identity-obj-proxy',
-    '\\.svg$': 'jest-transform-stub',
+    '\\.(svg)$': 'jest-transform-stub',
     // mocks for mdx-js
     'estree-walker': '<rootDir>/__tests__/mocks/estree-walker.ts',
     periscopic: '<rootDir>/__tests__/mocks/periscopic.ts',

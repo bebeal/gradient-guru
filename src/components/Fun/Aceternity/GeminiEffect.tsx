@@ -1,5 +1,3 @@
-'use client';
-
 // https://ui.aceternity.com/components/google-gemini-effect
 import { motion, MotionValue } from 'framer-motion';
 

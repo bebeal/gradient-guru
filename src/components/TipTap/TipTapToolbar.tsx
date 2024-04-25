@@ -1,11 +1,8 @@
-'use client';
-
-import { Editor } from '@tiptap/core';
-
-import { Icon } from '@/components/Primitives/Icons';
+import { Icon } from '@/components/Primitives/Icons/Icon';
 import { Loading } from '@/components/Primitives/Loading';
 import { Toolbar } from '@/components/Primitives/Toolbar';
 import { cn } from '@/utils/utils';
+import { Editor } from '@tiptap/core';
 
 export interface TipTapToolbarProps {
   editor: Editor;

@@ -1,9 +1,11 @@
-import { ComponentType, forwardRef } from 'react';
-
-import { MapCache } from '@/utils/MapCache';
-
-import { defaultProps, IconProps } from './Icon';
-import { CarbonIconSet, CodeLanguagesIconSet, CustomIconSet, LogosIconSet, LucideIconSet, RadixIconSet, TldrawIconSet } from './IconSets';
+import { IconProps } from '@/components/Primitives/Icons/Icon';
+import { CarbonIconSet } from '@/components/Primitives/Icons/IconSets/Carbon';
+import { CodeLanguagesIconSet } from '@/components/Primitives/Icons/IconSets/CodeLanguages';
+import { CustomIconSet } from '@/components/Primitives/Icons/IconSets/Custom';
+import { LogosIconSet } from '@/components/Primitives/Icons/IconSets/Logos';
+import { LucideIconSet } from '@/components/Primitives/Icons/IconSets/Lucide';
+import { RadixIconSet } from '@/components/Primitives/Icons/IconSets/Radix';
+import { TldrawIconSet } from '@/components/Primitives/Icons/IconSets/Tldraw';
 
 // IconSetMap: simple mapping from name of the icon to something that can be rendered
 // 'example-icon-name': IconComponent (React.FC)
@@ -28,24 +30,3 @@ export const IconSets: Record<string, IconSet> = {
 };
 export const IconSetNames: string[] = Object.keys(IconSets) || [];
 export type IconSetNames = keyof typeof IconSets;
-
-// IconCache: A cache to store and reuse icon component instances.
-// This prevents re-creating icon components on every render, which can
-// improve performance in scenarios where icons are dynamically chosen
-// and rendered throughout the application.
-const Cache = new MapCache<string, ComponentType<any>>();
-export const IconCache: IconSetMap = IconSetNames.reduce((iconSetsMap: any, IconSetName: string) => {
-  const { icons, iconProps } = IconSets[IconSetName];
-  iconSetsMap[IconSetName] = Object.keys(icons).reduce((iconSetMap: any, icon: string) => {
-    const iconDisplayName = `Icon.${IconSetName}.${icon}`;
-    iconSetMap[icon] = Cache.get(iconDisplayName, () =>
-      forwardRef((props: any, ref: any) => {
-        const IconComponent = icons[icon];
-        return <IconComponent {...defaultProps} {...iconProps} {...props} ref={ref} />;
-      }),
-    );
-    iconSetMap[icon].displayName = iconDisplayName;
-    return iconSetMap;
-  }, {} as IconSet);
-  return iconSetsMap;
-}, {} as IconSetMap);

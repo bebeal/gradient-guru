@@ -1,9 +1,8 @@
-import { ReactRenderer } from '@tiptap/react';
-import tippy from 'tippy.js';
-
 // Uses tippy to display a popup, which appears when `mentioning` something using the `@` symbol, which contains a list of suggestions based on the text typed so far
 
 import { MentionList } from './MentionList';
+import { ReactRenderer } from '@tiptap/react';
+import tippy from 'tippy.js';
 
 export const MentionListSuggestion = {
   items: ({ query }: any) => {

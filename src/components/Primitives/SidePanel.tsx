@@ -1,11 +1,9 @@
 import { ForwardedRef, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
-import * as Tabs from '@radix-ui/react-tabs';
-
 import { useRippleEffect } from '@/hooks/useRippleEffect';
 import { Radius, RadiusClasses } from '@/utils/styles';
 import { cn } from '@/utils/utils';
-
-import { Icon } from './Icons';
+import { Icon } from './Icons/Icon';
+import * as Tabs from '@radix-ui/react-tabs';
 
 export interface SidePanelTabProps {
   icon?: any;

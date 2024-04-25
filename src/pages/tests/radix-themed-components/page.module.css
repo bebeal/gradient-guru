@@ -1,0 +1,50 @@
+.table {
+  border-collapse: collapse;
+}
+
+.table th:not(:global(.rt-Table.ColumnHeaderCell), :global(.rt-Table.RowHeaderCell)) {
+  font-weight: var(--font-weight-regular);
+}
+
+.table tr:not(:global(.rt-Table.Row)) {
+  vertical-align: middle;
+}
+
+.table th:not(:global(.rt-Table.ColumnHeaderCell), :global(.rt-Table.RowHeaderCell)),
+.table td:not(:global(.rt-Table.Cell)) {
+  padding: 0;
+  padding-right: var(--space-4);
+  padding-bottom: var(--space-4);
+  text-align: center;
+}
+
+.table tbody tr td:first-child:not(:global(.rt-Table.Cell)) {
+  padding-left: 0;
+  padding-right: var(--space-4);
+  min-width: 64px;
+  text-align: left;
+}
+
+.table thead th:not(:global(.rt-Table.ColumnHeaderCell), :global(.rt-Table.RowHeaderCell)),
+.table tbody tr td:first-child:not(:global(.rt-Table.Cell)) {
+  font-size: var(--font-size-1);
+  letter-spacing: var(--letter-spacing-1);
+  line-height: var(--line-height-1);
+  color: var(--gray-11);
+}
+
+.table :global(.rt-TextField.Root) {
+  width: 180px;
+}
+.table :global(.rt-TextAreaRoot) {
+  width: 180px;
+}
+.table :global(.rt-Callout.Root) {
+  white-space: nowrap;
+}
+.table :global(.rt-Badge) {
+  vertical-align: top;
+}
+.table :global(.rt-SliderRoot) {
+  width: 160px;
+}

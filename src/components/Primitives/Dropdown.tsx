@@ -1,12 +1,10 @@
 import React, { forwardRef, useCallback } from 'react';
-import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-
 import { Radius, RadiusClasses } from '@/utils/styles';
 import { cn } from '@/utils/utils';
-
-import { Icon } from './Icons';
+import { Icon } from './Icons/Icon';
 import { Kbd } from './Kbd';
 import { Separator } from './Separator';
+import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 
 // --------------------------------------------------
 // DropdownMenu

@@ -1,8 +1,7 @@
 import { createContext, memo, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
+import { IToast, Toast } from '@/components/Primitives/Toast';
 import * as ToastPrimitive from '@radix-ui/react-toast';
 import { nanoid } from 'nanoid';
-
-import { IToast, Toast } from '@/components/Primitives/Toast';
 
 export const Toasts = memo(() => {
   const { toasts } = useToasts();

@@ -1,5 +1,4 @@
 import { forwardRef, Ref, useCallback, useMemo, useRef } from 'react';
-
 import { cn } from '@/utils/utils';
 
 const GPU_PARTS = ['base', 'fan-1', 'fan-2', 'fan-3', 'PCIE', 'gpu', 'inner-circle'];

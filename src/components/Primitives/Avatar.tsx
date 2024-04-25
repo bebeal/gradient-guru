@@ -1,8 +1,7 @@
 import { ReactElement, useState } from 'react';
-import * as AvatarPrimitive from '@radix-ui/react-avatar';
-
 import { Radius, RadiusClasses, Variant } from '@/utils/styles';
 import { cn } from '@/utils/utils';
+import * as AvatarPrimitive from '@radix-ui/react-avatar';
 
 export interface AvatarProps extends AvatarPrimitive.AvatarProps {
   variant?: Variant;

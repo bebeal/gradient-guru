@@ -1,9 +1,7 @@
 import { ReactNode, useCallback, useState } from 'react';
-
 import { cn } from '@/utils/utils';
-
 import { Button } from './Button';
-import { Icon } from './Icons';
+import { Icon } from './Icons/Icon';
 
 export interface CardSideProps {
   className?: string;

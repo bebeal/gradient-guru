@@ -1,8 +1,7 @@
 // https://ui.aceternity.com/components/typewriter-effect
 import { useEffect } from 'react';
-import { motion, stagger, useAnimate } from 'framer-motion';
-
 import { cn } from '@/utils/utils';
+import { motion, stagger, useAnimate } from 'framer-motion';
 
 export const TypewriterEffect = ({
   words,

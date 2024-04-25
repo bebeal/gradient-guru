@@ -1,9 +1,8 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react';
-import * as TogglePrimitive from '@radix-ui/react-toggle';
-
 // ref: https://github.com/saadeghi/daisyui/blob/35dbea89ca5b82dd0c3ba4bb69d5f39a7b7c4d54/src/components/styled/toggle.css#L2
 
 import { cn, noop } from '@/utils/utils';
+import * as TogglePrimitive from '@radix-ui/react-toggle';
 
 // export interface SwitchProps extends TogglePrimitive.ToggleProps {
 export interface SwitchProps {

@@ -8,52 +8,49 @@
 @tailwind utilities;
 
 /* tailwind preflight https://tailwindcss.com/docs/preflight */
-@layer base {
-  *,
-  ::before,
-  ::after {
-    box-sizing: border-box;
-  }
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
 
-  #root,
-  html,
-  body {
-    width: 100%;
-    height: 100vh;
-    height: -webkit-fill-available;
-    min-height: 100vh;
-    overflow: hidden;
-    display: flex;
-    padding: 0;
-    margin: 0;
-    place-items: center;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    touch-action: none;
-    overscroll-behavior: none;
-    line-height: 1;
-  }
+#root,
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  place-items: center;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: none;
+  overscroll-behavior: none;
+  line-height: 1;
+}
 
-  ::-webkit-scrollbar {
-    height: 8px;
-    width: 4px;
-    background: transparent;
-  }
+::-webkit-scrollbar {
+  height: 8px;
+  width: 4px;
+  background: transparent;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: hsl(0 0% 40%);
-    border-radius: 999px;
-  }
+::-webkit-scrollbar-thumb {
+  background: hsl(0 0% 40%);
+  border-radius: 999px;
+}
 
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-  a {
-    @apply text-[#646cff] no-underline	hover:text-[#535bf2] hover:underline;
-  }
+a {
+  @apply text-[#1976d2] no-underline visited:text-[#646cff] hover:underline;
 }
 
 /* global root styles */

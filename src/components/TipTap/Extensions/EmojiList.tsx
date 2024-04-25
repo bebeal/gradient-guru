@@ -1,5 +1,4 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react';
-
 import { Image } from '@/components/Primitives/Image';
 
 // Renders emojis as an inline node - See https://tiptap.dev/docs/editor/api/nodes/emoji

@@ -1,11 +1,10 @@
 // https://github.com/ueberdosis/tiptap/blob/a706df78c2df8235b6b1825a71fccf8539fe9700/packages/extension-code-block/src/code-block.ts
+import { Terminal } from '@/components/Terminal/Terminal';
+import { backtickInputRegex, tildeInputRegex } from '@/utils/regex';
 import { mergeAttributes, Node, textblockTypeInputRule } from '@tiptap/core';
 import { CodeBlockOptions } from '@tiptap/extension-code-block';
 import { Plugin, PluginKey, TextSelection } from '@tiptap/pm/state';
 import { NodeViewWrapper, ReactNodeViewRenderer } from '@tiptap/react';
-
-import { Terminal } from '@/components/Terminal/Terminal';
-import { backtickInputRegex, tildeInputRegex } from '@/utils/regex';
 
 // Custom extension intended to replace default code blocks with a sligthly fancier component which looks like a terminal and adds some extra functionality
 

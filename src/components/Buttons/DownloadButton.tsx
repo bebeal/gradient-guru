@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react';
-
 import { Button } from '@/components/Primitives/Button';
-import { Icon } from '@/components/Primitives/Icons';
+import { Icon } from '@/components/Primitives/Icons/Icon';
 import { Tooltip } from '@/components/Primitives/Tooltip';
 import { DownloaderProps, DownloadState, useDownloader } from '@/hooks/useDownloader';
 import { cn, nanoid, noop } from '@/utils/utils';

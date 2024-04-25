@@ -1,6 +1,5 @@
-import { ValueParserParams } from 'ag-grid-community';
-
 import { currencyFormatter } from './Formatters';
+import { ValueParserParams } from 'ag-grid-community';
 
 const currencyDataType = {
   currency: {

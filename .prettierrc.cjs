@@ -13,18 +13,14 @@ module.exports = {
   importOrder: [
     // import order
     '^types$',
-    '',
     '^react(.*)$',
     '^vite$',
     '^@vitejs(.*)$',
     '<THIRD_PARTY_MODULES>',
-    '',
     '^@([^/]+)$',
     '^@/(.*)$',
-    '',
-    '^(?!.*[.]css$)[./].*$',
-    '.css$',
-    '^[./]',
+    '^(?!.*\\.css$).*',
+    '.*\\.css$',
   ],
   importOrderSeparation: false, // separate groups with blank lines
   importOrderSortSpecifiers: true, // sort specifiers

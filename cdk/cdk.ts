@@ -1,10 +1,7 @@
 #!/usr/bin/env node
-
 import 'source-map-support/register';
-
-import * as cdk from 'aws-cdk-lib';
-
 import { makeStacks } from './stacks/stacks';
+import * as cdk from 'aws-cdk-lib';
 
 const makeApp = () => {
   const app = new cdk.App();

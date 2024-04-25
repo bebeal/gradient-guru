@@ -1,7 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
-import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
-
 import { cn } from '@/utils/utils';
+import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 
 export interface HoverCardProps extends HoverCardPrimitive.HoverCardProps {
   content: ReactNode;

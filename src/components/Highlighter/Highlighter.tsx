@@ -1,5 +1,4 @@
 import { Prism as SyntaxHighlighter, SyntaxHighlighterProps } from 'react-syntax-highlighter';
-
 import { SyntaxStyle, SyntaxStyles } from '@/components/Highlighter/SyntaxStyles/SyntaxStyles';
 
 export interface HighlighterProps extends SyntaxHighlighterProps {

@@ -45,8 +45,6 @@ import {
   UnderlineIcon,
 } from '@radix-ui/react-icons';
 
-import { IconSetMap } from '../IconSet';
-
 const LetterIcons = {
   LetterCaseUppercase: LetterCaseUppercaseIcon,
   LetterCaseCapitalize: LetterCaseCapitalizeIcon,
@@ -109,7 +107,7 @@ const Alignment = {
   PinBottom: PinBottomIcon,
 };
 
-export const RadixIconSet: IconSetMap = {
+export const RadixIconSet = {
   ...Typography,
   ...Alignment,
 };

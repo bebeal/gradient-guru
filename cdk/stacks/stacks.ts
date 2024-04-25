@@ -1,6 +1,5 @@
-import { App } from 'aws-cdk-lib';
-
 import { ViteStack } from './vite-stack';
+import { App } from 'aws-cdk-lib';
 
 export const makeStacks = (app: App) => {
   const stacks = [

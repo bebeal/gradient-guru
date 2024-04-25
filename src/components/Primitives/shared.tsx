@@ -1,6 +1,5 @@
 import { cn } from '@/utils/utils';
-
-import { Icon } from './Icons';
+import { Icon } from './Icons/Icon';
 
 export type ErrorMessage = { message?: string; stack?: string; title?: string };
 export interface ErroringProps {

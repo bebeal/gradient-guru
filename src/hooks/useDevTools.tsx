@@ -1,10 +1,9 @@
 import { createContext, FC, ReactNode, useContext } from 'react';
 import { Geiger } from 'react-geiger';
-import { create } from 'zustand';
-import { useShallow } from 'zustand/react/shallow';
-
 import { ReactQueryDevTool } from '@/utils/react-query';
 import { cn } from '@/utils/utils';
+import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
 
 // Define interfaces/types for dev tools and their context
 export interface DevTool {

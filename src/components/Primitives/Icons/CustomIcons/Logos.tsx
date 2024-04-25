@@ -1,5 +1,4 @@
 import { forwardRef } from 'react';
-
 import { cn } from '@/utils/utils';
 
 export const Airbnb = forwardRef((props: any, ref: any) => {

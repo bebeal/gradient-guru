@@ -1,5 +1,4 @@
 import { useCallback, useEffect } from 'react';
-
 import { isEmptyObject } from '@/utils/objects';
 import { matchesPath } from '@/utils/path';
 

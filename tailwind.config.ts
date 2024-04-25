@@ -1,11 +1,10 @@
+import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors } from './src/utils/tailwind-plugins';
 import AspectRatioPlugin from '@tailwindcss/aspect-ratio';
 import ContainerQueriesPlugin from '@tailwindcss/container-queries';
 import TypographyPlugin from '@tailwindcss/typography';
 import { radixThemePreset } from 'radix-themes-tw';
-import TailwindCSSRadixPlugin from 'tailwindcss-radix';
-
-import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors } from './src/utils/tailwind-plugins';
 import type { Config } from 'tailwindcss';
+import TailwindCSSRadixPlugin from 'tailwindcss-radix';
 
 const config: Config = {
   safelist: [
@@ -22,10 +21,9 @@ const config: Config = {
     `bg-red-500 bg-error-500 bg-green-500 bg-success-500 bg-primary-500 bg-accent-500`,
     'prose prose-sm prose-base prose-slate dark:prose-invert focus:outline-none',
     `object-fit object-contain object-cover max-w-full !max-w-full text-error bg-[rgb(0, 0, 0)] bg-[rgb(var(--accent-500))]`,
-    'text-[#00000] text-primary',
   ],
   darkMode: ['class'],
-  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx,md,mdx,html}'],
+  content: ['./src/**/*.{js,jsx,ts,tsx,md,mdx}'],
   preset: [radixThemePreset],
   theme: {
     extend: {
@@ -44,7 +42,7 @@ const config: Config = {
         },
       },
       textColor: {
-        primary: 'rgb(var(--text-primary) / <alpha-value>)',
+        primary: 'rgb(var(--text-primary)  / <alpha-value>)',
         secondary: 'rgb(var(--text-secondary) / <alpha-value>)',
         tertiary: 'rgb(var(--text-tertiary) / <alpha-value>)',
       },

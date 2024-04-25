@@ -1,10 +1,8 @@
 import { Suspense, useRef, useState } from 'react';
-import { LicenseManager } from 'ag-grid-charts-enterprise';
-import { AgGridReact } from 'ag-grid-react';
-
 import { Loading } from '@/components/Primitives/Loading';
 import { isDebugMode } from '@/utils/environment';
-
+import { LicenseManager } from 'ag-grid-charts-enterprise';
+import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import './grid-theme.css';

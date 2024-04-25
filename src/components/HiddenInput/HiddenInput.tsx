@@ -1,6 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-
-import { Icon } from '@/components/Primitives/Icons';
+import { Icon } from '@/components/Primitives/Icons/Icon';
 import { cn } from '@/utils/utils';
 
 export interface HiddenInputProps {

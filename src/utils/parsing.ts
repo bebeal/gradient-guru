@@ -1,6 +1,5 @@
-import Papa, { LocalFile, ParseConfig } from 'papaparse';
-
 import { isDevEnv } from './environment';
+import Papa, { LocalFile, ParseConfig } from 'papaparse';
 
 /**
  * csv parsing via papaparse

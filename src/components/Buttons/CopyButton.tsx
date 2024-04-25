@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
 import { Button, ButtonProps } from '@/components/Primitives/Button';
-import { Icon } from '@/components/Primitives/Icons';
+import { Icon } from '@/components/Primitives/Icons/Icon';
 import { Tooltip } from '@/components/Primitives/Tooltip';
 import { cn } from '@/utils/utils';
 

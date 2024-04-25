@@ -1,5 +1,4 @@
 import { fileURLToPath } from 'url';
-
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import svgr from 'vite-plugin-svgr';
@@ -30,12 +29,10 @@ const viteConfig = defineConfig(({ command, mode }) => {
       // for importing .svg files as react components, and .svg?url as URLs
       svgr({
         svgrOptions: {
-          plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
-          svgoConfig: {
-            floatPrecision: 2,
-          },
+          dimensions: true,
+          icon: true,
         },
-        include: '*.svg',
+        include: '**/*.svg',
       }),
       //
     ],

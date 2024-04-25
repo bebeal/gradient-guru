@@ -1,5 +1,4 @@
 import React, { forwardRef } from 'react';
-
 import { KeyMap } from '@/utils/keymap';
 import { cn } from '@/utils/utils';
 
@@ -59,7 +58,7 @@ export const Kbd = forwardRef((props: KbdProps, ref?: any) => {
     <kbd
       ref={ref}
       className={cn(
-        `relative flex gap-1 h-auto w-auto items-center justify-center rounded px-1.5 text-[10px] opacity-100`,
+        `relative flex gap-1 h-auto w-auto items-center justify-center rounded py-px px-1.5 text-[10px] opacity-100`,
         `shadow-kbd bg-zinc-900 text-kbd-foreground border-kbd-foreground font-mono font-bold`,
         `hover:bg-zinc-950 cursor-pointer hover:text-primary hover:shadow-kbd-hover`,
         className,

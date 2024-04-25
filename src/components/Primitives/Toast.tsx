@@ -1,10 +1,8 @@
 import { ReactNode, useCallback, useState } from 'react';
-import * as ToastPrimitive from '@radix-ui/react-toast';
-
 import { useToasts } from '@/hooks/useToasts';
 import { cn } from '@/utils/utils';
-
 import { Button } from './Button';
+import * as ToastPrimitive from '@radix-ui/react-toast';
 
 export const defaultToastTimeout = 3000;
 

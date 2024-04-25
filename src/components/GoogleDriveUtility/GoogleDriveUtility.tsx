@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-
 import { Button } from '@/components/Primitives/Button';
-import { Icon } from '@/components/Primitives/Icons';
+import { Icon } from '@/components/Primitives/Icons/Icon';
 import { Loading } from '@/components/Primitives/Loading';
-
 import { DebugAuthComponent } from './shared';
 import { useDrivePicker } from './useDrivePicker';
 

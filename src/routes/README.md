@@ -1,7 +1,0 @@
-# routes
-
-```bash
-┌ ○ /routes
-├ ○
-└ ○
-```

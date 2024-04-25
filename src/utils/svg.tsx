@@ -1,8 +1,7 @@
 import { isValidElement, ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import svgToDataUri from 'mini-svg-data-uri';
-
 import { cn } from './utils';
+import svgToDataUri from 'mini-svg-data-uri';
 
 // Encode SVG given as a React functional component as a data URL encoded string
 export const getURISVG = (svg: any): string => {

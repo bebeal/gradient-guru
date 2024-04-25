@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
-import styled from 'styled-components';
-
 import { DynamicGradientBackground } from '@/utils/colors';
 import { getEncodedSVGUrl } from '@/utils/svg';
 import { cn } from '@/utils/utils';
+import styled from 'styled-components';
 
 // Animate a continuous dashed path of an svg
 export const AnimatedDashedPath = styled.div<any>`

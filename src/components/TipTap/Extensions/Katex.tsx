@@ -1,10 +1,8 @@
+import { blockMath, inlineMath } from '@/utils/regex';
 import { Extension as TiptapExtension } from '@tiptap/core';
 import { Plugin as ProseMirrorPlugin, PluginKey as ProseMirrorPluginKey } from '@tiptap/pm/state';
 import { Decoration as ProseMirrorDecoration, DecorationSet as ProseMirrorDecorationSet } from '@tiptap/pm/view';
 import katex from 'katex';
-
-import { blockMath, inlineMath } from '@/utils/regex';
-
 // Custom implementation of KaTex based Mathematics extensions which supports LaTex math decorations
 
 import 'katex/dist/katex.min.css';

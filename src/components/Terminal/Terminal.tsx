@@ -1,5 +1,4 @@
 import { memo, useRef } from 'react';
-
 import { CopyButton } from '@/components/Buttons/CopyButton';
 import { DownloadButton } from '@/components/Buttons/DownloadButton';
 import { Highlighter, HighlighterProps } from '@/components/Highlighter/Highlighter';
