@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "composite": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "react-jsxdev",
+    "allowJs": true,
+    "checkJs": true,
+    "declaration": true,
+    "declarationMap": false,
+    "incremental": true,
+    "outDir": "dist/server",
+    "sourceMap": false,
+
+    /* Node */
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+
+    /* Linting */
+    "alwaysStrict": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+
+    /* Imports, Module Aliases, Paths, Types */
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "."
+  },
+  "include": ["api", "types", "server.ts", "vite.config.ts"],
+  "exclude": ["build", "dist", "node_modules", "src"],
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}

@@ -1,0 +1,149 @@
+/* import fonts */
+@import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
+@import '@/assets/fonts/Monaspace/Monaspace.css';
+
+/* import tailwindcss base styles: https://tailwindcss.com/docs/installation */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* tailwind preflight https://tailwindcss.com/docs/preflight */
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+#root,
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  place-items: center;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  touch-action: none;
+  overscroll-behavior: none;
+  line-height: 1;
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+  width: 4px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(0 0% 40%);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+a {
+  @apply text-[#1976d2] no-underline visited:text-[#646cff] hover:underline;
+}
+
+/* global root styles */
+:root {
+  @apply bg-primary font-mono text-primary;
+  color-scheme: light dark;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+
+  /* Custom properties for z-index layering */
+  --layer-overlays: 25;
+  --layer-toasts: 25;
+
+  /* Custom properties used in tailwind config */
+  --error: 255 69 58;
+  --muted: 85 85 85;
+  --success: 52 168 83;
+  --kbd-foreground: 161 161 170;
+
+  /* https://www.colorhexa.com/33a3ff */
+  --accent-50: 229 244 255;
+  --accent-100: 204 232 255;
+  --accent-200: 153 209 255;
+  --accent-300: 102 186 255;
+  --accent-400: 51 163 255;
+  --accent-500: 0 140 255;
+  --accent-600: 0 112 204;
+  --accent-700: 0 84 153;
+  --accent-800: 0 56 102;
+  --accent-900: 0 28 51;
+  --accent-950: 0 14 25;
+}
+
+/* Define light theme */
+.light {
+  --text-primary: 0 0 0;
+  --text-secondary: 85 85 85;
+  --text-tertiary: 153 153 153;
+
+  --background-primary: 238 238 238;
+  --background-secondary: 190 193 200;
+  --background-tertiary: 193 193 193;
+
+  --border-primary: 0 0 0;
+  --border-secondary: 220 220 220;
+  --border-tertiary: 229 229 229;
+}
+
+/* Define dark theme */
+.dark {
+  --text-primary: 249 249 249;
+  --text-secondary: 187 187 187;
+  --text-tertiary: 153 153 153;
+
+  --background-primary: 30 31 33;
+  --background-secondary: 35 37 41;
+  --background-tertiary: 26 26 26;
+
+  --border-primary: 73 85 95;
+  --border-secondary: 85 95 105;
+  --border-tertiary: 73 85 95;
+}
+
+/* Apply light theme per user preference */
+@media (prefers-color-scheme: light) {
+  :root {
+    @apply light;
+  }
+}
+
+/* Apply dark theme per user preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    @apply dark;
+  }
+}
+
+/* Ripple Effect */
+@keyframes ripple-click-effect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-click-effect 0.5s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}

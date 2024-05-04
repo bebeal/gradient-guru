@@ -1,0 +1,61 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "composite": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "checkJs": true,
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true,
+    "outDir": "dist/client",
+    "sourceMap": true,
+
+    /* Bundler */
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+
+    /* Linting */
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "useDefineForClassFields": true,
+    "skipLibCheck": true,
+
+    /* Imports, Module Aliases, Paths, Types */
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@assets/*": ["./assets/*"],
+      "@api/*": ["./server/api/*"],
+      "@client/*": ["./src/*"],
+      "@clients/*": ["./src/clients/*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@public/*": ["./public"],
+      "@server/*": ["./server"],
+      "@types/*": ["./types/*"],
+      "@utils/*": ["./src/utils/*"]
+    },
+    "types": ["node", "react", "react-dom", "vite/client"]
+  },
+  "include": ["src", "types", "assets", "node_modules/vite/types/*", "server/app.ts", ".eslintrc.cjs", "server/index.tsx"],
+  "exclude": ["build", "dist", "node_modules"],
+  "references": [{ "path": "./tsconfig.server.json" }],
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}
