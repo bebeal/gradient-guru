@@ -1,8 +1,8 @@
-import { colorRegex } from '@/utils/regex';
 import { Extension } from '@tiptap/core';
 import { Node } from '@tiptap/pm/model';
 import { Plugin } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
+import { colorRegex } from '@/utils/regex';
 
 // Replaces text color codes with vscode-like color chips
 

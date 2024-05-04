@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
-import { cn, noop } from '@/utils/utils';
 import * as SliderPrimitive from '@radix-ui/react-slider';
+import { cn, noop } from '@/utils/utils';
 
 // https://github.com/tmcw-up-for-adoption/simple-linear-scale/blob/master/index.js
 const linearScale = (input: readonly [number, number], output: readonly [number, number]) => {

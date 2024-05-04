@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { PlotlyProps } from '@/components/Plotly/Plotly';
 import { useQuery } from '@tanstack/react-query';
+import { PlotlyProps } from '@/components/Plotly/Plotly';
 
 const defaultBg = 'rgb(22, 26, 29)';
 const defaultFontColor = 'rgb(160, 170, 186)';

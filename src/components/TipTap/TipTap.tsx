@@ -1,9 +1,9 @@
 import { memo, Suspense, useRef } from 'react';
+import { Content, EditorContent, EditorOptions } from '@tiptap/react';
 import { Loading } from '@/components/Primitives/Loading';
 import { useTipTap } from '@/hooks/useTipTap';
 import { cn } from '@/utils/utils';
 import { TipTapToolbar } from './TipTapToolbar';
-import { Content, EditorContent, EditorOptions } from '@tiptap/react';
 
 export interface TipTapProps extends Partial<EditorOptions> {
   children?: any;

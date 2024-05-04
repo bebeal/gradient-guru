@@ -1,8 +1,8 @@
 import { ElementRef, forwardRef, useCallback, useEffect, useState } from 'react';
+import * as ToolbarPrimitive from '@radix-ui/react-toolbar';
 import { Radius } from '@/utils/styles';
 import { cn } from '@/utils/utils';
 import { Button, ButtonProps } from './Button';
-import * as ToolbarPrimitive from '@radix-ui/react-toolbar';
 
 // --------------------------------------------------
 // ToolbarButton

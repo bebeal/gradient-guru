@@ -2,7 +2,7 @@
 
 import { lazy, Suspense } from 'react';
 import { isRouteErrorResponse, useLocation, useRouteError } from 'react-router-dom';
-import NotFoundPage from '@/404';
+import NotFoundPage from '@/NotFound';
 import { Loading } from '@/components/Primitives/Loading';
 
 // It uses the url as a path, and will try to load the component from the file-system via dynamic import and render it.

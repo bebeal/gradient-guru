@@ -1,10 +1,10 @@
-import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors } from './src/utils/tailwind-plugins';
 import AspectRatioPlugin from '@tailwindcss/aspect-ratio';
 import ContainerQueriesPlugin from '@tailwindcss/container-queries';
 import TypographyPlugin from '@tailwindcss/typography';
 import { radixThemePreset } from 'radix-themes-tw';
 import type { Config } from 'tailwindcss';
 import TailwindCSSRadixPlugin from 'tailwindcss-radix';
+import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors } from './src/utils/tailwind-plugins';
 
 const config: Config = {
   safelist: [

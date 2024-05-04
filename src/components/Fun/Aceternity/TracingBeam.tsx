@@ -1,7 +1,7 @@
 //https://ui.aceternity.com/components/tracing-beam
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import { cn } from '@/utils/utils';
 import { motion, useScroll, useSpring, useTransform, useVelocity } from 'framer-motion';
+import { cn } from '@/utils/utils';
 
 export const TracingBeam = ({ children, className }: { children: ReactNode; className?: string }) => {
   const contentRef = useRef<HTMLDivElement>(null);

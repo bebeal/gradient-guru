@@ -25,7 +25,7 @@ export const gridOptions: GridOptions = {
   rowGroupPanelShow: isSmall ? undefined : 'always',
   pivotPanelShow: 'always',
   suppressColumnMoveAnimation: suppressColumnMoveAnimation(),
-  enableRtl: ssr ? false : /[?&]rtl=true/.test(window.location.search),
+  enableRtl: ssr ? false : /[?&]rtl=true/.test(window?.location?.search || ''),
   enableCharts: true,
   enableRangeSelection: true,
   enableFillHandle: true,

@@ -17,9 +17,10 @@ module.exports = {
     '^vite$',
     '^@vitejs(.*)$',
     '<THIRD_PARTY_MODULES>',
-    '^@([^/]+)$',
     '^@/(.*)$',
-    '^(?!.*\\.css$).*',
+    '^@([^/]+)$',
+    '^\\.\\/',
+    '',
     '.*\\.css$',
   ],
   importOrderSeparation: false, // separate groups with blank lines

@@ -7,13 +7,14 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
     "allowJs": true,
+    "esModuleInterop": true,
 
     /* Linting */
     "strict": true,
@@ -29,7 +30,7 @@
     /* Types */
     "types": ["node", "react", "react-dom", "vite/client", "@types/jest", "jest", "@testing-library/jest-dom"]
   },
-  "include": ["src", "jest.config.ts"],
+  "include": ["src", "jest.config.ts", ".eslintrc.cjs"],
   "exclude": ["node_modules", "dist", "build", "cdk", "cdk.out"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

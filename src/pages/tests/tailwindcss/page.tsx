@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
+import tailwindConfig from '../../../../tailwind.config';
+import dlv from 'dlv';
+import colorPalette from 'tailwindcss/colors';
+import resolveConfig from 'tailwindcss/resolveConfig';
 import { ColorPalette } from '@/components/ColorPalette/ColorPalette';
 import { ComponentMap, ComponentMapper } from '@/components/ComponentMapper/ComponentMapper';
 import { spectrum } from '@/utils/colors';
 import { kebabToTitleCase } from '@/utils/strings';
 import { cn } from '@/utils/utils';
-import tailwindConfig from '../../../../tailwind.config';
-import dlv from 'dlv';
-import colorPalette from 'tailwindcss/colors';
-import resolveConfig from 'tailwindcss/resolveConfig';
 
 const fixColor = (color: string) => color.replace('<alpha-value>', '1');
 
@@ -159,11 +159,11 @@ const ColorPaletteReference = ({ colors = [] }: { colors?: string[] }) => {
           <div key={title} className="2xl:contents">
             <div className="text-sm font-semibold text-slate-900 dark:text-slate-200 2xl:col-end-1 2xl:pt-2.5">
               {title
-                .split('')
-                .flatMap((l: any, i: number) => {
+                ?.split('')
+                ?.flatMap((l: any, i: number) => {
                   return i !== 0 && l.toUpperCase() === l ? [' ', l] : [l];
                 })
-                .join('')}
+                ?.join('')}
             </div>
             <div className="grid mt-3 grid-cols-1 sm:grid-cols-11 gap-y-3 gap-x-2 sm:mt-2 2xl:mt-0">
               {palette.map((props: any) => (

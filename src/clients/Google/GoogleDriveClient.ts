@@ -1,6 +1,6 @@
+import { Auth, drive_v3, google } from 'googleapis';
 import { getEnvVariable } from '@/utils/environment';
 import { GoogleAuth } from './GoogleAuth';
-import { Auth, drive_v3, google } from 'googleapis';
 
 export class GoogleDriveClient {
   private static instance: GoogleDriveClient;

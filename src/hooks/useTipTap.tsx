@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
+import { useEditor } from '@tiptap/react';
 import { MarkdownTipTapExtensions } from '@/components/TipTap/Extensions/Extensions';
 import { TipTapProps } from '@/components/TipTap/TipTap';
 import { cn } from '@/utils/utils';
-import { useEditor } from '@tiptap/react';
 
 export interface useTipTapProps extends Partial<TipTapProps> {}
 

@@ -16,7 +16,7 @@ const DEFAULT_MAPPING = MIME_MAPPING.txt;
 type FileExt = keyof typeof MIME_MAPPING;
 
 export function fileNameToMimeType(fileName: string): string {
-  const fileNameParts = fileName.split('.');
+  const fileNameParts = fileName?.toString()?.split('.');
   const extension = fileNameParts.slice(-1)[0];
   return extensionMimeType(extension);
 }

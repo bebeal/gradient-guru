@@ -1,7 +1,7 @@
 import { isValidElement, ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { cn } from './utils';
 import svgToDataUri from 'mini-svg-data-uri';
+import { cn } from './utils';
 
 // Encode SVG given as a React functional component as a data URL encoded string
 export const getURISVG = (svg: any): string => {
@@ -90,6 +90,7 @@ export const addGridToSvg = (
 
   const [x, y, w, h] = svg
     .getAttribute('viewBox')!
+    .toString()
     .split(' ')
     .map((v) => +v);
 

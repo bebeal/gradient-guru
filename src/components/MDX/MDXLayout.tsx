@@ -5,8 +5,10 @@ import MDXOptions from '@/utils/mdx-options.mjs';
 import { isEmptyObject } from '@/utils/objects';
 import { FrontMatter } from './FrontMatter';
 import { CustomMDXComponents } from './MDXComponents';
+
 // katex css
 import 'katex/dist/katex.min.css';
+
 import { isDevEnv } from '@/utils/environment';
 
 // dummy for now until find a replacement for next-mdx-remote within mdx-js/mdx

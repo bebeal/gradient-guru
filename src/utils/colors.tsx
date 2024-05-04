@@ -1,8 +1,8 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Radius, RadiusClasses } from './styles';
 import { getEncodedSVGUrl, isSVG } from './svg';
 import { cn } from './utils';
-import styled from 'styled-components';
 
 export type Color =
   | 'ruby'

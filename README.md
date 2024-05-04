@@ -10,6 +10,28 @@ react-script (react-router) -> next.js (app router) -> vite (react-router)
 
 Use `.env.example` as a template to fill out necessary environment variables which are required for various clients and services
 
+## Build
+
+```bash
+yarn
+yarn build
+```
+
+Output:
+
+![Build Output](src/assets/images/build-output.png)
+
+## Dev Server
+  
+```bash
+yarn
+yarn dev
+```
+
+Output:
+
+![Dev Server Output](src/assets/images/server-output.png)
+
 ## Dependencies
 
 All the dependencies built into this project.

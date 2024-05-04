@@ -1,7 +1,7 @@
 // https://ui.aceternity.com/components/typewriter-effect
 import { useEffect } from 'react';
-import { cn } from '@/utils/utils';
 import { motion, stagger, useAnimate } from 'framer-motion';
+import { cn } from '@/utils/utils';
 
 export const TypewriterEffect = ({
   words,
@@ -19,7 +19,7 @@ export const TypewriterEffect = ({
   const wordsArray = words.map((word) => {
     return {
       ...word,
-      text: word.text.split(''),
+      text: word?.text?.split(''),
     };
   });
 
@@ -94,7 +94,7 @@ export const TypewriterEffectSmooth = ({
   const wordsArray = words.map((word) => {
     return {
       ...word,
-      text: word.text.split(''),
+      text: word?.text?.split(''),
     };
   });
   const renderWords = () => {

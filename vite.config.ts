@@ -18,8 +18,11 @@ const viteConfig = defineConfig(({ command, mode }) => {
     build: {
       minify: false, // Set to false to make tests faster, set to true for production
     },
+    ssr: {
+      noExternal: ['styled-components', '@emotion/*'],
+    },
     server: {
-      port: parseInt(env.VITE_PORT) || 3407,
+      port: parseInt(env.PORT) || 3407,
     },
     plugins: [
       // for react with swc for faster refresh instead of esbuild & babel
@@ -34,7 +37,6 @@ const viteConfig = defineConfig(({ command, mode }) => {
         },
         include: '**/*.svg',
       }),
-      //
     ],
   };
 });

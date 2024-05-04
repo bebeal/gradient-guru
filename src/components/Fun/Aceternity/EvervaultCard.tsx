@@ -1,7 +1,7 @@
 // https://ui.aceternity.com/components/evervault-card
 import { useEffect, useState } from 'react';
-import { cn } from '@/utils/utils';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { cn } from '@/utils/utils';
 
 export const EvervaultCard = ({ text, className }: { text?: string; className?: string }) => {
   const mouseX = useMotionValue(0);

@@ -1,7 +1,7 @@
 // https://ui.aceternity.com/components/glowing-stars-effect
 import React, { useEffect, useRef, useState } from 'react';
-import { cn } from '@/utils/utils';
 import { AnimatePresence, motion } from 'framer-motion';
+import { cn } from '@/utils/utils';
 
 export const GlowingStarsBackgroundCard = ({ className, children }: { className?: string; children?: React.ReactNode }) => {
   const [mouseEnter, setMouseEnter] = useState(false);

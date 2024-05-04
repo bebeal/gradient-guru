@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { cn } from '@/utils/utils';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+import { cn } from '@/utils/utils';
 
 export interface TooltipProps extends TooltipPrimitive.TooltipProps {
   content?: any;

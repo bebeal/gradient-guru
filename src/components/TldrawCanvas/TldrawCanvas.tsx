@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { nanoid } from '@/utils/utils';
 import { setUserPreferences, Tldraw } from 'tldraw';
+import { nanoid } from '@/utils/utils';
+
 import 'tldraw/tldraw.css';
 
 export interface TldrawCanvasProps {}

@@ -1,10 +1,10 @@
 // https://ui.aceternity.com/components/sparkles
 import { useEffect, useState } from 'react';
-import { cn } from '@/utils/utils';
 import { Container } from '@tsparticles/engine';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
 import { motion, useAnimation } from 'framer-motion';
+import { cn } from '@/utils/utils';
 
 type ParticlesProps = {
   id?: string;

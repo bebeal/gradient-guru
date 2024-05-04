@@ -1,11 +1,3 @@
-import { nanoid } from '@/utils/utils';
-import { ColorChips } from './ColorChips';
-import KatexExtension from './Katex';
-import { ReactComponent } from './ReactComponent';
-import { Snippets } from './Snippets';
-import { TerminalBlock } from './TerminalBlock';
-import { TextReplacements } from './TextReplacements';
-import { Video } from './Video';
 import InvisibleCharacters, { HardBreakNode } from '@tiptap-pro/extension-invisible-characters';
 import { TableOfContent } from '@tiptap-pro/extension-table-of-content';
 import UniqueID from '@tiptap-pro/extension-unique-id';
@@ -51,6 +43,14 @@ import Underline from '@tiptap/extension-underline';
 import Youtube from '@tiptap/extension-youtube';
 import { Node } from '@tiptap/pm/model';
 import { Markdown as MarkdownExtension } from 'tiptap-markdown';
+import { nanoid } from '@/utils/utils';
+import { ColorChips } from './ColorChips';
+import KatexExtension from './Katex';
+import { ReactComponent } from './ReactComponent';
+import { Snippets } from './Snippets';
+import { TerminalBlock } from './TerminalBlock';
+import { TextReplacements } from './TextReplacements';
+import { Video } from './Video';
 
 // import { EmojiList } from './EmojiList';
 // import { Comments } from './Comments';

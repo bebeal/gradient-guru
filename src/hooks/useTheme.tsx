@@ -1,8 +1,7 @@
 import { createContext, FunctionComponent, ReactNode, useContext, useEffect, useState } from 'react';
 import { Theme as RadixTheme, ThemePanel as RadixThemePanel, ThemeProps } from '@radix-ui/themes';
-import '@radix-ui/themes/styles.css';
 
-// The `@radix-ui/themes` library is used to handle the themeing of the radix themed components.
+import '@radix-ui/themes/styles.css';
 
 const SHOW_BY_DEFAULT = false;
 
@@ -23,9 +22,8 @@ export type ThemeProviderProps = {
 };
 
 export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({ children }) => {
-  const [showThemePanel, setShowThemePanel] = useState<boolean>(SHOW_BY_DEFAULT); //  use build flag in future
+  const [showThemePanel, setShowThemePanel] = useState<boolean>(SHOW_BY_DEFAULT);
   const theme: ThemeProps = {
-    // * Both theme libraries have similar but slightly diff naming conventions:
     appearance: 'dark',
     accentColor: 'indigo',
     grayColor: 'auto',

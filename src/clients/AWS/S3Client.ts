@@ -1,8 +1,8 @@
 import { Readable } from 'stream';
-import { getEnvVariable, getEnvVariables } from '@/utils/environment';
-import { streamToString } from '@/utils/stream';
 import { GetObjectCommand, S3Client as InternalS3Client, ListObjectVersionsCommand, ObjectVersion, PutObjectCommand, PutObjectOutput } from '@aws-sdk/client-s3';
 import { AwsCredentialIdentity } from '@aws-sdk/types';
+import { getEnvVariable, getEnvVariables } from '@/utils/environment';
+import { streamToString } from '@/utils/stream';
 
 const getAWSCredentials = () => {
   const { accessKeyId, secretAccessKey } = getEnvVariables({

@@ -39,7 +39,7 @@ export const useDynamicDocTitle = (
 
   // Safely return the title and path, defaulting to empty strings if not running in a browser context
   return {
-    title: typeof window !== 'undefined' ? document.title : '',
-    path: typeof window !== 'undefined' ? window.location.pathname : '',
+    title: typeof window !== 'undefined' ? document?.title : '',
+    path: typeof window !== 'undefined' ? window?.location?.pathname : '',
   };
 };

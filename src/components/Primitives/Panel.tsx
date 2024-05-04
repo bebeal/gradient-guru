@@ -1,8 +1,8 @@
 import React, { forwardRef, useCallback } from 'react';
+import * as PanelPrimitive from '@radix-ui/react-accordion';
 import { useRippleEffect } from '@/hooks/useRippleEffect';
 import { cn } from '@/utils/utils';
 import { Icon } from './Icons/Icon';
-import * as PanelPrimitive from '@radix-ui/react-accordion';
 
 export enum Direction {
   up = 'up',

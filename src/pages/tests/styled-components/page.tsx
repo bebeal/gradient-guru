@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { ComponentMap, ComponentMapper } from '@/components/ComponentMapper/ComponentMapper';
 import styled from 'styled-components';
+import { ComponentMap, ComponentMapper } from '@/components/ComponentMapper/ComponentMapper';
 
 const StyledButton = styled.button<any>`
   padding: 5px 10px;

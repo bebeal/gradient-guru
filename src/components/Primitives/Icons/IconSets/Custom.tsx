@@ -1,13 +1,13 @@
 import { forwardRef } from 'react';
+import { Spinner } from '../CustomIcons';
+import { ThreeFanGpu } from '../CustomIcons/ThreeFanGpu';
+import { IconSetMap } from '../IconSet';
 import UnknownSprite from '@/assets/icons/201-question.svg';
 import CenterCircle from '@/assets/icons/Carbon/CenterCircle.svg';
 import DotMark from '@/assets/icons/Carbon/DotMark.svg';
 import StatusPartialFail from '@/assets/icons/Carbon/StatusPartialFail.svg';
 import GradientGuru from '@/assets/icons/GradientGuru.svg';
 import { cn } from '@/utils/utils';
-import { Spinner } from '../CustomIcons';
-import { ThreeFanGpu } from '../CustomIcons/ThreeFanGpu';
-import { IconSetMap } from '../IconSet';
 
 export const DotDotDot = forwardRef((props: any, ref: any) => {
   const { className = '', vertical = false, bounce = false, width, height } = props;

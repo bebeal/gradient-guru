@@ -1,9 +1,8 @@
 import { createContext, FC, ReactNode, useContext } from 'react';
-import { Geiger } from 'react-geiger';
-import { ReactQueryDevTool } from '@/utils/react-query';
-import { cn } from '@/utils/utils';
 import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
+import { ReactQueryDevTool } from '@/utils/react-query';
+import { cn } from '@/utils/utils';
 
 // Define interfaces/types for dev tools and their context
 export interface DevTool {
@@ -14,7 +13,7 @@ export interface DevTool {
 }
 export interface DevToolsStoreState {
   reactQueryDevTool: DevTool;
-  geiger: DevTool;
+  // geiger: DevTool;
 }
 export type DevToolsStoreActions = {
   setDevTool: (tool: keyof DevToolsStoreState, value: Partial<DevTool>) => void;
@@ -27,9 +26,9 @@ export const useDevToolsStore = create<DevToolsStoreState & DevToolsStoreActions
     enabled: false,
     visible: false,
   },
-  geiger: {
-    enabled: false,
-  },
+  // geiger: {
+  //   enabled: false,
+  // },
   setDevTool: (tool, value) => set((state) => ({ [tool]: { ...state[tool], ...value } })),
   isDevToolEnabled: (tool) => get()[tool].enabled,
   toggleDevTool: (tool, override) => set((state) => ({ [tool]: { ...state[tool], visible: override ?? !state[tool].visible } })),
@@ -45,18 +44,19 @@ export interface DevToolsProviderProps {
 }
 export const DevToolsProvider: FC<DevToolsProviderProps> = ({ children, className }) => {
   const reactQueryDevTool = useDevToolsStore(useShallow((state) => state.reactQueryDevTool));
-  const geiger = useDevToolsStore(useShallow((state) => state.geiger));
   const [setDevTool, isDevToolEnabled, toggleDevTool] = useDevToolsStore(useShallow((state) => [state.setDevTool, state.isDevToolEnabled, state.toggleDevTool]));
 
   // add other dev tools which need to wrap around the entire app (e.g. providers, profilers)
   const DevToolsComponent = ({ children }: { children: ReactNode }) => {
     return (
-      <Geiger profilerId={'Geiger'} renderTimeThreshold={0} {...geiger}>
+      <>
+        {/* <Geiger profilerId={'Geiger'} renderTimeThreshold={0} {...geiger}> */}
         {children}
         <div className={cn('fixed top-0 left-0 pointer-events-auto cursor-auto z-[var(--layer-overlays)]', className)}>
           {reactQueryDevTool?.enabled && <ReactQueryDevTool {...reactQueryDevTool} toggle={() => toggleDevTool('reactQueryDevTool')} />}
         </div>
-      </Geiger>
+        {/* </Geiger> */}
+      </>
     );
   };
 
@@ -64,7 +64,7 @@ export const DevToolsProvider: FC<DevToolsProviderProps> = ({ children, classNam
     <DevToolsContext.Provider
       value={{
         reactQueryDevTool,
-        geiger,
+        // geiger,
         setDevTool,
         isDevToolEnabled,
         toggleDevTool,

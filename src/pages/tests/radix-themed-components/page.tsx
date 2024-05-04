@@ -1,6 +1,4 @@
 import React, { Suspense, useEffect } from 'react';
-import { useTheme } from '@/hooks/useTheme';
-import { getPeopleForColor } from './people';
 import { ArrowRightIcon, CaretDownIcon, InfoCircledIcon, MagnifyingGlassIcon, StarIcon } from '@radix-ui/react-icons';
 import {
   AlertDialog,
@@ -71,7 +69,9 @@ import {
   textPropDefs,
   themePropDefs,
 } from '@radix-ui/themes/props';
+import { useTheme } from '@/hooks/useTheme';
 import styles from './page.module.css';
+import { getPeopleForColor } from './people';
 
 const PrimitivesTest = () => {
   const theme = useTheme();

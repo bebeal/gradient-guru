@@ -1,9 +1,9 @@
 // https://ui.aceternity.com/components/text-reveal-card
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { useMounted } from '@/hooks/useMounted';
-import { cn } from '@/utils/utils';
 import { motion } from 'framer-motion';
 import { twMerge } from 'tailwind-merge';
+import { useMounted } from '@/hooks/useMounted';
+import { cn } from '@/utils/utils';
 
 export const TextRevealCard = ({ text, revealText, children, className }: { text: string; revealText: string; children?: React.ReactNode; className?: string }) => {
   const [widthPercentage, setWidthPercentage] = useState(0);

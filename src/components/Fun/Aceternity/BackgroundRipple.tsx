@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { cn } from '@/utils/utils';
 import { motion, useAnimation } from 'framer-motion';
+import { cn } from '@/utils/utils';
 
 /* eslint-disable react-hooks/rules-of-hooks */
 // https://www.aceternity.com/components/background-cell-animation

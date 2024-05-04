@@ -1,7 +1,7 @@
 // https://ui.aceternity.com/components/background-beams
+import { motion } from 'framer-motion';
 import { useMounted } from '@/hooks/useMounted';
 import { cn } from '@/utils/utils';
-import { motion } from 'framer-motion';
 
 export const BackgroundBeams = ({ className }: { className?: string }) => {
   const mounted = useMounted();

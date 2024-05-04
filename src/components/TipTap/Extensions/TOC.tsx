@@ -1,5 +1,5 @@
-import { cn } from '@/utils/utils';
 import { TextSelection } from '@tiptap/pm/state';
+import { cn } from '@/utils/utils';
 
 // Table Of Contents extension
 

@@ -20,7 +20,7 @@ const normalizePath = (path: string, removeLeadingSlash = true, removeTrailingSl
 
 export const matchesPath = (patternsMap: { [key: string]: any }, currentPath: string): any => {
   const patterns = Object.keys(patternsMap);
-  const path = normalizePath(currentPath) || normalizePath(window.location.pathname);
+  const path = normalizePath(currentPath) || normalizePath(window?.location?.pathname?.toString());
   for (const pattern of patterns) {
     // This will check for the pattern with or without a trailing slash
     const regexPattern = `^${normalizePath(pattern).split('?')[0].replace(/\/$/, '')}/?$`;

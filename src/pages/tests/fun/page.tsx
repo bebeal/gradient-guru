@@ -1,4 +1,5 @@
 import { FC, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ComponentMap, ComponentMapper } from '@/components/ComponentMapper/ComponentMapper';
 import {
   BackgroundBeams,
@@ -22,7 +23,6 @@ import {
 import { Image } from '@/components/Primitives/Image';
 import { cn } from '@/utils/utils';
 import { mockData } from './mockData';
-import { motion, useScroll, useTransform } from 'framer-motion';
 
 const PinDemo = () => {
   return (

@@ -12,7 +12,7 @@ export const parseFrontmatter = (fileContent: string) => {
   const frontMatter: Partial<any> = {};
 
   frontMatterLines.forEach((line) => {
-    const [key, ...valueArr] = line.split(': ');
+    const [key, ...valueArr] = line.toString().split(': ');
     let value = valueArr.join(': ').trim();
     value = value.replace(/^['"](.*)['"]$/, '$1'); // Remove quotes
     frontMatter[key.trim()] = value;

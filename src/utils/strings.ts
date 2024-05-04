@@ -19,7 +19,7 @@ export const camelToSnakeCase = (str: string): string => {
 };
 
 export const snakeToCamelCase = (snakeStr: string): string => {
-  const components = snakeStr.split('_');
+  const components = snakeStr?.toString()?.split('_');
   return (
     components[0] +
     components
@@ -31,6 +31,7 @@ export const snakeToCamelCase = (snakeStr: string): string => {
 
 export const toSnakeCase = (camelStr: string): string => {
   return camelStr
+    .toString()
     .split('')
     .map((c) => (c === c.toUpperCase() ? `_${c.toLowerCase()}` : c))
     .join('')
@@ -40,6 +41,7 @@ export const toSnakeCase = (camelStr: string): string => {
 // Get initials from name, e.g. John Doe => JD
 export const getInitials = (name: string): string => {
   return name
+    .toString()
     .split(' ')
     .map((word) => word[0]?.toUpperCase() || '')
     .join('');

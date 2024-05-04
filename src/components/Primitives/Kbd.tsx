@@ -12,7 +12,7 @@ export interface KbdProps {
 export const Kbd = forwardRef((props: KbdProps, ref?: any) => {
   const { children, className = '', plusSign = false, popup = false } = props;
   const [clicked, setClicked] = React.useState(false);
-  const mappedKeys = children.split('').map((key: any) => KeyMap[key] || key);
+  const mappedKeys = children?.split('').map((key: any) => KeyMap[key] || key);
 
   const formatKeys = () => {
     const elements = [];
