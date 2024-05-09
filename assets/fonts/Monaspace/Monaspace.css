@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'Argon';
+  src: url('MonaspaceArgonVarVF[wght,wdth,slnt].ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-stretch: 50% 200%;
+  font-style: oblique 0deg -10deg;
+}
+
+@font-face {
+  font-family: 'Krypton';
+  src: url('MonaspaceKryptonVarVF[wght,wdth,slnt].ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-stretch: 50% 200%;
+  font-style: oblique 0deg -10deg;
+}
+
+@font-face {
+  font-family: 'Neon';
+  src: url('MonaspaceNeonVarVF[wght,wdth,slnt].ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-stretch: 50% 200%;
+  font-style: oblique 0deg -10deg;
+}
+
+@font-face {
+  font-family: 'Radon';
+  src: url('MonaspaceRadonVarVF[wght,wdth,slnt].ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-stretch: 50% 200%;
+  font-style: oblique 0deg -10deg;
+}
+
+@font-face {
+  font-family: 'Xenon';
+  src: url('MonaspaceXenonVarVF[wght,wdth,slnt].ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-stretch: 50% 200%;
+  font-style: oblique 0deg -10deg;
+}
