@@ -25,11 +25,6 @@ export default defineConfig({
     // Set minify to false to make tests faster, set to true for production
     minify: false,
   },
-  // css: {
-  //   preprocessorOptions: {
-      
-  //   },
-  // },
   plugins,
   resolve: {
     alias: [
