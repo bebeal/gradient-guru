@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-
-import express from 'express';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import express from 'express';
 
 // import api from './server/app.js';
 
@@ -70,18 +69,16 @@ const createServer = async () => {
       if (isProd) {
         template = indexProd;
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         render = (await import('../server/index.js')).default.render;
       }
 
       const context: any = {};
       const appHtml = await render(req);
-      const { helmet } = appHtml;
 
       if (context.url) return res.redirect(301, context.url);
 
-      let html = template.replace('<!--app-html-->', appHtml.html);
+      const html = template.replace('<!--app-html-->', appHtml.html);
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e: any) {

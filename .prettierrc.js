@@ -1,5 +1,5 @@
 /** @type {import('prettier').Config} */
-module.exports = {
+export default {
   endOfLine: 'lf', // end of line sequence, 'lf' - for linux, 'crlf' - for windows
   printWidth: 240, // max 240 chars in line, code is easy to read
   semi: true, // enforce semi-colons at the end of statements
@@ -23,16 +23,12 @@ module.exports = {
     '',
     '.*\\.css$',
   ],
-  importOrderSeparation: false, // separate groups with blank lines
-  importOrderSortSpecifiers: true, // sort specifiers
-  importOrderBuiltinModulesToTop: true, // move built-in modules to the top of the import list
+  importOrderTypeScriptVersion: '5.0.0', // combines type and value imports
   importOrderParserPlugins: [
     // parser plugins for import order
     'typescript',
     'jsx',
     'decorators-legacy',
   ],
-  importOrderMergeDuplicateImports: true, // merge duplicate imports
-  importOrderCombineTypeAndValueImports: true, // combine type and value imports
-  plugins: ['@ianvs/prettier-plugin-sort-imports'],
+  plugins: ['prettier-plugin-tailwindcss', '@ianvs/prettier-plugin-sort-imports'],
 };

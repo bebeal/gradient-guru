@@ -60,5 +60,6 @@ coverage
 
 # Other files I don't want formatted
 README.md
-.eslintrc.cjs
+.eslintrc.*
+eslint-config.js
 *.d.ts

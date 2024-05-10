@@ -3,7 +3,7 @@ import ReactDomServer from 'react-dom/server';
 import { createStaticHandler, createStaticRouter, StaticRouterProvider } from 'react-router-dom/server';
 import type * as express from 'express';
 import { App } from '@/App';
-import {routes} from '@/routes';
+import { routes } from '@/routes';
 
 const render = async (req: express.Request) => {
   const helmetContext = {};
@@ -20,8 +20,8 @@ const render = async (req: express.Request) => {
 
   const html = ReactDomServer.renderToString(
     <React.StrictMode>
-        <StaticRouterProvider router={router} context={context} />
-    </React.StrictMode>
+      <StaticRouterProvider router={router} context={context} />
+    </React.StrictMode>,
   );
 
   return { html, ...helmetContext };

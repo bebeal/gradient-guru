@@ -4,7 +4,6 @@ import TypographyPlugin from '@tailwindcss/typography';
 import { radixThemePreset } from 'radix-themes-tw';
 import type { Config } from 'tailwindcss';
 import TailwindCSSRadixPlugin from 'tailwindcss-radix';
-import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors } from './src/utils/tailwind-plugins';
 
 const config: Config = {
   safelist: [
@@ -250,7 +249,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [VariablesForColors, TailwindCSSRadixPlugin, TypographyPlugin, AspectRatioPlugin, ContainerQueriesPlugin, AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin],
+  plugins: [TailwindCSSRadixPlugin, TypographyPlugin, AspectRatioPlugin, ContainerQueriesPlugin],
 };
 
 export default config;

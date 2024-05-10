@@ -32,7 +32,6 @@ export default defineConfig({
       { find: '@assets', replacement: `${__dirname}/assets` },
       { find: '@api', replacement: `${__dirname}/server/api` },
       { find: '@client', replacement: `${__dirname}/src` },
-      { find: '@clients', replacement: `${__dirname}/src/clients` },
       { find: '@components', replacement: `${__dirname}/src/components` },
       { find: '@hooks', replacement: `${__dirname}/src/hooks` },
       { find: '@lib', replacement: `${__dirname}/src/lib` },

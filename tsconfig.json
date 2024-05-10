@@ -37,7 +37,6 @@
       "@assets/*": ["./assets/*"],
       "@api/*": ["./server/api/*"],
       "@client/*": ["./src/*"],
-      "@clients/*": ["./src/clients/*"],
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@lib/*": ["./src/lib/*"],
