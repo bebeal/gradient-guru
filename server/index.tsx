@@ -6,8 +6,6 @@ import { App } from '@/App';
 import { routes } from '@/routes';
 
 const render = async (req: express.Request) => {
-  const helmetContext = {};
-
   const { query, dataRoutes } = createStaticHandler(routes);
   const remixRequest = createFetchRequest(req);
   const context = await query(remixRequest);
@@ -20,14 +18,16 @@ const render = async (req: express.Request) => {
 
   const html = ReactDomServer.renderToString(
     <React.StrictMode>
-      <StaticRouterProvider router={router} context={context} />
+      <App>
+        <StaticRouterProvider router={router} context={context} />
+      </App>
     </React.StrictMode>,
   );
 
-  return { html, ...helmetContext };
+  return { html };
 };
 
-export function createFetchRequest(req: express.Request): Request {
+export const createFetchRequest = (req: express.Request): Request => {
   const origin = `${req.protocol}://${req.get('host')}`;
   // Note: This had to take originalUrl into account for presumably vite's proxying
   const url = new URL(req.originalUrl || req.url, origin);
@@ -60,7 +60,7 @@ export function createFetchRequest(req: express.Request): Request {
   }
 
   return new Request(url.href, init);
-}
+};
 
 const _export = {
   render,

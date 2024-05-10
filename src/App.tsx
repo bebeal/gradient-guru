@@ -1,6 +1,5 @@
 import React from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { Router } from '@/routes';
 import { makeQueryClient } from '@/utils/react-query';
 
 import '@/index.css';
@@ -15,10 +14,6 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const App = () => {
-  return (
-    <Providers>
-      <Router />
-    </Providers>
-  );
+export const App = ({ children }: { children: React.ReactNode }) => {
+  return <Providers>{children}</Providers>;
 };

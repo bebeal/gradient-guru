@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 
-class App {
+class Api {
   public router: Router = express.Router();
 
   constructor() {
@@ -10,6 +10,6 @@ class App {
   }
 }
 
-const api = new App();
+const api = new Api();
 
 export default api;

@@ -1,6 +1,6 @@
 /* import fonts */
-@import '@/assets/fonts/BerkeleyMono/BerkeleyMono.css';
-@import '@/assets/fonts/Monaspace/Monaspace.css';
+@import '@assets/fonts/BerkeleyMono/BerkeleyMono.css';
+@import '@assets/fonts/Monaspace/Monaspace.css';
 
 /* import tailwindcss base styles: https://tailwindcss.com/docs/installation */
 @tailwind base;

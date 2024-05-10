@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import { Router } from '@/routes';
+import { BrowserRouter, createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { App } from './App';
+import { routes } from './routes';
 
-const root = document.getElementById('root')!;
+const router = createBrowserRouter(routes);
+
+const root = document.getElementById('root') as HTMLElement;
 const app = (
   <React.StrictMode>
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
+    <App>
+      <RouterProvider router={router} fallbackElement={null} />
+    </App>
   </React.StrictMode>
 );
 const context = {};
