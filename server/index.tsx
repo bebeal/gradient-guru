@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDomServer from 'react-dom/server';
 import { createStaticHandler, createStaticRouter, StaticRouterProvider } from 'react-router-dom/server';
 import type * as express from 'express';
-import { App } from '@/App';
 import { routes } from '@/routes';
 
 const render = async (req: express.Request) => {
@@ -16,13 +15,7 @@ const render = async (req: express.Request) => {
 
   const router = createStaticRouter(dataRoutes, context);
 
-  const html = ReactDomServer.renderToString(
-    <React.StrictMode>
-      <App>
-        <StaticRouterProvider router={router} context={context} />
-      </App>
-    </React.StrictMode>,
-  );
+  const html = ReactDomServer.renderToString(<StaticRouterProvider router={router} context={context} />);
 
   return { html };
 };

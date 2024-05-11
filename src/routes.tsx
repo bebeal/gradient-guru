@@ -1,18 +1,21 @@
 import { Route, Routes, type RouteObject } from 'react-router-dom';
+import { App } from '@/App';
 import NotFound from '@/pages/not-found/page';
 import Root from '@/pages/page';
 
 export const routes: RouteObject[] = [
-  { path: '*', element: <NotFound /> },
-  { path: '/', element: <Root /> },
+  {
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        path: '',
+        element: <Root />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+    ],
+  },
 ];
-
-export const Router = () => {
-  return (
-    <Routes>
-      {routes.map(({ path, element, errorElement }) => (
-        <Route key={path} path={path} element={element} errorElement={errorElement} />
-      ))}
-    </Routes>
-  );
-};

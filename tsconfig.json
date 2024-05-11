@@ -42,13 +42,13 @@
       "@lib/*": ["./src/lib/*"],
       "@pages/*": ["./src/pages/*"],
       "@public/*": ["./public"],
-      "@server/*": ["./server"],
+      "@server/*": ["./server/*"],
       "@types/*": ["./types/*"],
       "@utils/*": ["./src/utils/*"]
     },
     "types": ["node", "react", "react-dom", "vite/client"]
   },
-  "include": ["src", "types", "assets", "node_modules/vite/types/*", "server/app.ts", ".eslintrc.cjs", "server/index.tsx"],
+  "include": ["src", "types", "assets", "node_modules/vite/types/*", "server/api.ts", ".eslintrc.cjs", "server/index.tsx"],
   "exclude": ["build", "dist", "node_modules"],
   "references": [{ "path": "./tsconfig.server.json" }],
   "ts-node": {

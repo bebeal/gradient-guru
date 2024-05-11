@@ -2,9 +2,8 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import api from '@server/api';
 import express from 'express';
-
-// import api from './server/app.js';
 
 const __dirname: string = path.dirname(fileURLToPath(import.meta.url));
 const isTest = process.env.VITEST;
@@ -51,7 +50,7 @@ const createServer = async () => {
   }
 
   // api routes
-  // app.use('/api', api.router);
+  app.use('/api', api.router);
 
   app.use('*', async (req, res) => {
     try {

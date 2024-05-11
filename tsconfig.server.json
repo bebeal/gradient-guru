@@ -26,10 +26,24 @@
 
     /* Imports, Module Aliases, Paths, Types */
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@assets/*": ["./assets/*"],
+      "@api/*": ["./server/api/*"],
+      "@client/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@public/*": ["./public"],
+      "@server/*": ["./server/*"],
+      "@types/*": ["./types/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
   },
-  "include": ["api", "types", "server.ts", "vite.config.ts"],
-  "exclude": ["build", "dist", "node_modules", "src"],
+  "include": ["src", "server.ts", "server", "types", "vite.config.ts"],
+  "exclude": ["build", "dist", "node_modules"],
   "ts-node": {
     "transpileOnly": true,
     "compilerOptions": {
