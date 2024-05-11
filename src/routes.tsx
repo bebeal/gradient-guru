@@ -1,4 +1,4 @@
-import { Route, Routes, type RouteObject } from 'react-router-dom';
+import { type RouteObject } from 'react-router-dom';
 import { App } from '@/App';
 import NotFound from '@/pages/not-found/page';
 import Root from '@/pages/page';

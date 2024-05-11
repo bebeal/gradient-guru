@@ -1,26 +1,9 @@
-import React from 'react';
 import ReactDomServer from 'react-dom/server';
 import { createStaticHandler, createStaticRouter, StaticRouterProvider } from 'react-router-dom/server';
 import type * as express from 'express';
 import { routes } from '@/routes';
 
-const render = async (req: express.Request) => {
-  const { query, dataRoutes } = createStaticHandler(routes);
-  const remixRequest = createFetchRequest(req);
-  const context = await query(remixRequest);
-
-  if (context instanceof Response) {
-    throw context;
-  }
-
-  const router = createStaticRouter(dataRoutes, context);
-
-  const html = ReactDomServer.renderToString(<StaticRouterProvider router={router} context={context} />);
-
-  return { html };
-};
-
-export const createFetchRequest = (req: express.Request): Request => {
+const createFetchRequest = (req: express.Request): Request => {
   const origin = `${req.protocol}://${req.get('host')}`;
   // Note: This had to take originalUrl into account for presumably vite's proxying
   const url = new URL(req.originalUrl || req.url, origin);
@@ -53,6 +36,20 @@ export const createFetchRequest = (req: express.Request): Request => {
   }
 
   return new Request(url.href, init);
+};
+
+const render = async (req: express.Request) => {
+  const { query, dataRoutes } = createStaticHandler(routes);
+  const fetchRequest = createFetchRequest(req);
+  const context = await query(fetchRequest);
+
+  if (context instanceof Response) {
+    throw context;
+  }
+
+  const router = createStaticRouter(dataRoutes, context);
+  const html = ReactDomServer.renderToString(<StaticRouterProvider router={router} context={context} />);
+  return { html };
 };
 
 const _export = {

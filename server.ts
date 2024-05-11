@@ -16,14 +16,15 @@ const resolve = (_path: string) => path.resolve(__dirname, _path);
 const indexProd: string = isProd ? fs.readFileSync(resolve('client/index.html'), 'utf-8') : '';
 
 const createServer = async () => {
+  // Create http server
   const app = express();
 
   let vite: any;
 
+  // Add Vite or respective production middlewares
   if (!isProd) {
-    vite = await (
-      await import('vite')
-    ).createServer({
+    const { createServer } = await import('vite');
+    vite = await createServer({
       root,
       logLevel: isTest ? 'error' : 'info',
       server: {
@@ -35,13 +36,9 @@ const createServer = async () => {
       },
       appType: 'custom',
     });
-
     app.use(vite.middlewares);
-  }
-
-  if (isProd) {
+  } else {
     app.use((await import('compression')).default());
-
     app.use(
       (await import('serve-static')).default(resolve('./client'), {
         index: false,
@@ -52,32 +49,27 @@ const createServer = async () => {
   // api routes
   app.use('/api', api.router);
 
+  // Serve HTML
   app.use('*', async (req, res) => {
     try {
       const url = req.originalUrl;
-
       let template, render;
 
       if (!isProd) {
+        // Always read fresh template in development
         template = fs.readFileSync(resolve('index.html'), 'utf8');
         template = await vite.transformIndexHtml(url, template);
-
         render = (await vite.ssrLoadModule('/server/index.tsx')).default.render;
-      }
-
-      if (isProd) {
+      } else {
         template = indexProd;
-
         // @ts-ignore
         render = (await import('../server/index.js')).default.render;
       }
 
       const context: any = {};
-      const appHtml = await render(req);
-
+      const rendered = await render(req);
       if (context.url) return res.redirect(301, context.url);
-
-      const html = template.replace('<!--app-html-->', appHtml.html);
+      const html = template.replace('<!--app-html-->', rendered.html).replace('<!--app-head-->', rendered.head);
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e: any) {
