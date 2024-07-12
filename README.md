@@ -32,6 +32,10 @@ https://github.com/bebeal/gradient-guru/assets/42706447/ef5f150e-2d67-42a9-b919-
 
 https://github.com/bebeal/gradient-guru/assets/42706447/dbee7dd0-ae8b-49be-8a97-88c055e50233
 
+### Agent Interaction
+
+https://github.com/user-attachments/assets/b67c6db2-d404-41a6-9fd3-1cec323bdfcc
+
 
 
 
