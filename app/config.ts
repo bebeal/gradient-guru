@@ -1,9 +1,9 @@
 import { IDocConfig } from '@/hooks';
 
 export const DocConfig: IDocConfig = {
-  title: 'App',
+  title: 'app',
   shorthand: 'app',
   separator: '•',
-  description: 'App Description',
+  description: 'gg',
   url: 'http://localhost:3407',
 };

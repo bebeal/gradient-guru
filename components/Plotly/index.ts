@@ -1,1 +1,2 @@
-export * from './Plotly'
+export * from './Plotly';
+export * from './usePlotly';

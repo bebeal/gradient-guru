@@ -5,13 +5,6 @@ import mdxOptions from './utils/mdx-options.mjs';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import remarkFrontmatter from 'remark-frontmatter'
 
-// import postgres from 'postgres';
-
-// export const sql = postgres(process.env.POSTGRES_URL, {
-//   ssl: 'allow',
-// });
-
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compiler: {
@@ -22,7 +15,7 @@ const nextConfig = {
   configOrigin: 'default',
   useFileSystemPublicRoutes: true,
   generateEtags: true,
-  pageExtensions: ['js', 'jsx', 'mjs', 'ts', 'tsx', 'md', 'mdx', 'mjs', 'cjs', 'mts', 'cts'],
+  pageExtensions: ['js', 'jsx', 'mjs', 'ts', 'tsx', 'md', 'mdx', 'mjs', 'cjs', 'mts', 'cts', 'csv'],
   poweredByHeader: true,
   compress: true,
   optimizeFonts: true,
@@ -91,6 +84,13 @@ const nextConfig = {
     mdxRs: false, // experimental rust-based mdx compiler
     nextScriptWorkers: false,
   },
+  webpack: (config, { isServer }) => {
+    config.module.rules.push({
+      test: /\.csv$/,
+      loader: 'raw-loader'
+    });
+    return config;
+  },
 };
 
 const withBundleAnalyzer = NextBundleAnalyzer({
@@ -110,7 +110,7 @@ const withMDX = createMDX({
     ]
   }
 });
- 
+
 const config = withBundleAnalyzer(withMDX(withSVGR(nextConfig)));
 
 export default config;

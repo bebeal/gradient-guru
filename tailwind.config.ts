@@ -1,10 +1,10 @@
+import type { Config } from 'tailwindcss';
 import AspectRatioPlugin from '@tailwindcss/aspect-ratio';
 import ContainerQueriesPlugin from '@tailwindcss/container-queries';
 import TypographyPlugin from '@tailwindcss/typography';
 import { radixThemePreset } from 'radix-themes-tw';
 import TailwindCSSRadixPlugin from 'tailwindcss-radix';
 import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors } from './utils/tailwind-plugins';
-import type { Config } from 'tailwindcss';
 
 const config: Config = {
   safelist: [
@@ -21,6 +21,7 @@ const config: Config = {
     `bg-red-500 bg-error-500 bg-green-500 bg-success-500 bg-primary-500 bg-accent-500`,
     'prose prose-sm prose-base prose-slate dark:prose-invert focus:outline-none',
     `object-fit object-contain object-cover max-w-full !max-w-full text-error bg-[rgb(0, 0, 0)] bg-[rgb(var(--accent-500))]`,
+    'font-mono font-argon font-krypton font-neon font-radon font-xenon',
   ],
   darkMode: ['class'],
   content: [
@@ -30,7 +31,6 @@ const config: Config = {
     './components/**/*.{js,jsx,ts,tsx,md,mdx}',
     './utils/**/*.{js,jsx,ts,tsx,md,mdx}',
     './clients/**/*.{js,jsx,ts,tsx,md,mdx}',
-    './assets/**/*.{js,jsx,ts,tsx,md,mdx}',
   ],
   preset: [radixThemePreset],
   theme: {

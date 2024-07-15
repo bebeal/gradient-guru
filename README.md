@@ -403,7 +403,7 @@ Use `.env.example` as a template to fill out necessary environment variables whi
 
 ---
 
-- Adding React Query Devtools and App Debugger
+- Adding React Query Devtools
 
   - Install packages
 
@@ -411,23 +411,20 @@ Use `.env.example` as a template to fill out necessary environment variables whi
   yarn add @tanstack/react-query-devtools
   ```
 
-  - Define a `DevToolsProvider` in `hooks/useDevTools.tsx` and use it in `providers.tsx`.
-    - Consolidates debugging for `@tanstack/react-query-devtools` to serve a single source of truth for debugging for the app.
-    - This sets up various dev tools, all which can be optionally enabled/disabled and for dev tools with components optionally visible/hidden.
-    - Add `ReactQueryDevtools`.
-      - Overwrites the native button with a custom one.
+  To use:
 
----
+  ```tsx
+  import { ReactQueryDevtools } from 'react-query/devtools';
 
-- Add [`react-geiger`](https://github.com/kristiandupont/react-geiger) as a non-serious debugging tool to `DevToolsProvider`
-
-  - Install packages
-
-  ```bash
-  yarn add react-geiger lodash
+  export const DebugToolsProvider: FC = ({ children }) => {
+    return (
+      <>
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </>
+    );
+  };
   ```
-
-  - Add `GeigerProvider` to `DebugToolsProvider`
 
 ---
 

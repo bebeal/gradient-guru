@@ -95,9 +95,9 @@ const configureWebpackForNextjs = (config) => {
 const withSVGR = (nextConfig = {}) => {
   return {
     ...nextConfig,
-    webpack: (config) => {
-      nextConfig.webpack && nextConfig.webpack(config);
-      return configureWebpackForNextjs(config);
+    webpack: (config, options) => {
+      nextConfig.webpack && nextConfig.webpack(config, options);
+      return configureWebpackForNextjs(config, options);
     },
   };
 }

@@ -1,10 +1,10 @@
 'use client'
 
-import { Separator } from "@/components";
 import Image from 'next/image';
 // import as asset SVG, see webpack definition in next.config.js
-import GradientGruruSVG from '@/assets/icons/GradientGuruArchitecture.svg?url';
-import { ImageCaption } from "@/utils";
+import GradientGruruSVG from '@/public/icons/GradientGuruArchitecture.svg?url';
+import { ImageCaption } from "@/utils/images";
+import { Separator } from "@/components/Primitives/Separator";
 
 const AboutPage = () => {
   return (

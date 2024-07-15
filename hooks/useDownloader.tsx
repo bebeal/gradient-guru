@@ -25,7 +25,7 @@ export const useDownloader = (props: DownloaderProps) => {
     simDownload=false,
     simError=false,
   } = props;
-  const [total, setTotal] = useState<number>(100000000);
+  const [total, setTotal] = useState<number>(27520);
   const [bytesDownloaded, setBytesDownloaded] = useState<number>(0);
   const [targetPercentage, setTargetPercentage] = useState<number>(0);
   const [downloadPercentage, setDownloadPercentage] = useState<number>(0);

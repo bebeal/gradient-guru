@@ -1,7 +1,7 @@
 'use client';
 
 import { Demo } from '@/components';
-import X from '@/assets/images/X.png';
+import X from '@/public/images/X.png';
 import { cn } from '@/utils';
 
 
@@ -17,7 +17,7 @@ const DemoPage = () => {
       ),
       title: 'Tweet Demo',
       pinTitle: 'Click to open in new tab',
-      description: 'Example of a Tweet component that fetches a tweet by ID',
+      description: 'Example of a <Tweet /> component which fetches a tweet from twitter api by ID',
       link: `/demos/tweet-demo`,
     },
   ];

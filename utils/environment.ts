@@ -1,5 +1,6 @@
 export const env = process.env.NODE_ENV || process.env.NEXT_PUBLIC_ENV || 'development';
 export const isDevEnv = env === 'development';
+export const isDebugMode = () => isDevEnv && globalThis?.location?.search?.includes('debug');
 
 export const isPublicEnvVariable = (key: string): boolean => {
   return key.startsWith('NEXT_PUBLIC_');

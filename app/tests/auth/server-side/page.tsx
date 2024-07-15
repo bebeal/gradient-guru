@@ -1,5 +1,10 @@
+import { auth } from "@/utils/auth";
+import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
 
-import { getSessionServerSide } from "@/utils";
+
+const getSessionServerSide = async (...args: [GetServerSidePropsContext] | [NextApiRequest, NextApiResponse] | []) => {
+  return await auth(...(args as []));
+};
 
 const AuthStatus = async () => {
   const session = await getSessionServerSide();

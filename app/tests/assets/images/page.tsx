@@ -2,11 +2,11 @@
 
 // assets page to show various ways you can import and use svgs, images.
 // This will strictly be from client side (bundled and optimized by webpack)
-import NextImage from 'next/image';
-import PNGTest from '@/assets/images/panda-adversarial.png';
-import mountains from "@/assets/images/mountains.jpg";
-import { FC } from 'react';
+import mountains from "@/public/images/mountains.jpg";
+import PNGTest from '@/public/images/panda-adversarial.png';
 import { getShimmerPlaceholder } from '@/utils';
+import NextImage from 'next/image';
+import { FC } from 'react';
 
 // 3 common ways to use pngs:
 // 1. direct import -> react component

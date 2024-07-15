@@ -1,6 +1,6 @@
 'use client'
 
-import { usePlotly } from '@/hooks';
+import { usePlotly } from './usePlotly';
 import { Erroring, Loading } from '@/components';
 import { PlotParams } from 'react-plotly.js';
 import { Suspense } from 'react';

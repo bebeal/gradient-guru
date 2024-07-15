@@ -3,7 +3,7 @@ import path from 'path';
 import Image, { ImageProps } from 'next/image';
 import type { MDXComponents } from 'mdx/types';
 
-export const ASSETS_DIR = 'assets/mdx';
+export const ASSETS_DIR = 'public/mdx/';
 
 export const parseFrontmatter = (fileContent: string) => {
   const frontmatterRegex = /---\s*([\s\S]*?)\s*---/;

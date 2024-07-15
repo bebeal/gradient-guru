@@ -7,11 +7,10 @@
 
 ```bash
 ├── app/               # nextjs app router
-├── assets/            # Static assets served through webpack (fonts, icons, images, mdx, etc)
 ├── clients/           # Clients for various services (Google, Github, AWS). Auth for these handled by next-auth (https://auth.js.org/)
 ├── components/        # React components
 ├── hooks/             # React hooks
-├── public/            # Only assets that are in the public directory at build time will be served by Next.js
+├── public/            # Static assets served through webpack and Next.js (fonts, icons, images, mdx, etc)
 ├── utils/             # Modular/Portable utility functions/classes/constants/etc
 ├── package.json       # standard package config
 ├── tsconfig.json      # standard typescript config

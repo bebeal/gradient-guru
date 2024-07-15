@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Button, DebugAuthComponent, Icon, Loading } from "@/components";
-import { useDrivePicker } from '@/hooks';
+import { useDrivePicker } from './useDrivePicker';
 
 // Declare types for Google Picker
 declare global {
