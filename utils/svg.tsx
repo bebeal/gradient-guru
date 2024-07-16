@@ -146,3 +146,22 @@ export const addGridToSvg = (
 
   svg.appendChild(grid);
 };
+
+export const DivArrow = () => {
+  return (
+    <div style={{display: "flex", alignItems: "center"}}>
+        <div style={{
+                width: '50px',
+                height: '30px',
+                backgroundColor: '#2C2F33',
+            }} />
+        <div style={{
+                width: '0',
+                height: '0',
+                borderTop: '30px solid transparent',
+                borderBottom: '30px solid transparent',
+                borderLeft: '50px solid #2C2F33',
+            }} />
+          </div>
+  )
+}

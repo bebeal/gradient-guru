@@ -13,6 +13,8 @@ frontend:
         - env | grep -e _AWS_ACCESS_KEY_ID -e _AWS_SECRET_ACCESS_KEY -e _AWS_REGION -e _AWS_BUCKET >> .env.production
         # next-auth (see https://authjs.dev/reference/nextjs#environment-variable-inferrence)
         - env | grep -e NEXTAUTH_URL -e NEXTAUTH_SECRET -e AUTH_REDIRECT_PROXY_URL -e AUTH_SECRET >> .env.production
+        # operation fix the fucking auth AUTH_TRUST_HOST to true
+        - export AUTH_TRUST_HOST=true
         # Github Auth
         - env | grep -e GITHUB_CLIENT_ID -e GITHUB_CLIENT_SECRET >> .env.production
         # Google Auth

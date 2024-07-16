@@ -5,26 +5,47 @@ import { useSession, signIn } from "next-auth/react";
 import { useEffect } from "react";
 import { Button, Icon } from "@/components";
 
-export const DebugAuthComponent = ({ session, gapiLoaded, pickerApiLoaded }: { session: any, gapiLoaded: boolean, pickerApiLoaded: boolean }) => {
+export const DebugAuthComponent = () => {
+  const session = useSession();
   return (
     <div className="absolute top-0 left-0 w-auto h-auto bg-tertiary border border-primary flex justify-center items-center m-2 rounded p-1 text-xs">
       <div className="grid grid-cols-2 gap-1 w-full p-2 rounded">
         <strong>Auth Status:</strong>    
-        <div className="flex justify-end gap-1">
-          {session.status} <AuthStatus />
-        </div>
-        <strong>GAPI Loaded:</strong>
-        <div className="flex justify-end">
-          {gapiLoaded ? 'Yes' : 'No'}
-        </div>
-        <strong>Picker API Loaded:</strong>
-        <div className="flex justify-end">
-          {pickerApiLoaded ? 'Yes' : 'No'}
+        <div className="flex items-center justify-end gap-1 h-auto">
+          {session?.status ?? '?'} <AuthStatus />
         </div>
       </div>
     </div>
   )
 };
+
+export const GoogleDebugAuthComponent = ({ session, gapiLoaded, pickerApiLoaded }: { session: any, gapiLoaded: boolean, pickerApiLoaded: boolean }) => {
+  return (
+    <div className="absolute top-0 left-0 w-auto h-auto bg-tertiary border border-primary flex justify-center items-center m-2 rounded p-1 text-xs">
+      <div className="grid grid-cols-2 gap-1 w-full p-2 rounded">
+        <strong>Auth Status:</strong>    
+        <div className="flex items-center justify-end gap-1 h-auto">
+          {session.status} <AuthStatus />
+        </div>
+        {!!gapiLoaded && (
+          <>
+          <strong>GAPI Loaded:</strong>
+            <div className="flex justify-end">{gapiLoaded ? 'Yes' : 'No'}</div>
+          </>
+        )}
+        {!!pickerApiLoaded && (
+          <>
+          <strong>Picker API Loaded:</strong>
+          <div className="flex justify-end">
+            {pickerApiLoaded ? 'Yes' : 'No'}
+          </div>
+          </>
+        )}
+      </div>
+    </div>
+  )
+};
+
 
 export const AuthStatus = () => {
   const session: any = useSession();

@@ -35,7 +35,7 @@ export const nextAuthConfig = {
     strategy: 'jwt',
   },
   secret: secret,
-  trustHost: !isDevEnv,
+  trustHost: true,
   debug: isDevEnv,
   providers,
   callbacks: {

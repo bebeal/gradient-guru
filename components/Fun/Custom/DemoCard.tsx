@@ -16,7 +16,7 @@ export const Demo = (props: DemoProps) => {
     pinTitle,
     href,
     description,
-    content
+    content,
   } = props;
 
   return (
@@ -24,12 +24,12 @@ export const Demo = (props: DemoProps) => {
         title={pinTitle}
         href={href}
       >
-        <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 min-w-[20rem] h-full">
-          <h3 className="max-w-xs !pb-2 !m-0 font-bold text-base text-slate-100 h-auto">
+        <div className="flex basis-full flex-col p-4 tracking-tight text-tertiary min-w-[14rem] h-full relative overflow-visible">
+          <h3 className="max-w-xs !pb-2 !m-0 font-bold text-base text-primary h-auto">
             {title}
           </h3>
           <div className="text-base !m-0 !p-0 font-normal">
-            <span className="text-slate-500 min-h-[48px] flex">
+            <span className="text-slate-500 min-h-[48px] flex text-xs">
               {description}
             </span>
           </div>

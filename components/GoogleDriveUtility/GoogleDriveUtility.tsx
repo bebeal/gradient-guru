@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from "react";
-import { Button, DebugAuthComponent, Icon, Loading } from "@/components";
+import { Button, GoogleDebugAuthComponent, Icon, Loading } from "@/components";
 import { useDrivePicker } from './useDrivePicker';
 
 // Declare types for Google Picker
@@ -91,7 +91,7 @@ export const GoogleDriveUtility = (props: GoogleDriveUtilityProps) => {
   }
   return (
     <div className="flex flex-col gap-1 w-auto h-auto justify-center items-center">
-      {debug && <DebugAuthComponent session={session} gapiLoaded={gapiLoaded} pickerApiLoaded={pickerApiLoaded} />}
+      {debug && <GoogleDebugAuthComponent session={session} gapiLoaded={gapiLoaded} pickerApiLoaded={pickerApiLoaded} />}
       <GoogleApiScript />
       <Button variant="outline" onClick={buttonClicked}>
         <Icon set="Logos" icon="GoogleDrive" className="w-6 h-6" />

@@ -1,30 +1,43 @@
 'use client';
 
-import { Demo } from '@/components';
+import { Demo, Icon } from '@/components';
 import X from '@/public/images/X.png';
 import { cn } from '@/utils';
 
 
 const DemoPage = () => {
+  const title = 'Demos';
   const demos = [
+    {
+      preview: (
+        <div className="rounded-lg border border-primary max-w-lg w-full h-auto flex p-8">
+          <Icon set="Logos" icon="GoogleDrive" className="w-full h-full" />
+        </div>
+      ),
+      title: 'Google Drive Picker Demo',
+      pinTitle: 'Click to open in new tab',
+      description: '<GoogleDriveUtility> component which which authenticates and ingests files selected by user from their google drive',
+      link: `/tests/google-drive`,
+    },
     {
       preview: (
         <img
           src={X.src}
           alt="Tweet Demo"
-          className="object-cover rounded-lg border border-primary w-full h-full flex"
+          className="object-cover rounded-lg border border-primary flex w-xl h-auto p-4"
         />
       ),
       title: 'Tweet Demo',
       pinTitle: 'Click to open in new tab',
-      description: 'Example of a <Tweet /> component which fetches a tweet from twitter api by ID',
+      description: '<Tweet> component that fetches tweet by ID from twitter api',
       link: `/demos/tweet-demo`,
     },
   ];
 
   return (
-    <div className={cn(`flex flex-col justify-center items-center w-full h-full gap-5 overflow-auto`)}>
-      <div className={cn(`flex w-auto h-full justify-center items-center gap-4 flex-wrap overflow-auto p-10`)}>
+    <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">
+      <div className="text-2xl font-bold text-center underline">{title}</div>
+      <div className={cn(`flex w-auto justify-center items-center gap-2 flex-wrap p-2`)}>
         {demos.map((demo, index) => (
           <Demo key={`demo-${index}`} content={demo.preview} title={demo.title} pinTitle={demo?.pinTitle || demo?.title} description={demo.description} href={demo.link} />
         ))}
