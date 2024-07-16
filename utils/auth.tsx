@@ -34,7 +34,7 @@ export const nextAuthConfig = {
     strategy: 'jwt',
   },
   secret: secret.secret,
-  debug: true,
+  debug: isDevEnv,
   providers,
   callbacks: {
     session: async ({ session, token }: any) => {
