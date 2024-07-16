@@ -62,7 +62,7 @@ const FontsPage = () => {
         {tailwindFonts.map((font) => (
           <div key={`font-${font.fontClassName}`} className="flex flex-col rounded items-center justify-center w-full h-auto overflow-auto bg-primary text-primary gap-1 border border-primary p-2">
             <div className="flex flex-row gap-4 h-auto items-center">
-              <Highlighter language={"bash"} className="font-bold">{font.fontClassName}</Highlighter>
+              <Highlighter language={"bash"} className="font-bold !rounded">{font.fontClassName}</Highlighter>
               -
               <a key={`link-${font.url}`} href={font.url} target="_blank" rel="noopener noreferrer" className="font-bold" >{font.name}</a>
             </div>
