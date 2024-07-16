@@ -2,11 +2,11 @@ import { ReactNode } from 'react';
 import NextAuth, { NextAuthConfig, NextAuthResult } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
-import CognitoProvider from "next-auth/providers/cognito";
+// import CognitoProvider from "next-auth/providers/cognito";
 import { SessionProvider } from 'next-auth/react';
 import { GithubAuth } from '@/clients/Github/GithubAuth';
 import { GoogleAuth } from '@/clients/Google/GoogleAuth';
-import { CognitoAuth } from '@/clients/AWS/CognitoAuth';
+// import { CognitoAuth } from '@/clients/AWS/CognitoAuth';
 import Logo from '@/public/favicon.ico';
 import { getEnvVariables, isDevEnv } from './environment';
 
@@ -21,8 +21,7 @@ export const getNextAuth = (): any => {
 export const providers: any = [
   ...(GoogleAuth ? [GoogleProvider(GoogleAuth)] : []),
   ...(GithubAuth ? [GithubProvider(GithubAuth)] : []),
-  ...(CognitoAuth ? [CognitoProvider(CognitoAuth)] : []),
-  
+  // ...(CognitoAuth ? [CognitoProvider(CognitoAuth)] : []),
 ];
 
 const secret = process?.env?.NEXTAUTH_SECRET

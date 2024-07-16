@@ -29,8 +29,10 @@ export const useDrivePicker = ({ googleDriveApiKey }: DrivePickerProps) => {
     }
 
     const pickerApi = window.gapi.picker.api;
-    const preSearchedView = new pickerApi.View(pickerApi.ViewId.DOCS)
-      .setQuery('.tldr');
+    const fileTypes = ['.svg', '.tldr', '.drawio', '.di', '.fig', '.jam'];
+    
+    const preSearchedView = new pickerApi.View(pickerApi.ViewId.DOCS);
+      // .setQuery(fileTypes.join(' '));
     const googleDriveViewGroup = new pickerApi.ViewGroup(preSearchedView);
     const picker = new pickerApi.PickerBuilder()
         .addViewGroup(googleDriveViewGroup)
