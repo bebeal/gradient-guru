@@ -16,7 +16,7 @@ const CardPage = () => {
             children: (
               <div className="w-full h-full flex flex-col justify-center items-center gap-4">
                 <div className="flex w-auto h-auto justify-center items-center">Front Content</div>
-                <div className="text-[50px] leading-none w-auto h-auto flex justify-center items-center">😇</div>
+                <div className="text-[50px] leading-none w-auto h-auto flex justify-center items-center">🔥</div>
                 <Icon set="Carbon" icon="Awake" width="50" height="100%" />
               </div>
             ),
@@ -26,24 +26,36 @@ const CardPage = () => {
             children: (
               <div className="w-full h-full flex flex-col justify-center items-center gap-4">
                 <div className="flex w-auto h-auto justify-center items-center">Back Content</div>
-                <div className="text-[50px] leading-none w-auto h-auto flex justify-center items-center">😈</div>
+                <div className="text-[50px] leading-none w-auto h-auto flex justify-center items-center">🧊</div>
                 <Icon set="Carbon" icon="Asleep" width="50" height="100%" />
               </div>
             ),
           }}
         />
         <Card
-          className="w-[100px]"
+          className="w-[200px]"
           front={{
             title: 'Only Front',
-            children: <div>wow</div>,
+            children: (
+              <div className="w-full h-full flex flex-col justify-center items-center gap-4">
+                <div className="flex w-auto h-auto justify-center items-center">Front Content</div>
+                <div className="text-[50px] leading-none w-auto h-auto flex justify-center items-center">🔥</div>
+                <Icon set="Carbon" icon="Awake" width="50" height="100%" />
+              </div>
+            ),
           }}
         />
         <Card
-          className="w-[100px]"
+          className="w-[200px]"
           back={{
             title: 'Only Back',
-            children: <div>wow</div>,
+            children: (
+              <div className="w-full h-full flex flex-col justify-center items-center gap-4">
+                <div className="flex w-auto h-auto justify-center items-center">Back Content</div>
+                <div className="text-[50px] leading-none w-auto h-auto flex justify-center items-center">🧊</div>
+                <Icon set="Carbon" icon="Asleep" width="50" height="100%" />
+              </div>
+            ),
           }}
         />
       </div>

@@ -4,9 +4,9 @@ import React, { FC } from 'react';
 import dlv from 'dlv';
 import colorPalette from 'tailwindcss/colors';
 import resolveConfig from 'tailwindcss/resolveConfig';
-import { ColorPalette, ComponentMap, ComponentMapper } from '@/components';
+import { ColorPalette, ComponentMap, ComponentMapper, Separator, Terminal } from '@/components';
 import tailwindConfig from '@/tailwind.config';
-import { cn, kebabToTitleCase, spectrum } from '@/utils';
+import { cn, DivArrow, kebabToTitleCase, spectrum } from '@/utils';
 
 const fixColor = (color: string) => color.replace('<alpha-value>', '1');
 
@@ -52,17 +52,36 @@ const TailwindColors = () => {
 };
 
 const LinearGradients = () => {
+  const cssLinearGradientCode = `background-image:linear-gradient(to right, ${spectrum.join(',')})`;
+  const svgLinearGradientCode = `
+<linearGradient id="test-svg-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+  ${spectrum.map((color, index) => `<stop key={${JSON.stringify(color)}} offset="${(index * 100) / (spectrum.length - 1)}%" stopColor={${JSON.stringify(color)}} />`).join('\n  ')}
+</linearGradient>
+`.trim();
+  
   return (
-    <div className="w-auto h-auto flex flex-col items-start justify-center p-10 gap-1">
-      <div className={cn(`flex items-center gap-2`)}>
-        <div className={cn(`border border-black dark:border-white [background-image:linear-gradient(to_right,${spectrum.join(',')})] w-[200px] h-[20px]`)} />
+    <div className="w-full h-auto flex flex-col items-center justify-center p-10 gap-2">
+      <div className="flex flex-row gap-10">
+          <div className="flex flex-col w-[600px] h-auto justify-center overflow-hidden">
+            <Terminal language={"jsx"}>{cssLinearGradientCode}</Terminal>
+          </div>
+          <DivArrow />
+      <div className={cn(`flex flex-col items-center justify-center gap-2`)}>
         <div className={cn(`text-xs`)}>CSS Linear Gradient</div>
+        <div className={cn(`border border-black dark:border-white [background-image:linear-gradient(to_right,${spectrum.join(',')})] w-[200px] h-[20px]`)} />
       </div>
-      <div className={cn(`flex items-center gap-2`)}>
-        <svg width="200" height="20" className="border border-black dark:border-white">
-          {' '}
+      </div>
+      <Separator />
+      <div className={cn(`flex flex-col items-center justify-center p-10 gap-2`)}>
+      <div className="flex flex-row gap-10">
+          <div className="flex flex-col w-[600px] h-auto items-center justify-center overflow-hidden">
+            <Terminal language={"jsx"}>{svgLinearGradientCode}</Terminal>
+          </div>
+          <DivArrow />
+          <div className={cn(`flex flex-col items-center justify-center gap-2`)}>
+        <div className={cn(`text-xs`)}>SVG Linear Gradient with color stops</div>
+        <svg width="200" height="20" className="border border-black dark:border-white w-[200px]">
           <defs>
-            {' '}
             <linearGradient id={`test-svg-gradient`} x1="0%" y1="0%" x2="100%" y2="0%">
               {spectrum.map((color: string, index: number) => (
                 <stop key={color} offset={`${(index * 100) / (spectrum.length - 1)}%`} stopColor={color} />
@@ -71,7 +90,8 @@ const LinearGradients = () => {
           </defs>
           <rect width="200" height="20" fill="url(#test-svg-gradient)" />
         </svg>
-        <div className={cn(`text-xs`)}>SVG Linear Gradient with color stops</div>
+        </div>
+        </div>
       </div>
     </div>
   );

@@ -42,9 +42,10 @@ export const useDownloader = (props: DownloaderProps) => {
   }, [setDownloadPercentage]);
 
   const jumpTo = useCallback((percentage: number) => {
+    setBytesDownloaded(percentage);
     setDownloadPercentage(percentage);
     setTargetPercentage(percentage);
-  }, [setDownloadPercentage, setTargetPercentage]);
+  }, [setDownloadPercentage, setTargetPercentage, setBytesDownloaded]);
 
   const simulateDownload = useCallback(() => {
     let currentTarget = 0;
@@ -118,7 +119,6 @@ export const useDownloader = (props: DownloaderProps) => {
     mutationFn: downloadFile,
     onMutate: () => {
       jumpTo(0);
-      setBytesDownloaded(0);
       setStatus('pending');
     },
     onSuccess: () => {

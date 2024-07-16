@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Checkbox } from '@/components';
+import { Checkbox, Icon } from '@/components';
 
 const CheckboxPage = () => {
   const [value, setValue] = useState<boolean | 'indeterminate'>('indeterminate');
@@ -19,6 +19,7 @@ const CheckboxPage = () => {
         <Checkbox checked={value} onCheckedChange={setValue} size={32} />
         <Checkbox checked={value} onCheckedChange={setValue} size={40} />
       </div>
+      <Icon set="Carbon" icon="Checkmark" className="hidden"/>
     </div>
   );
 };

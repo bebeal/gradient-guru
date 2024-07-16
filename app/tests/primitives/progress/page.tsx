@@ -23,12 +23,12 @@ const DownloadComponent = () => {
   });
 
   return (
-    <div className="w-full flex h-auto flex-col flex-nowrap text-xs">
-      <button className="bg-gray-600 hover:bg-gray-700" onClick={() => downloader?.mutate()}>
+    <div className="w-full flex h-auto flex-col flex-nowrap text-xs text-center gap-2">
+      <button className="bg-tertiary hover:bg-secondary" onClick={() => downloader?.mutate()}>
         Download {url}
       </button>
       <div>Progress: {downloadPercentage.toFixed(2)}%</div>
-      <div className="w-full flex">
+      <div>
         Bytes Downloaded: {bytesDownloaded} / {total || '??'}
       </div>
       <Progress progress={downloadPercentage} total={total} />
@@ -39,7 +39,7 @@ const DownloadComponent = () => {
 const ProgressPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-primary text-primary gap-10">
-      <div className="flex flex-col justify-center gap-2 w-[500px] p-4 border border-primary">
+      <div className="flex flex-col justify-center items-center gap-2 w-[500px] p-4 border border-primary">
         <DownloadComponent />
       </div>
     </div>

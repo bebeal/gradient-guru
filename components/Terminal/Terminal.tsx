@@ -75,7 +75,7 @@ export const Terminal = memo((props: TerminalProps) => {
           </Highlighter>
         </div>
       ) : (
-      <Highlighter language={language} syntaxStyle={syntaxStyle} className={'!h-full !rounded-t-0 !rounded-b-lg !flex-1'} {...rest}>
+      <Highlighter language={language} syntaxStyle={syntaxStyle} className={'!h-full !rounded-t-0 !rounded-b-lg !flex-1 !overflow-auto'} {...rest}>
         {children}
       </Highlighter>
       )}
