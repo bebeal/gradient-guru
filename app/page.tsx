@@ -3,7 +3,7 @@ import { LinkList } from "@/components";
 
 const AppPage = () => {
   const title = 'Root App Page';
-  const pages: string[] = ['api', 'cdk', 'demos', 'about', 'privacy-policy', 'README', 'terms-of-service', 'tests'];
+  const pages: string[] = ['api', 'demos', 'tests'];
 
   // to only render certain links in dev env (note: the endpoints will still exists, just not linked to from here)
   // if (isDevEnv) {

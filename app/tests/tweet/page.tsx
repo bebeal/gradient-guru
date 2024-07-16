@@ -1,3 +1,5 @@
+'use client';
+
 import { ComponentMap, ComponentMapper, Tweet } from "@/components";
 import { FC } from "react";
 
