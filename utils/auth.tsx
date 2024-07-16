@@ -17,7 +17,6 @@ export const getNextAuth = (): any => {
   });
 };
 
-const secret = getNextAuth();
 // OAuth Providers
 export const providers: any = [
   ...(GoogleAuth ? [GoogleProvider(GoogleAuth)] : []),
@@ -26,6 +25,8 @@ export const providers: any = [
   
 ];
 
+const secret = process?.env?.NEXTAUTH_SECRET
+
 export const nextAuthConfig = {
   theme: {
     logo: Logo.src,
@@ -33,12 +34,13 @@ export const nextAuthConfig = {
   session: {
     strategy: 'jwt',
   },
-  secret: secret.secret,
+  secret: secret,
+  trustHost: !isDevEnv,
   debug: isDevEnv,
   providers,
   callbacks: {
     session: async ({ session, token }: any) => {
-      if (token.account) {
+      if (token?.account) {
         session.account = token.account;
       }
       return session;

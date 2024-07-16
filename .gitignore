@@ -87,5 +87,6 @@ certificates
 # @swc/jest
 .swc
 
-# assets
+# misc
+logs
 public/csv/USvideos.csv
