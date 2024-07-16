@@ -25,7 +25,6 @@ frontend:
     build:
       commands:
         - yarn build
-        - ls -lsa
   artifacts:
     baseDirectory: .next
     files:
