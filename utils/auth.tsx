@@ -17,6 +17,7 @@ export const getNextAuth = (): any => {
   });
 };
 
+const secret = getNextAuth();
 // OAuth Providers
 export const providers: any = [
   ...(GoogleAuth ? [GoogleProvider(GoogleAuth)] : []),
@@ -32,8 +33,8 @@ export const nextAuthConfig = {
   session: {
     strategy: 'jwt',
   },
-  secret: getNextAuth().secret,
-  debug: isDevEnv && false,
+  secret: secret.secret,
+  debug: true,
   providers,
   callbacks: {
     session: async ({ session, token }: any) => {
