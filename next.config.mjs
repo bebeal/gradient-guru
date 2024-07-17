@@ -7,6 +7,7 @@ import remarkFrontmatter from 'remark-frontmatter'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   compiler: {
     styledComponents: true,
   },
