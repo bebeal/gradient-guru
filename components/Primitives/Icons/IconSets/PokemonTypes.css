@@ -1,20 +1,10 @@
-.pkmn-type-wrapper {
-    width: 800px;
-    margin: auto auto;
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(6, 1fr);
-    align-content: center;
-    align-items: center;
-}
-
 .pkmn-type-icon {
     border-radius: 100%;
     margin: auto;
     transition: 200ms all;
 }
 
-.pkmn-type-icon:hover{
+.pkmn-type-icon:hover {
     filter: saturate(200%);
     transform: scale(1.1);
     cursor: pointer;

@@ -1,7 +1,7 @@
 import { ComponentType, forwardRef } from 'react';
 import { MapCache } from '@/utils';
 import { defaultProps, IconProps } from './Icon';
-import { CarbonIconSet, CodeLanguagesIconSet, CustomIconSet, LogosIconSet, LucideIconSet, PokemonTypesIconSet, RadixIconSet, TldrawIconSet } from './IconSets';
+import { CarbonIconSet, CodeLanguagesIconSet, CustomIconSet, LogosIconSet, LucideIconSet, PokemonTypesIconSet, RadixIconSet } from './IconSets';
 
 // IconSetMap: simple mapping from name of the icon to something that can be rendered
 // 'example-icon-name': IconComponent (React.FC)

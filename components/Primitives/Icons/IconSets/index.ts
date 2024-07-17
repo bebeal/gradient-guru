@@ -1,4 +1,3 @@
-export * from './Tldraw';
 export * from './Carbon';
 export * from './CodeLanguages';
 export * from './Custom';
