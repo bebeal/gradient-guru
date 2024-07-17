@@ -13,7 +13,7 @@ const makeApp = () => {
 
 try {
   makeApp();
-  console.log("CDK template generation completed successfullyt");
+  console.log("CDK template generation completed successfully");
 } catch (error) {
   console.error("Error synthesizing CDK app:", error);
   process.exit(1);

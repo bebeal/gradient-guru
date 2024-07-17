@@ -14,7 +14,7 @@
     "url": "https://github.com/bebeal/gradient-guru/issues"
   },
   "scripts": {
-    "build": "yarn build:app && yarn build:cdk",
+    "build": "yarn build:app",
     "build:app": "next build",
     "build:cdk": "CDK_OUTDIR=cdk.out ts-node --project cdk/tsconfig.json cdk/cdk.ts",
     "deploy": "yarn build && yarn cdk deploy --require-approval never",
@@ -213,7 +213,6 @@
     "prettier-plugin-tailwindcss": "^0.5.12",
     "radix-themes-tw": "^0.2.1",
     "raw-loader": "^4.0.2",
-    "sharp": "^0.32.6",
     "styled-components": "^6.1.11",
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "^3.3.5",
