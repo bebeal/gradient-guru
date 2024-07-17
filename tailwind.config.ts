@@ -22,6 +22,7 @@ const config: Config = {
     'prose prose-sm prose-base prose-slate dark:prose-invert focus:outline-none',
     `object-fit object-contain object-cover max-w-full !max-w-full text-error bg-[rgb(0, 0, 0)] bg-[rgb(var(--accent-500))]`,
     'font-mono font-argon font-krypton font-neon font-radon font-xenon',
+    'pkmn-type-bug', 'pkmn-type-dark', 'pkmn-type-dragon', 'pkmn-type-electric', 'pkmn-type-fire', 'pkmn-type-fairy', 'pkmn-type-fighting', 'pkmn-type-flying', 'pkmn-type-ghost', 'pkmn-type-grass', 'pkmn-type-ground', 'pkmn-type-ice', 'pkmn-type-normal', 'pkmn-type-poison', 'pkmn-type-psychic', 'pkmn-type-rock', 'pkmn-type-steel', 'pkmn-type-water'
   ],
   darkMode: ['class'],
   content: [

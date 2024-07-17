@@ -1,7 +1,7 @@
 import { ComponentType, forwardRef } from 'react';
 import { MapCache } from '@/utils';
 import { defaultProps, IconProps } from './Icon';
-import { CarbonIconSet, CodeLanguagesIconSet, CustomIconSet, LogosIconSet, LucideIconSet, RadixIconSet, TldrawIconSet } from './IconSets';
+import { CarbonIconSet, CodeLanguagesIconSet, CustomIconSet, LogosIconSet, LucideIconSet, PokemonTypesIconSet, RadixIconSet, TldrawIconSet } from './IconSets';
 
 // IconSetMap: simple mapping from name of the icon to something that can be rendered
 // 'example-icon-name': IconComponent (React.FC)
@@ -17,12 +17,13 @@ export interface IconSet {
 // IconSets object containing all available icon sets
 export const IconSets: Record<string, IconSet> = {
   Carbon: { icons: CarbonIconSet },
-  Tldraw: { icons: TldrawIconSet, iconProps: { stroke: 'none', fill: 'none' }},
+  // Tldraw: { icons: TldrawIconSet, iconProps: { stroke: 'none', fill: 'none' }},
   CodeLanguages: { icons: CodeLanguagesIconSet },
   Logos: { icons: LogosIconSet },
   Custom: { icons: CustomIconSet },
   Lucide: { icons: LucideIconSet, iconProps: { stroke: 'currentColor', fill: 'none' } },
   Radix: { icons: RadixIconSet },
+  PokeTypes: { icons: PokemonTypesIconSet },
 };
 export const IconSetNames: string[] = Object.keys(IconSets) || [];
 export type IconSetNames = keyof typeof IconSets;

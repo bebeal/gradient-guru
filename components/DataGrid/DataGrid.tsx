@@ -1,6 +1,4 @@
-'use client'
-
-import { Erroring, Loading } from '@/components';
+import { createColumnDefs, Erroring, Loading } from '@/components';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { isDebugMode, isDevEnv } from '@/utils';
 import { AgGridReact } from 'ag-grid-react';
@@ -13,6 +11,7 @@ import {
   SideBarDef,
   createGrid,
 } from "ag-grid-community";
+import { columnTypes } from "./Columns";
 import { LicenseManager } from "ag-grid-charts-enterprise";
 LicenseManager.setLicenseKey(process.env.NEXT_PUBLIC_AG_GRID_LICENSE_KEY || "");
 
@@ -33,7 +32,11 @@ export const DataGrid = (props: DataGridProps) => {
   } = props;
   const gridRef = useRef(null);
   const [rowData, setData] = useState(data);
-  const [columnDefs, setColumnDefs] = useState(columnNames.map((name) => ({ headerName: name, field: name })));
+  const [columnDefs, setColumnDefs] = useState(createColumnDefs(columnNames));
+  const [gridOptions, setGridOptions] = useState<GridOptions>({
+    columnTypes,
+
+  });
 
   return (
     <Suspense fallback={<Loading>Loading Grid</Loading>}>
@@ -42,6 +45,7 @@ export const DataGrid = (props: DataGridProps) => {
           ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
+          gridOptions={gridOptions}
           debug={isDebugMode()}
           className="w-full h-full"
         />

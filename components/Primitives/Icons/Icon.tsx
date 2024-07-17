@@ -1,5 +1,3 @@
-'use client';
-
 import UnknownSprite from '@/public/icons/201-question.svg';
 import { forwardRef, Suspense, SVGProps, useCallback } from 'react';
 import { IconCache } from './IconSet';
