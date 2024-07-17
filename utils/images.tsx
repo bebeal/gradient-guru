@@ -67,11 +67,11 @@ export const rgbDataURL = (r: number, g: number, b: number) =>
 
 
 export const ImageCaption = (props: any) => {
-  const { image, caption, ...rest } = props
+  const { image, caption, text='muted', ...rest } = props
   return (
-    <figure className="relative w-full h-full flex flex-col gap-1" {...rest}>
+    <figure className="relative w-full h-auto flex flex-col gap-1" {...rest}>
       {image}
-      <figcaption className="text-xs text-center text-muted">{caption}</figcaption>
+      <figcaption className={`text-xs text-center text-${text} font-bold`}>{caption}</figcaption>
     </figure>
   )
 }

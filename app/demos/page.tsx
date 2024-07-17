@@ -42,6 +42,17 @@ const DemoPage = () => {
       pinTitle: 'Click to open in new tab',
       description: 'Pokemon DB rendered with a highly customized ag-grid',
       link: '/tests/data-grid/pokemonDB',
+    },
+    {
+      preview: (
+        <div className="rounded-lg border border-primary max-w-lg w-full h-auto flex p-8">
+          <Icon set="Custom" icon="ThreeFanGpu" className="w-full h-full" />
+        </div>
+      ),
+      title: 'GPUs',
+      pinTitle: 'Click to open in new tab',
+      description: 'GPU Architecture Breakdown',
+      link: '/demos/gpu',
     }
   ];
 

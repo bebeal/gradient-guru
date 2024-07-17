@@ -1,3 +1,5 @@
+'use client';
+
 import { createColumnDefs, Erroring, Loading } from '@/components';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { isDebugMode, isDevEnv } from '@/utils';

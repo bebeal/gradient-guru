@@ -12503,6 +12503,7 @@ __metadata:
     raw-loader: "npm:^4.0.2"
     react: "npm:^18"
     react-dom: "npm:^18"
+    react-parallax-tilt: "npm:^1.7.232"
     react-plotly.js: "npm:^2.6.0"
     react-syntax-highlighter: "npm:^15.5.0"
     react-tweet: "npm:^3.2.0"
@@ -17483,6 +17484,16 @@ __metadata:
   version: 18.3.1
   resolution: "react-is@npm:18.3.1"
   checksum: 10c0/f2f1e60010c683479e74c63f96b09fb41603527cd131a9959e2aee1e5a8b0caf270b365e5ca77d4a6b18aae659b60a86150bb3979073528877029b35aecd2072
+  languageName: node
+  linkType: hard
+
+"react-parallax-tilt@npm:^1.7.232":
+  version: 1.7.232
+  resolution: "react-parallax-tilt@npm:1.7.232"
+  peerDependencies:
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/3dbed433e36cebad7207c8856f38eb72aa529e19b09fd5657f9497c881f90964d708be20b3c09fbae432a808720555a8e445895de3375c9fb5aa720ba951c08b
   languageName: node
   linkType: hard
 

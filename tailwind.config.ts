@@ -4,7 +4,7 @@ import ContainerQueriesPlugin from '@tailwindcss/container-queries';
 import TypographyPlugin from '@tailwindcss/typography';
 import { radixThemePreset } from 'radix-themes-tw';
 import TailwindCSSRadixPlugin from 'tailwindcss-radix';
-import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors } from './utils/tailwind-plugins';
+import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors, TailwindGlowPlugin } from './utils/tailwind-plugins';
 
 const config: Config = {
   safelist: [
@@ -22,7 +22,8 @@ const config: Config = {
     'prose prose-sm prose-base prose-slate dark:prose-invert focus:outline-none',
     `object-fit object-contain object-cover max-w-full !max-w-full text-error bg-[rgb(0, 0, 0)] bg-[rgb(var(--accent-500))]`,
     'font-mono font-argon font-krypton font-neon font-radon font-xenon',
-    'pkmn-type-bug', 'pkmn-type-dark', 'pkmn-type-dragon', 'pkmn-type-electric', 'pkmn-type-fire', 'pkmn-type-fairy', 'pkmn-type-fighting', 'pkmn-type-flying', 'pkmn-type-ghost', 'pkmn-type-grass', 'pkmn-type-ground', 'pkmn-type-ice', 'pkmn-type-normal', 'pkmn-type-poison', 'pkmn-type-psychic', 'pkmn-type-rock', 'pkmn-type-steel', 'pkmn-type-water'
+    'pkmn-type-bug', 'pkmn-type-dark', 'pkmn-type-dragon', 'pkmn-type-electric', 'pkmn-type-fire', 'pkmn-type-fairy', 'pkmn-type-fighting', 'pkmn-type-flying', 'pkmn-type-ghost', 'pkmn-type-grass', 'pkmn-type-ground', 'pkmn-type-ice', 'pkmn-type-normal', 'pkmn-type-poison', 'pkmn-type-psychic', 'pkmn-type-rock', 'pkmn-type-steel', 'pkmn-type-water',
+    'text-[#98AEDD]'
   ],
   darkMode: ['class'],
   content: [
@@ -165,7 +166,7 @@ const config: Config = {
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
         // supports ripple like animation on all clickbles
-        ripple: {
+        'ripple': {
           '0%': { transform: 'scale(0.8)', opacity: '1' },
           '100%': { transform: 'scale(2.4)', opacity: '0' },
         },
@@ -209,7 +210,7 @@ const config: Config = {
           '100%': { transform: 'translate(0, 0)' },
         },
         // to make components slightly grow and shrink to grab attention
-        grow: {
+        'grow': {
           '0%': {
             transform: 'scale(1)',
           },
@@ -221,7 +222,7 @@ const config: Config = {
           },
         },
         // pulse animation but don't call it pulse cause tailwind already defines a pulse animation which might be useful to have?
-        pulsate: {
+        'pulsate': {
           '0%': {
             'box-shadow': '0 0 5px #FFFFFF, 0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF, 0 0 40px #FFFFFF',
           },
@@ -248,18 +249,19 @@ const config: Config = {
         'fade-right': 'fade-right 0.3s ease-in-out',
         'fade-down': 'fade-down 0.3s ease-in-out',
         'fade-left': 'fade-left 0.3s ease-in-out',
-        ripple: 'ripple 1.2s infinite ease-in-out',
+        'ripple': 'ripple 1.2s infinite ease-in-out',
         'ripple-pause': 'ripple-pause 2s backwards infinite ease-in-out',
         'dot-bounce': 'dot-bounce 1s infinite',
         'focus-chat': 'focus-chat 3s infinite cubic-bezier(0.8, 0, 1, 1)',
-        grow: 'grow 5s infinite linear',
+        'grow': 'grow 5s infinite linear',
         'spin-cw': 'spin 2s linear infinite forwards',
         'spin-ccw': 'spin 2s linear infinite reverse',
-        pulsate: 'pulsate 2s infinite',
+        'ramp-up-spin': 'spin .5s linear infinite reverse',
+        'pulsate': 'pulsate 2s infinite',
       },
     },
   },
-  plugins: [VariablesForColors, TailwindCSSRadixPlugin, TypographyPlugin, AspectRatioPlugin, ContainerQueriesPlugin, AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin],
+  plugins: [VariablesForColors, TailwindCSSRadixPlugin, TypographyPlugin, AspectRatioPlugin, ContainerQueriesPlugin, AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, TailwindGlowPlugin],
 };
 
 export default config;
