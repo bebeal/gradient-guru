@@ -1,7 +1,6 @@
 export * from './tailwind-plugins';
 
 export * from './auth';
-export * from './canvas';
 export * from './colors';
 export * from './CountryCodes';
 export * from './device';
