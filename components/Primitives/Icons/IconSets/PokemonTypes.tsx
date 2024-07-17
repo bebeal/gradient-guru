@@ -64,12 +64,12 @@ export const PokemonTypesIconSet: IconSetMap = Object.fromEntries(
     rock,
     steel,
     water,
-  }).map(([typeString, TypeIcon]) => {
+  }).map(([typeString, TypeIcon]: [string, any]) => {
     return [
       typeString,
       (props: any) => (
-        <div {...props} className={`pkmn-type-${typeString} pkmn-type-icon w-4 h-4`}>
-          <TypeIcon />
+        <div className={`pkmn-type-${typeString} pkmn-type-icon`}>
+          <TypeIcon viewBox={`0 0 512 512`} width="512" {...props} />
         </div>
       ),
     ];

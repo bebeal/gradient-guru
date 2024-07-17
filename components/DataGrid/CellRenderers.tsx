@@ -63,7 +63,7 @@ export const pokemonTypesRenderer = (params: CellRendererParams) => {
             <div key={`span-pkmn-type-${type}`} className="flex items-center justify-center overflow-visible transition-none pointer-events-auto">
                  <Tooltip content={type}>
                     <div className="flex w-auto h-auto">
-                        <Icon set="PokeTypes" icon={type} />
+                        <Icon set="PokeTypes" icon={type} className="w-4 h-4" />
                     </div>
                 </Tooltip>
             </div>
