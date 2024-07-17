@@ -59,5 +59,7 @@ export const {
 }: NextAuthResult = NextAuth(nextAuthConfig);
 
 export const NextAuthProvider = ({ children, session }: { children: ReactNode; session?: any }) => {
-  return <SessionProvider session={session}>{children}</SessionProvider>;
+  // `session` comes from `getServerSideProps` or `getInitialProps`.
+  // Avoids flickering/session loading on first load.
+  return <SessionProvider session={session} refetchInterval={5 * 60}>{children}</SessionProvider>;
 };

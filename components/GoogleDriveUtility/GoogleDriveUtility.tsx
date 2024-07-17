@@ -27,7 +27,7 @@ export const GoogleDriveUtility = (props: GoogleDriveUtilityProps) => {
     gapiLoaded,
     pickerApiLoaded,
     createPicker,
-  } = useDrivePicker({ googleDriveApiKey });
+  } = useDrivePicker({ googleDriveApiKey })
   const [createPickerRequested, setCreatePickerRequested] = useState(false);
 
   useEffect(() => {

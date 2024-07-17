@@ -1,8 +1,9 @@
 'use client'
 
+import { useToasts } from "@/hooks/useToasts";
 import { useSession } from "next-auth/react";
 import Script from "next/script";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export interface DrivePickerProps {
   googleDriveApiKey?: string | null;
@@ -10,9 +11,28 @@ export interface DrivePickerProps {
 
 export const useDrivePicker = ({ googleDriveApiKey }: DrivePickerProps) => {
   const session: any = useSession();
+  const { addToast } = useToasts();
   const [gapiLoaded, setGapiLoaded] = useState(false);
   const [pickerApiLoaded, setPickerApiLoaded] = useState(false);
   const [selection, setSelection] = useState<any>(null);
+
+  useEffect(() => {
+    if (selection) {
+      const fileCount = selection?.length;
+      addToast({
+        title: `${fileCount === 1 ? 'File' : 'Files'} Selected`,
+        description: (
+          <ul className="list-disc ml-4 text-xs">
+            {selection.map((file: any) => (
+              <li key={file.id}>
+                {file.name}
+              </li>
+            ))}
+          </ul>
+        ),
+      });
+    }
+  }, [selection, addToast]);
 
   const pickerCallback = useCallback((data: any) => {
     if (data[window.gapi.picker.api.Response.ACTION] == window.gapi.picker.api.Action.PICKED) {
@@ -27,12 +47,8 @@ export const useDrivePicker = ({ googleDriveApiKey }: DrivePickerProps) => {
       console.error('Missing required parameters or APIs not loaded');
       return;
     }
-
-    const pickerApi = window.gapi.picker.api;
-    const fileTypes = ['.svg', '.tldr', '.drawio', '.di', '.fig', '.jam'];
-    
+    const pickerApi = window.gapi.picker.api;    
     const preSearchedView = new pickerApi.View(pickerApi.ViewId.DOCS);
-      // .setQuery(fileTypes.join(' '));
     const googleDriveViewGroup = new pickerApi.ViewGroup(preSearchedView);
     const picker = new pickerApi.PickerBuilder()
         .addViewGroup(googleDriveViewGroup)
@@ -41,6 +57,7 @@ export const useDrivePicker = ({ googleDriveApiKey }: DrivePickerProps) => {
         .setCallback(pickerCallback)
         .enableFeature(pickerApi.Feature.MULTISELECT_ENABLED)
         .enableFeature(pickerApi.Feature.SIMPLE_UPLOAD_ENABLED)
+        .enableFeature(pickerApi.Feature.MINE_ONLY)
         .build();
     picker.setVisible(true);
   }, [gapiLoaded, pickerApiLoaded, pickerCallback, session, googleDriveApiKey]);
