@@ -52,7 +52,7 @@ const TailwindColors = () => {
 };
 
 const LinearGradients = () => {
-  const cssLinearGradientCode = `background-image:linear-gradient(to right, ${spectrum.join(',')})`;
+  const cssLinearGradientCode = `background-image: linear-gradient(to right, ${spectrum.join(',')})`;
   const svgLinearGradientCode = `
 <linearGradient id="test-svg-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
   ${spectrum.map((color, index) => `<stop key={${JSON.stringify(color)}} offset="${(index * 100) / (spectrum.length - 1)}%" stopColor={${JSON.stringify(color)}} />`).join('\n  ')}
@@ -266,8 +266,8 @@ const TailwindComponents: ComponentMap = {
   GridSmallDemo,
   DotDemo,
   GlassDemo,
-  TailwindColors,
   LinearGradients,
+  TailwindColors,
   ExtendedTailwind,
   TextOnBackground,
 };

@@ -14,7 +14,7 @@ const DemoPage = () => {
           <Icon set="Logos" icon="GoogleDrive" className="w-full h-full" />
         </div>
       ),
-      title: 'Google Drive Picker Demo',
+      title: 'Google Drive Picker',
       pinTitle: 'Click to open in new tab',
       description: '<GoogleDriveUtility> which authenticates and ingests files from google drive',
       link: `/tests/google-drive`,
@@ -27,26 +27,26 @@ const DemoPage = () => {
           className="object-cover rounded-lg border border-primary flex w-xl h-auto p-4"
         />
       ),
-      title: 'Tweet Demo',
+      title: 'Tweet Component',
       pinTitle: 'Click to open in new tab',
       description: '<Tweet> which fetches tweet by ID from twitter api',
       link: `/demos/tweet-demo`,
     },
     {
       preview: (
-        <div className="rounded-lg border border-primary max-w-lg w-full h-auto flex p-8 bg-slate-500">
-          <Icon set="Custom" icon="ClassicPokeBall" className="w-full h-full" />
+        <div className="rounded-lg border border-primary w-full h-auto flex px-8 py-6 bg-slate-500">
+          <Icon set="Custom" icon="ClassicPokeBall" className="w-full max-w-md" />
         </div>
       ),
-      title: 'Pokemon DB',
+      title: 'Pokémon DB',
       pinTitle: 'Click to open in new tab',
       description: 'Pokemon DB rendered with a highly customized ag-grid',
       link: '/tests/data-grid/pokemonDB',
     },
     {
       preview: (
-        <div className="rounded-lg border border-primary max-w-lg w-full h-auto flex px-8 py-12">
-          <Icon set="Custom" icon="ThreeFanGpu" className="w-full h-full" />
+        <div className="rounded-lg border border-primary w-full h-auto flex px-8 py-12">
+          <Icon set="Custom" icon="ThreeFanGpu" className="w-full h-full max-w-sm" />
         </div>
       ),
       title: 'GPUs',
