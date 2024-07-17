@@ -16,7 +16,7 @@ const DemoPage = () => {
       ),
       title: 'Google Drive Picker Demo',
       pinTitle: 'Click to open in new tab',
-      description: '<GoogleDriveUtility> component which which authenticates and ingests files selected by user from their google drive',
+      description: '<GoogleDriveUtility> which authenticates and ingests files from google drive',
       link: `/tests/google-drive`,
     },
     {
@@ -29,7 +29,7 @@ const DemoPage = () => {
       ),
       title: 'Tweet Demo',
       pinTitle: 'Click to open in new tab',
-      description: '<Tweet> component that fetches tweet by ID from twitter api',
+      description: '<Tweet> which fetches tweet by ID from twitter api',
       link: `/demos/tweet-demo`,
     },
     {
@@ -45,7 +45,7 @@ const DemoPage = () => {
     },
     {
       preview: (
-        <div className="rounded-lg border border-primary max-w-lg w-full h-auto flex p-8">
+        <div className="rounded-lg border border-primary max-w-lg w-full h-auto flex px-8 py-12">
           <Icon set="Custom" icon="ThreeFanGpu" className="w-full h-full" />
         </div>
       ),
