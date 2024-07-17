@@ -23,8 +23,7 @@
     "dev": "nodemon --watch server --watch server.ts --exec tsx server.ts",
     "format": "prettier --write --cache '**/*.{yml,yaml,json,md,mdx,html,css,js,jsx,ts,tsx,cjs,mjs}'",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "serve": "cross-env NODE_ENV=production node ./dist/server"
+    "preview": "vite preview"
   },
   "dependencies": {
     "express": "^4.19.2",
@@ -104,5 +103,5 @@
     "yarn": ">=1",
     "npm": ">=9"
   },
-  "packageManager": "yarn@4.2.2"
+  "packageManager": "yarn@4.3.1"
 }

@@ -69,7 +69,7 @@ const createServer = async () => {
       const context: any = {};
       const rendered = await render(req);
       if (context.url) return res.redirect(301, context.url);
-      const html = template.replace('<!--app-html-->', rendered.html).replace('<!--app-head-->', rendered.head);
+      const html = template.replace('<!--app-html-->', rendered.html);
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e: any) {
