@@ -1,15 +1,16 @@
 'use client';
 
+import { forwardRef } from 'react';
 import UnknownSprite from '@/public/icons/201-question.svg';
 import CenterCircle from '@/public/icons/Carbon/CenterCircle.svg';
 import DotMark from '@/public/icons/Carbon/DotMark.svg';
 import StatusPartialFail from '@/public/icons/Carbon/StatusPartialFail.svg';
 import GradientGuru from '@/public/icons/GradientGuru.svg';
 import { cn } from '@/utils';
-import { forwardRef } from 'react';
 import { Spinner } from '../CustomIcons';
 import { ThreeFanGpu } from '../CustomIcons/ThreeFanGpu';
 import { IconSetMap } from '../IconSet';
+
 
 export const DotDotDot = forwardRef((props: any, ref: any) => {
   const { className = '', vertical = false, bounce = false, width, height, ...rest } = props;
@@ -229,6 +230,50 @@ export const Indeterminate = forwardRef((props?: any, ref?: any) => {
   );
 });
 
+export const ClassicPokeBall = forwardRef((props?: any, ref?: any) => {
+  return (
+    <svg height={'1em'} {...props} ref={ref} viewBox="0 0 1367.000000 1364.000000" preserveAspectRatio="xMidYMid meet">
+      <g transform="translate(0.000000,1364.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+        <path
+          d="M6450 13629 c-658 -41 -1278 -164 -1870 -372 -1289 -452 -2413 -1280
+-3227 -2377 -775 -1044 -1239 -2297 -1323 -3575 -30 -468 -33 -544 -21 -761
+93 -1693 720 -3178 1856 -4394 90 -96 176 -186 192 -199 15 -14 84 -78 153
+-142 393 -369 899 -729 1420 -1009 348 -188 798 -375 1185 -494 841 -258 1689
+-350 2570 -280 1864 148 3569 1046 4756 2504 564 691 1003 1529 1250 2384 44
+153 156 605 188 761 78 383 98 685 82 1235 -15 529 -49 844 -136 1275 -306
+1513 -1130 2887 -2325 3881 -1237 1028 -2794 1584 -4405 1573 -115 -1 -271 -6
+-345 -10z m-2260 -1288 c98 -22 213 -62 285 -99 274 -138 468 -400 521 -704
+22 -125 14 -384 -15 -513 -83 -362 -278 -707 -565 -1004 -375 -386 -830 -642
+-1316 -742 -101 -21 -143 -24 -340 -24 -183 0 -241 3 -310 19 -293 64 -517
+209 -665 431 -81 122 -130 249 -155 409 -18 106 -7 353 19 471 62 271 192 542
+385 800 74 99 342 369 456 459 351 277 766 460 1170 516 111 15 432 4 530 -19z
+m4405 -3231 c549 -52 1019 -392 1237 -894 137 -314 159 -679 62 -1013 -72
+-251 -206 -468 -408 -661 -522 -498 -1328 -548 -1912 -116 -312 230 -519 568
+-585 955 -18 105 -20 149 -16 289 8 239 48 402 147 605 147 301 376 533 675
+682 166 84 341 134 528 152 121 12 151 12 272 1z m-2288 -2578 c333 -678 963
+-1142 1728 -1274 175 -30 539 -33 714 -5 164 26 358 77 494 131 449 175 823
+471 1102 871 27 39 49 71 50 73 9 14 695 -150 1065 -254 342 -97 852 -261
+1185 -382 293 -106 661 -245 668 -252 26 -24 -136 -596 -263 -930 -138 -363
+-321 -745 -486 -1012 -16 -26 -49 -80 -73 -120 -394 -647 -950 -1269 -1570
+-1754 -971 -759 -2152 -1238 -3371 -1365 -431 -45 -1030 -44 -1445 1 -845 93
+-1712 363 -2440 763 -210 114 -334 189 -528 319 -1235 823 -2170 2052 -2626
+3451 -87 267 -175 605 -162 619 7 8 270 110 487 189 389 141 971 328 1344 434
+91 25 219 62 285 80 66 19 248 66 405 104 837 205 1732 347 2605 415 206 16
+611 40 720 43 l40 1 72 -146z"
+        />
+        <path
+          d="M8286 8760 c-240 -38 -495 -174 -662 -352 -364 -392 -412 -980 -114
+-1424 63 -94 211 -244 296 -302 201 -135 420 -202 659 -202 575 0 1059 425
+1136 997 15 114 6 303 -21 411 -51 208 -160 400 -311 549 -159 156 -328 251
+-540 304 -96 24 -343 34 -443 19z m324 -91 c372 -46 708 -319 847 -687 53
+-142 74 -332 54 -487 -59 -454 -394 -813 -844 -906 -130 -27 -338 -22 -459 9
+-375 100 -672 391 -767 755 -99 380 13 771 300 1041 232 220 539 317 869 275z"
+        />
+      </g>
+    </svg>
+  );
+});
+
 export const CustomIconSet: IconSetMap = {
   HorizontalDots,
   VerticalDots,
@@ -255,4 +300,5 @@ export const CustomIconSet: IconSetMap = {
   ThreeFanGpu,
   GradientGuru,
   UnknownSprite,
+  ClassicPokeBall
 };

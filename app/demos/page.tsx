@@ -32,6 +32,17 @@ const DemoPage = () => {
       description: '<Tweet> component that fetches tweet by ID from twitter api',
       link: `/demos/tweet-demo`,
     },
+    {
+      preview: (
+        <div className="rounded-lg border border-primary max-w-lg w-full h-auto flex p-8 bg-slate-500">
+          <Icon set="Custom" icon="ClassicPokeBall" className="w-full h-full" />
+        </div>
+      ),
+      title: 'Pokemon DB',
+      pinTitle: 'Click to open in new tab',
+      description: 'Pokemon DB rendered with a highly customized ag-grid',
+      link: '/tests/data-grid/pokemonDB',
+    }
   ];
 
   return (
