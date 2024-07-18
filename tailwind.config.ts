@@ -4,7 +4,7 @@ import ContainerQueriesPlugin from '@tailwindcss/container-queries';
 import TypographyPlugin from '@tailwindcss/typography';
 import { radixThemePreset } from 'radix-themes-tw';
 import TailwindCSSRadixPlugin from 'tailwindcss-radix';
-import { AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, VariablesForColors, TailwindGlowPlugin } from './utils/tailwind-plugins';
+import { AnimationTailwindcssPlugin, GlassTailwindPlugin, GridTailwindPlugin, VariablesForColors, GlowTailwindPlugin, PokemonTypesTailwindPlugin } from './utils/tailwind-plugins';
 
 const config: Config = {
   safelist: [
@@ -261,7 +261,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [VariablesForColors, TailwindCSSRadixPlugin, TypographyPlugin, AspectRatioPlugin, ContainerQueriesPlugin, AnimationTailwindcssPlugin, TailwindGlassPlugin, TailwindGridPlugin, TailwindGlowPlugin],
+  plugins: [VariablesForColors, TailwindCSSRadixPlugin, TypographyPlugin, AspectRatioPlugin, ContainerQueriesPlugin, AnimationTailwindcssPlugin, GlassTailwindPlugin, GridTailwindPlugin, GlowTailwindPlugin, PokemonTypesTailwindPlugin],
 };
 
 export default config;

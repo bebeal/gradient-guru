@@ -2,7 +2,7 @@
 // tailwind-glass.ts
 import plugin from 'tailwindcss/plugin';
 
-export const TailwindGlassPlugin = plugin(({ addComponents }) => {
+export const GlassTailwindPlugin = plugin(({ addComponents }) => {
   addComponents({
     '.glass': {
       'backdrop-filter': 'blur(18px) saturate(180%)',

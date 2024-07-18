@@ -1,6 +1,6 @@
 import plugin from 'tailwindcss/plugin';
 
-export const TailwindGlowPlugin = plugin(({ addBase, addUtilities, theme }) => {
+export const GlowTailwindPlugin = plugin(({ addBase, addUtilities, theme }) => {
   const glowIntensity: Record<string, string> = {
     'sm': '0 0 3px var(--tw-shadow-color)',
     'md': '0 0 5px var(--tw-shadow-color)',

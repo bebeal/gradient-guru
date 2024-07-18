@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
 import { IconSetMap } from '../IconSet';
 
-import './PokemonTypes.css';
 import { cn } from '@/utils';
 
 const bug = dynamic(() => import('@/public/icons/PokemonTypes/bug.svg'));
@@ -25,24 +24,24 @@ const water = dynamic(() => import('@/public/icons/PokemonTypes/water.svg'));
 
 // for ordering/sorting
 export const pokemonTypeOrder = [
-    'Normal',
-    'Fire',
-    'Water',
-    'Grass',
-    'Electric',
-    'Ice',
-    'Fighting',
-    'Poison',
-    'Ground',
-    'Flying',
-    'Psychic',
-    'Bug',
-    'Rock',
-    'Ghost',
-    'Dragon',
-    'Dark',
-    'Steel',
-    'Fairy'
+    'normal',
+    'fire',
+    'water',
+    'grass',
+    'electric',
+    'ice',
+    'fighting',
+    'poison',
+    'ground',
+    'flying',
+    'psychic',
+    'bug',
+    'rock',
+    'ghost',
+    'dragon',
+    'dark',
+    'steel',
+    'fairy'
 ];
 
 export const PokemonTypesIconSet: IconSetMap = Object.fromEntries(

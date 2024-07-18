@@ -14,8 +14,7 @@ export const flattenColorPalette: any = (colors: any) => {
   )
 };
 
-
-export const TailwindGridPlugin = ({ matchUtilities, theme }: any) => {
+export const GridTailwindPlugin = ({ matchUtilities, theme }: any) => {
   matchUtilities(
     {
       "bg-grid": (value: any) => ({
