@@ -17,7 +17,7 @@ const DemoPage = () => {
       title: 'Google Drive Picker',
       pinTitle: 'Click to open in new tab',
       description: '<GoogleDriveUtility> which authenticates and ingests files from google drive',
-      link: `/tests/google-drive`,
+      link: `/demos/google-drive`,
     },
     {
       preview: (
@@ -41,7 +41,7 @@ const DemoPage = () => {
       title: 'Pokémon DB',
       pinTitle: 'Click to open in new tab',
       description: 'Pokemon DB rendered with a highly customized ag-grid',
-      link: '/tests/data-grid/pokemonDB',
+      link: '/demos/data-grid/pokemonDB',
     },
     {
       preview: (

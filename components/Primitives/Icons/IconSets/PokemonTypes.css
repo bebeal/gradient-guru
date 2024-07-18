@@ -20,8 +20,7 @@
     right: 0;
     bottom: 0;
     border-radius: 100%;
-    filter: blur(8px);
-    opacity: 0.7;
+    opacity: 0;
     z-index: -1;
     transition: 200ms all;
 }
