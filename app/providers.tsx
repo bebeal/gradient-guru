@@ -13,22 +13,22 @@ import '@/public/fonts/BerkeleyMono/BerkeleyMono.css';
 import '@/public/fonts/Monaspace/Monaspace.css';
 
 // Global level providers
-const Providers = ({ children }: any) => {
+const Providers = ({ children }: { children: React.ReactNode }) => {
   const queryClient = makeQueryClient();
   useDynamicDocTitle(DocConfig);
 
   return (
-    <StyledComponentsRegistry>
-      <ThemeProvider>
-        <QueryClientProvider client={queryClient}>
-          <NextAuthProvider>
-              <ToastsProvider>
-                {children}
-              </ToastsProvider>
-          </NextAuthProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
-    </StyledComponentsRegistry>
+    <NextAuthProvider>
+      <StyledComponentsRegistry>
+        <ThemeProvider>
+          <QueryClientProvider client={queryClient}>
+                <ToastsProvider>
+                  {children}
+                </ToastsProvider>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </StyledComponentsRegistry>
+    </NextAuthProvider>
   );
 };
 

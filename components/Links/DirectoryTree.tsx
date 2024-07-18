@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Icon } from '@/components';
+import { cn } from '@/utils';
 
 export interface TreeNode {
   [key: string]: string[];
@@ -26,13 +27,9 @@ export const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, basePath = '
           className="flex items-center cursor-pointer py-1"
           onClick={() => toggleExpand(path)}
         >
-          {expanded[path] ? (
-            <Icon set="Carbon" icon="ChevronDown" className="h-4 w-4 mr-1" />
-          ) : (
-            <Icon set="Carbon" icon="ChevronRight" className="h-4 w-4 mr-1" />
-          )}
+          <Icon set="Carbon" icon="ChevronRight" className={cn("h-4 w-4 mr-1", "transform transition-transform anim-duration-200 ease-in-out", expanded[path] ? 'rotate-90' : 'rotate-0')} />
           <Icon set="Custom" icon="Folder" className="h-4 w-4 mr-2 select-none" />
-          <span className="font-medium">{path}</span>
+          <span className="font-medium">{path.replace('./', 'app')}</span>
         </div>
         {expanded[path] && (
           <div className="ml-6">
