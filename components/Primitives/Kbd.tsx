@@ -3,6 +3,24 @@
 import React, { forwardRef, useState } from 'react';
 import { cn, KeyMap } from '@/utils';
 
+const mapChildren = (children: string | string[] | React.ReactNode): string | string[] | React.ReactNode => {
+  if (typeof children === 'string') {
+    return children.split('').map((key) => KeyMap[key] || key);
+  }
+  
+  if (Array.isArray(children)) {
+    return children.map((child) => {
+      if (typeof child === 'string') {
+        return KeyMap[child] || child;
+      }
+      return child;
+    });
+  }
+  
+  // If it's not a string or array, return as is (could be a single React element or other value)
+  return children;
+};
+
 export interface KbdProps {
   children?: any;
   className?: string;
@@ -14,25 +32,19 @@ export const Kbd = forwardRef((props: KbdProps, ref?: any) => {
   const { children, className = '', plusSign = false, popup = false } = props;
   const [clicked, setClicked] = useState<boolean>(false);
   // children can be a string, array, or single key
-  const mappedKeys = typeof children === 'string' ?  children?.split('').map((key: any) => KeyMap[key] || key) :
-    typeof children === 'object' ? children?.map((key: any) => KeyMap[key] || key) : KeyMap[children] || children;
+  const mappedKeys = mapChildren(children);
 
   const formatKeys = () => {
-    const elements = [];
-
-    for (let i = 0; i < mappedKeys.length; i++) {
-      // I hate that this key is horiztonally offset, so this is to line it up with the other keys
-      elements.push(
-        <span key={i}>
-          {mappedKeys[i]}
-        </span>,
-      );
-      if (plusSign && i < mappedKeys.length - 1 && mappedKeys[i + 1] !== ' ') {
-        elements.push('+');
-      }
+    if (!Array.isArray(mappedKeys)) {
+      return <span>{mappedKeys}</span>;
     }
-
-    return elements;
+  
+    return mappedKeys.map((key, index) => (
+      <React.Fragment key={`key-${index}`}>
+        <span>{key}</span>
+        {plusSign && index < mappedKeys.length - 1 && mappedKeys[index + 1] !== ' ' && <span>+</span>}
+      </React.Fragment>
+    ));
   };
 
   const handleCopy = (e: React.ClipboardEvent) => {
@@ -47,8 +59,10 @@ export const Kbd = forwardRef((props: KbdProps, ref?: any) => {
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    if (mappedKeys) {
+    if (mappedKeys && Array.isArray(mappedKeys)) {
       navigator.clipboard.writeText(mappedKeys.join('').replace(/\s\+\s/g, ''));
+    } else if (mappedKeys) {
+      navigator.clipboard.writeText(mappedKeys.toString());
     }
     if (popup) {
       setClicked(true);
@@ -60,7 +74,7 @@ export const Kbd = forwardRef((props: KbdProps, ref?: any) => {
     <kbd
       ref={ref}
       className={cn(
-        `relative flex gap-1 h-auto w-auto items-center justify-center rounded px-1.5 opacity-100`,
+        `relative flex gap-1 h-auto w-auto items-center justify-center text-center rounded px-2 opacity-100`,
         `shadow-kbd bg-zinc-900 text-kbd-foreground border-kbd-foreground font-mono font-bold`,
         `hover:bg-zinc-950 cursor-pointer hover:text-primary hover:shadow-kbd-hover`,
         className,

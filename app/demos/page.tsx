@@ -1,6 +1,6 @@
 'use client';
 
-import { Demo, Icon } from '@/components';
+import { Demo, Icon, Kbd } from '@/components';
 import X from '@/public/images/X.png';
 import { cn } from '@/utils';
 
@@ -53,6 +53,53 @@ const DemoPage = () => {
       pinTitle: 'Click to open in new tab',
       description: 'GPU Architecture Breakdown',
       link: '/demos/gpu',
+    },
+    {
+      preview: (
+        <div className="relative border border-gray-700 rounded-lg p-4 !font-radon">
+          <div className="grid grid-cols-6 gap-2 justify-items-center">
+            <div className="col-start-5 col-span-1">
+              <Kbd>k</Kbd>
+            </div>
+            <div className="col-start-1 col-span-1">
+              <Kbd>l</Kbd>
+            </div>
+            <div className="col-start-2 col-span-1">
+              <Kbd>o</Kbd>
+            </div>
+            <div className="col-start-3 col-span-1">
+              <Kbd>g</Kbd>
+            </div>
+            <div className="col-start-4 col-span-1">
+              <Kbd>g</Kbd>
+            </div>
+            <div className="col-start-5 col-span-1">
+              <Kbd>e</Kbd>
+            </div>
+            <div className="col-start-6 col-span-1">
+              <Kbd>r</Kbd>
+            </div>
+            <div className="col-start-5 col-span-1">
+              <Kbd>y</Kbd>
+            </div>
+          </div>
+        </div>
+      ),
+      title: 'Key Logger',
+      pinTitle: 'Click to open in new tab',
+      description: 'Key Logger via hook',
+      link: '/demos/key-logger',
+    },
+    {
+      preview: (
+        <div className="rounded-lg border border-primary flex p-6 h-[150px]">
+          <Icon set="Carbon" icon="ChartMultitype" className="w-full" />
+        </div>
+      ),
+      title: 'Data Visualizations',
+      pinTitle: 'Click to open in new tab',
+      description: 'Data Visualizations with plotly', // (TODO: add D3.js, ag-charts)
+      link: '/demos/data-viz',
     }
   ];
 

@@ -1093,6 +1093,7 @@ const Json = dynamic(() => import('@/public/icons/Carbon/Json.svg'));
 const JsonReference = dynamic(() => import('@/public/icons/Carbon/JsonReference.svg'));
 const JumpLink = dynamic(() => import('@/public/icons/Carbon/JumpLink.svg'));
 const KeepDry = dynamic(() => import('@/public/icons/Carbon/KeepDry.svg'));
+const Key = dynamic(() => import('@/public/icons/Carbon/Key.svg'));
 const Keyboard = dynamic(() => import('@/public/icons/Carbon/Keyboard.svg'));
 const KeyboardOff = dynamic(() => import('@/public/icons/Carbon/KeyboardOff.svg'));
 const Kubernetes = dynamic(() => import('@/public/icons/Carbon/Kubernetes.svg'));
@@ -3305,6 +3306,7 @@ export const CarbonIconSet: IconSetMap = {
   JsonReference,
   JumpLink,
   KeepDry,
+  Key,
   Keyboard,
   KeyboardOff,
   Kubernetes,
