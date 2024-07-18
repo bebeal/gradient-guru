@@ -1,0 +1,20 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - export NODE_OPTIONS=--max-old-space-size=16384
+        - nvm use 20
+        - corepack enable
+        - yarn cache clean
+        - yarn install
+    build:
+      commands:
+        - yarn build
+  artifacts:
+      baseDirectory: dist
+      files:
+          - '**/*'
+  cache:
+      paths:
+          - 'node_modules/**/*'
