@@ -4,17 +4,16 @@ import React, { useState } from 'react';
 import { Icon } from '@/components';
 import { cn } from '@/utils';
 
-export interface TreeNode {
-  [key: string]: string[];
-}
-
 export interface DirectoryTreeProps {
-  data: TreeNode;
+  data: { [key: string]: string[] }
   basePath?: string;
 }
 
 export const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, basePath = '' }) => {
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [expanded, setExpanded] = useState<Record<string, boolean>>(() => {
+    const firstKey = Object.keys(data)?.[0];
+    return firstKey ? { [firstKey]: true } : {};
+  });
 
   const toggleExpand = (path: string) => {
     setExpanded(prev => ({ ...prev, [path]: !prev[path] }));

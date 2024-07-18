@@ -68,6 +68,28 @@ const nextConfig = {
   async headers() {
     return [
       {
+        // This applies to all routes
+        source: '/:path*',
+        headers: [
+          { // controls DNS prefetching, allowing browsers to proactively perform domain name resolution
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
+          },
+          { // indicates whether the site should be allowed to be displayed within an iframe, protects against clickjacking attacks
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN'
+          },
+          { // prevents the browser from attempting to guess the type of content if the Content-Type header is not explicitly set. This can prevent XSS exploits for websites that allow users to upload and share files.
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          { // controls how much information the browser includes when navigating from the current website (origin) to another.
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin'
+          }
+        ]
+      },
+      {
         source: '/api/:path*',
         headers: [
           {
