@@ -8,7 +8,6 @@ const APIPage = () => {
   };
 
   return (
-    <>
     <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">
       {title && <div className="text-2xl font-bold text-center underline">{title}</div>}
       <div className="flex flex-col gap-10 w-full justify-center items-center">
@@ -17,7 +16,6 @@ const APIPage = () => {
         </div>
       </div>
     </div>
-    </>
   );
 };
 
