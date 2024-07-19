@@ -1,13 +1,9 @@
-'use client'
-
 import { DirectoryTree } from "@/components/Links/DirectoryTree";
-import { Icon } from "@/components/Primitives/Icons/Icon";
-import { useEffect } from "react";
 
 const APIPage = () => {
   const title = 'APIs';
   const apis = {
-    'auth/': ['signin', 'signout'],
+    'auth/': ['signin', 'signout', 'session', 'providers'],
     'tweet/': ['1810310734091571240'],
   };
 
