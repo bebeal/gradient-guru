@@ -1,5 +1,3 @@
-'use client'
-
 // Browser Window check
 export const isWindow = (): boolean => typeof window !== 'undefined';
 

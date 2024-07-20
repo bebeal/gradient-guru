@@ -3,7 +3,7 @@
 import { createContext, memo, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import * as ToastPrimitive from '@radix-ui/react-toast';
 import { nanoid } from 'nanoid';
-import { IToast, Toast } from '@/components';
+import { IToast, Toast, ToastOptions } from '@/components';
 
 export const Toasts = memo(() => {
   const { toasts } = useToasts();
@@ -44,7 +44,7 @@ export const ToastViewport = () => {
 };
 
 export type ToastContextType = {
-  addToast: (toast: Omit<IToast, 'id'> & { id?: string }) => string;
+  addToast: (toast: ToastOptions & { id?: string }) => string;
   removeToast: (id?: IToast['id']) => string;
   clearToasts: () => void;
   simulateSwipeRightGesture: (id?: IToast['id']) => string | undefined | null;
@@ -52,13 +52,13 @@ export type ToastContextType = {
 };
 export const ToastsContext = createContext({} as ToastContextType);
 
-export type ToastsProviderProps = {
+type ToastsProviderProps = {
   children: ReactNode;
 };
 export const ToastsProvider = ({ children }: ToastsProviderProps) => {
   const [toasts, setToasts] = useState<IToast[]>([]);
 
-  const addToast = useCallback((toast: Omit<IToast, 'id'> & { id?: string }) => {
+  const addToast = useCallback((toast: ToastOptions & { id?: string }) => {
     const id = toast.id ?? nanoid();
     setToasts((d) => [...d.filter((m) => m.id !== toast.id), { ...toast, id }]);
     return id;

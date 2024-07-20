@@ -7,9 +7,11 @@ import { cn } from '@/utils';
 export interface DirectoryTreeProps {
   data: { [key: string]: string[] }
   basePath?: string;
+  target?: string;
+  rel?: string;
 }
 
-export const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, basePath = '' }) => {
+export const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, basePath = '', target, rel }) => {
   const [expanded, setExpanded] = useState<Record<string, boolean>>(() => {
     const firstKey = Object.keys(data)?.[0];
     return firstKey ? { [firstKey]: true } : {};
@@ -34,7 +36,7 @@ export const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, basePath = '
           <div className="ml-6">
             {node.map((subPath) => (
               <div key={subPath} className="py-1">
-                <a href={`${basePath}${path}${subPath}`} target="_blank" rel="noopener noreferrer" className="text-sm font-bold flex items-center">
+                <a href={`${basePath}${path}${subPath}`} target={target} rel={rel} className="text-sm font-bold flex items-center">
                   <Icon set="Custom" icon="File" className="h-4 w-4 mr-1" />
                   {subPath}
                 </a>

@@ -14,8 +14,7 @@ export interface ToastAction {
   onClick: (event?: any) => void;
 }
 
-export interface IToast {
-  id: string;
+export interface ToastOptions {
   icon?: any;
   title?: string;
   description?: any | ReactNode | string;
@@ -24,7 +23,9 @@ export interface IToast {
   duration?: number;
   closeLabel?: string;
 }
-
+export interface IToast extends ToastOptions {
+  id: string;
+}
 export interface ToastProps {
   toast: IToast;
 }

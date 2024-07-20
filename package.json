@@ -144,6 +144,7 @@
     "prosemirror-view": "^1.33.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-hotkeys-hook": "^4.5.0",
     "react-parallax-tilt": "^1.7.232",
     "react-plotly.js": "^2.6.0",
     "react-syntax-highlighter": "^15.5.0",

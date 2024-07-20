@@ -12200,6 +12200,7 @@ __metadata:
     raw-loader: "npm:^4.0.2"
     react: "npm:^18"
     react-dom: "npm:^18"
+    react-hotkeys-hook: "npm:^4.5.0"
     react-parallax-tilt: "npm:^1.7.232"
     react-plotly.js: "npm:^2.6.0"
     react-syntax-highlighter: "npm:^15.5.0"
@@ -17021,6 +17022,16 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: 10c0/a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
+  languageName: node
+  linkType: hard
+
+"react-hotkeys-hook@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "react-hotkeys-hook@npm:4.5.0"
+  peerDependencies:
+    react: ">=16.8.1"
+    react-dom: ">=16.8.1"
+  checksum: 10c0/ae3ee47c623aaece4c21ce8027b0fff18caaee8c6cb22fafcbebbb54cee27ef7d0097145f04da1bd67b5af1d89cb4f983ae6a72b32451de81dca193255187480
   languageName: node
   linkType: hard
 

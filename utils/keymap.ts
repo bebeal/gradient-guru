@@ -1,62 +1,85 @@
-'use client'
-
 import { isAppleDevice } from "./device";
 
-export const SPACE = '␣';
-export const SHIFT = '⇧';
+// todo: use https://gitlab.com/nfriend/ts-key-enum/-/blob/master/Key.enum.d.ts instead but also make the mapping to the symbols
+const SPACE = '␣';
+const SHIFT = '⇧';
 export const ALT_WIN = 'Alt';
 export const ALT_MAC = '⌥';
-export const CONTROL = '⌃';
-export const ENTER = '↵';
-export const ARROW_UP = '↑';
-export const ARROW_DOWN = '↓';
-export const ARROW_LEFT = '←';
-export const ARROW_RIGHT = '→';
-export const ESCAPE = '⎋';
-export const TAB = '↹';
-export const CAPSLOCK = '⇪';
+const CONTROL = '⌃';
+const ENTER = '↵';
+const ARROW_UP = '↑';
+const ARROW_DOWN = '↓';
+const ARROW_LEFT = '←';
+const ARROW_RIGHT = '→';
+const ESCAPE = '⎋';
+const TAB = '↹';
+const CAPSLOCK = '⇪';
 export const DELETE_WIN = 'Del';
 export const DELETE_MAC = '⌦';
-export const PAGE_UP = '⇞';
-export const PAGE_DOWN = '⇟';
-export const HOME = '↖';
-export const END = '↘';
-export const INSERT = '⎀';
-export const NUMLOCK = '⇭';
-export const SCROLL_LOCK = '⤓';
-export const PAUSE = '⏸';
-export const CLEAR = '⌧';
-export const HELP = '⍰';
-export const VOLUME_UP = '🔊';
-export const VOLUME_DOWN = '🔉';
-export const VOLUME_MUTE = '🔇';
-export const MEDIA_NEXT = '⏭';
-export const MEDIA_PREV = '⏮';
-export const MEDIA_STOP = '⏹';
-export const MEDIA_PLAY_PAUSE = '⏯';
-export const PRINT_SCREEN = '⎙';
-export const CONTEXT_MENU = '≣';
+const PAGE_UP = '⇞';
+const PAGE_DOWN = '⇟';
+const HOME = '↖';
+const END = '↘';
+const INSERT = '⎀';
+const NUMLOCK = '⇭';
+const SCROLL_LOCK = '⤓';
+const PAUSE = '⏸';
+const CLEAR = '⌧';
+const HELP = '⍰';
+const VOLUME_UP = '🔊';
+const VOLUME_DOWN = '🔉';
+const VOLUME_MUTE = '🔇';
+const MEDIA_NEXT = '⏭';
+const MEDIA_PREV = '⏮';
+const MEDIA_STOP = '⏹';
+const MEDIA_PLAY_PAUSE = '⏯';
+const PRINT_SCREEN = '⎙';
+const CONTEXT_MENU = '≣';
+const F1 = 'F1';
+const F2 = 'F2';
+const F3 = 'F3';
+const F4 = 'F4';
+const F5 = 'F5';
+const F6 = 'F6';
+const F7 = 'F7';
+const F8 = 'F8';
+const F9 = 'F9';
+const F10 = 'F10';
+const F11 = 'F11';
+const F12 = 'F12';
 export const META_MAC = '⌘';
 export const META_WIN = '⊞';
-export const F1 = 'F1';
-export const F2 = 'F2';
-export const F3 = 'F3';
-export const F4 = 'F4';
-export const F5 = 'F5';
-export const F6 = 'F6';
-export const F7 = 'F7';
-export const F8 = 'F8';
-export const F9 = 'F9';
-export const F10 = 'F10';
-export const F11 = 'F11';
-export const F12 = 'F12';
 
+const META_KEY = isAppleDevice() ? META_MAC : META_WIN;
+const ALT_KEY = isAppleDevice() ? ALT_MAC : ALT_WIN;
+const DEL_KEY = isAppleDevice() ? DELETE_MAC : DELETE_WIN;
+
+const MetaMappings: Record<string, string> = {
+  'Meta': META_KEY,
+  'OSLeft': META_KEY,
+  'OSRight': META_KEY,
+  'Cmd': META_KEY,
+};
+const FunctionMappings: Record<string, string> = {
+  F1,
+  F2,
+  F3,
+  F4,
+  F5,
+  F6,
+  F7,
+  F8,
+  F9,
+  F10,
+  F11,
+  F12
+};
 export const KeyMap: Record<string, string> = {
   ' ': SPACE,
   'Shift': SHIFT,
   'ShiftRight': SHIFT,
   'ShiftLeft': SHIFT,
-  'Alt': isAppleDevice() ? ALT_MAC : ALT_WIN,
+  'Alt': ALT_KEY,
   'Control': CONTROL,
   'Enter': ENTER,
   'ArrowUp': ARROW_UP,
@@ -66,7 +89,7 @@ export const KeyMap: Record<string, string> = {
   'Escape': ESCAPE,
   'Tab': TAB,
   'CapsLock': CAPSLOCK,
-  'Delete': isAppleDevice() ? DELETE_MAC : DELETE_WIN,
+  'Delete': DEL_KEY,
   'PageUp': PAGE_UP,
   'PageDown': PAGE_DOWN,
   'Home': HOME,
@@ -86,19 +109,6 @@ export const KeyMap: Record<string, string> = {
   'MediaPlayPause': MEDIA_PLAY_PAUSE,
   'PrintScreen': PRINT_SCREEN,
   'ContextMenu': CONTEXT_MENU,
-  'Meta': isAppleDevice() ? META_MAC : META_WIN,
-  'OSLeft': isAppleDevice() ? META_MAC : META_WIN,
-  'OSRight': isAppleDevice() ? META_MAC : META_WIN,
-  F1,
-  F2,
-  F3,
-  F4,
-  F5,
-  F6,
-  F7,
-  F8,
-  F9,
-  F10,
-  F11,
-  F12
+  ...MetaMappings,
+  ...FunctionMappings,
 };

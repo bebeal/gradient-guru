@@ -63,7 +63,7 @@ const Pin = ({ content }: { content?: React.ReactNode | string }) => {
 
 export const DemoCard = (props: DemoCardProps) => {
   const { debug } = useDevTools();
-  const { title, pinContent, href, description, content, containerClassName, className } = props;
+  const { title, pinContent, href, description, content, containerClassName, className, ...rest } = props;
   const ref = useRef<HTMLDivElement>(null);
   const [dims, setDims] = useState({ width: 0, height: 0 });
 
@@ -90,6 +90,7 @@ export const DemoCard = (props: DemoCardProps) => {
         containerClassName
       )}
       style={{ width: dims.width, height: dims.height }}
+      {...rest}
     >
       <div
         style={{

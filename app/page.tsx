@@ -5,7 +5,7 @@ import { DirectoryTree, Icon, LinkList } from "@/components";
 
 const AppPage = () => {
   const pages = {
-    './': ['api', 'demos', 'tests'],
+    './': ['api', 'demos', 'shortcuts', 'tests'],
   };
 
   return (

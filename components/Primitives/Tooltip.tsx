@@ -47,6 +47,7 @@ export const Tooltip = (props: TooltipProps) => {
               'fade-in-0 zoom-in-95',
               'rounded-md border bg-secondary px-3 py-1.5 text-sm text-secondary shadow-md',
               'pointer-events-auto cursor-default',
+              'z-[var(--layer-overlays)]'
             )}
           >
             <TooltipPrimitive.Arrow className={cn('fill-current text-primary')} />
