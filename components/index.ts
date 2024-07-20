@@ -2,7 +2,7 @@ export * from './Buttons';
 export * from './ColorPalette';
 export * from './ComponentMapper';
 export * from './DataGrid';
-export * from './Fun';
+export * from './Random';
 export * from './GoogleDriveUtility';
 export * from './HiddenInput';
 export * from './Highlighter';

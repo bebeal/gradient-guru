@@ -1,2 +1,2 @@
 export * from './Aceternity';
-export * from './Custom';
+export * from './Misc';

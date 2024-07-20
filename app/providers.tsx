@@ -22,9 +22,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       <StyledComponentsRegistry>
         <ThemeProvider>
           <QueryClientProvider client={queryClient}>
-                <ToastsProvider>
-                  {children}
-                </ToastsProvider>
+            <ToastsProvider>
+              {children}
+            </ToastsProvider>
           </QueryClientProvider>
         </ThemeProvider>
       </StyledComponentsRegistry>

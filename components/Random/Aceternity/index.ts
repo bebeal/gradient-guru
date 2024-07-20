@@ -1,4 +1,3 @@
-export * from './3DPin';
 export * from './BackgroundRipple';
 export * from './BackgroundBeams';
 export * from './EvervaultCard';

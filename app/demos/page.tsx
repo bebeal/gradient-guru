@@ -1,6 +1,6 @@
 'use client';
 
-import { Demo, Icon, Kbd } from '@/components';
+import { DemoCard, Icon, Kbd } from '@/components';
 import X from '@/public/images/X.png';
 import { cn } from '@/utils';
 
@@ -10,9 +10,7 @@ const DemoPage = () => {
   const demos = [
     {
       preview: (
-        <div className="rounded-lg border border-primary max-w-lg w-full h-auto flex p-8">
-          <Icon set="Logos" icon="GoogleDrive" className="w-full h-full" />
-        </div>
+          <Icon set="Logos" icon="GoogleDrive" className="w-full h-full p-6" />
       ),
       title: 'Google Drive Picker',
       pinTitle: 'Click to open in new tab',
@@ -24,7 +22,7 @@ const DemoPage = () => {
         <img
           src={X.src}
           alt="Tweet Demo"
-          className="object-cover rounded-lg border border-primary flex w-xl h-auto p-4"
+          className="object-cover rounded-lg flex w-xl h-auto p-4"
         />
       ),
       title: 'Tweet Component',
@@ -45,9 +43,7 @@ const DemoPage = () => {
     },
     {
       preview: (
-        <div className="rounded-lg border border-primary w-full h-auto flex px-8 py-12">
-          <Icon set="Custom" icon="ThreeFanGpu" className="w-full h-full max-w-sm" />
-        </div>
+          <Icon set="Custom" icon="ThreeFanGpu" className="w-full h-full max-w-sm p-4" />
       ),
       title: 'GPUs',
       pinTitle: 'Click to open in new tab',
@@ -56,32 +52,30 @@ const DemoPage = () => {
     },
     {
       preview: (
-        <div className="relative border border-gray-700 rounded-lg p-4 !font-radon">
-          <div className="grid grid-cols-6 gap-2 justify-items-center">
-            <div className="col-start-5 col-span-1">
-              <Kbd>k</Kbd>
-            </div>
-            <div className="col-start-1 col-span-1">
-              <Kbd>l</Kbd>
-            </div>
-            <div className="col-start-2 col-span-1">
-              <Kbd>o</Kbd>
-            </div>
-            <div className="col-start-3 col-span-1">
-              <Kbd>g</Kbd>
-            </div>
-            <div className="col-start-4 col-span-1">
-              <Kbd>g</Kbd>
-            </div>
-            <div className="col-start-5 col-span-1">
-              <Kbd>e</Kbd>
-            </div>
-            <div className="col-start-6 col-span-1">
-              <Kbd>r</Kbd>
-            </div>
-            <div className="col-start-5 col-span-1">
-              <Kbd>y</Kbd>
-            </div>
+        <div className="grid grid-cols-6 gap-2 justify-items-center p-4">
+          <div className="col-start-5 col-span-1">
+            <Kbd>k</Kbd>
+          </div>
+          <div className="col-start-1 col-span-1">
+            <Kbd>l</Kbd>
+          </div>
+          <div className="col-start-2 col-span-1">
+            <Kbd>o</Kbd>
+          </div>
+          <div className="col-start-3 col-span-1">
+            <Kbd>g</Kbd>
+          </div>
+          <div className="col-start-4 col-span-1">
+            <Kbd>g</Kbd>
+          </div>
+          <div className="col-start-5 col-span-1">
+            <Kbd>e</Kbd>
+          </div>
+          <div className="col-start-6 col-span-1">
+            <Kbd>r</Kbd>
+          </div>
+          <div className="col-start-5 col-span-1">
+            <Kbd>y</Kbd>
           </div>
         </div>
       ),
@@ -92,9 +86,7 @@ const DemoPage = () => {
     },
     {
       preview: (
-        <div className="rounded-lg border border-primary flex p-6 h-[150px]">
-          <Icon set="Carbon" icon="ChartMultitype" className="w-full" />
-        </div>
+          <Icon set="Carbon" icon="ChartMultitype" className="w-full h-full p-6" />
       ),
       title: 'Data Visualizations',
       pinTitle: 'Click to open in new tab',
@@ -108,7 +100,7 @@ const DemoPage = () => {
       <div className="text-2xl font-bold text-center underline">{title}</div>
       <div className={cn(`flex w-auto justify-center items-center gap-2 flex-wrap p-2`)}>
         {demos.map((demo, index) => (
-          <Demo key={`demo-${index}`} content={demo.preview} title={demo.title} pinTitle={demo?.pinTitle || demo?.title} description={demo.description} href={demo.link} />
+          <DemoCard key={`demo-${index}`} content={demo.preview} title={demo.title} pinContent={demo?.pinTitle || demo?.title} description={demo.description} href={demo.link} />
         ))}
       </div>
     </div>

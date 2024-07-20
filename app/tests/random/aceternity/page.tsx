@@ -3,30 +3,9 @@
 import { FC, useRef } from "react";
 import Image from 'next/image';
 import { motion,  useScroll, useTransform } from "framer-motion";
-import { Demo, BackgroundCellAnimation, BackgroundBeams, LampContainer, PinContainer, EvervaultSvg, EvervaultCard, GoogleGeminiEffect, GlowingStarsBackgroundCard, GlowingStarsTitle, GlowingStarsDescription, SparklesCore, TextRevealCardTitle, TextRevealCard, TextRevealCardDescription, TracingBeam, TypewriterEffectSmooth, PulseBeams, ComponentMap, ComponentMapper } from "@/components";
+import { BackgroundBeams, LampContainer, EvervaultSvg, EvervaultCard, GoogleGeminiEffect, GlowingStarsBackgroundCard, GlowingStarsTitle, GlowingStarsDescription, SparklesCore, TextRevealCardTitle, TextRevealCard, TextRevealCardDescription, TracingBeam, TypewriterEffectSmooth, PulseBeams, ComponentMap, ComponentMapper } from "@/components";
 import { cn } from "@/utils";
 import { mockData } from "./mockData";
-
-const PinDemo = () => {
-  return (
-    <PinContainer
-        title={'3D Pin Title'}
-        href={'/'}
-      >
-        <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[20rem]">
-          <h3 className="max-w-xs !pb-2 !m-0 font-bold text-base text-slate-100">
-            Title
-          </h3>
-          <div className="text-base !m-0 !p-0 font-normal">
-            <span className="text-slate-500 ">
-              Description
-            </span>
-          </div>
-          <div className="flex flex-1 w-full rounded-lg mt-4 bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500" />
-        </div>
-    </PinContainer>
-  )
-};
 
 const BackgroundBeamsDemo = () => {
   return (
@@ -266,19 +245,8 @@ const TypewriterEffectDemo = () => {
     );
 };
 
-const DemoCardDemo = () => {
-  return (
-    <Demo
-      title="Demo Title"
-      description="Demo Description"
-      pinTitle="Demo Pin Title"
-      href="/"
-    />
-  )
-};
 
-const FunComponents: ComponentMap = {
-  PinDemo,
+const AceternityComponents: ComponentMap = {
   TypewriterEffectDemo,
   TracingBeamDemo,
   BackgroundBeamsDemo,
@@ -289,13 +257,12 @@ const FunComponents: ComponentMap = {
   PulseBeamsDemo,
   SparklesDemo,
   TextRevealDemo,
-  DemoCardDemo
 };
 
-const FunPage: FC = () => {
+const AceternityPage: FC = () => {
   return (
-    <ComponentMapper title="Fun Components" components={FunComponents} />
+    <ComponentMapper title="Fun Components" components={AceternityComponents} />
   );
 };
 
-export default FunPage;
+export default AceternityPage;
