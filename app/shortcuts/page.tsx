@@ -1,12 +1,12 @@
 'use client';
 
-import React from 'react';
-import { ShortcutsGuide } from '@/components/Shortcuts/Shortcuts';
-import { Shortcut } from '@/hooks/useShortcuts';
+
+import { HotkeysGuide } from '@/components/Hotkeys/Hotkeys';
+import { Hotkey } from '@/hooks/useHotkeys';
 import { META_MAC } from '@/utils';
 
-const ShortcutsPage = () => {
-  const shortcuts: Shortcut[] = [
+const HotkeysPage = () => {
+  const hotkeys: Hotkey[] = [
     {
       key: `${META_MAC}+k`,
       action: () => console.log('Command palette opened'),
@@ -50,9 +50,9 @@ const ShortcutsPage = () => {
 
   return (
     <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">
-      <ShortcutsGuide shortcuts={shortcuts} />
+      <HotkeysGuide hotkeys={hotkeys} />
     </div>
   );
 };
 
-export default ShortcutsPage;
+export default HotkeysPage;

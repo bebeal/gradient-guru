@@ -3,7 +3,7 @@
 import { memo, Suspense, useRef } from 'react';
 import { EditorContent, EditorOptions } from '@tiptap/react';
 import { Loading } from '@/components';
-import { useTipTap } from '@/hooks';
+import { useTipTap } from '@/hooks/useTipTap';
 import { cn } from '@/utils';
 import { TipTapToolbar } from './TipTapToolbar';
 
