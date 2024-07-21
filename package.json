@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.540.0",
+    "@hookform/resolvers": "^3.9.0",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
     "@next/mdx": "^14.1.4",
@@ -144,6 +145,7 @@
     "prosemirror-view": "^1.33.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.52.1",
     "react-hotkeys-hook": "^4.5.0",
     "react-parallax-tilt": "^1.7.232",
     "react-plotly.js": "^2.6.0",
@@ -158,6 +160,7 @@
     "remark-mdx-frontmatter": "^4.0.0",
     "tiptap-markdown": "^0.8.10",
     "tldraw": "2.0.2",
+    "zod": "^3.23.8",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
