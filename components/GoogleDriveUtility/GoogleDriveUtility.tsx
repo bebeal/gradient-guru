@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { useCallback, useEffect, useState } from "react";
-import { Button, GoogleDebugAuthComponent, Icon, Loading } from "@/components";
+import { useCallback, useEffect, useState } from 'react';
+import { Button, GoogleDebugAuthComponent, Icon, Loading } from '@/components';
 import { useDrivePicker } from './useDrivePicker';
 
 // Declare types for Google Picker
@@ -17,48 +17,31 @@ export interface GoogleDriveUtilityProps {
 }
 
 export const GoogleDriveUtility = (props: GoogleDriveUtilityProps) => {
-  const {
-    debug=true,
-    googleDriveApiKey,
-  } = props;
-  const {
-    GoogleApiScript,
-    session,
-    gapiLoaded,
-    pickerApiLoaded,
-    createPicker,
-  } = useDrivePicker({ googleDriveApiKey })
+  const { debug = true, googleDriveApiKey } = props;
+  const { GoogleApiScript, session, gapiLoaded, pickerApiLoaded, createPicker } = useDrivePicker({ googleDriveApiKey });
   const [createPickerRequested, setCreatePickerRequested] = useState(false);
 
   useEffect(() => {
-    if (createPickerRequested && session?.status === "authenticated") {
+    if (createPickerRequested && session?.status === 'authenticated') {
       createPicker();
     }
   }, [createPickerRequested, createPicker, session?.status]);
 
-  const authenticatePopup = useCallback((url: string, title='Google Sign In') => {
+  const authenticatePopup = useCallback((url: string, title = 'Google Sign In') => {
     if (!window) return;
     const dualScreenLeft = window.screenLeft ?? window.screenX;
     const dualScreenTop = window.screenTop ?? window.screenY;
 
-    const width =
-      window.innerWidth ?? document.documentElement.clientWidth ?? screen.width;
+    const width = window.innerWidth ?? document.documentElement.clientWidth ?? screen.width;
 
-    const height =
-      window.innerHeight ??
-      document.documentElement.clientHeight ??
-      screen.height;
+    const height = window.innerHeight ?? document.documentElement.clientHeight ?? screen.height;
 
     const systemZoom = width / window.screen.availWidth;
 
     const left = (width - 500) / 2 / systemZoom + dualScreenLeft;
     const top = (height - 550) / 2 / systemZoom + dualScreenTop;
 
-    const newWindow = window.open(
-      url,
-      title,
-      `popup=true,width=${500/systemZoom},height=${550/systemZoom},top=${top},left=${left}`
-    )!;
+    const newWindow = window.open(url, title, `popup=true,width=${500 / systemZoom},height=${550 / systemZoom},top=${top},left=${left}`)!;
 
     newWindow?.focus();
     // Create an interval to check if the window has been closed, and if so, createPicker
@@ -70,17 +53,20 @@ export const GoogleDriveUtility = (props: GoogleDriveUtilityProps) => {
     }, 1000);
   }, []);
 
-  const authenticateAndOpenPicker = useCallback((provider: string) => {
-    if (session?.status === "unauthenticated") {
-      // Open the Google Sign In window
-      authenticatePopup(`/api/auth/signin?provider=${provider}`);
-    }
+  const authenticateAndOpenPicker = useCallback(
+    (provider: string) => {
+      if (session?.status === 'unauthenticated') {
+        // Open the Google Sign In window
+        authenticatePopup(`/api/auth/signin?provider=${provider}`);
+      }
 
-    // if already authenticated, resolve immediately
-    if (session?.status === "authenticated") {
-      createPicker();
-    }
-  }, [session?.status, authenticatePopup, createPicker]);
+      // if already authenticated, resolve immediately
+      if (session?.status === 'authenticated') {
+        createPicker();
+      }
+    },
+    [session?.status, authenticatePopup, createPicker],
+  );
 
   const buttonClicked = useCallback(() => {
     authenticateAndOpenPicker('google');

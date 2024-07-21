@@ -4,7 +4,7 @@ import { Progress } from '@/components';
 import { useDownloader } from '@/hooks/useDownloader';
 
 // const useDownloader = ({ url, onDownloadProgress }: { url: string; onDownloadProgress: (downloadPercentage: number, bytes: number, total: number | undefined) => void }) => {
-  
+
 //   return {
 //     downloader: undefined,
 //     downloadPercentage: 0,

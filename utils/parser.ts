@@ -1,10 +1,10 @@
+import { Readable } from 'node:stream';
 import Papa, { LocalFile, ParseConfig, ParseRemoteConfig, ParseWorkerConfig } from 'papaparse';
 import { isDevEnv } from './environment';
-import { Readable } from 'node:stream';
 
 /**
  * csv parsing via papaparse
- * 
+ *
  * @param csv either a string of delimited text, a File object, or a URL (for Remote Files)
  * @param config an optional config
  *    - ...PapaParseConfig: See https://www.papaparse.com/docs#config
@@ -20,11 +20,7 @@ import { Readable } from 'node:stream';
 
 // wrap config in this to auto infer whether this is a remote file download or not
 export const remoteParseConfig = (csv?: LocalFile | string, config?: ParseConfig & { download?: any }): ParseConfig => ({
-  download: (
-    typeof csv === 'string' && csv.startsWith('http') ||
-    typeof csv === 'object' && csv.constructor.name === 'URL' ||
-    typeof csv === 'object' && csv.constructor.name === 'File' 
-  ),
+  download: (typeof csv === 'string' && csv.startsWith('http')) || (typeof csv === 'object' && csv.constructor.name === 'URL') || (typeof csv === 'object' && csv.constructor.name === 'File'),
   ...config, // unwrap here that way if user specifies download, it will override the inferred value
 });
 
@@ -49,4 +45,3 @@ export const parse = (csv: any, config?: ParseConfig & { [key: string]: any }) =
   return Papa.parse(csv, parserConfig);
 };
 export const unparse = Papa.unparse;
-

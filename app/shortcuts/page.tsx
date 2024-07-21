@@ -12,39 +12,39 @@ const ShortcutsPage = () => {
       action: () => console.log('Command palette opened'),
       options: {
         description: 'Open command palette',
-        scopes: ['*']
-      }
+        scopes: ['*'],
+      },
     },
     {
       key: `${META_MAC}+d`,
       action: () => console.log('Toggle debug'),
       options: {
         description: 'Toggle debug',
-        scopes: ['*']
-      }
+        scopes: ['*'],
+      },
     },
     {
       key: `${META_MAC}+s`,
       action: () => console.log('File saved'),
       options: {
         description: 'Save file',
-      }
+      },
     },
     {
       key: `${META_MAC}+z`,
       action: () => console.log('Undo'),
       options: {
         description: 'Undo',
-        scopes: ['editor', 'input']
-      }
+        scopes: ['editor', 'input'],
+      },
     },
     {
       key: `cmd+shift+z`,
       action: () => console.log('Redo'),
       options: {
         description: 'Redo',
-        scopes: ['editor', 'input']
-      }
+        scopes: ['editor', 'input'],
+      },
     },
   ];
 

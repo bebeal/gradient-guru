@@ -1,25 +1,19 @@
-'use client'
+'use client';
 
-import { PlotlyProps } from '@/components';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { PlotlyProps } from '@/components';
 
 const defaultBg = 'rgb(22, 26, 29)';
 const defaultFontColor = 'rgb(160, 170, 186)';
 
 // For managing plotly visualizations
 export const usePlotly = (props: PlotlyProps) => {
-  const {
-    data: initialData = [],
-    layout: initialLayout = {},
-    frames: initialFrames = [],
-    config: initialConfig = {},
-    ...rest
-  } = props;
+  const { data: initialData = [], layout: initialLayout = {}, frames: initialFrames = [], config: initialConfig = {}, ...rest } = props;
 
   const dataQuery = useQuery<Plotly.Data[], Error>({
     queryKey: ['plotlyData', initialData],
-    queryFn: async () => { 
+    queryFn: async () => {
       if (typeof initialData === 'string') {
         const res = await fetch(initialData);
         const jsonData = await res.json();

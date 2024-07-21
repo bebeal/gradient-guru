@@ -1,7 +1,7 @@
-import { ValueParserParams } from "ag-grid-community";
-import { currencyFormatter } from "./Formatters";
-import { booleanCellRenderer, flagRenderer, pokemonTypesRenderer, ratingRenderer } from "./CellRenderers";
-import { pokemonTypeOrder } from "../Primitives/Icons/IconSets/PokemonTypes";
+import { ValueParserParams } from 'ag-grid-community';
+import { pokemonTypeOrder } from '../Primitives/Icons/IconSets/PokemonTypes';
+import { booleanCellRenderer, flagRenderer, pokemonTypesRenderer, ratingRenderer } from './CellRenderers';
+import { currencyFormatter } from './Formatters';
 
 const currencyDataType = {
   currency: {
@@ -9,29 +9,29 @@ const currencyDataType = {
     baseDataType: 'number',
     valueFormatter: currencyFormatter,
     valueParser: (params: ValueParserParams) => {
-        if (params.newValue == null) {
-            return null;
-        }
-        let newValue = String(params.newValue)?.trim?.();
-        if (newValue === '') {
-            return null;
-        }
-        newValue = newValue.replace('$', '').replace(',', '');
-        if (newValue.includes('(')) {
-            newValue = newValue.replace('(', '').replace(')', '');
-            newValue = '-' + newValue;
-        }
-        return Number(newValue);
+      if (params.newValue == null) {
+        return null;
+      }
+      let newValue = String(params.newValue)?.trim?.();
+      if (newValue === '') {
+        return null;
+      }
+      newValue = newValue.replace('$', '').replace(',', '');
+      if (newValue.includes('(')) {
+        newValue = newValue.replace('(', '').replace(')', '');
+        newValue = '-' + newValue;
+      }
+      return Number(newValue);
     },
     columnTypes: ['currency', 'numeric'],
   },
-}
+};
 
 const currencyColumnType = {
   useValueFormatterForExport: false,
   // useValueParserForImport: false,
   valueFormatter: currencyFormatter,
-}
+};
 
 const pokemonTypeComparator = (typeA: string, typeB: string) => {
   if (typeA === '' || typeB === '') {
@@ -39,7 +39,7 @@ const pokemonTypeComparator = (typeA: string, typeB: string) => {
   }
   const indexA = pokemonTypeOrder.indexOf(typeA);
   const indexB = pokemonTypeOrder.indexOf(typeB);
-  
+
   if (indexA === -1 && indexB === -1) {
     return typeA.localeCompare(typeB); // If neither type is in the list, sort alphabetically
   } else if (indexA === -1) {
@@ -47,9 +47,9 @@ const pokemonTypeComparator = (typeA: string, typeB: string) => {
   } else if (indexB === -1) {
     return -1; // Unknown types go to the end
   }
-  
+
   return indexA - indexB;
-}
+};
 
 export const columnTypes = {
   rating: {
@@ -59,7 +59,7 @@ export const columnTypes = {
     cellRenderer: flagRenderer,
   },
   boolean: {
-    cellRenderer: booleanCellRenderer
+    cellRenderer: booleanCellRenderer,
   },
   pokemonType: {
     cellRenderer: pokemonTypesRenderer,
@@ -78,7 +78,7 @@ export const columnTypes = {
       // more types > less types
       return typesAArray.length - typesBArray.length;
     },
-  }
+  },
 };
 
 export const createColumnDefs = (columnNames: string[]) => {
@@ -87,6 +87,6 @@ export const createColumnDefs = (columnNames: string[]) => {
       return 'pokemonType';
     }
     return undefined;
-  }
-  return columnNames.map((name) => ({ headerName: name, field: name, type: autoAssignCellRenderer(name) }))
-}
+  };
+  return columnNames.map((name) => ({ headerName: name, field: name, type: autoAssignCellRenderer(name) }));
+};

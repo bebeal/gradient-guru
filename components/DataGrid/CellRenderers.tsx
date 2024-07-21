@@ -2,8 +2,8 @@
 
 import { CustomCellRendererProps } from 'ag-grid-react';
 import { CountryCodes } from '@/utils';
-import { Icon } from '../Primitives/Icons/Icon';
 import { HoverCard } from '../Primitives/HoverCard';
+import { Icon } from '../Primitives/Icons/Icon';
 import { Tooltip } from '../Primitives/Tooltip';
 
 export interface CellRendererParams extends CustomCellRendererProps {
@@ -58,17 +58,22 @@ export const pokemonTypesRenderer = (params: CellRendererParams) => {
 
   return (
     <div className="flex gap-1 flex-wrap w-full h-full justify-around items-center">
-      {value.toLowerCase().split(', ').map((type: string) => {
-        return (
+      {value
+        .toLowerCase()
+        .split(', ')
+        .map((type: string) => {
+          return (
             <div key={`span-pkmn-type-${type}`} className="flex items-center justify-center overflow-visible transition-none pointer-events-auto">
-                 <Tooltip content={type}>
-                    <div className="flex w-auto h-auto"> {/* Need this div just so tooltip can pass a ref */}
-                        <Icon set="PokeTypes" icon={type} className="w-6" />
-                    </div>
-                </Tooltip>
+              <Tooltip content={type}>
+                <div className="flex w-auto h-auto">
+                  {' '}
+                  {/* Need this div just so tooltip can pass a ref */}
+                  <Icon set="PokeTypes" icon={type} className="w-6" />
+                </div>
+              </Tooltip>
             </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 };

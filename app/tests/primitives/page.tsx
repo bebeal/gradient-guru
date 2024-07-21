@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import { DirectoryTree } from "@/components";
+import { DirectoryTree } from '@/components';
 
 const PrimitivesPage = () => {
   const primitives = {
-    'primitives/': ['accordion', 'card', 'checkbox', 'dropdown', 'kbd', 'menubar', 'progress', 'select', 'side-panel', 'slider', 'switch', 'textarea', 'toasts', 'tooltip']
+    'primitives/': ['accordion', 'card', 'checkbox', 'dropdown', 'kbd', 'menubar', 'progress', 'select', 'side-panel', 'slider', 'switch', 'textarea', 'toasts', 'tooltip'],
   };
 
   return (

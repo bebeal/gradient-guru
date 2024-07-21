@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import { ComponentMap, ComponentMapper } from "@/components";
-import { FC } from "react";
-import styled from "styled-components";
+import { FC } from 'react';
+import styled from 'styled-components';
+import { ComponentMap, ComponentMapper } from '@/components';
 
 const StyledButton = styled.button<any>`
   padding: 5px 10px;
@@ -19,18 +19,12 @@ const StyledButton = styled.button<any>`
 
 const StyledComponents: ComponentMap = {
   StyledButtonDemo: () => {
-    return (
-      <StyledButton>
-        Styled Button
-      </StyledButton>
-    );
-  }
+    return <StyledButton>Styled Button</StyledButton>;
+  },
 };
 
 const StyledComponentsPage: FC = () => {
-  return (
-    <ComponentMapper title="Styled Components" components={StyledComponents} />
-  );
+  return <ComponentMapper title="Styled Components" components={StyledComponents} />;
 };
 
 export default StyledComponentsPage;

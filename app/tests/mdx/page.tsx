@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { LinkList, Separator } from "@/components";
+import { LinkList, Separator } from '@/components';
 
 const MDXPage = () => {
   const title = 'Tests';
@@ -13,7 +13,7 @@ const MDXPage = () => {
       <LinkList links={pages} prefix="/tests/mdx/" />
       <Separator />
       Slugs in public/mdx:
-      <LinkList links={slugs} prefix="/tests/mdx/" textMap={{'example': 'public/mdx/example.mdx'}} />
+      <LinkList links={slugs} prefix="/tests/mdx/" textMap={{ example: 'public/mdx/example.mdx' }} />
     </div>
   );
 };

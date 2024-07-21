@@ -1,40 +1,39 @@
-'use client'
+'use client';
 
-import { cn } from '@/utils';
 import { useCallback } from 'react';
 import { useEditor } from '@tiptap/react';
 import { TipTapProps } from '@/components';
 import { MarkdownTipTapExtensions } from '@/components/TipTap/Extensions/Extensions';
+import { cn } from '@/utils';
 
-export interface useTipTapProps extends Partial<TipTapProps> {
-}
+export interface useTipTapProps extends Partial<TipTapProps> {}
 
 export const useTipTap = (props: useTipTapProps) => {
-  const {
-    children,
-    content='',
-    className,
-    extensions=MarkdownTipTapExtensions,
-    ...rest
-  } = props;
+  const { children, content = '', className, extensions = MarkdownTipTapExtensions, ...rest } = props;
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class: cn("prose prose-sm prose-zinc dark:prose-invert w-full h-full p-4 focus:outline-none !max-w-full", className),
-      }
+        class: cn('prose prose-sm prose-zinc dark:prose-invert w-full h-full p-4 focus:outline-none !max-w-full', className),
+      },
     },
     extensions,
     content: children || content,
-    ...rest
+    ...rest,
   });
 
-  const updateContent = useCallback((content: string) => {
-    editor?.commands.setContent(content);
-  }, [editor]);
+  const updateContent = useCallback(
+    (content: string) => {
+      editor?.commands.setContent(content);
+    },
+    [editor],
+  );
 
-  const setColor = useCallback((color: string = "#FFFFFF") => {
-    editor?.commands.setColor(color);
-  }, [editor]);
+  const setColor = useCallback(
+    (color: string = '#FFFFFF') => {
+      editor?.commands.setColor(color);
+    },
+    [editor],
+  );
 
   const addVideo = (videoUrl: string) => editor?.commands.setVideo(videoUrl);
 
@@ -45,11 +44,11 @@ export const useTipTap = (props: useTipTapProps) => {
     return {
       characters,
       words,
-    }
+    };
   }, [editor]);
 
   const getLinkAttributes = useCallback(() => {
-    return editor?.getAttributes('link').href
+    return editor?.getAttributes('link').href;
   }, [editor]);
 
   const getText = useCallback(() => {
@@ -83,5 +82,5 @@ export const useTipTap = (props: useTipTapProps) => {
     getHTML,
     getJSON,
     getAll,
-  }
+  };
 };

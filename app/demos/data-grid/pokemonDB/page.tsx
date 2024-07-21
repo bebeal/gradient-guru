@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
 // import { promises as fs } from 'fs';
-import { Loading, DataGrid, Erroring } from "@/components";
-import { useEffect, useState } from "react";
-import { parse } from "@/utils";
+import { useEffect, useState } from 'react';
+import { DataGrid, Erroring, Loading } from '@/components';
+import { parse } from '@/utils';
 
 const PokemonDBDataGridPage = () => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ const PokemonDBDataGridPage = () => {
             console.error('Error parsing CSV:', err.message);
             setError('Failed to load data');
             setLoading(false);
-          }
+          },
         });
       } catch (err: any) {
         console.error('Network or file access error:', err.message);
@@ -42,14 +42,16 @@ const PokemonDBDataGridPage = () => {
   }, []);
 
   if (loading) {
-    return (<div className="flex h-full w-full align-center justify-center"><Loading>Loading Data</Loading></div>);
+    return (
+      <div className="flex h-full w-full align-center justify-center">
+        <Loading>Loading Data</Loading>
+      </div>
+    );
   }
   if (error) {
     return <Erroring error={error} />;
   }
-  return (
-    <DataGrid data={data} columnNames={columnNames} />
-  )
+  return <DataGrid data={data} columnNames={columnNames} />;
 };
 
 export default PokemonDBDataGridPage;

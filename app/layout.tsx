@@ -47,10 +47,10 @@ export const metadata: Metadata = {
   icons,
   applicationName: DocConfig.title,
   appleWebApp: {
-		capable: true,
-		title: DocConfig.title,
-		statusBarStyle: 'black',
-	},
+    capable: true,
+    title: DocConfig.title,
+    statusBarStyle: 'black',
+  },
   description: DocConfig?.description || '',
   formatDetection: {
     telephone: false,

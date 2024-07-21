@@ -1,6 +1,5 @@
-'use client'
+'use client';
 
-import { nanoid } from '@/utils';
 import InvisibleCharacters, { HardBreakNode } from '@tiptap-pro/extension-invisible-characters';
 import { TableOfContent } from '@tiptap-pro/extension-table-of-content';
 import UniqueID from '@tiptap-pro/extension-unique-id';
@@ -46,13 +45,14 @@ import Underline from '@tiptap/extension-underline';
 import Youtube from '@tiptap/extension-youtube';
 import { Node } from '@tiptap/pm/model';
 import { Markdown as MarkdownExtension } from 'tiptap-markdown';
+import { nanoid } from '@/utils';
 import { ColorChips } from './ColorChips';
+import KatexExtension from './Katex';
 import { ReactComponent } from './ReactComponent';
 import { Snippets } from './Snippets';
+import { TerminalBlock } from './TerminalBlock';
 import { TextReplacements } from './TextReplacements';
 import { Video } from './Video';
-import { TerminalBlock } from './TerminalBlock';
-import KatexExtension from './Katex';
 
 // import { EmojiList } from './EmojiList';
 // import { Comments } from './Comments';
@@ -70,27 +70,28 @@ import KatexExtension from './Katex';
  */
 const ProExtensions = {
   InvisibleCharacters: InvisibleCharacters.configure({
-    visible: true,                                 // Define default visibility.
-    builders: [new HardBreakNode()],               // An array of invisible characters – by default it contains: spaces, hard breaks and paragraphs.
-    injectCSS: true,                               // By default, the extension injects some CSS. With injectCSS you can disable that.
-    injectNonce: undefined,                        // When you use a Content-Security-Policy with nonce, you can specify a nonce to be added to dynamically created elements.
+    visible: true, // Define default visibility.
+    builders: [new HardBreakNode()], // An array of invisible characters – by default it contains: spaces, hard breaks and paragraphs.
+    injectCSS: true, // By default, the extension injects some CSS. With injectCSS you can disable that.
+    injectNonce: undefined, // When you use a Content-Security-Policy with nonce, you can specify a nonce to be added to dynamically created elements.
   }),
   KatexExtension: KatexExtension.configure({
-    katexOptions: undefined,                       // For the math typesetting the extension uses the third party library KaTeX. To adjust its behaviour, you can pass KaTeX options to it. Find all of them https://katex.org/docs/options.html.
+    katexOptions: undefined, // For the math typesetting the extension uses the third party library KaTeX. To adjust its behaviour, you can pass KaTeX options to it. Find all of them https://katex.org/docs/options.html.
   }),
   TableOfContent: TableOfContent.configure({
-    headingType: 'heading',                        // The type of the heading node you want to use for your Table of Content. By default this is heading but in case you create your own custom Heading extension OR extend the existing one and use a different name, you can pass that name here.
-    getId: () => nanoid(),                         // A builder function that returns a unique ID for each heading. Inside the argument you get access to the headings text content (for example you want to generate IDs based on the text content of the heading).By default this is a function that uses the uuid package to generate a unique ID.
-    scrollParent: typeof window !== 'undefined' ? window : undefined,                         // The scroll parent you want to attach to. This is used to determine which heading currently is active or was already scrolled over. By default this is the window but you can pass any HTML element here.
-    onUpdate: (content: any) => {                  // The most important option that you must set to use this extension. This is a callback function that gets called whenever the Table of Content updates. You get access to an array of heading data (see below) which you can use to render your own Table of Content. To render the table of content you can render it by any means you want. You can use a framework like Vue, React or Svelte or you can use a simple templating engine like Handlebars or Pug. You can also use a simple document.createElement to render the table of content. You can pass a second argument to get the information whether this is the initial creation step for the ToC data.
+    headingType: 'heading', // The type of the heading node you want to use for your Table of Content. By default this is heading but in case you create your own custom Heading extension OR extend the existing one and use a different name, you can pass that name here.
+    getId: () => nanoid(), // A builder function that returns a unique ID for each heading. Inside the argument you get access to the headings text content (for example you want to generate IDs based on the text content of the heading).By default this is a function that uses the uuid package to generate a unique ID.
+    scrollParent: typeof window !== 'undefined' ? window : undefined, // The scroll parent you want to attach to. This is used to determine which heading currently is active or was already scrolled over. By default this is the window but you can pass any HTML element here.
+    onUpdate: (content: any) => {
+      // The most important option that you must set to use this extension. This is a callback function that gets called whenever the Table of Content updates. You get access to an array of heading data (see below) which you can use to render your own Table of Content. To render the table of content you can render it by any means you want. You can use a framework like Vue, React or Svelte or you can use a simple templating engine like Handlebars or Pug. You can also use a simple document.createElement to render the table of content. You can pass a second argument to get the information whether this is the initial creation step for the ToC data.
       // setItems(content)
     },
   }),
   UniqueID: UniqueID.configure({
-    attributeName: 'id',                           // Name of the attribute that is attached to the HTML tag (will be prefixed with data-).
-    types: [],                                     // All types that should get a unique ID, for example ['heading', 'paragraph']
-    generateID: () => nanoid(),                    // A function that generates and returns a unique ID.
-    filterTransaction: null,                       // Ignore some mutations, for example applied from other users through the collaboration plugin.
+    attributeName: 'id', // Name of the attribute that is attached to the HTML tag (will be prefixed with data-).
+    types: [], // All types that should get a unique ID, for example ['heading', 'paragraph']
+    generateID: () => nanoid(), // A function that generates and returns a unique ID.
+    filterTransaction: null, // Ignore some mutations, for example applied from other users through the collaboration plugin.
   }),
 };
 
@@ -118,44 +119,44 @@ const ProExtensions = {
  * - [TaskList]: The TaskList extension allows you to use the <ul> HTML tag in the editor.
  * - [Text]: The Text extension allows you to use the <span> HTML tag in the editor.
  * - [Youtube]: The Youtube extension allows you to use the <iframe> HTML tag in the editor.
- * 
+ *
  * Custom Node Extensions:
  * - [ReactComponent]: Lightweight wrapper for rendering arbitrary React components
  * - [TerminalBlock]: Intended to replace default code blocks with a sligthly fancier component which looks like a terminal and adds some extra functionality
  * - [Video]: Video Embed Extension
- * 
+ *
  */
 const NodeExtensions = {
   Blockquote: Blockquote,
   BulletList: BulletList.configure({
-    itemTypeName: "listItem",                      // Specify the list item name
-    keepMarks: true,                               // Decides whether to keep the marks from a previous line after toggling the list either using inputRule or using the button
-    keepAttributes: false,                         // Decides whether to keep the attributes from a previous line after toggling the list either using inputRule or using the button
+    itemTypeName: 'listItem', // Specify the list item name
+    keepMarks: true, // Decides whether to keep the marks from a previous line after toggling the list either using inputRule or using the button
+    keepAttributes: false, // Decides whether to keep the attributes from a previous line after toggling the list either using inputRule or using the button
   }),
   Document: Document,
   HardBreak: HardBreak.configure({
-    keepMarks: false,                              // Decides whether to keep marks after a line break. Based on the keepOnSplit option for marks.
+    keepMarks: false, // Decides whether to keep marks after a line break. Based on the keepOnSplit option for marks.
   }),
   Heading: Heading.configure({
-    levels: [1, 2, 3, 4, 5, 6],                    // Specifies which heading levels are supported.
+    levels: [1, 2, 3, 4, 5, 6], // Specifies which heading levels are supported.
   }),
   HorizontalRule: HorizontalRule.configure({
     HTMLAttributes: {
-      class: 'm-0 mb-[1.25em]',  
+      class: 'm-0 mb-[1.25em]',
     },
   }),
   Image: Image.configure({
-    inline: true,                                  // Renders the image node inline, for example in a paragraph tag: <p><img src="spacer.gif"></p>. By default images are on the same level as paragraphs.
-    allowBase64: true,                             // Allow images to be parsed as base64 strings <img src="data:image/jpg;base64...">.
+    inline: true, // Renders the image node inline, for example in a paragraph tag: <p><img src="spacer.gif"></p>. By default images are on the same level as paragraphs.
+    allowBase64: true, // Allow images to be parsed as base64 strings <img src="data:image/jpg;base64...">.
   }),
   ListItem: ListItem,
   OrderedList: OrderedList.configure({
     HTMLAttributes: {
       class: 'marker:text-xs',
     },
-    itemTypeName: "listItem",                      // Specify the list item name
-    keepMarks: true,                               // Decides whether to keep the marks from a previous line after toggling the list either using inputRule or using the button
-    keepAttributes: false,                         // Decides whether to keep the attributes from a previous line after toggling the list either using inputRule or using the button
+    itemTypeName: 'listItem', // Specify the list item name
+    keepMarks: true, // Decides whether to keep the marks from a previous line after toggling the list either using inputRule or using the button
+    keepAttributes: false, // Decides whether to keep the attributes from a previous line after toggling the list either using inputRule or using the button
   }),
   Paragraph,
   Table: Table.configure({
@@ -163,47 +164,47 @@ const NodeExtensions = {
     handleWidth: 5,
     cellMinWidth: 25,
     lastColumnResizable: true,
-    allowTableNodeSelection: false
+    allowTableNodeSelection: false,
   }),
   TableCell,
   TableHeader,
   TableRow,
   TaskItem: TaskItem.configure({
     HTMLAttributes: {
-      class: 'flex flex-row items-center justify-center gap-2 w-auto h-auto m-0 p-0 [&>p]:m-0 [&>div]:m-0 [&>label]:m-0 [&>p]:flex [&>div]:flex [&>label]:flex'
+      class: 'flex flex-row items-center justify-center gap-2 w-auto h-auto m-0 p-0 [&>p]:m-0 [&>div]:m-0 [&>label]:m-0 [&>p]:flex [&>div]:flex [&>label]:flex',
     },
-    nested: true,                                  // Whether the task items are allowed to be nested within each other.
+    nested: true, // Whether the task items are allowed to be nested within each other.
     onReadOnlyChecked: (node: Node, checked: boolean): boolean => {
-      return false;                                // A handler for when the task item is checked or unchecked while the editor is set to readOnly. If this is not supplied, the task items are immutable while the editor is readOnly. If this function returns false, the check state will be preserved (readOnly).
+      return false; // A handler for when the task item is checked or unchecked while the editor is set to readOnly. If this is not supplied, the task items are immutable while the editor is readOnly. If this function returns false, the check state will be preserved (readOnly).
     },
   }),
   TaskList: TaskList.configure({
     HTMLAttributes: {
-      class: `flex flex-col gap-1 items-start w-auto h-auto justify-center m-0 p-0`
+      class: `flex flex-col gap-1 items-start w-auto h-auto justify-center m-0 p-0`,
     },
-    itemTypeName: 'taskItem',                     // Specify the list item name
+    itemTypeName: 'taskItem', // Specify the list item name
   }),
   Text,
   Youtube: Youtube.configure({
-    inline: false,                                 // Controls if the node should be handled inline or as a block.
-    width: 480,                                    // Controls the default width of added videos
-    height: 320,                                   // Controls the default height of added videos
-    controls: true,                                // Enables or disables YouTube video controls
-    nocookie: false,                               // Enables the nocookie mode for YouTube embeds
-    allowFullscreen: true,                         // Allows the iframe to be played in fullscreen
-    autoplay: false,                               // Allows the iframe to to start playing after the player is loaded,
-    ccLanguage: undefined,                         // Specifies the default language that the player will use to display closed captions. Set the parameter's value to an ISO 639-1 two-letter language code. For example, setting it to es will cause the captions to be in spanish
-    ccLoadPolicy: false,                           // Setting this parameter's value to true causes closed captions to be shown by default, even if the user has turned captions off
-    disableKBcontrols: false,                      // Disables the keyboards controls for the iframe player
-    enableIFrameApi: false,                        // Enables the player to be controlled via IFrame Player API calls
-    origin: '',                                    // This parameter provides an extra security measure for the IFrame API and is only supported for IFrame embeds. If you are using the IFrame API, which means you are setting the enableIFrameApi parameter value to true, you should always specify your domain as the origin parameter value.
-    endTime: 0,                                    // This parameter specifies the time, measured in seconds from the start of the video, when the player should stop playing the video. For example, setting it to 15 will make the video stop at the 15 seconds mark
-    interfaceLanguage: undefined,                  // Sets the player's interface language. The parameter value is an ISO 639-1 two-letter language code. For example, setting it to fr will cause the interface to be in french
-    ivLoadPolicy: 0,                               // Setting this to 1 causes video annotations to be shown by default, whereas setting to 3 causes video annotations to not be shown by default
-    loop: false,                                   // This parameter has limited support in IFrame embeds. To loop a single video, set the loop parameter value to true and set the playlist parameter value to the same video ID already specified in the Player API URL.
-    playlist: '',                                  // This parameter specifies a comma-separated list of video IDs to play.
-    modestBranding: false,                         // Disables the Youtube logo on the control bar of the player. Note that a small YouTube text label will still display in the upper-right corner of a paused video when the user's mouse pointer hovers over the player
-    progressBarColor: undefined,                   // This parameter specifies the color that will be used in the player's video progress bar. Note that setting the color parameter to white will disable the modestBranding parameter
+    inline: false, // Controls if the node should be handled inline or as a block.
+    width: 480, // Controls the default width of added videos
+    height: 320, // Controls the default height of added videos
+    controls: true, // Enables or disables YouTube video controls
+    nocookie: false, // Enables the nocookie mode for YouTube embeds
+    allowFullscreen: true, // Allows the iframe to be played in fullscreen
+    autoplay: false, // Allows the iframe to to start playing after the player is loaded,
+    ccLanguage: undefined, // Specifies the default language that the player will use to display closed captions. Set the parameter's value to an ISO 639-1 two-letter language code. For example, setting it to es will cause the captions to be in spanish
+    ccLoadPolicy: false, // Setting this parameter's value to true causes closed captions to be shown by default, even if the user has turned captions off
+    disableKBcontrols: false, // Disables the keyboards controls for the iframe player
+    enableIFrameApi: false, // Enables the player to be controlled via IFrame Player API calls
+    origin: '', // This parameter provides an extra security measure for the IFrame API and is only supported for IFrame embeds. If you are using the IFrame API, which means you are setting the enableIFrameApi parameter value to true, you should always specify your domain as the origin parameter value.
+    endTime: 0, // This parameter specifies the time, measured in seconds from the start of the video, when the player should stop playing the video. For example, setting it to 15 will make the video stop at the 15 seconds mark
+    interfaceLanguage: undefined, // Sets the player's interface language. The parameter value is an ISO 639-1 two-letter language code. For example, setting it to fr will cause the interface to be in french
+    ivLoadPolicy: 0, // Setting this to 1 causes video annotations to be shown by default, whereas setting to 3 causes video annotations to not be shown by default
+    loop: false, // This parameter has limited support in IFrame embeds. To loop a single video, set the loop parameter value to true and set the playlist parameter value to the same video ID already specified in the Player API URL.
+    playlist: '', // This parameter specifies a comma-separated list of video IDs to play.
+    modestBranding: false, // Disables the Youtube logo on the control bar of the player. Note that a small YouTube text label will still display in the upper-right corner of a paused video when the user's mouse pointer hovers over the player
+    progressBarColor: undefined, // This parameter specifies the color that will be used in the player's video progress bar. Note that setting the color parameter to white will disable the modestBranding parameter
   }),
   // Custom Extensions
   ReactComponent,
@@ -226,7 +227,7 @@ const NodeExtensions = {
  * - [Superscript]: The Superscript extension allows you to use the <sup> HTML tag in the editor.
  * - [TextStyle]: The TextStyle extension allows you to use the <span> HTML tag in the editor.
  * - [Underline]: The Underline extension allows you to use the <u> HTML tag in the editor.
- * 
+ *
  */
 const MarkExtensions = {
   Bold,
@@ -236,27 +237,28 @@ const MarkExtensions = {
     },
   }),
   Highlight: Highlight.extend({
-    priority: 1000,                          
+    priority: 1000,
   }).configure({
-    multicolor: true  
+    multicolor: true,
   }),
   Italic: Italic,
   Link: Link.configure({
-    autolink: true,                           // If enabled, it adds links as you type.
-    protocols: [                              // Additional custom protocols you would like to be recognized as links.
-      'ftp', 
-      'mailto',     
-      { 
-        scheme: 'tel',                        // By default, linkify adds // to the end of a protocol
-        optionalSlashes: true                 // however this behavior can be changed by passing optionalSlashes option
-      }
+    autolink: true, // If enabled, it adds links as you type.
+    protocols: [
+      // Additional custom protocols you would like to be recognized as links.
+      'ftp',
+      'mailto',
+      {
+        scheme: 'tel', // By default, linkify adds // to the end of a protocol
+        optionalSlashes: true, // however this behavior can be changed by passing optionalSlashes option
+      },
     ],
-    openOnClick: true,                        // If enabled, links will be opened on click.
-    linkOnPaste: true,                        // Adds a link to the current selection if the pasted content only contains an url.
-    HTMLAttributes: {           
-      rel: 'noopener noreferrer',             // Change rel to different value. Allow search engines to follow links(remove nofollow)
-      target: "_blank",                       // Remove target entirely so links open in current tab
-      class: 'cursor-pointer decoration-[0.5px] underline-offset-2',                // Adds a class to the link element.
+    openOnClick: true, // If enabled, links will be opened on click.
+    linkOnPaste: true, // Adds a link to the current selection if the pasted content only contains an url.
+    HTMLAttributes: {
+      rel: 'noopener noreferrer', // Change rel to different value. Allow search engines to follow links(remove nofollow)
+      target: '_blank', // Remove target entirely so links open in current tab
+      class: 'cursor-pointer decoration-[0.5px] underline-offset-2', // Adds a class to the link element.
     },
     // A function that validates every autolinked link. If it exists, it will be called with the link href as argument. If it returns false, the link will be removed. Can be used to set rules for example excluding or including certain domains, tlds, etc.
     validate: (href: string) => /^https?:\/\//.test(href),
@@ -286,7 +288,7 @@ const MarkExtensions = {
  * - [Placeholder]: The Placeholder extension adds a placeholder to the editor. It’s a text that shows up when the editor is empty.
  * - [TextAlign]: The TextAlign extension allows you to add a text align attribute to your text. You can define a list of alignments and use them to align your text.
  * - [Typography]: The Typography extension allows you to add a typography attribute to your text. You can define a list of typography styles and use them to style your text.
- * 
+ *
  * Custom Functionality Extensions:
  * - [TextReplacements]: The TextReplacements extension allows you to replace certain characters with others. For example, you can replace three dots with an ellipsis character.
  * - [ColorChips]: Replaces text color codes with vscode-like color chips
@@ -296,34 +298,35 @@ const FunctionalityExtensions = {
   BubbleMenu: BubbleMenu.configure({
     shouldShow: ({ editor, view, state, oldState, from, to }) => {
       // only show the bubble menu for images and links
-      return editor.isActive('image') || editor.isActive('link')
+      return editor.isActive('image') || editor.isActive('link');
     },
   }),
   CharacterCount: CharacterCount.configure({
-    mode: "textSize",                       // textSize: counts the characters in the text, nodeSize: counts the nodes in the document
+    mode: 'textSize', // textSize: counts the characters in the text, nodeSize: counts the nodes in the document
   }),
-  Color: Color.configure({ 
-    types: ["textStyle"],                    // A list of marks to which the color attribute should be applied to.
+  Color: Color.configure({
+    types: ['textStyle'], // A list of marks to which the color attribute should be applied to.
   }),
   DropCursor: DropCursor.configure({
-    color: 'currentColor',                   // Color of the dropcursor.
-    width: 1,                                // Width of the dropcursor.
-    class: '',                               // One or multiple CSS classes that should be applied to the dropcursor.
+    color: 'currentColor', // Color of the dropcursor.
+    width: 1, // Width of the dropcursor.
+    class: '', // One or multiple CSS classes that should be applied to the dropcursor.
   }),
   Focus: Focus.configure({
-    className: 'focus',                      // The class that is applied to the focused element.
-    mode: 'all',                             // Apply the class to 'all', the 'shallowest' or the 'deepest' node.
+    className: 'focus', // The class that is applied to the focused element.
+    mode: 'all', // Apply the class to 'all', the 'shallowest' or the 'deepest' node.
   }),
   FontFamily: FontFamily.configure({
-    types: ['textStyle', 'listItem'],        // A list of marks to which the font family attribute should be applied to.
+    types: ['textStyle', 'listItem'], // A list of marks to which the font family attribute should be applied to.
   }),
   Gapcursor,
   History: History.configure({
-    depth: 100,                              // The amount of history events that are collected before the oldest events are discarded. Defaults to 100.
-    newGroupDelay: 500,                      // The delay between changes after which a new group should be started (in milliseconds). When changes aren’t adjacent, a new group is always started.
+    depth: 100, // The amount of history events that are collected before the oldest events are discarded. Defaults to 100.
+    newGroupDelay: 500, // The delay between changes after which a new group should be started (in milliseconds). When changes aren’t adjacent, a new group is always started.
   }),
   ListKeymap: ListKeymap.configure({
-    listTypes: [                              // A array of list items and their parent wrapper node types.
+    listTypes: [
+      // A array of list items and their parent wrapper node types.
       {
         itemName: 'listItem',
         wrapperNames: ['bulletList', 'orderedList'],
@@ -332,36 +335,36 @@ const FunctionalityExtensions = {
         itemName: 'taskItem',
         wrapperNames: ['taskList'],
       },
-    ]
+    ],
   }),
   Markdown: MarkdownExtension.configure({
-    html: true,                  // Allow HTML input/output
-    tightLists: true,            // No <p> inside <li> in markdown output
-    tightListClass: 'tight',     // Add class to <ul> allowing you to remove <p> margins when tight
-    bulletListMarker: '-',       // <li> prefix in markdown output
-    linkify: true,              // Create links from "https://..." text
-    breaks: true,               // New lines (\n) in markdown input are converted to <br>
-    transformPastedText: true,   // Allow to paste markdown text in the editor
-    transformCopiedText: true,   // Copied text is transformed to markdown
+    html: true, // Allow HTML input/output
+    tightLists: true, // No <p> inside <li> in markdown output
+    tightListClass: 'tight', // Add class to <ul> allowing you to remove <p> margins when tight
+    bulletListMarker: '-', // <li> prefix in markdown output
+    linkify: true, // Create links from "https://..." text
+    breaks: true, // New lines (\n) in markdown input are converted to <br>
+    transformPastedText: true, // Allow to paste markdown text in the editor
+    transformCopiedText: true, // Copied text is transformed to markdown
   }),
   Placeholder: Placeholder.configure({
-    emptyEditorClass: 'is-editor-empty',                        // The class that is added to the editor when it’s empty.
-    emptyNodeClass: 'is-empty',                          // The added CSS class if the node is empty.
+    emptyEditorClass: 'is-editor-empty', // The class that is added to the editor when it’s empty.
+    emptyNodeClass: 'is-empty', // The added CSS class if the node is empty.
     // Dynamica placeholder
     placeholder: ({ node }) => {
       if (node.type.name === 'heading') {
-        return 'Title...'
+        return 'Title...';
       }
-      return 'Write something …'
+      return 'Write something …';
     },
-    showOnlyWhenEditable: true,                  // Show decorations only when editor is editable.
-    showOnlyCurrent: true,                       // Show decorations only in currently selected node.
-    includeChildren: false,                      // Show decorations also for nested nodes.
+    showOnlyWhenEditable: true, // Show decorations only when editor is editable.
+    showOnlyCurrent: true, // Show decorations only in currently selected node.
+    includeChildren: false, // Show decorations also for nested nodes.
   }),
   TextAlign: TextAlign.configure({
-    types: ['heading', 'paragraph'],                      // A list of nodes where the text align attribute should be applied to. Usually something like ['heading', 'paragraph'].
-    alignments: ['left', 'center', 'right', 'justify'],   // A list of available options for the text align attribute.
-    defaultAlignment: 'left',                             // The default alignment for the text align attribute.
+    types: ['heading', 'paragraph'], // A list of nodes where the text align attribute should be applied to. Usually something like ['heading', 'paragraph'].
+    alignments: ['left', 'center', 'right', 'justify'], // A list of available options for the text align attribute.
+    defaultAlignment: 'left', // The default alignment for the text align attribute.
   }),
   Typography,
   // Custom Functionality Extensions
@@ -374,18 +377,11 @@ export const AllExtensions: any = {
   ...ProExtensions,
   ...NodeExtensions,
   ...MarkExtensions,
-  ...FunctionalityExtensions
+  ...FunctionalityExtensions,
 };
 
- // CUSTOM EXTENSIONS: Custom Extensions defined in `TipTap/Etensions`
-export const CustomExtensions = [
-  'ReactComponent',
-  'TerminalBlock',
-  'Video',
-  'TextReplacements',
-  'ColorChips',
-  'Snippets',
-];
+// CUSTOM EXTENSIONS: Custom Extensions defined in `TipTap/Etensions`
+export const CustomExtensions = ['ReactComponent', 'TerminalBlock', 'Video', 'TextReplacements', 'ColorChips', 'Snippets'];
 
 // collection of the most popular Tiptap extensions: https://tiptap.dev/docs/editor/api/extensions/starter-kit
 export const StarterKitExtensions = [
@@ -393,7 +389,7 @@ export const StarterKitExtensions = [
   'Blockquote',
   'BulletList',
   'TerminalBlock', // replacement for code block
-  'Document',      // required doc
+  'Document', // required doc
   'HardBreak',
   'Heading',
   'HorizontalRule',
@@ -439,19 +435,10 @@ export const BaseMarkdownExtensions = [
   'ListKeymap',
   'Placeholder',
   'TextAlign',
-
 ];
 
-export const GfmExtensions = [
-  ...BaseMarkdownExtensions,
-  'KatexExtension',
-  'TextReplacements',
-  'ColorChips',
-];
+export const GfmExtensions = [...BaseMarkdownExtensions, 'KatexExtension', 'TextReplacements', 'ColorChips'];
 
-export const EditorMarkdownExtensions = [
-  ...GfmExtensions,
-  'CharacterCount',
-];
+export const EditorMarkdownExtensions = [...GfmExtensions, 'CharacterCount'];
 
 export const MarkdownTipTapExtensions = Array.from(new Set(EditorMarkdownExtensions.map((extension) => AllExtensions[extension])));

@@ -30,4 +30,3 @@ export const isMobile = (): boolean => isWindow() && navigator && /Android|webOS
 
 // Touch device check
 export const isTouchDevice = (): boolean => isWindow() && navigator && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
-

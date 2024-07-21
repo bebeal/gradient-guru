@@ -1,14 +1,13 @@
+'use client';
 
-'use client'
-
-import { Terminal } from "@/components";
+import { Terminal } from '@/components';
 
 const javascriptCode = `// Fibonacci
 const fib = n => n <= 1 ? n : fib(n-1) + fib(n-2);
   
 // Euler's formula: e^(i*pi) + 1 = 0
 const euler = () => Math.cos(Math.PI) + Math.sin(Math.PI) * 1i + 1;
-`
+`;
 
 const pythonCode = `import numpy as np
 
@@ -20,7 +19,7 @@ def cross_product(v1, v2):
 
 def mat_mul(m1, m2):
     return np.matmul(m1, m2)
-`
+`;
 
 const cppCode = `#include <iostream>
 #include <vector>
@@ -45,9 +44,11 @@ const TerminalPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-full bg-primary text-primary">
       <div className="flex flex-col gap-2 w-full h-auto justify-center items-center overflow-auto p-10">
-        <Terminal language={"javascript"}>{javascriptCode}</Terminal>
-        <Terminal editable language={"python"}>{pythonCode}</Terminal>
-        <Terminal language={"cpp"}>{cppCode}</Terminal>
+        <Terminal language={'javascript'}>{javascriptCode}</Terminal>
+        <Terminal editable language={'python'}>
+          {pythonCode}
+        </Terminal>
+        <Terminal language={'cpp'}>{cppCode}</Terminal>
       </div>
     </div>
   );

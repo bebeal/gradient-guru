@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
 
 export interface ColorPaletteProps {
   name: string;
@@ -27,33 +27,17 @@ export const ColorPalette: React.FC<ColorPaletteProps> = ({ name, value }) => {
 
   return (
     <div className="relative flex">
-      <div
-        className="flex items-center gap-x-3 w-full cursor-pointer sm:block sm:space-y-1.5"
-        onClick={handleCopy}
-      >
-        <div
-          className="h-10 w-10 rounded dark:ring-1 dark:ring-inset dark:ring-white/10"
-          style={{ backgroundColor: value }}
-        />
+      <div className="flex items-center gap-x-3 w-full cursor-pointer sm:block sm:space-y-1.5" onClick={handleCopy}>
+        <div className="h-10 w-10 rounded dark:ring-1 dark:ring-inset dark:ring-white/10" style={{ backgroundColor: value }} />
         <div className="flex flex-col px-0.5 max-w-20">
-          <div className="min-w-6 w-auto font-medium text-xs text-slate-900 dark:text-white">
-            {name}
-          </div>
-          <div className="text-slate-500 text-xs font-mono lowercase dark:text-slate-400 sm:text-[0.625rem] md:text-xs lg:text-[0.625rem] 2xl:text-xs break-words">
-            {value}
-          </div>
+          <div className="min-w-6 w-auto font-medium text-xs text-slate-900 dark:text-white">{name}</div>
+          <div className="text-slate-500 text-xs font-mono lowercase dark:text-slate-400 sm:text-[0.625rem] md:text-xs lg:text-[0.625rem] 2xl:text-xs break-words">{value}</div>
         </div>
       </div>
       {isCopied && (
         <div className="absolute bottom-full left-1/2 mb-3.5 pb-1 -translate-x-1/2 bg-sky-500 text-white font-mono text-[0.625rem] leading-6 font-medium px-1.5 rounded-lg">
           Copied
-          <svg
-            aria-hidden="true"
-            width="16"
-            height="6"
-            viewBox="0 0 16 6"
-            className="text-sky-500 absolute top-full left-1/2 -mt-px -ml-2"
-          >
+          <svg aria-hidden="true" width="16" height="6" viewBox="0 0 16 6" className="text-sky-500 absolute top-full left-1/2 -mt-px -ml-2">
             <path
               fillRule="evenodd"
               clipRule="evenodd"

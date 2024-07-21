@@ -2,11 +2,10 @@
 
 import React, { FC, Suspense } from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import MDXOptions from '@/utils/mdx-options.mjs';
 import { isDevEnv, isEmptyObject } from '@/utils';
+import MDXOptions from '@/utils/mdx-options.mjs';
 import { FrontMatter } from './FrontMatter';
 import { CustomMDXComponents } from './MDXComponents';
-
 // katex css
 import 'katex/dist/katex.min.css';
 
@@ -20,7 +19,7 @@ export interface MDXLayoutProps {
 }
 
 export const MDXLayout: React.FC<MDXLayoutProps> = (props: MDXLayoutProps) => {
-  const { children, slug, frontMatter, showFrontMatter = true, useRemote=true, ...rest } = props;
+  const { children, slug, frontMatter, showFrontMatter = true, useRemote = true, ...rest } = props;
   const mdxContent = useRemote ? (
     <MDXRemote
       {...rest}
@@ -37,7 +36,9 @@ export const MDXLayout: React.FC<MDXLayoutProps> = (props: MDXLayoutProps) => {
         ...(props.components || {}),
       }}
     />
-  ) : children;
+  ) : (
+    children
+  );
 
   return (
     <section>

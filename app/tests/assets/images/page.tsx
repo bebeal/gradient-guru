@@ -2,13 +2,13 @@
 
 // assets page to show various ways you can import and use svgs, images.
 // This will strictly be from client side (bundled and optimized by webpack)
-import mountains from "@/public/images/mountains.jpg";
-import Slow3GThrottling from "@/public/images/Slow3GThrottling.png";
-import PNGTest from '@/public/images/panda-adversarial.png';
-import { getShimmerPlaceholder } from '@/utils';
-import NextImage from 'next/image';
 import { FC, useEffect, useRef, useState } from 'react';
-import { Icon, Kbd, Loading } from "@/components";
+import NextImage from 'next/image';
+import { Icon, Kbd, Loading } from '@/components';
+import mountains from '@/public/images/mountains.jpg';
+import PNGTest from '@/public/images/panda-adversarial.png';
+import Slow3GThrottling from '@/public/images/Slow3GThrottling.png';
+import { getShimmerPlaceholder } from '@/utils';
 
 // 3 common ways to use pngs:
 // 1. direct import -> react component
@@ -56,7 +56,6 @@ const PNG_wrapped_in_next_image = () => {
   );
 };
 
-
 // Hint to test these, throttle the network speed to slow 3G in devtools
 const Image_With_Shimmer_Placeholder = () => {
   return (
@@ -66,24 +65,28 @@ const Image_With_Shimmer_Placeholder = () => {
         <div className="text-sm font-bold text-center flex flex-col p-4">
           Turn on Network Throttling in DevTools to see the shimmer effect
           <div className="flex flex-col gap-1 w-full justify-center items-center mt-2">
-            <div className="flex w-auto"><Kbd>F12</Kbd></div>
-            <div className=""><Icon set="Carbon" icon="Add" className="w-4" /></div>
-            <img src={Slow3GThrottling.src} alt="3G Throttling instructions" className="flex w-auto h-full max-h-[300px]"  />
+            <div className="flex w-auto">
+              <Kbd>F12</Kbd>
+            </div>
+            <div className="">
+              <Icon set="Carbon" icon="Add" className="w-4" />
+            </div>
+            <img src={Slow3GThrottling.src} alt="3G Throttling instructions" className="flex w-auto h-full max-h-[300px]" />
           </div>
         </div>
         <div className="border border-black dark:border-white rounded w-auto h-full overflow-auto p-2">
-        <NextImage
-          src={mountains}
-          alt="Mountains w/ Shimmer Placeholder"
-          placeholder={getShimmerPlaceholder(700, 475)}
-          loading="lazy"
-          width={700}
-          height={475}
-          style={{
-            maxWidth: "100%",
-            height: "auto",
-          }}
-        />
+          <NextImage
+            src={mountains}
+            alt="Mountains w/ Shimmer Placeholder"
+            placeholder={getShimmerPlaceholder(700, 475)}
+            loading="lazy"
+            width={700}
+            height={475}
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
+          />
         </div>
       </div>
     </div>
@@ -98,25 +101,29 @@ const Image_With_Blur_Placeholder = () => {
         <div className="text-sm font-bold text-center flex flex-col p-4">
           Turn on Network Throttling in DevTools to see the blur placeholder
           <div className="flex flex-col gap-1 w-full justify-center items-center mt-4">
-            <div className="flex w-auto"><Kbd>F12</Kbd></div>
-            <div className=""><Icon set="Carbon" icon="Add" className="w-4" /></div>
+            <div className="flex w-auto">
+              <Kbd>F12</Kbd>
+            </div>
+            <div className="">
+              <Icon set="Carbon" icon="Add" className="w-4" />
+            </div>
             <img src={Slow3GThrottling.src} alt="3G Throttling instructions" className="flex w-auto h-full max-h-[300px]" />
           </div>
         </div>
         <div className="border border-black dark:border-white rounded w-auto h-full overflow-auto p-2">
-        <NextImage
-          alt="Mountains w/ Blur Placeholder"
-          src={mountains}
-          placeholder="blur"
-          loading="lazy"
-          quality={100}
-          width={700}
-          height={475}
-          style={{
-            maxWidth: "100%",
-            height: "auto",
-          }}
-        />
+          <NextImage
+            alt="Mountains w/ Blur Placeholder"
+            src={mountains}
+            placeholder="blur"
+            loading="lazy"
+            quality={100}
+            width={700}
+            height={475}
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
+          />
         </div>
       </div>
     </div>

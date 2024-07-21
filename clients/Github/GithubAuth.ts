@@ -1,6 +1,6 @@
-import { GitHubProfile } from "next-auth/providers/github";
-import { OAuth2Config } from "next-auth/providers";
-import { getEnvVariables } from "@/utils/environment";
+import { OAuth2Config } from 'next-auth/providers';
+import { GitHubProfile } from 'next-auth/providers/github';
+import { getEnvVariables } from '@/utils/environment';
 
 export const GithubAuth = getEnvVariables({
   clientId: 'GITHUB_CLIENT_ID',

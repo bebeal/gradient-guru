@@ -4,7 +4,6 @@ import { createContext, FunctionComponent, ReactNode, useContext, useEffect, use
 import { Theme as RadixTheme, ThemeOptions as RadixThemeOptions, ThemePanel as RadixThemePanel } from '@radix-ui/themes';
 import { ThemeProvider as NextThemeProvider, useTheme as useNextTheme } from 'next-themes';
 import { ThemeProviderProps as NextThemeProviderProps, UseThemeProps as UseNextThemeProps } from 'next-themes/dist/types';
-
 import '@radix-ui/themes/styles.css';
 
 // * Centralizing themeing libraries to be controllable from a single context provider without having hard requirements on consumers to choose one, any, or none.

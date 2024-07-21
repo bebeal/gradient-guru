@@ -5,7 +5,7 @@ import { Icon } from '@/components';
 import { cn } from '@/utils';
 
 export interface DirectoryTreeProps {
-  data: { [key: string]: string[] }
+  data: { [key: string]: string[] };
   basePath?: string;
   target?: string;
   rel?: string;
@@ -18,17 +18,14 @@ export const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, basePath = '
   });
 
   const toggleExpand = (path: string) => {
-    setExpanded(prev => ({ ...prev, [path]: !prev[path] }));
+    setExpanded((prev) => ({ ...prev, [path]: !prev[path] }));
   };
 
   const renderTree = (node: string[], path: string): React.ReactNode => {
     return (
       <div key={path}>
-        <div
-          className="flex items-center cursor-pointer py-1"
-          onClick={() => toggleExpand(path)}
-        >
-          <Icon set="Carbon" icon="ChevronRight" className={cn("h-4 w-4 mr-1", "transform transition-transform anim-duration-200 ease-in-out", expanded[path] ? 'rotate-90' : 'rotate-0')} />
+        <div className="flex items-center cursor-pointer py-1" onClick={() => toggleExpand(path)}>
+          <Icon set="Carbon" icon="ChevronRight" className={cn('h-4 w-4 mr-1', 'transform transition-transform anim-duration-200 ease-in-out', expanded[path] ? 'rotate-90' : 'rotate-0')} />
           <Icon set="Custom" icon="Folder" className="h-4 w-4 mr-2 select-none" />
           <span className="font-medium">{path.replace('./', 'app')}</span>
         </div>
@@ -48,9 +45,5 @@ export const DirectoryTree: React.FC<DirectoryTreeProps> = ({ data, basePath = '
     );
   };
 
-  return (
-    <div className="font-mono text-sm">
-      {Object.entries(data).map(([key, value]) => renderTree(value, key))}
-    </div>
-  );
+  return <div className="font-mono text-sm">{Object.entries(data).map(([key, value]) => renderTree(value, key))}</div>;
 };

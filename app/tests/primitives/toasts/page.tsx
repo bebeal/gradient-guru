@@ -23,12 +23,12 @@ const ToastsPage: FC = () => {
     );
   };
 
-  const RemoveToastButton = ({ id , disabled=false}: { id?: string, disabled: boolean }) => {
+  const RemoveToastButton = ({ id, disabled = false }: { id?: string; disabled: boolean }) => {
     const optionalProps = {
       highContrast: disabled,
-    }
+    };
     return (
-      <Button className="w-[180px] [justify-content:flex-start_!important]" variant={"classic"} {...optionalProps} onClick={() => simulateSwipeRightGesture(id)} disabled={disabled}>
+      <Button className="w-[180px] [justify-content:flex-start_!important]" variant={'classic'} {...optionalProps} onClick={() => simulateSwipeRightGesture(id)} disabled={disabled}>
         <Icon set="Carbon" icon="TrashCan" /> Remove Toast
       </Button>
     );
@@ -37,7 +37,7 @@ const ToastsPage: FC = () => {
   const ClearToastsButton = () => {
     return (
       <Button className="w-[180px] [justify-content:flex-start_!important]" variant="classic" onClick={() => clearToasts()}>
-       <Icon set="Carbon" icon="MisuseOutline" /> Clear Toasts
+        <Icon set="Carbon" icon="MisuseOutline" /> Clear Toasts
       </Button>
     );
   };

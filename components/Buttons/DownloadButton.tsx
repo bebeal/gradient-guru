@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
 import { useCallback, useMemo, useRef } from 'react';
 import { Button, Icon, Tooltip } from '@/components';
-import { DownloadState, DownloaderProps, useDownloader } from '@/hooks';
+import { DownloaderProps, DownloadState, useDownloader } from '@/hooks';
 import { cn, nanoid, noop } from '@/utils';
 
 const getColorFromState = (state: DownloadState) => {
@@ -39,20 +39,26 @@ export interface DownloadButtonProps extends DownloaderProps {
 }
 
 export const DownloadButton = (props: DownloadButtonProps) => {
-  const { id=`${nanoid()}`, className='', onClick: onClickCallback=noop, tooltip=false, url, ...rest } = props;
+  const { id = `${nanoid()}`, className = '', onClick: onClickCallback = noop, tooltip = false, url, ...rest } = props;
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { downloader, downloadPercentage, status } = useDownloader(props);
 
-  const onClick = useCallback((e: any) => {
+  const onClick = useCallback(
+    (e: any) => {
       downloader.mutate();
       onClickCallback?.(e);
-  }, [onClickCallback, downloader]);
+    },
+    [onClickCallback, downloader],
+  );
 
-  const DownloadButton = useMemo(() => (
+  const DownloadButton = useMemo(
+    () => (
       <Button ref={buttonRef} onClick={onClick} variant={'none'} className={cn('rounded-full h-8 w-8 p-2 relative hover:bg-primary/30', className)}>
         {status === 'pending' || status === 'error' ? (
           <div className={cn(`absolute w-full h-full text-${getColorFromState(status)}-500 left-0 top-0`)}>
-            <Icon set="Custom" icon="Spinner"
+            <Icon
+              set="Custom"
+              icon="Spinner"
               id={`download-spinner-${id}`}
               className={cn('absolute inset-0 flex items-center justify-center text-xs w-full h-full')}
               percentage={downloadPercentage.toFixed(2)}
@@ -67,11 +73,9 @@ export const DownloadButton = (props: DownloadButtonProps) => {
         )}
         <span className="sr-only">Copy</span>
       </Button>
-  ), [onClick, className, status, id, downloadPercentage]);
+    ),
+    [onClick, className, status, id, downloadPercentage],
+  );
 
-  return tooltip ? (
-    <Tooltip content={getTooltipMessageFromState(status)}>
-      {DownloadButton}
-    </Tooltip>
-  ) : DownloadButton;
+  return tooltip ? <Tooltip content={getTooltipMessageFromState(status)}>{DownloadButton}</Tooltip> : DownloadButton;
 };

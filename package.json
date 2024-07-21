@@ -21,7 +21,7 @@
     "clean": "rm -rf node_modules .next cdk.out",
     "debug": "next build --debug",
     "dev": "PORT=3407 next dev",
-    "format": "prettier --write --cache '**/*.{yml,yaml,json,md,mdx,html,css,js,jsx,ts,tsx,cjs,mjs}'",
+    "format": "prettier --write --cache 'app/**/*.{js,jsx,ts,tsx}' 'cdk/**/*.{js,jsx,ts,tsx}' 'components/**/*.{js,jsx,ts,tsx}' 'utils/**/*.{js,jsx,ts,tsx}' 'hooks/**/*.{js,jsx,ts,tsx}' '!**/tsconfig.json' '!**/package.json' '!**/package-lock.json' '!**/yarn.lock' '!**/node_modules/**/*' '!**/tailwind.config.*' '!**/next.config.js' '!**/jest.config.js' '!**/cdk.out/**/*' '!**/public/**/*'",
     "profile": "next build --profile",
     "no-mangle": "next build --no-mangle",
     "analyze": "ANALYZE=true next build",

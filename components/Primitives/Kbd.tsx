@@ -1,8 +1,8 @@
 'use client';
 
-import { Fragment, ReactNode, forwardRef, memo, useCallback, useMemo, useState } from 'react';
-import { cn, KeyMap } from '@/utils';
+import { forwardRef, Fragment, memo, ReactNode, useCallback, useMemo, useState } from 'react';
 import { useMounted } from '@/hooks';
+import { cn, KeyMap } from '@/utils';
 import { Loading } from './Loading';
 
 const mapString = (key: string): string => {
@@ -11,7 +11,7 @@ const mapString = (key: string): string => {
     return KeyMap?.[key] || key;
   }
   // or a special key in which case we'll format it KeyMap['Meta']-> '⌘' (if it exists)
-  const capitalized = (key.slice(0, 1).toUpperCase() + key.slice(1));
+  const capitalized = key.slice(0, 1).toUpperCase() + key.slice(1);
   return KeyMap?.[capitalized] || capitalized;
 };
 
@@ -21,7 +21,7 @@ const mapStrings = (keys: string[] | string): string[] | string => {
     return keys.map(mapString);
   }
   return mapString(keys);
-}
+};
 
 // Map key codes passed as a string, an array of strings, or react components
 const mapChildren = (children: string | string[] | ReactNode): string | string[] | ReactNode => {
@@ -38,24 +38,26 @@ export interface KbdProps {
   clickToCopy?: boolean;
 }
 
-export const KbdKey = memo(forwardRef((props: any, ref?: any) => {
-  const { children, className = '', ...rest } = props;
+export const KbdKey = memo(
+  forwardRef((props: any, ref?: any) => {
+    const { children, className = '', ...rest } = props;
 
-  return (
-    <kbd
-      ref={ref}
-      className={cn(
-        `relative flex gap-1 h-auto w-auto items-center justify-center text-center rounded px-1.5`,
-        `shadow-kbd bg-zinc-900 text-kbd-foreground border-kbd-foreground font-mono font-bold`,
-        `hover:bg-zinc-950 cursor-pointer hover:text-primary hover:shadow-kbd-hover`,
-        className,
-      )}
-      {...rest}
-    >
-      {children}
-    </kbd>
-  );
-}));
+    return (
+      <kbd
+        ref={ref}
+        className={cn(
+          `relative flex gap-1 h-auto w-auto items-center justify-center text-center rounded px-1.5`,
+          `shadow-kbd bg-zinc-900 text-kbd-foreground border-kbd-foreground font-mono font-bold`,
+          `hover:bg-zinc-950 cursor-pointer hover:text-primary hover:shadow-kbd-hover`,
+          className,
+        )}
+        {...rest}
+      >
+        {children}
+      </kbd>
+    );
+  }),
+);
 KbdKey.displayName = 'KbdKey';
 
 export const Kbd = forwardRef((props: KbdProps, ref?: any) => {
@@ -67,7 +69,7 @@ export const Kbd = forwardRef((props: KbdProps, ref?: any) => {
 
   const getTextToCopy = (keys?: string | string[] | ReactNode): string => {
     return (Array.isArray(keys) ? keys.join('') : keys)?.toString() || '';
-  }
+  };
 
   const handleCopySelection = (e?: React.ClipboardEvent) => {
     const selection = window.getSelection()?.toString();

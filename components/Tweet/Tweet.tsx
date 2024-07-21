@@ -1,8 +1,9 @@
-'use client'
+'use client';
 
+import { memo } from 'react';
 import { EmbeddedTweet, TweetNotFound, TweetSkeleton, useTweet, type TweetProps } from 'react-tweet';
 
-export const Tweet = (props: TweetProps) => {
+export const Tweet = memo((props: TweetProps) => {
   const { id, components, ...rest } = props;
   const { data, error, isLoading } = useTweet(id, `/api/tweet/${id}`);
 
@@ -20,4 +21,4 @@ export const Tweet = (props: TweetProps) => {
       </div>
     </div>
   );
-};
+});

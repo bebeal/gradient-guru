@@ -1,25 +1,25 @@
 'use client';
 
-import { cn, DynamicGradientBackground, getEncodedSVGUrl } from "@/utils";
-import { useEffect, useRef } from "react";
-import styled from "styled-components";
+import { useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { cn, DynamicGradientBackground, getEncodedSVGUrl } from '@/utils';
 
 // Animate a continuous dashed path of an svg
 export const AnimatedDashedPath = styled.div<any>`
-display: flex;
-height: 100%;
-width: auto;
+  display: flex;
+  height: 100%;
+  width: auto;
 
-path {
-  z-index: 1;
-  stroke-dasharray: 50;
-  animation: dash 5s linear infinite;
-  @keyframes dash {
-    to {
-      stroke-dashoffset: 100;
+  path {
+    z-index: 1;
+    stroke-dasharray: 50;
+    animation: dash 5s linear infinite;
+    @keyframes dash {
+      to {
+        stroke-dashoffset: 100;
+      }
     }
   }
-}
 `;
 // Animate a single path of an svg as if it were being drawn
 export const AnimatedLinePath = styled.div<any>`
@@ -48,7 +48,7 @@ export const AnimatedLinePath = styled.div<any>`
   }
 `;
 export const AnimatedLineSVG = (props: any) => {
-  const { children, width = '100%', height = '100%', type='line', className, ...rest } = props;
+  const { children, width = '100%', height = '100%', type = 'line', className, ...rest } = props;
 
   // set pathLength on all path children
   const ref = useRef<HTMLDivElement>(null);

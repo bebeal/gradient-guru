@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { useMutation } from '@tanstack/react-query';
 import { useCallback, useEffect, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
 type DownloadProgressCallback = (downloadPercentage: number, bytesDownloaded: number, total?: number) => void;
 
@@ -17,35 +17,34 @@ export interface DownloaderProps {
 }
 
 export const useDownloader = (props: DownloaderProps) => {
-  const {
-    url,
-    headers,
-    onDownloadProgress,
-    queryOptions,
-    simDownload=false,
-    simError=false,
-  } = props;
+  const { url, headers, onDownloadProgress, queryOptions, simDownload = false, simError = false } = props;
   const [total, setTotal] = useState<number>(27520);
   const [bytesDownloaded, setBytesDownloaded] = useState<number>(0);
   const [targetPercentage, setTargetPercentage] = useState<number>(0);
   const [downloadPercentage, setDownloadPercentage] = useState<number>(0);
   const [status, setStatus] = useState<DownloadState>('idle');
 
-  const update = useCallback((current: number, target: number) => {
-    requestAnimationFrame(() => {
-      if (current !== target) {
-        const step = current < target ? 1 : -1;
-        const nextPercentage = current + step;
-        setDownloadPercentage(nextPercentage);
-      }
-    });
-  }, [setDownloadPercentage]);
+  const update = useCallback(
+    (current: number, target: number) => {
+      requestAnimationFrame(() => {
+        if (current !== target) {
+          const step = current < target ? 1 : -1;
+          const nextPercentage = current + step;
+          setDownloadPercentage(nextPercentage);
+        }
+      });
+    },
+    [setDownloadPercentage],
+  );
 
-  const jumpTo = useCallback((percentage: number) => {
-    setBytesDownloaded(percentage);
-    setDownloadPercentage(percentage);
-    setTargetPercentage(percentage);
-  }, [setDownloadPercentage, setTargetPercentage, setBytesDownloaded]);
+  const jumpTo = useCallback(
+    (percentage: number) => {
+      setBytesDownloaded(percentage);
+      setDownloadPercentage(percentage);
+      setTargetPercentage(percentage);
+    },
+    [setDownloadPercentage, setTargetPercentage, setBytesDownloaded],
+  );
 
   const simulateDownload = useCallback(() => {
     let currentTarget = 0;
@@ -59,7 +58,7 @@ export const useDownloader = (props: DownloaderProps) => {
     };
     increment();
   }, [setTargetPercentage]);
-  
+
   const simulateError = useCallback(() => {
     let currentTarget = 0;
     const increment = (interval: number = 1) => {
@@ -71,23 +70,23 @@ export const useDownloader = (props: DownloaderProps) => {
       currentTarget += 1;
       setTargetPercentage(currentTarget);
       setTimeout(increment, interval);
-    }
+    };
     increment();
   }, [jumpTo, setTargetPercentage]);
 
- const downloadFile = useCallback(async () => {
-  if (!url) {
-    if (simDownload) return simulateDownload();
-    if (simError) return simulateError();
-    return;
-  }
+  const downloadFile = useCallback(async () => {
+    if (!url) {
+      if (simDownload) return simulateDownload();
+      if (simError) return simulateError();
+      return;
+    }
 
-  const response = await fetch(url, {
-    method: 'GET',
-    headers,
-  });
-  const contentLength = +response.headers.get("Content-Length")!;
-  setTotal(parseInt(contentLength.toString() || '100'));
+    const response = await fetch(url, {
+      method: 'GET',
+      headers,
+    });
+    const contentLength = +response.headers.get('Content-Length')!;
+    setTotal(parseInt(contentLength.toString() || '100'));
 
     let loaded = 0;
     const reader = response.body?.getReader();
@@ -108,7 +107,7 @@ export const useDownloader = (props: DownloaderProps) => {
           controller.enqueue(value);
         }
         controller.close();
-      }
+      },
     });
 
     return new Response(stream).blob();

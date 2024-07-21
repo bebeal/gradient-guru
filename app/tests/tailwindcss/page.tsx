@@ -58,39 +58,39 @@ const LinearGradients = () => {
   ${spectrum.map((color, index) => `<stop key={${JSON.stringify(color)}} offset="${(index * 100) / (spectrum.length - 1)}%" stopColor={${JSON.stringify(color)}} />`).join('\n  ')}
 </linearGradient>
 `.trim();
-  
+
   return (
     <div className="w-full h-auto flex flex-col items-center justify-center p-10 gap-2">
       <div className="flex flex-row gap-10">
-          <div className="flex flex-col w-[600px] h-auto justify-center overflow-hidden">
-            <Terminal language={"jsx"}>{cssLinearGradientCode}</Terminal>
-          </div>
-          <DivArrow />
-      <div className={cn(`flex flex-col items-center justify-center gap-2`)}>
-        <div className={cn(`text-xs`)}>CSS Linear Gradient</div>
-        <div className={cn(`border border-black dark:border-white [background-image:linear-gradient(to_right,${spectrum.join(',')})] w-[200px] h-[20px]`)} />
-      </div>
+        <div className="flex flex-col w-[600px] h-auto justify-center overflow-hidden">
+          <Terminal language={'jsx'}>{cssLinearGradientCode}</Terminal>
+        </div>
+        <DivArrow />
+        <div className={cn(`flex flex-col items-center justify-center gap-2`)}>
+          <div className={cn(`text-xs`)}>CSS Linear Gradient</div>
+          <div className={cn(`border border-black dark:border-white [background-image:linear-gradient(to_right,${spectrum.join(',')})] w-[200px] h-[20px]`)} />
+        </div>
       </div>
       <Separator />
       <div className={cn(`flex flex-col items-center justify-center p-10 gap-2`)}>
-      <div className="flex flex-row gap-10">
+        <div className="flex flex-row gap-10">
           <div className="flex flex-col w-[600px] h-auto items-center justify-center overflow-hidden">
-            <Terminal language={"jsx"}>{svgLinearGradientCode}</Terminal>
+            <Terminal language={'jsx'}>{svgLinearGradientCode}</Terminal>
           </div>
           <DivArrow />
           <div className={cn(`flex flex-col items-center justify-center gap-2`)}>
-        <div className={cn(`text-xs`)}>SVG Linear Gradient with color stops</div>
-        <svg width="200" height="20" className="border border-black dark:border-white w-[200px]">
-          <defs>
-            <linearGradient id={`test-svg-gradient`} x1="0%" y1="0%" x2="100%" y2="0%">
-              {spectrum.map((color: string, index: number) => (
-                <stop key={color} offset={`${(index * 100) / (spectrum.length - 1)}%`} stopColor={color} />
-              ))}
-            </linearGradient>
-          </defs>
-          <rect width="200" height="20" fill="url(#test-svg-gradient)" />
-        </svg>
-        </div>
+            <div className={cn(`text-xs`)}>SVG Linear Gradient with color stops</div>
+            <svg width="200" height="20" className="border border-black dark:border-white w-[200px]">
+              <defs>
+                <linearGradient id={`test-svg-gradient`} x1="0%" y1="0%" x2="100%" y2="0%">
+                  {spectrum.map((color: string, index: number) => (
+                    <stop key={color} offset={`${(index * 100) / (spectrum.length - 1)}%`} stopColor={color} />
+                  ))}
+                </linearGradient>
+              </defs>
+              <rect width="200" height="20" fill="url(#test-svg-gradient)" />
+            </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -202,11 +202,11 @@ const GridDemo = () => {
     <div className="h-[450px] w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex items-center justify-center">
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
       <div className="flex flex-row gap-10">
-          <div className="flex flex-col w-auto h-auto items-center justify-center overflow-hidden">
-            <Terminal language={"jsx"}>{gridCode}</Terminal>
-          </div>
-          <DivArrow />
-      <p className="text-4xl sm:text-2xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">bg-grid</p>
+        <div className="flex flex-col w-auto h-auto items-center justify-center overflow-hidden">
+          <Terminal language={'jsx'}>{gridCode}</Terminal>
+        </div>
+        <DivArrow />
+        <p className="text-4xl sm:text-2xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">bg-grid</p>
       </div>
     </div>
   );
@@ -218,11 +218,11 @@ const GridSmallDemo = () => {
     <div className="h-[450px] w-full dark:bg-black bg-white  dark:bg-grid-sm-white/[0.2] bg-grid-sm-black/[0.2] relative flex items-center justify-center">
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
       <div className="flex flex-row gap-10">
-          <div className="flex flex-col w-auto h-auto items-center justify-center overflow-hidden">
-            <Terminal language={"jsx"}>{smallGridCode}</Terminal>
-          </div>
-          <DivArrow />
-      <p className="text-4xl sm:text-2xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">bg-grid-sm</p>
+        <div className="flex flex-col w-auto h-auto items-center justify-center overflow-hidden">
+          <Terminal language={'jsx'}>{smallGridCode}</Terminal>
+        </div>
+        <DivArrow />
+        <p className="text-4xl sm:text-2xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">bg-grid-sm</p>
       </div>
     </div>
   );
@@ -234,11 +234,11 @@ const DotDemo = () => {
     <div className="h-[450px] w-full dark:bg-black bg-white  dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center">
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
       <div className="flex flex-row gap-10">
-          <div className="flex flex-col w-auto h-auto items-center justify-center overflow-hidden">
-            <Terminal language={"jsx"}>{dotCode}</Terminal>
-          </div>
-          <DivArrow />
-      <p className="text-4xl sm:text-2xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">bg-dot</p>
+        <div className="flex flex-col w-auto h-auto items-center justify-center overflow-hidden">
+          <Terminal language={'jsx'}>{dotCode}</Terminal>
+        </div>
+        <DivArrow />
+        <p className="text-4xl sm:text-2xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">bg-dot</p>
       </div>
     </div>
   );
@@ -249,13 +249,11 @@ const GlassDemo = () => {
   return (
     <div className="bg-mountain bg-contain bg-no-repeat bg-center h-[450px] w-full flex justify-center items-center">
       <div className="flex flex-row gap-10">
-          <div className="flex flex-col w-auto h-auto items-center justify-center overflow-hidden">
-            <Terminal language={"jsx"}>{glassCode}</Terminal>
-          </div>
-          <DivArrow />
-      <div className="glass h-[15rem] w-[20rem] text-[#b5b5b5] font-bold rounded-md text-2xl flex items-center justify-center">
-        glass
-      </div>
+        <div className="flex flex-col w-auto h-auto items-center justify-center overflow-hidden">
+          <Terminal language={'jsx'}>{glassCode}</Terminal>
+        </div>
+        <DivArrow />
+        <div className="glass h-[15rem] w-[20rem] text-[#b5b5b5] font-bold rounded-md text-2xl flex items-center justify-center">glass</div>
       </div>
     </div>
   );
@@ -273,9 +271,7 @@ const TailwindComponents: ComponentMap = {
 };
 
 const TailwindPage: FC = () => {
-  return (
-    <ComponentMapper title="TailwindCSS Components" components={TailwindComponents} />
-  );
+  return <ComponentMapper title="TailwindCSS Components" components={TailwindComponents} />;
 };
 
 export default TailwindPage;

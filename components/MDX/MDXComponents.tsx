@@ -1,6 +1,7 @@
-'use client'
+'use client';
 
 import type { MDXComponents } from 'mdx/types';
+
 // import Image, { ImageOptions } from '@tiptap/extension-image';
 
 // const ImageNode = Image.configure({
@@ -19,6 +20,4 @@ import type { MDXComponents } from 'mdx/types';
 // console.log(`html`, html)
 
 // hmmm https://github.com/ueberdosis/tiptap/issues/2289
-export const CustomMDXComponents: MDXComponents = {
-  
-};
+export const CustomMDXComponents: MDXComponents = {};

@@ -1,12 +1,12 @@
-'use client'
+'use client';
 
-import { Node, nodeInputRule } from '@tiptap/react'
-import { Plugin, PluginKey } from 'prosemirror-state'
+import { Node, nodeInputRule } from '@tiptap/react';
+import { Plugin, PluginKey } from 'prosemirror-state';
 
 // Video Embed Extension
 
 export interface VideoOptions {
-  HTMLAttributes: Record<string, any>,
+  HTMLAttributes: Record<string, any>;
 }
 
 declare module '@tiptap/core' {
@@ -15,21 +15,21 @@ declare module '@tiptap/core' {
       /**
        * Set a video node
        */
-      setVideo: (src: string) => ReturnType,
+      setVideo: (src: string) => ReturnType;
       /**
        * Toggle a video
        */
-      toggleVideo: (src: string) => ReturnType,
-    }
+      toggleVideo: (src: string) => ReturnType;
+    };
   }
 }
 
-const VIDEO_INPUT_REGEX = /!\[(.+|:?)]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/
+const VIDEO_INPUT_REGEX = /!\[(.+|:?)]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/;
 
 export const Video = Node.create({
   name: 'video',
 
-  group: "block",
+  group: 'block',
 
   addAttributes() {
     return {
@@ -45,24 +45,26 @@ export const Video = Node.create({
     return [
       {
         tag: 'video',
-        getAttrs: el => ({ src: (el as HTMLVideoElement).getAttribute('src') }),
+        getAttrs: (el) => ({ src: (el as HTMLVideoElement).getAttribute('src') }),
       },
-    ]
+    ];
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [
-      'video',
-      { controls: 'true', style: 'width: 100%', ...HTMLAttributes },
-      ['source', HTMLAttributes]
-    ]
+    return ['video', { controls: 'true', style: 'width: 100%', ...HTMLAttributes }, ['source', HTMLAttributes]];
   },
 
   addCommands() {
     return {
-      setVideo: (src: string) => ({ commands }) => commands.insertContent(`<video controls="true" style="width: 100%" src="${src}" />`),
+      setVideo:
+        (src: string) =>
+        ({ commands }) =>
+          commands.insertContent(`<video controls="true" style="width: 100%" src="${src}" />`),
 
-      toggleVideo: () => ({ commands }) => commands.toggleNode(this.name, 'paragraph'),
+      toggleVideo:
+        () =>
+        ({ commands }) =>
+          commands.toggleNode(this.name, 'paragraph'),
     };
   },
 
@@ -72,12 +74,12 @@ export const Video = Node.create({
         find: VIDEO_INPUT_REGEX,
         type: this.type,
         getAttributes: (match) => {
-          const [,, src] = match
+          const [, , src] = match;
 
-          return { src }
+          return { src };
         },
-      })
-    ]
+      }),
+    ];
   },
 
   addProseMirrorPlugins() {
@@ -88,45 +90,43 @@ export const Video = Node.create({
         props: {
           handleDOMEvents: {
             drop(view, event) {
-              const { state: { schema, tr }, dispatch } = view
-              const hasFiles = event.dataTransfer &&
-                event.dataTransfer.files &&
-                event.dataTransfer.files.length
+              const {
+                state: { schema, tr },
+                dispatch,
+              } = view;
+              const hasFiles = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length;
 
-              if (!hasFiles) return false
+              if (!hasFiles) return false;
 
-              const videos = Array
-                .from(event.dataTransfer.files)
-                .filter(file => (/video/i).test(file.type))
+              const videos = Array.from(event.dataTransfer.files).filter((file) => /video/i.test(file.type));
 
-              if (videos.length === 0) return false
+              if (videos.length === 0) return false;
 
-              event.preventDefault()
+              event.preventDefault();
 
-              const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY })
+              const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY });
 
-              videos.forEach(video => {
-                const reader = new FileReader()
+              videos.forEach((video) => {
+                const reader = new FileReader();
 
-                reader.onload = readerEvent => {
-                  const node = schema.nodes.video.create({ src: readerEvent.target?.result })
+                reader.onload = (readerEvent) => {
+                  const node = schema.nodes.video.create({ src: readerEvent.target?.result });
 
                   if (coordinates && typeof coordinates.pos === 'number') {
-                    const transaction = tr.insert(coordinates?.pos, node)
+                    const transaction = tr.insert(coordinates?.pos, node);
 
-                    dispatch(transaction)
+                    dispatch(transaction);
                   }
-                }
+                };
 
-                reader.readAsDataURL(video)
-              })
+                reader.readAsDataURL(video);
+              });
 
-              return true
-            }
-          }
-        }
-      })
-    ]
-  }
-
+              return true;
+            },
+          },
+        },
+      }),
+    ];
+  },
 });

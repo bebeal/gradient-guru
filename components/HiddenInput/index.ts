@@ -1,1 +1,1 @@
-export * from './HiddenInput'
+export * from './HiddenInput';

@@ -19,7 +19,7 @@ const CheckboxPage = () => {
         <Checkbox checked={value} onCheckedChange={setValue} size={32} />
         <Checkbox checked={value} onCheckedChange={setValue} size={40} />
       </div>
-      <Icon set="Carbon" icon="Checkmark" className="hidden"/>
+      <Icon set="Carbon" icon="Checkmark" className="hidden" />
     </div>
   );
 };

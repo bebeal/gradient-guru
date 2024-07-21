@@ -29,13 +29,16 @@ const IconSetsPage = memo(() => {
     setCurrentPage((prev) => ({ ...prev, [iconSet]: newPage }));
   }, []);
 
-  const getPageDisplay = useCallback( (iconSet: string): string => {
-    const totalIcons = Object.keys(IconSets[iconSet].icons).length;
-    const totalPages = Math.ceil(totalIcons / ICON_PAGINATION_PER_SET);
-    const page = currentPage[iconSet] || 0;
+  const getPageDisplay = useCallback(
+    (iconSet: string): string => {
+      const totalIcons = Object.keys(IconSets[iconSet].icons).length;
+      const totalPages = Math.ceil(totalIcons / ICON_PAGINATION_PER_SET);
+      const page = currentPage[iconSet] || 0;
 
-    return `Page ${page + 1} of ${totalPages}`;
-  }, [currentPage], );
+      return `Page ${page + 1} of ${totalPages}`;
+    },
+    [currentPage],
+  );
 
   const filteredIconSets = useMemo(() => {
     const filteredSets = Object.keys(IconSets);
@@ -45,29 +48,38 @@ const IconSetsPage = memo(() => {
     return filteredSets;
   }, [globalSearchQuery]);
 
-  const getFilteredIcons = useCallback((iconSetName: string, iconsFromSet: string[]) => {
-    const searchQuery = localSearchQueries[iconSetName]?.toLowerCase() || '';
+  const getFilteredIcons = useCallback(
+    (iconSetName: string, iconsFromSet: string[]) => {
+      const searchQuery = localSearchQueries[iconSetName]?.toLowerCase() || '';
 
-    if (!searchQuery) {
-      return iconsFromSet;
-    }
+      if (!searchQuery) {
+        return iconsFromSet;
+      }
 
-    return iconsFromSet.filter((icon: string) => icon.toLowerCase().includes(searchQuery));
-  }, [localSearchQueries], );
+      return iconsFromSet.filter((icon: string) => icon.toLowerCase().includes(searchQuery));
+    },
+    [localSearchQueries],
+  );
 
-  const updateLocalSearchQueries = useCallback((newGlobalQuery: string) => {
-    const updatedQueries = { ...localSearchQueries };
-    filteredIconSets.forEach((iconSet) => {
-      updatedQueries[iconSet] = newGlobalQuery;
-    });
-    setLocalSearchQueries(updatedQueries);
-  }, [filteredIconSets, localSearchQueries], );
+  const updateLocalSearchQueries = useCallback(
+    (newGlobalQuery: string) => {
+      const updatedQueries = { ...localSearchQueries };
+      filteredIconSets.forEach((iconSet) => {
+        updatedQueries[iconSet] = newGlobalQuery;
+      });
+      setLocalSearchQueries(updatedQueries);
+    },
+    [filteredIconSets, localSearchQueries],
+  );
 
-  const handleGlobalSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const newGlobalQuery = e.target.value;
-    setGlobalSearchQuery(newGlobalQuery);
-    updateLocalSearchQueries(newGlobalQuery);
-  }, [updateLocalSearchQueries], );
+  const handleGlobalSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newGlobalQuery = e.target.value;
+      setGlobalSearchQuery(newGlobalQuery);
+      updateLocalSearchQueries(newGlobalQuery);
+    },
+    [updateLocalSearchQueries],
+  );
 
   return (
     <div className="p-8">

@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { Extension, textInputRule } from '@tiptap/core'
+import { Extension, textInputRule } from '@tiptap/core';
 
 // Generic extension to define text replacements
 
@@ -133,6 +133,6 @@ export const TextReplacements = Extension.create({
       textInputRule({ find: /X\) $/, replace: '😵 ' }),
       textInputRule({ find: /:@ $/, replace: '😠 ' }),
       textInputRule({ find: /<3 $/, replace: '❤️ ' }),
-    ]
+    ];
   },
-})
+});

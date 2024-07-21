@@ -1,11 +1,10 @@
+'use client';
 
-'use client'
-
-import { useCallback, useState } from "react";
-import { HiddenInput } from "@/components";
+import { useCallback, useState } from 'react';
+import { HiddenInput } from '@/components';
 
 const HiddenInputPage = () => {
-  const [value, setValue] = useState<string>('')
+  const [value, setValue] = useState<string>('');
   const onChange = useCallback((key: string) => {
     setValue(key);
   }, []);

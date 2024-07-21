@@ -24,7 +24,7 @@ export const providers: any = [
   // ...(CognitoAuth ? [CognitoProvider(CognitoAuth)] : []),
 ];
 
-const secret = process?.env?.NEXTAUTH_SECRET
+const secret = process?.env?.NEXTAUTH_SECRET;
 
 export const nextAuthConfig = {
   theme: {
@@ -61,5 +61,9 @@ export const {
 export const NextAuthProvider = ({ children, session }: { children: ReactNode; session?: any }) => {
   // `session` comes from `getServerSideProps` or `getInitialProps`.
   // Avoids flickering/session loading on first load.
-  return <SessionProvider session={session} refetchInterval={5 * 60}>{children}</SessionProvider>;
+  return (
+    <SessionProvider session={session} refetchInterval={5 * 60}>
+      {children}
+    </SessionProvider>
+  );
 };

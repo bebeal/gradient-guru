@@ -1,6 +1,7 @@
 'use client';
 
-import { DirectoryTree, Icon, LinkList } from "@/components";
+import { DirectoryTree, Icon, LinkList } from '@/components';
+
 // import { isDevEnv } from "@/utils";
 
 const AppPage = () => {
@@ -14,7 +15,7 @@ const AppPage = () => {
         <DirectoryTree data={pages} basePath="./" />
       </div>
       <Icon set="Carbon" icon="ChevronDown" className="h-4 w-4 mr-1 hidden" />
-      <Icon set="Carbon" icon="ChevronRight" className="h-4 w-4 mr-1 hidden"  />
+      <Icon set="Carbon" icon="ChevronRight" className="h-4 w-4 mr-1 hidden" />
       <Icon set="Custom" icon="File" className="hidden" />
       <Icon set="Custom" icon="Folder" className="hidden" />
     </div>

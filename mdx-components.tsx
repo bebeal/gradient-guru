@@ -1,5 +1,5 @@
-import { CustomMDXComponents, MDXLayout } from '@/components';
 import { MDXComponents } from 'mdx/types';
+import { CustomMDXComponents, MDXLayout } from '@/components';
 
 // This file is required to use MDX in `app` directory.
 export const useMDXComponents = (components: MDXComponents): MDXComponents => {

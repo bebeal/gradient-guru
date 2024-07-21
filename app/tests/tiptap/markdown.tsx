@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 export const ItalicString = `*Italic*	_Italic_`;
 export const BoldString = `**Bold**	__Bold__`;
@@ -69,15 +69,14 @@ A note[^1]
 
 * [ ] to do
 * [x] done
-`
+`;
 const Colors: string = `
 #ef4591
 
 #ef459177
 
 #ffef45
-`
-
+`;
 
 export const markdownString = `
 ${ItalicString}\n

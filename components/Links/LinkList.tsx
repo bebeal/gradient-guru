@@ -7,7 +7,7 @@ export interface LinkListProps {
 }
 
 export const LinkList = (props: LinkListProps) => {
-  const { links, textMap, prefix = '/', target="_blank", rel="noopener noreferrer" } = props;
+  const { links, textMap, prefix = '/', target = '_blank', rel = 'noopener noreferrer' } = props;
   return (
     <div>
       {links.map((link, index) => (

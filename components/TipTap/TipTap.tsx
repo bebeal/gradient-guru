@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import { useTipTap } from '@/hooks';
-import { Loading } from '@/components';
-import { cn } from '@/utils';
+import { memo, Suspense, useRef } from 'react';
 import { EditorContent, EditorOptions } from '@tiptap/react';
-import { Suspense, memo, useRef } from 'react';
+import { Loading } from '@/components';
+import { useTipTap } from '@/hooks';
+import { cn } from '@/utils';
 import { TipTapToolbar } from './TipTapToolbar';
 
 export interface TipTapProps extends Partial<EditorOptions> {
@@ -16,9 +16,7 @@ export interface TipTapProps extends Partial<EditorOptions> {
 }
 
 export const TipTap = memo((props: TipTapProps) => {
-  const {
-    toolbar=true,
-  } = props;
+  const { toolbar = true } = props;
   const ref = useRef<HTMLDivElement>(null);
   const { editor } = useTipTap(props);
 
@@ -28,8 +26,8 @@ export const TipTap = memo((props: TipTapProps) => {
   return (
     <div ref={ref} className="relative flex flex-col w-full h-full border border-primary rounded-sm bg-secondary">
       <Suspense fallback={<Loading />}>
-        {toolbar && <TipTapToolbar editor={editor}/>}
-        <div className={cn("relative flex w-full h-full overflow-y-auto overflow-x-hidden justify-center [&>div]:w-full")}>
+        {toolbar && <TipTapToolbar editor={editor} />}
+        <div className={cn('relative flex w-full h-full overflow-y-auto overflow-x-hidden justify-center [&>div]:w-full')}>
           <EditorContent editor={editor} />
         </div>
       </Suspense>

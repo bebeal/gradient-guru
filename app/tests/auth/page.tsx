@@ -1,4 +1,4 @@
-import { LinkList } from "@/components";
+import { LinkList } from '@/components';
 
 const AuthPage = () => {
   const title = 'Auth Flows';

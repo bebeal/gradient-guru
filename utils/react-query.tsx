@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { IconButton } from '@radix-ui/themes';
 import { QueryClient } from '@tanstack/react-query';
-import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 export const makeQueryClient = (overrideOptions?: any) => {
@@ -30,16 +30,13 @@ const OverrideReactQueryStyles = createGlobalStyle`
   }
 `;
 
-
 const ReactQueryDevToolProduction = lazy(() =>
-  import('@tanstack/react-query-devtools/build/modern/production.js').then(
-    (d) => ({
-      default: d.ReactQueryDevtools,
-    }),
-  ),
-)
+  import('@tanstack/react-query-devtools/build/modern/production.js').then((d) => ({
+    default: d.ReactQueryDevtools,
+  })),
+);
 
-export const ReactQueryDevToolPanel: React.FC<any> = ({ visible, setVisible, toggle }: { visible: boolean, setVisible: (value: boolean) => void, toggle: () => void }) => {
+export const ReactQueryDevToolPanel: React.FC<any> = ({ visible, setVisible, toggle }: { visible: boolean; setVisible: (value: boolean) => void; toggle: () => void }) => {
   return (
     <ReactQueryDevToolProduction
       key={visible ? 'open' : 'closed'} // hack to force re-render
@@ -50,7 +47,7 @@ export const ReactQueryDevToolPanel: React.FC<any> = ({ visible, setVisible, tog
   );
 };
 
-const ReactQueryDevToolToggle: React.FC<any> = ({ visible, setVisible, toggle }: { visible: boolean, setVisible: (value: boolean) => void, toggle: () => void }) => {
+const ReactQueryDevToolToggle: React.FC<any> = ({ visible, setVisible, toggle }: { visible: boolean; setVisible: (value: boolean) => void; toggle: () => void }) => {
   return (
     <div className="p-2 w-auto h-auto flex">
       <IconButton className="p-2 hover:cursor-pointer text-[1em]" color="indigo" radius="large" variant="surface" onPointerDown={toggle}>
@@ -61,31 +58,30 @@ const ReactQueryDevToolToggle: React.FC<any> = ({ visible, setVisible, toggle }:
 };
 
 export const ReactQueryDevTool = (props: any) => {
-  const {
-    visible: visibleFromProps = false,
-    toggle: toggleCallback,
-    ...rest
-  } = props;
+  const { visible: visibleFromProps = false, toggle: toggleCallback, ...rest } = props;
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState<boolean>(visibleFromProps);
 
-  const toggle = useCallback((event?: any) => {
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setVisible((prev: boolean) => {
-      const newValue = !prev;
-      window.localStorage.setItem('TanstackQueryDevtools.open', String(newValue));
-      toggleCallback?.(newValue);
-      return newValue;
-    });
-  }, [toggleCallback]);
+  const toggle = useCallback(
+    (event?: any) => {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      setVisible((prev: boolean) => {
+        const newValue = !prev;
+        window.localStorage.setItem('TanstackQueryDevtools.open', String(newValue));
+        toggleCallback?.(newValue);
+        return newValue;
+      });
+    },
+    [toggleCallback],
+  );
 
   // listen for closes on the devtools panel and update the state
   useEffect(() => {
-    const observer = new MutationObserver(mutations => {
-      mutations.forEach(mutation => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
         if (!mutation.addedNodes) return;
         for (let i = 0; i < mutation.addedNodes.length; i++) {
           const node = mutation.addedNodes[i] as HTMLElement;
@@ -114,5 +110,3 @@ export const ReactQueryDevTool = (props: any) => {
     </div>
   );
 };
-
-

@@ -11,7 +11,6 @@ import { Spinner } from '../CustomIcons';
 import { ThreeFanGpu } from '../CustomIcons/ThreeFanGpu';
 import { IconSetMap } from '../IconSet';
 
-
 export const DotDotDot = forwardRef((props: any, ref: any) => {
   const { className = '', vertical = false, bounce = false, width, height, ...rest } = props;
   return (
@@ -300,5 +299,5 @@ export const CustomIconSet: IconSetMap = {
   ThreeFanGpu,
   GradientGuru,
   UnknownSprite,
-  ClassicPokeBall
+  ClassicPokeBall,
 };

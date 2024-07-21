@@ -1,4 +1,4 @@
-import { DirectoryTree } from "@/components/Links/DirectoryTree";
+import { DirectoryTree } from '@/components/Links/DirectoryTree';
 
 const RandomPage = () => {
   const title = 'Random Components';

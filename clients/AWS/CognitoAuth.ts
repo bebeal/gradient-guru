@@ -1,7 +1,6 @@
-
-import { CognitoProfile } from "next-auth/providers/cognito";
-import { OAuth2Config } from "next-auth/providers";
-import { getEnvVariables } from "@/utils/environment";
+import { OAuth2Config } from 'next-auth/providers';
+import { CognitoProfile } from 'next-auth/providers/cognito';
+import { getEnvVariables } from '@/utils/environment';
 
 // export const CognitoAuth = getEnvVariables({
 //   clientId: 'COGNITO_CLIENT_ID',

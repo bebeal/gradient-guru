@@ -7,7 +7,7 @@ import { streamToString } from '@/utils/stream';
 const getAWSCredentials = (): AwsCredentialIdentity | null => {
   return getEnvVariables({
     accessKeyId: '_AWS_ACCESS_KEY_ID',
-    secretAccessKey: '_AWS_SECRET_ACCESS_KEY'
+    secretAccessKey: '_AWS_SECRET_ACCESS_KEY',
   }) as AwsCredentialIdentity;
 };
 
@@ -53,7 +53,7 @@ export class S3Client {
   }
 
   public static getMissingEnvVariables(): string[] {
-    return S3Client.envVariables().filter(env => !getEnvVariable(env));
+    return S3Client.envVariables().filter((env) => !getEnvVariable(env));
   }
 
   // returns the singleton instance of the client
@@ -110,14 +110,14 @@ export class S3Client {
   // get all available versions of an object
   public async getAll(id: string): Promise<Record<string, any>[]> {
     const versions = await this.listVersions(id);
-    return Promise.all(versions.map(version => this.getObject(id, version.VersionId)));
+    return Promise.all(versions.map((version) => this.getObject(id, version.VersionId)));
   }
 
   // Get specific version of an object using version index
   // `version` is an index of which version of the object to retrieve. Defaults to latest version.
   public async get(id: string, version: number | undefined = undefined): Promise<Record<string, any>> {
     if (version !== undefined) {
-        // get all versions of the object, use version as index to get the versionId
+      // get all versions of the object, use version as index to get the versionId
       const versions = await this.listVersions(id);
       if (version >= versions.length) {
         throw new Error(`Invalid version ${version} for ${id}`);

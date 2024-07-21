@@ -37,4 +37,3 @@ export const getEnvVariables = (envVars: Record<string, string>): Record<string,
     return acc;
   }, {});
 };
-

@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { LinkList } from "@/components";
+import { LinkList } from '@/components';
 
 const DataGridsPage = () => {
   const title = 'DataGridsPage';

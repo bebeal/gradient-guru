@@ -1,7 +1,6 @@
-
-import { GoogleProfile } from "next-auth/providers/google";
-import { OAuth2Config } from "next-auth/providers";
-import { getEnvVariable, getEnvVariables } from "@/utils/environment";
+import { OAuth2Config } from 'next-auth/providers';
+import { GoogleProfile } from 'next-auth/providers/google';
+import { getEnvVariable, getEnvVariables } from '@/utils/environment';
 
 export const getGoogleAuth = () => {
   return getEnvVariables({
@@ -22,12 +21,7 @@ export const GoogleAuth = {
       prompt: 'consent',
       access_type: 'offline',
       response_type: 'code',
-      scope: [
-        'openid',
-        'profile',
-        'email',
-        'https://www.googleapis.com/auth/drive',
-      ].join(' '),
+      scope: ['openid', 'profile', 'email', 'https://www.googleapis.com/auth/drive'].join(' '),
     },
-  }
+  },
 };

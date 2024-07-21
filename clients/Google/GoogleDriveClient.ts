@@ -1,7 +1,6 @@
-
-import { google, Auth, drive_v3 } from "googleapis";
-import { GoogleAuth } from "./GoogleAuth";
-import { getEnvVariable } from "@/utils/environment";
+import { Auth, drive_v3, google } from 'googleapis';
+import { getEnvVariable } from '@/utils/environment';
+import { GoogleAuth } from './GoogleAuth';
 
 export class GoogleDriveClient {
   private static instance: GoogleDriveClient;
@@ -29,7 +28,7 @@ export class GoogleDriveClient {
   }
 
   public static getMissingEnvVariables(): string[] {
-    return GoogleDriveClient.envVariables().filter(env => !getEnvVariable(env));
+    return GoogleDriveClient.envVariables().filter((env) => !getEnvVariable(env));
   }
 
   public static getInstance(session: any) {
@@ -94,10 +93,13 @@ export class GoogleDriveClient {
 
   public async downloadFile(fileId: string): Promise<Buffer> {
     try {
-      const response = await this.drive.files.get({
-        fileId: fileId,
-        alt: 'media',
-      }, { responseType: 'stream' });
+      const response = await this.drive.files.get(
+        {
+          fileId: fileId,
+          alt: 'media',
+        },
+        { responseType: 'stream' },
+      );
 
       const chunks: Buffer[] = [];
       return new Promise((resolve, reject) => {

@@ -1,9 +1,7 @@
-import { TldrawCanvas } from "@/components/TldrawCanvas";
+import { TldrawCanvas } from '@/components/TldrawCanvas';
 
 const TldrawPage = () => {
-  return (
-    <TldrawCanvas />
-  );
+  return <TldrawCanvas />;
 };
 
 export default TldrawPage;

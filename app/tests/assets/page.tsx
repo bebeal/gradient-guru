@@ -1,4 +1,4 @@
-import { LinkList } from "@/components";
+import { LinkList } from '@/components';
 
 const AssetsPage = () => {
   const title = 'Root App Page';
@@ -10,6 +10,6 @@ const AssetsPage = () => {
       <LinkList links={pages} prefix="/tests/assets/" />
     </div>
   );
-}
+};
 
 export default AssetsPage;

@@ -1,15 +1,15 @@
-import { useState, useCallback, useEffect } from "react";
-import { Kbd } from "../components/Primitives/Kbd";
-import { nanoid } from "nanoid";
+import { useCallback, useEffect, useState } from 'react';
+import { nanoid } from 'nanoid';
+import { Kbd } from '../components/Primitives/Kbd';
 
 export type KeyLoggerConfig = {
-  combineTime: number;              // Determines the clock speed for combining keys i.e. if consecutive keys are pressed within this time, they are combined into a single toast
-  fadeTime: number;                 // Determines the time it takes for a toast to fade out naturally
-  maxToasts: number;                // Maximum number of toasts that can be displayed at a time
-  maxKeyLength: number;             // Maximum number of keys that can be combined into a single toast
-  clickToDismiss?: boolean;         // If true, toasts can be dismissed by clicking on them
-  clickToCopy?: boolean;            // If true, toasts can be copied by clicking on them
-}
+  combineTime: number; // Determines the clock speed for combining keys i.e. if consecutive keys are pressed within this time, they are combined into a single toast
+  fadeTime: number; // Determines the time it takes for a toast to fade out naturally
+  maxToasts: number; // Maximum number of toasts that can be displayed at a time
+  maxKeyLength: number; // Maximum number of keys that can be combined into a single toast
+  clickToDismiss?: boolean; // If true, toasts can be dismissed by clicking on them
+  clickToCopy?: boolean; // If true, toasts can be copied by clicking on them
+};
 
 export const useKeyLogger = (initialConfig: Partial<KeyLoggerConfig> = {}) => {
   const [config, setConfig] = useState<KeyLoggerConfig>({
@@ -25,21 +25,24 @@ export const useKeyLogger = (initialConfig: Partial<KeyLoggerConfig> = {}) => {
 
   // Combine keys if they are pressed within a certain time and add to existing toast
   // otherwise, start a new toast
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    const now = Date.now();
-    if (keys.length === 0 || now - keys?.[keys.length - 1]?.timestamp > config?.combineTime || keys?.[keys.length - 1]?.keys.length >= config?.maxKeyLength ) {
-      // start a new toast if past combineTime or length of current toast exceeds maxKeyLength
-      setKeys((prevKeys: any) => [...prevKeys, { keys: [e.key], timestamp: now }]);
-    } else {
-      // add to existing toast
-      const prevKeys = [...keys];
-      const prevKey = prevKeys?.[prevKeys.length - 1];
-      prevKey?.keys.push(e.key);
-      prevKey.timestamp = now;
-      setKeys(prevKeys);
-    }
-  }, [keys, config?.combineTime, config?.maxKeyLength]);
-  
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      const now = Date.now();
+      if (keys.length === 0 || now - keys?.[keys.length - 1]?.timestamp > config?.combineTime || keys?.[keys.length - 1]?.keys.length >= config?.maxKeyLength) {
+        // start a new toast if past combineTime or length of current toast exceeds maxKeyLength
+        setKeys((prevKeys: any) => [...prevKeys, { keys: [e.key], timestamp: now }]);
+      } else {
+        // add to existing toast
+        const prevKeys = [...keys];
+        const prevKey = prevKeys?.[prevKeys.length - 1];
+        prevKey?.keys.push(e.key);
+        prevKey.timestamp = now;
+        setKeys(prevKeys);
+      }
+    },
+    [keys, config?.combineTime, config?.maxKeyLength],
+  );
+
   const fadeKey = () => setKeys((prevKeys: any) => prevKeys.slice(1));
 
   useEffect(() => {
@@ -81,13 +84,16 @@ export const useKeyLogger = (initialConfig: Partial<KeyLoggerConfig> = {}) => {
     return keys.map((key: any) => key.keys).join(' ');
   };
 
-  const onClick = useCallback((e: React.MouseEvent, index: number) => {
-    e?.preventDefault();
-    e?.stopPropagation();
-    if (config.clickToDismiss) {
-      removeToast(index);
-    }
-  }, [config.clickToDismiss]);
+  const onClick = useCallback(
+    (e: React.MouseEvent, index: number) => {
+      e?.preventDefault();
+      e?.stopPropagation();
+      if (config.clickToDismiss) {
+        removeToast(index);
+      }
+    },
+    [config.clickToDismiss],
+  );
 
   // render this to get the toasts
   const streamToasts = () => {

@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
 import { customAlphabet } from 'nanoid';
+import { twMerge } from 'tailwind-merge';
 
 export const NUMBERS: string = '0123456789';
 export const UPPER_ALPHABET: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

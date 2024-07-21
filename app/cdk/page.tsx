@@ -1,12 +1,10 @@
-'use client'
+'use client';
 
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 import CDKREADME from '@/cdk/README.md';
 
 const CDKREADMEPage = (): ReactElement => {
-  return (
-    <CDKREADME />
-  )
+  return <CDKREADME />;
 };
 
 export default CDKREADMEPage;

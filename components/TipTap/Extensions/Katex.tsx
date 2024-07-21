@@ -1,17 +1,16 @@
-'use client'
+'use client';
 
-import { blockMath, inlineMath } from "@/utils";
-import { Extension as TiptapExtension } from "@tiptap/core";
-import { Plugin as ProseMirrorPlugin, PluginKey as ProseMirrorPluginKey } from "@tiptap/pm/state";
-import { DecorationSet as ProseMirrorDecorationSet, Decoration as ProseMirrorDecoration } from "@tiptap/pm/view";
-import katex from "katex";
-
+import { Extension as TiptapExtension } from '@tiptap/core';
+import { Plugin as ProseMirrorPlugin, PluginKey as ProseMirrorPluginKey } from '@tiptap/pm/state';
+import { Decoration as ProseMirrorDecoration, DecorationSet as ProseMirrorDecorationSet } from '@tiptap/pm/view';
+import katex from 'katex';
+import { blockMath, inlineMath } from '@/utils';
 // Custom implementation of KaTex based Mathematics extensions which supports LaTex math decorations
 
 import 'katex/dist/katex.min.css';
 
-export const KatexEditorClasses = ["text-primary", "px-2", "py-[0.2rem]", "font-mono", "bg-[#202020]"];
-export const KatexRenderClasses = ["cursor-pointer", "transition-[background]", "duration-[0.2s]", "px-1", "py-0"];
+export const KatexEditorClasses = ['text-primary', 'px-2', 'py-[0.2rem]', 'font-mono', 'bg-[#202020]'];
+export const KatexRenderClasses = ['cursor-pointer', 'transition-[background]', 'duration-[0.2s]', 'px-1', 'py-0'];
 
 const renderKatex = (editor: any, node: any, match: any, pos: number, katexOptions: any, displayMode: boolean) => {
   const start = match.index + pos;
@@ -19,26 +18,32 @@ const renderKatex = (editor: any, node: any, match: any, pos: number, katexOptio
   const expression = match[1];
   const decorations: any[] = [];
   if (expression) {
-    decorations.push(ProseMirrorDecoration.widget(start, (() => {
-      const element = document.createElement("span");
-      element.classList.add(...KatexEditorClasses);
-      editor.isEditable && element.classList.add("rounded", displayMode ? "block" : "inline-block");
-      try {
+    decorations.push(
+      ProseMirrorDecoration.widget(start, () => {
+        const element = document.createElement('span');
+        element.classList.add(...KatexEditorClasses);
+        editor.isEditable && element.classList.add('rounded', displayMode ? 'block' : 'inline-block');
+        try {
           katex.render(expression, element, { ...katexOptions, displayMode });
-      } catch (e) {
-          element.innerHTML = expression
-      }
-      return element
-  })))
+        } catch (e) {
+          element.innerHTML = expression;
+        }
+        return element;
+      }),
+    );
 
-    decorations.push(ProseMirrorDecoration.inline(start, end, {
-        class: `!hidden ${KatexEditorClasses.join(" ")}`,
-        style: `${displayMode ? 'display: block;' : 'display: inline-block;'} height: 0; opacity: 0; overflow: hidden; position: absolute; width: 0;`
-    }));
+    decorations.push(
+      ProseMirrorDecoration.inline(start, end, {
+        class: `!hidden ${KatexEditorClasses.join(' ')}`,
+        style: `${displayMode ? 'display: block;' : 'display: inline-block;'} height: 0; opacity: 0; overflow: hidden; position: absolute; width: 0;`,
+      }),
+    );
   } else {
-    decorations.push(ProseMirrorDecoration.inline(start, end, {
-      class: KatexEditorClasses.join(" ")
-    }));
+    decorations.push(
+      ProseMirrorDecoration.inline(start, end, {
+        class: KatexEditorClasses.join(' '),
+      }),
+    );
   }
   return decorations;
 };
@@ -80,13 +85,13 @@ const createKatexPlugin = (options: any) => {
       apply: (tr, set) => findMathExpressions(tr.doc),
     },
     props: {
-      decorations: state => findMathExpressions(state.doc),
+      decorations: (state) => findMathExpressions(state.doc),
     },
   });
 };
 
 const KatexExtension = TiptapExtension.create({
-  name: "katex",
+  name: 'katex',
   addOptions: () => ({
     katexOptions: undefined,
   }),

@@ -4,27 +4,18 @@ import { DemoCard, Icon, Kbd } from '@/components';
 import X from '@/public/images/X.png';
 import { cn } from '@/utils';
 
-
 const DemoPage = () => {
   const title = 'Demos';
   const demos = [
     {
-      preview: (
-          <Icon set="Logos" icon="GoogleDrive" className="w-full h-full p-6" />
-      ),
+      preview: <Icon set="Logos" icon="GoogleDrive" className="w-full h-full p-6" />,
       title: 'Google Drive Picker',
       pinTitle: 'Click to open in new tab',
       description: '<GoogleDriveUtility> which authenticates and ingests files from google drive',
       link: `/demos/google-drive`,
     },
     {
-      preview: (
-        <img
-          src={X.src}
-          alt="Tweet Demo"
-          className="object-cover rounded-lg flex w-xl h-auto p-4"
-        />
-      ),
+      preview: <img src={X.src} alt="Tweet Demo" className="object-cover rounded-lg flex w-xl h-auto p-4" />,
       title: 'Tweet Component',
       pinTitle: 'Click to open in new tab',
       description: '<Tweet> which fetches tweet by ID from twitter api',
@@ -42,9 +33,7 @@ const DemoPage = () => {
       link: '/demos/data-grid/pokemonDB',
     },
     {
-      preview: (
-          <Icon set="Custom" icon="ThreeFanGpu" className="w-full h-full max-w-sm p-4" />
-      ),
+      preview: <Icon set="Custom" icon="ThreeFanGpu" className="w-full h-full max-w-sm p-4" />,
       title: 'GPUs',
       pinTitle: 'Click to open in new tab',
       description: 'GPU Architecture Breakdown',
@@ -85,14 +74,12 @@ const DemoPage = () => {
       link: '/demos/key-logger',
     },
     {
-      preview: (
-          <Icon set="Carbon" icon="ChartMultitype" className="w-full h-full p-6" />
-      ),
+      preview: <Icon set="Carbon" icon="ChartMultitype" className="w-full h-full p-6" />,
       title: 'Data Visualizations',
       pinTitle: 'Click to open in new tab',
       description: 'Data Visualizations with plotly', // (TODO: add D3.js, ag-charts)
       link: '/demos/data-viz',
-    }
+    },
   ];
 
   return (

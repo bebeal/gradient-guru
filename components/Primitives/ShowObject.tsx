@@ -1,5 +1,4 @@
-
-export const ShowObject = (props: {[key: string]: any}) => {
+export const ShowObject = (props: { [key: string]: any }) => {
   const { object, ...rest } = props;
   return (
     <pre className="flex w-auto h-auto text-xs text-left border rounded p-1" {...rest}>

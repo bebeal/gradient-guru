@@ -37,10 +37,12 @@ export const IconCache: IconSetMap = IconSetNames.reduce((iconSetsMap: any, Icon
   const { icons, iconProps } = IconSets[IconSetName];
   iconSetsMap[IconSetName] = Object.keys(icons).reduce((iconSetMap: any, icon: string) => {
     const iconDisplayName = `Icon.${IconSetName}.${icon}`;
-    iconSetMap[icon] = Cache.get(iconDisplayName, () => forwardRef((props: any, ref: any) => {
-      const IconComponent = icons[icon];
-      return <IconComponent {...defaultProps} {...iconProps} {...props} ref={ref} />;
-    }));
+    iconSetMap[icon] = Cache.get(iconDisplayName, () =>
+      forwardRef((props: any, ref: any) => {
+        const IconComponent = icons[icon];
+        return <IconComponent {...defaultProps} {...iconProps} {...props} ref={ref} />;
+      }),
+    );
     iconSetMap[icon].displayName = iconDisplayName;
     return iconSetMap;
   }, {} as IconSet);

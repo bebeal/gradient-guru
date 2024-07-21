@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import { Suspense } from 'react';
- 
+import Link from 'next/link';
+
 const NotFoundPage = () => {
   return (
     <Suspense fallback={null}>
@@ -10,7 +10,7 @@ const NotFoundPage = () => {
         <Link href="/">Return from /</Link>
       </div>
     </Suspense>
-  )
+  );
 };
 
 export default NotFoundPage;

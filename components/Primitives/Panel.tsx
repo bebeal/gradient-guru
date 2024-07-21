@@ -2,8 +2,8 @@
 
 import React, { forwardRef, useCallback } from 'react';
 import * as PanelPrimitive from '@radix-ui/react-accordion';
-import { cn } from '@/utils';
 import { useRippleEffect } from '@/hooks';
+import { cn } from '@/utils';
 import { Icon } from './Icons';
 
 export enum Direction {
@@ -88,7 +88,9 @@ export const Panel = forwardRef((props: PanelProps, ref?: any) => {
               !value.includes('item') && borderClasses,
             )}
           >
-            <Icon set="Carbon" icon="ChevronRight"
+            <Icon
+              set="Carbon"
+              icon="ChevronRight"
               className={cn(
                 {
                   [Direction.up]: 'rotate-[-270deg] group-radix-state-open:rotate-[-90deg]',

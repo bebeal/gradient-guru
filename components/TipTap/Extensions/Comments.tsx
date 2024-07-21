@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { Mark, mergeAttributes, Range } from "@tiptap/core";
-import { Mark as PMMark } from "@tiptap/pm/model";
+import { Mark, mergeAttributes, Range } from '@tiptap/core';
+import { Mark as PMMark } from '@tiptap/pm/model';
 
 // Google Doc like comments
 
-declare module "@tiptap/core" {
+declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     comment: {
       /**
@@ -35,7 +35,7 @@ export interface CommentStorage {
 }
 
 export const Comments = Mark.create<CommentOptions, CommentStorage>({
-  name: "comments",
+  name: 'comments',
 
   addOptions() {
     return {
@@ -48,8 +48,8 @@ export const Comments = Mark.create<CommentOptions, CommentStorage>({
     return {
       commentId: {
         default: null,
-        parseHTML: (el) => (el as HTMLSpanElement).getAttribute("data-comment-id"),
-        renderHTML: (attrs) => ({ "data-comment-id": attrs.commentId }),
+        parseHTML: (el) => (el as HTMLSpanElement).getAttribute('data-comment-id'),
+        renderHTML: (attrs) => ({ 'data-comment-id': attrs.commentId }),
       },
     };
   },
@@ -57,20 +57,14 @@ export const Comments = Mark.create<CommentOptions, CommentStorage>({
   parseHTML() {
     return [
       {
-        tag: "span[data-comment-id]",
-        getAttrs: (el) =>
-          !!(el as HTMLSpanElement).getAttribute("data-comment-id")?.trim() &&
-          null,
+        tag: 'span[data-comment-id]',
+        getAttrs: (el) => !!(el as HTMLSpanElement).getAttribute('data-comment-id')?.trim() && null,
       },
     ];
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [
-      "span",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-      0,
-    ];
+    return ['span', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];
   },
 
   onSelectionUpdate() {
@@ -101,24 +95,23 @@ export const Comments = Mark.create<CommentOptions, CommentStorage>({
 
   addCommands() {
     return {
-      setComment: (commentId: string | null) =>
+      setComment:
+        (commentId: string | null) =>
         ({ commands }) => {
           if (!commentId) return false;
 
-          commands.setMark("comment", { commentId });
+          commands.setMark('comment', { commentId });
           return true;
         },
-      unsetComment: (commentId: string | null) =>
+      unsetComment:
+        (commentId: string | null) =>
         ({ tr, dispatch }) => {
           if (!commentId) return false;
 
           const commentMarksWithRange: MarkWithRange[] = [];
 
           tr.doc.descendants((node, pos) => {
-            const commentMark = node.marks.find((mark) =>
-                mark.type.name === "comment" &&
-                mark.attrs.commentId === commentId
-            );
+            const commentMark = node.marks.find((mark) => mark.type.name === 'comment' && mark.attrs.commentId === commentId);
 
             if (!commentMark) return;
 

@@ -1,12 +1,10 @@
-'use client'
+'use client';
 
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 import README from '@/README.md';
 
 const READMEPage = (): ReactElement => {
-  return (
-    <README />
-  )
+  return <README />;
 };
 
 export default READMEPage;

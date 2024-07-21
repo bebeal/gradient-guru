@@ -2,11 +2,10 @@
 
 // assets page to show various ways you can import and use svgs, images.
 // This will strictly be from client side (bundled and optimized by webpack)
+import { FC, useRef, useState } from 'react';
 import { AnimatedDashedPath, AnimatedLineSVG, MissingNoSprite, WildMissingNoAppeaered } from '@/components';
 import MachineLeaerningIcon from '@/public/icons/Carbon/MachineLearning.svg';
 import SendIcon from '@/public/icons/Carbon/Send.svg';
-import { FC, useRef, useState } from 'react';
-
 
 // common way to use svgs:
 // 1. direct import -> react component
@@ -48,19 +47,29 @@ const SVG_animation_wrapper_dashed = () => {
   return (
     <div className="relative w-[200px] h-[200px]">
       <div className="absolute w-full h-full z-10">
-    <AnimatedDashedPath>
-      <svg width="200" height="200" viewBox="0 0 340 333" className="w-full h-full text-primary">
-        <path fill="transparent" stroke="currentColor" strokeWidth="4" d="M66.039,133.545c0,0-21-57,18-67s49-4,65,8
+        <AnimatedDashedPath>
+          <svg width="200" height="200" viewBox="0 0 340 333" className="w-full h-full text-primary">
+            <path
+              fill="transparent"
+              stroke="currentColor"
+              strokeWidth="4"
+              d="M66.039,133.545c0,0-21-57,18-67s49-4,65,8
         s30,41,53,27s66,4,58,32s-5,44,18,57s22,46,0,45s-54-40-68-16s-40,88-83,48s11-61-11-80s-79-7-70-41
-        C46.039,146.545,53.039,128.545,66.039,133.545z"/>
-      </svg>
-    </AnimatedDashedPath>
+        C46.039,146.545,53.039,128.545,66.039,133.545z"
+            />
+          </svg>
+        </AnimatedDashedPath>
       </div>
       <div className="absolute w-full h-full z-1">
         <svg width="200" height="200" viewBox="0 0 340 333" className="w-full h-full text-primary">
-          <path fill="transparent" stroke="#777777CC" strokeWidth="4" d="M66.039,133.545c0,0-21-57,18-67s49-4,65,8
+          <path
+            fill="transparent"
+            stroke="#777777CC"
+            strokeWidth="4"
+            d="M66.039,133.545c0,0-21-57,18-67s49-4,65,8
           s30,41,53,27s66,4,58,32s-5,44,18,57s22,46,0,45s-54-40-68-16s-40,88-83,48s11-61-11-80s-79-7-70-41
-          C46.039,146.545,53.039,128.545,66.039,133.545z"/>
+          C46.039,146.545,53.039,128.545,66.039,133.545z"
+          />
         </svg>
       </div>
     </div>

@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import { useToasts } from "@/hooks/useToasts";
-import { useSession } from "next-auth/react";
-import Script from "next/script";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
+import Script from 'next/script';
+import { useSession } from 'next-auth/react';
+import { useToasts } from '@/hooks/useToasts';
 
 export interface DrivePickerProps {
   googleDriveApiKey?: string | null;
@@ -24,9 +24,7 @@ export const useDrivePicker = ({ googleDriveApiKey }: DrivePickerProps) => {
         description: (
           <ul className="list-disc ml-4 text-xs">
             {selection.map((file: any) => (
-              <li key={file.id}>
-                {file.name}
-              </li>
+              <li key={file.id}>{file.name}</li>
             ))}
           </ul>
         ),
@@ -47,18 +45,18 @@ export const useDrivePicker = ({ googleDriveApiKey }: DrivePickerProps) => {
       console.error('Missing required parameters or APIs not loaded');
       return;
     }
-    const pickerApi = window.gapi.picker.api;    
+    const pickerApi = window.gapi.picker.api;
     const preSearchedView = new pickerApi.View(pickerApi.ViewId.DOCS);
     const googleDriveViewGroup = new pickerApi.ViewGroup(preSearchedView);
     const picker = new pickerApi.PickerBuilder()
-        .addViewGroup(googleDriveViewGroup)
-        .setOAuthToken(session.data.account.access_token)
-        .setDeveloperKey(googleDriveApiKey)
-        .setCallback(pickerCallback)
-        .enableFeature(pickerApi.Feature.MULTISELECT_ENABLED)
-        .enableFeature(pickerApi.Feature.SIMPLE_UPLOAD_ENABLED)
-        .enableFeature(pickerApi.Feature.MINE_ONLY)
-        .build();
+      .addViewGroup(googleDriveViewGroup)
+      .setOAuthToken(session.data.account.access_token)
+      .setDeveloperKey(googleDriveApiKey)
+      .setCallback(pickerCallback)
+      .enableFeature(pickerApi.Feature.MULTISELECT_ENABLED)
+      .enableFeature(pickerApi.Feature.SIMPLE_UPLOAD_ENABLED)
+      .enableFeature(pickerApi.Feature.MINE_ONLY)
+      .build();
     picker.setVisible(true);
   }, [gapiLoaded, pickerApiLoaded, pickerCallback, session, googleDriveApiKey]);
 
@@ -81,22 +79,15 @@ export const useDrivePicker = ({ googleDriveApiKey }: DrivePickerProps) => {
         // Load Picker API only after Google API is successfully loaded
         window.gapi.load('picker', {
           callback: () => setPickerApiLoaded(true),
-          onerror: () => console.error('Error loading Picker API')
+          onerror: () => console.error('Error loading Picker API'),
         });
       },
-      onerror: () => console.error('Error loading Google API')
+      onerror: () => console.error('Error loading Google API'),
     });
   }, [gapiLoaded]);
 
   const GoogleApiScript = () => {
-    return (
-      <Script
-        id="google-drive-api"
-        src="https://apis.google.com/js/api.js" 
-        onLoad={loadGoogleApi} 
-        strategy="afterInteractive"
-      />
-    );
+    return <Script id="google-drive-api" src="https://apis.google.com/js/api.js" onLoad={loadGoogleApi} strategy="afterInteractive" />;
   };
 
   return {
@@ -106,6 +97,6 @@ export const useDrivePicker = ({ googleDriveApiKey }: DrivePickerProps) => {
     pickerApiLoaded,
     gapiLoaded,
     session,
-    GoogleApiScript
+    GoogleApiScript,
   };
 };

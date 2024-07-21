@@ -1,12 +1,11 @@
 'use client';
 
 // rewritten https://github.com/bebeal/gradient-guru/tree/main/components/Random/Custom/DemoCard.tsx from original: https://ui.aceternity.com/components/3d-pin
-
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/utils/utils';
-import { useDevTools } from '@/hooks/useDevTools';
 import { Loading } from '@/components/Primitives/Loading';
+import { useDevTools } from '@/hooks/useDevTools';
+import { cn } from '@/utils/utils';
 
 export interface DemoCardProps {
   title?: string;
@@ -27,7 +26,7 @@ const Card = forwardRef<HTMLDivElement, DemoCardProps>(({ ...props }, ref) => {
         <span className="text-slate-500 flex text-xs h-full">{description}</span>
       </div>
       <div className="rounded-xl border border-white/[0.2] group-hover/pin:border-white/[0.3] max-w-lg max-h-[165px] w-auto h-full flex justify-center items-center transition duration-700">
-      {content ? content : <div className="flex flex-1 w-full rounded-lg bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500 min-w-36 min-h-32" />}
+        {content ? content : <div className="flex flex-1 w-full rounded-lg bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500 min-w-36 min-h-32" />}
       </div>
     </div>
   );
@@ -45,9 +44,24 @@ const Pin = ({ content }: { content?: React.ReactNode | string }) => {
         </div>
         <div style={{ perspective: '1000px', transform: 'rotateX(70deg) translateZ(0)' }} className="absolute left-1/2 top-1/2 ml-[0.09375rem] mt-4 -translate-x-1/2 -translate-y-1/2">
           <>
-            <motion.div initial={{ opacity: 0, scale: 0, x: '-50%', y: '-50%' }} animate={{ opacity: [0, 1, 0.5, 0], scale: 1, z: 0 }} transition={{ duration: 6, repeat: Infinity, delay: 0 }} className="absolute left-1/2 top-1/2  h-[11.25rem] w-[11.25rem] rounded-[50%] bg-sky-500/[0.08] shadow-[0_8px_16px_rgb(0_0_0/0.4)]" ></motion.div>
-            <motion.div initial={{ opacity: 0, scale: 0, x: '-50%', y: '-50%' }} animate={{ opacity: [0, 1, 0.5, 0], scale: 1, z: 0 }} transition={{ duration: 6, repeat: Infinity, delay: 2 }} className="absolute left-1/2 top-1/2  h-[11.25rem] w-[11.25rem] rounded-[50%] bg-sky-500/[0.08] shadow-[0_8px_16px_rgb(0_0_0/0.4)]" ></motion.div>
-            <motion.div initial={{ opacity: 0, scale: 0, x: '-50%', y: '-50%' }} animate={{ opacity: [0, 1, 0.5, 0], scale: 1, z: 0 }} transition={{ duration: 6, repeat: Infinity, delay: 4 }} className="absolute left-1/2 top-1/2  h-[11.25rem] w-[11.25rem] rounded-[50%] bg-sky-500/[0.08] shadow-[0_8px_16px_rgb(0_0_0/0.4)]" ></motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0, x: '-50%', y: '-50%' }}
+              animate={{ opacity: [0, 1, 0.5, 0], scale: 1, z: 0 }}
+              transition={{ duration: 6, repeat: Infinity, delay: 0 }}
+              className="absolute left-1/2 top-1/2  h-[11.25rem] w-[11.25rem] rounded-[50%] bg-sky-500/[0.08] shadow-[0_8px_16px_rgb(0_0_0/0.4)]"
+            ></motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0, x: '-50%', y: '-50%' }}
+              animate={{ opacity: [0, 1, 0.5, 0], scale: 1, z: 0 }}
+              transition={{ duration: 6, repeat: Infinity, delay: 2 }}
+              className="absolute left-1/2 top-1/2  h-[11.25rem] w-[11.25rem] rounded-[50%] bg-sky-500/[0.08] shadow-[0_8px_16px_rgb(0_0_0/0.4)]"
+            ></motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0, x: '-50%', y: '-50%' }}
+              animate={{ opacity: [0, 1, 0.5, 0], scale: 1, z: 0 }}
+              transition={{ duration: 6, repeat: Infinity, delay: 4 }}
+              className="absolute left-1/2 top-1/2  h-[11.25rem] w-[11.25rem] rounded-[50%] bg-sky-500/[0.08] shadow-[0_8px_16px_rgb(0_0_0/0.4)]"
+            ></motion.div>
           </>
         </div>
         <>
@@ -75,47 +89,41 @@ export const DemoCard = (props: DemoCardProps) => {
       });
     }
   }, [ref]);
-  
 
   return (
     <>
-    <a
-      href={href}
-      target="_blank"
-      referrerPolicy="no-referrer"
-      className={cn(
-        dims.width === 0 || dims.height === 0 && 'opacity-0',
-        'relative grid group/pin z-[var(--layer-toasts)] cursor-pointer overflow-visible h-auto w-auto',
-        debug && 'border && border-red-500', 
-        containerClassName
-      )}
-      style={{ width: dims.width, height: dims.height }}
-      {...rest}
-    >
-      <div
-        style={{
-          perspective: '1000px',
-          transform: 'rotateX(70deg) translateZ(0deg)',
-        }}
-        className="absolute left-1/2 top-1/2 mt-4 -translate-x-1/2 -translate-y-1/2"
+      <a
+        href={href}
+        target="_blank"
+        referrerPolicy="no-referrer"
+        className={cn(dims.width === 0 || (dims.height === 0 && 'opacity-0'), 'relative grid group/pin z-[var(--layer-toasts)] cursor-pointer overflow-visible h-auto w-auto', debug && 'border && border-red-500', containerClassName)}
+        style={{ width: dims.width, height: dims.height }}
+        {...rest}
       >
         <div
-          className={cn(
-            "absolute left-1/2 top-1/2 p-0.5 flex justify-start items-start rounded-lg shadow-[0_8px_16px_rgb(0_0_0/0.4)] transition duration-700 overflow-hidden",
-            'bg-black border border-white/[0.2] group-hover/pin:border-white/[0.3]',
-            /* Animation is applied here but triggered by hovering the parent */
-            `[transform:translate(-50%,-50%)_rotateX(0deg)_scale(1)]`,
-            `group-hover/pin:[transform:translate(-50%,-50%)_rotateX(40deg)_scale(0.8)]`
-          )}
+          style={{
+            perspective: '1000px',
+            transform: 'rotateX(70deg) translateZ(0deg)',
+          }}
+          className="absolute left-1/2 top-1/2 mt-4 -translate-x-1/2 -translate-y-1/2"
         >
-          <div className={cn('relative z-[var(--layer-toasts)]', className)}>
-            <Card ref={ref} {...props} />
+          <div
+            className={cn(
+              'absolute left-1/2 top-1/2 p-0.5 flex justify-start items-start rounded-lg shadow-[0_8px_16px_rgb(0_0_0/0.4)] transition duration-700 overflow-hidden',
+              'bg-black border border-white/[0.2] group-hover/pin:border-white/[0.3]',
+              /* Animation is applied here but triggered by hovering the parent */
+              `[transform:translate(-50%,-50%)_rotateX(0deg)_scale(1)]`,
+              `group-hover/pin:[transform:translate(-50%,-50%)_rotateX(40deg)_scale(0.8)]`,
+            )}
+          >
+            <div className={cn('relative z-[var(--layer-toasts)]', className)}>
+              <Card ref={ref} {...props} />
+            </div>
           </div>
         </div>
-      </div>
-      <Pin content={pinContent} />
-    </a>
-    {dims.width === 0 || dims.height === 0 && <Loading />}
+        <Pin content={pinContent} />
+      </a>
+      {dims.width === 0 || (dims.height === 0 && <Loading />)}
     </>
   );
 };

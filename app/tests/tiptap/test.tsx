@@ -1,4 +1,3 @@
-
 export const boldTextExample = `
 <b>Carl Friedrich Gauss, often referred to as the 'Prince of Mathematicians', made significant contributions to many fields, including number theory.</b>
 `;
@@ -262,7 +261,6 @@ export const youtubeEmbedExample = `
   <iframe src="https://www.youtube.com/watch?v=QYSJ83rl6nI"></iframe>
 </div>
 `;
-
 
 export const contentString = `
 ${boldTextExample}\n

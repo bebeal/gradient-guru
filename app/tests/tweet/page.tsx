@@ -1,7 +1,7 @@
 'use client';
 
-import { ComponentMap, ComponentMapper, Tweet } from "@/components";
-import { FC } from "react";
+import { FC } from 'react';
+import { ComponentMap, ComponentMapper, Tweet } from '@/components';
 
 const Tweets: ComponentMap = {
   TweetComponent: () => <Tweet id="1768058551031800134" />,
@@ -9,9 +9,7 @@ const Tweets: ComponentMap = {
 };
 
 const TweetsPage: FC = () => {
-  return (
-    <ComponentMapper title="TailwindCSS Components" components={Tweets} />
-  );
+  return <ComponentMapper title="TailwindCSS Components" components={Tweets} />;
 };
 
 export default TweetsPage;

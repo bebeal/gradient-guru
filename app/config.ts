@@ -1,4 +1,4 @@
-import { IDocConfig } from "@/hooks";
+import { IDocConfig } from '@/hooks';
 
 export const DocConfig: IDocConfig = {
   title: 'app',
