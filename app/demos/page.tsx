@@ -85,7 +85,7 @@ const DemoPage = () => {
   return (
     <div className="flex flex-col gap-2 w-full h-auto justify-center items-center p-4 overflow-auto">
       <div className="text-2xl font-bold text-center underline">{title}</div>
-      <div className={cn(`flex w-auto justify-center items-center gap-2 flex-wrap p-2`)}>
+      <div className={cn(`flex w-auto justify-center items-center gap-10 flex-wrap p-2`)}>
         {demos.map((demo, index) => (
           <DemoCard key={`demo-${index}`} content={demo.preview} title={demo.title} pinContent={demo?.pinTitle || demo?.title} description={demo.description} href={demo.link} />
         ))}

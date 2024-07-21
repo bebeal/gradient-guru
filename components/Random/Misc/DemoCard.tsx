@@ -96,7 +96,7 @@ export const DemoCard = (props: DemoCardProps) => {
         href={href}
         target="_blank"
         referrerPolicy="no-referrer"
-        className={cn(dims.width === 0 || (dims.height === 0 && 'opacity-0'), 'relative grid group/pin z-[var(--layer-toasts)] cursor-pointer overflow-visible h-auto w-auto', debug && 'border && border-red-500', containerClassName)}
+        className={cn(dims.width === 0 || (dims.height === 0 && 'opacity-0'), 'relative grid group/pin z-[var(--layer-toasts)] cursor-pointer overflow-hidden h-auto w-auto', debug && 'border && border-red-500', containerClassName)}
         style={{ width: dims.width, height: dims.height }}
         {...rest}
       >
