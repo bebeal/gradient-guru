@@ -1,68 +1,47 @@
 'use client';
 
-import React, { useMemo } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import React from 'react';
+import 'zod-metadata/register';
+import { FieldValues, useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { z, ZodSchema } from 'zod';
+import { cn } from '@/utils/utils';
 
-// field configuration:
-// - name: unique identifier for the field
-// - component: React component to render the field (controls the field value)
-// - schema: zod schema for validation
-// - label: optional label for the field
-// - any other props to pass through to the component
-export interface FieldConfig {
-  name: string;
-  component: React.ComponentType<any>;
-  schema: z.ZodType<any, any>;
-  label?: string;
-  [key: string]: any;
+export interface AutoFormProps<T extends FieldValues> {
+  schema: z.ZodObject<T>;
+  values: T;
+  onSubmit: (data: T) => void;
 }
 
-// AutoForm component props:
-// - fields: array of field configurations
-// - values: binded state values for the form (the source of truth)
-// - onSubmit: callback function when the form is submitted
-export interface AutoFormProps {
-  fields: FieldConfig[];
-  values: Record<string, any>;
-  onSubmit: (data: any) => void;
-}
-
-// automatic form with validation
-export const AutoForm: React.FC<AutoFormProps> = ({ fields, values, onSubmit }) => {
-  // extract full object schema from fields
-  const schema = useMemo(() => z.object(Object.fromEntries(fields.map((field) => [field.name, field.schema]))), [fields]);
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm({
+export const AutoForm = <T extends FieldValues>({ schema, values, onSubmit }: AutoFormProps<T>) => {
+  const useFormReturn: UseFormReturn<T> = useForm({
     resolver: zodResolver(schema),
-    values: values,
+    values: values || schema.parse(undefined), // zod has the concept of defaults, to extract them parsed undefined on the schema https://zod.dev/?id=default
+    mode: 'onChange',
   });
 
-  const onSubmitHandler = handleSubmit((data) => {
-    onSubmit(data);
-  });
-
+  const { register, formState, handleSubmit } = useFormReturn;
+  const schemaFields = Object.keys(schema.shape);
   return (
-    <form onSubmit={onSubmitHandler} className="space-y-4">
-      {fields.map((field) => (
-        <div key={field.name} className="space-y-2">
-          {field.label && (
-            <label htmlFor={field.name} className="block text-sm font-medium text-gray-700">
-              {field.label}
+    <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700">
+      <h2 className="text-2xl font-bold mb-6">Form</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {/* {schemaFields.map((field) => (
+          <div key={field}>
+            <label htmlFor={field} className="block text-sm font-medium mb-1 capitalize">
+              {field}
             </label>
-          )}
-          <Controller name={field.name} control={control} render={({ field: { onChange, value, ref } }) => <field.component {...field} onChange={onChange} value={value} ref={ref} error={errors[field.name]} />} />
-          {errors[field.name] && <p className="text-sm text-red-600">{errors[field.name]?.message as string}</p>}
-        </div>
-      ))}
-      <button type="submit" disabled={isSubmitting} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50">
-        {isSubmitting ? 'Submitting...' : 'Submit'}
-      </button>
-    </form>
+            <input
+              {...register(field)}
+              id={field}
+              className="w-full p-2 bg-gray-700 rounded border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            />
+            <p className={`mt-1 text-red-500 text-sm h-5 ${formState.errors[field] ? 'visible' : 'invisible'}`}>
+              {formState.errors[field]?.message?.toString()}
+            </p>
+          </div>
+        ))} */}
+      </form>
+    </div>
   );
 };

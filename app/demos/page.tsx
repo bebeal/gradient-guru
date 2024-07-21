@@ -8,6 +8,12 @@ const DemoPage = () => {
   const title = 'Demos';
   const demos = [
     {
+      title: 'Auto Form',
+      pinTitle: 'Click to open in new tab',
+      description: 'a form component controlled with `react-hook-form` and has extensible validation through zod schema',
+      link: `/demos/auto-form`,
+    },
+    {
       preview: <Icon set="Logos" icon="GoogleDrive" className="w-full h-full p-6" />,
       title: 'Google Drive Picker',
       pinTitle: 'Click to open in new tab',
