@@ -44,7 +44,7 @@ export const Terminal = memo((props: TerminalProps) => {
   };
 
   return (
-    <section id={id} className={cn('flex flex-col h-auto w-auto rounded-lg gap-0', className)}>
+    <section id={id} className={cn('flex flex-col h-auto w-auto rounded-lg gap-0 border border-primary', className)}>
       <div className="bg-[#28282b] w-full h-auto leading-4 rounded-t-lg grid grid-cols-3 items-center px-4 py-[0.5px] pointer-events-auto overflow-hidden">
         <div className="flex w-auto gap-1 items-center justify-self-start">{codeLanguage?.icon && codeLanguage?.href && codeLanguage?.name && <IconLink icon={codeLanguage?.icon} href={codeLanguage?.href} label={codeLanguage?.name} />}</div>
         <div className="text-primary font-bold text-xs justify-self-center truncate">

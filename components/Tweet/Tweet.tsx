@@ -15,10 +15,10 @@ export const Tweet = memo((props: TweetProps) => {
     return <TweetSkeleton />;
   }
   return (
-    <div className="my-6">
-      <div className={`flex justify-center`}>
+    // <div className="my-6">
+      <div className={`flex justify-center h-full overflow-auto`}>
         <EmbeddedTweet tweet={data} components={components} {...rest} />
       </div>
-    </div>
+    // </div>
   );
 });

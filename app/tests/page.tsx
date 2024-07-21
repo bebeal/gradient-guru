@@ -4,7 +4,7 @@ import { DirectoryTree, LinkList } from '@/components';
 
 const TestsPage = () => {
   const tests = {
-    'tests/': ['assets', 'auth', 'buttons', 'directory-tree', 'icon-sets', 'mdx', 'primitives', 'radix-themed-components', 'random', 'styled-components', 'syntax-highlighter', 'tailwindcss', 'terminal', 'tiptap', 'tldraw', 'tweet'],
+    'tests/': ['assets', 'auth', 'auto-form', 'buttons', 'directory-tree', 'icon-sets', 'mdx', 'primitives', 'radix-themed-components', 'random', 'styled-components', 'syntax-highlighter', 'tailwindcss', 'terminal', 'tiptap', 'tldraw'],
   };
 
   return (
