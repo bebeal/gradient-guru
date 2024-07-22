@@ -1,3 +1,5 @@
+import Mountains from '@/public/images/mountains.jpg';
+
 export const boldTextExample = `
 <b>Carl Friedrich Gauss, often referred to as the 'Prince of Mathematicians', made significant contributions to many fields, including number theory.</b>
 `;
@@ -76,12 +78,9 @@ export const taskListExample = `<ul data-type="taskList">
 <li data-type="taskItem" data-checked="false">butter</li>
 </ul>`;
 
-export const blockquoteExample = `
-<p>
-<blockquote>
+export const blockquoteExample = `<p><blockquote>
 Mathematics is the queen of sciences and number theory is the queen of mathematics.
-</blockquote>—Carl Friedrich Gauss</p>
-`;
+</blockquote>—Carl Friedrich Gauss</p>`;
 
 export const codeExample = `<code>const gaussFormula = (n)  => {
   return n * (n + 1) / 2;
@@ -248,12 +247,19 @@ Do you want go deeper? Here is a list of all supported functions:
 `;
 
 export const hexColor = `<p>
-You can also teach the editor new things. For example to recognize hex colors and add a color swatch on the fly: #FFF, #0D0D0D, #616161, #A975FF, #FB5151, #FD9170, #FFCB6B, #68CEF8, #80cbc4, #9DEF8F
+You can also teach the editor new things. For example to recognize hex colors and add a color swatch on the fly:
+
+#ef4591
+
+#ef459177
+
+#ffef45
+
 </p>`;
 
 export const imageExample = `
 <p>Try to move the cursor after the image with your arrow keys! You should see a horizontal blinking cursor below the image. This is the gapcursor.</p>
-<img src="https://source.unsplash.com/8xznAGy4HcY/800x400" />
+<img src="${Mountains.src}" alt="Mountains" />
 `;
 
 export const youtubeEmbedExample = `
@@ -265,6 +271,10 @@ export const youtubeEmbedExample = `
 export const contentString = `
 ${codeExample}\n
 ${codeBlockExample}\n
+${mathExample}\n
+${hexColor}\n
+${youtubeEmbedExample}\n
+${imageExample}\n
 ${boldTextExample}\n
 ${italicTextExample}\n
 ${underlineTextExample}\n
@@ -288,8 +298,4 @@ ${hardBreakExample}\n
 ${fontFamilyExample}\n
 ${colorExample}\n
 ${invisibleCharacterExample}\n
-${mathExample}\n
-${hexColor}\n
-${youtubeEmbedExample}\n
-${imageExample}\n
 `;

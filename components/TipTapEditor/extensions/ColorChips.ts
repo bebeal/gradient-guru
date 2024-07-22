@@ -12,11 +12,12 @@ export const findColors = (doc: Node): DecorationSet => {
   const decorations: Decoration[] = [];
 
   doc.descendants((node, position) => {
-    if (!node.text) {
+    if (!node.isText || !node.text) {
       return;
     }
 
-    Array.from(node.text.matchAll(colorRegex.source as any)).forEach((match) => {
+    const colorCheckRegex = new RegExp(colorRegex, 'g');
+    Array.from(node.text.matchAll(colorCheckRegex)).forEach((match) => {
       const color = match[0];
       const index = match.index || 0;
       const from = position + index;

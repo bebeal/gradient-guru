@@ -54,7 +54,8 @@ export const markdownRegex = (text: string): boolean => {
 // Hexadecimal colors with 3, 4, 6, or 8 digits (the latter two include the alpha channel) like #fff, #ffffff, #f00, #ff0000, #0f0, #00ff00, #000f, #0000ff00.
 // RGB colors like rgb(255, 0, 72).
 // RGBA colors like rgba(255, 0, 72, 0.5).
-export const colorRegex = new RegExp(/^#(?:[0-9a-f]{3}){1,2}(?:[0-9a-f]{2})?$|^rgba?\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})(?:,\s*(0|1|0?\.\d+))?\)$/i);
+export const colorRegex = /#([0-9A-Fa-f]{3}){1,2}([0-9A-Fa-f]{2})?|rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(,\s*(0|1|0?\.\d+))?\s*\)/g;
+// export const colorRegex = /^#(?:[0-9a-f]{3}){1,2}(?:[0-9a-f]{2})?$|^rgba?\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})(?:,\s*(0|1|0?\.\d+))?\)$/i;
 
 // For LaTeX math syntax
 // Inline math: The Pythagorean theorem is $a^2 + b^2 = c^2$.

@@ -205,8 +205,7 @@ export const TerminalBlock = Node.create({
 
   addProseMirrorPlugins() {
     return [
-      // this plugin creates a code block for pasted content from VS Code
-      // we can also detect the copied code language
+      // this plugin creates a code block and can also detect the copied code language
       new Plugin({
         key: new PluginKey('codeBlockVSCodeHandler'),
         props: {
