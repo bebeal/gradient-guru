@@ -4,6 +4,11 @@ import withSVGR from './utils/SVGR.mjs';
 import mdxOptions from './utils/mdx-options.mjs';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import remarkFrontmatter from 'remark-frontmatter'
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -118,6 +123,7 @@ const nextConfig = {
     ];
   },
   experimental: {
+    // serverComponentsExternalPackages: ["yjs"],
     scrollRestoration: true,
     webpackBuildWorker: true,
     serverMinification: true,
@@ -141,6 +147,12 @@ const nextConfig = {
       test: /\.csv$/,
       loader: 'raw-loader'
     });
+    // https://github.com/yjs/yjs/issues/438#issuecomment-2225079409
+    if (!isServer) {
+      // Ensure that all imports of 'yjs' resolve to the same instance
+      config.resolve.alias['yjs'] = path.resolve(__dirname, 'node_modules/yjs');
+      config.resolve.alias['y-prosemirror'] = path.resolve(__dirname, 'node_modules/y-prosemirror');
+    }
     return config;
   },
 };

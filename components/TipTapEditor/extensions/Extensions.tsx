@@ -3,7 +3,6 @@
 
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import InvisibleCharacters, { HardBreakNode } from '@tiptap-pro/extension-invisible-characters';
-import { StarterKit } from '@tiptap/starter-kit'
 import { Highlight } from '@tiptap/extension-highlight'
 import { CharacterCount } from '@tiptap/extension-character-count'
 import { Underline } from '@tiptap/extension-underline'
@@ -20,18 +19,18 @@ import { Dropcursor } from '@tiptap/extension-dropcursor'
 import { Subscript } from '@tiptap/extension-subscript'
 import { Superscript } from '@tiptap/extension-superscript'
 import { Paragraph } from '@tiptap/extension-paragraph'
-import { CodeBlock } from '@tiptap/extension-code-block'
 import { BulletList } from '@tiptap/extension-bullet-list'
 import { OrderedList } from '@tiptap/extension-ordered-list'
 // import { Collaboration } from '@tiptap/extension-collaboration'
 import { TaskItem } from '@tiptap/extension-task-item'
 import { TaskList } from '@tiptap/extension-task-list'
 import { FileHandler } from '@tiptap-pro/extension-file-handler'
-import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
 import Youtube from '@tiptap/extension-youtube';
 import Code from '@tiptap/extension-code';
 import { Markdown as MarkdownExtension } from 'tiptap-markdown';
-
+import Bold from '@tiptap/extension-bold';
+import Italic from '@tiptap/extension-italic';
+import Strike from '@tiptap/extension-strike';
 import {
   EmojiSuggestion,
   FontSize,
@@ -73,27 +72,17 @@ interface ExtensionTemplateProps {
 
 export const ExtensionTemplate = ({ provider, userId, userName = 'Maxi' }: ExtensionTemplateProps): Extensions => [
   Document,
+  Column,
   Columns,
   TaskList,
   TaskItem.configure({
     nested: true,
   }),
-  Column,
   Selection,
   Heading.configure({
     levels: [1, 2, 3, 4, 5, 6],
   }),
   HorizontalRule,
-  StarterKit.configure({
-    document: false,
-    dropcursor: false,
-    heading: false,
-    horizontalRule: false,
-    blockquote: false,
-    history: false,
-    codeBlock: false,
-  }),
-  // TerminalBlock,
   TextStyle,
   FontSize,
   FontFamily,
@@ -178,6 +167,9 @@ export const ExtensionTemplate = ({ provider, userId, userName = 'Maxi' }: Exten
   TableCell,
   TableHeader,
   TableRow,
+  Bold,
+  Italic,
+  Strike,
   Typography,
   Placeholder.configure({
     emptyEditorClass: 'is-editor-empty',                        // The class that is added to the editor when it’s empty.
@@ -227,6 +219,7 @@ export const ExtensionTemplate = ({ provider, userId, userName = 'Maxi' }: Exten
     injectCSS: true,                               // By default, the extension injects some CSS. With injectCSS you can disable that.
     injectNonce: undefined,                        // When you use a Content-Security-Policy with nonce, you can specify a nonce to be added to dynamically created elements.
   }),
+  TerminalBlock,
   Code.configure({
     HTMLAttributes: {
       class: 'text-[#d4d4d4] bg-[#1e1e1e] after:content-none before:content-none px-1 py-[0.5px] rounded',

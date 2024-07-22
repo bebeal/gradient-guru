@@ -4,7 +4,7 @@ import { Selection, Transaction } from '@tiptap/pm/state'
 import { CellSelection, TableMap } from '@tiptap/pm/tables'
 import { Node, ResolvedPos } from '@tiptap/pm/model'
 import { Editor } from '@tiptap/react'
-import { Figcaption, HorizontalRule, ImageUpload, ImageBlock, Link, TableOfContentsNode, Table, CodeBlock } from './extensions';
+import { Figcaption, HorizontalRule, ImageUpload, ImageBlock, Link, TableOfContentsNode, Table, TerminalBlock } from './extensions';
 
 export const isRectSelected = (rect: any) => (selection: CellSelection) => {
   const map = TableMap.get(selection.$anchorCell.node(-1))
@@ -375,7 +375,7 @@ export const isCustomNodeSelected = (editor: Editor, node: HTMLElement) => {
   const customNodes = [
     HorizontalRule.name,
     ImageUpload.name,
-    CodeBlock.name,
+    TerminalBlock.name,
     ImageBlock.name,
     Link.name,
     // AiWriter.name,

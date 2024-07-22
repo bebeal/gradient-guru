@@ -1,25 +1,47 @@
 'use client'
 
 // https://github.com/ueberdosis/tiptap/blob/a706df78c2df8235b6b1825a71fccf8539fe9700/packages/extension-code-block/src/code-block.ts
-import { Node, mergeAttributes, textblockTypeInputRule } from '@tiptap/core';
+import { Node, mergeAttributes, textblockTypeInputRule, SingleCommands } from '@tiptap/core';
 import { NodeViewWrapper, ReactNodeViewRenderer } from '@tiptap/react';
 import { Plugin, PluginKey, TextSelection } from '@tiptap/pm/state';
 import { CodeBlockOptions } from '@tiptap/extension-code-block';
 import { Terminal } from '@/components';
 import { backtickInputRegex, tildeInputRegex } from '@/utils';
 
-// Custom extension intended to replace default code blocks with a sligthly fancier component which looks like a terminal and adds some extra functionality
-
-export interface TerminalBlock extends CodeBlockOptions {
+export interface TerminalBlockOptions {
+      /**
+     * Adds a prefix to language classes that are applied to code tags.
+     * @default 'language-'
+     */
+    languageClassPrefix: string;
+    /**
+     * Define whether the node should be exited on triple enter.
+     * @default true
+     */
+    exitOnTripleEnter: boolean;
+    /**
+     * Define whether the node should be exited on arrow down if there is no node after it.
+     * @default true
+     */
+    exitOnArrowDown: boolean;
+    /**
+     * Custom HTML attributes that should be added to the rendered HTML tag.
+     * @default {}
+     * @example { class: 'foo' }
+     */
+    HTMLAttributes: Record<string, any>;
 }
 
 // Step 1: Create a Custom Node Extension
-export const TerminalBlock = Node.create({
+export const TerminalBlock = Node.create<TerminalBlockOptions, any>({
   name: 'terminalBlock',
 
   addOptions() {
     return {
       languageClassPrefix: 'language-',
+      exitOnTripleEnter: true,
+      exitOnArrowDown: true,
+      HTMLAttributes: {},
     }
   },
 
@@ -85,11 +107,15 @@ export const TerminalBlock = Node.create({
   addCommands() {
     return {
       setCodeBlock:
-        attributes => ({ commands }) => {
+        (attributes?: {
+          language: string;
+      }) => ({ commands }: { commands: SingleCommands }) => {
           return commands.setNode(this.name, attributes)
         },
       toggleCodeBlock:
-        attributes => ({ commands }) => {
+        (attributes?: {
+          language: string;
+      }) => ({ commands }: { commands: SingleCommands }) => {
           return commands.toggleNode(this.name, 'paragraph', attributes)
         },
     }

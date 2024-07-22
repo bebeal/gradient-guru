@@ -27,4 +27,3 @@ export * from './Video';
 export * from './TextReplacements';
 export * from './ReactComponent';
 export * from './Extensions';
-export { CodeBlock } from '@tiptap/extension-code-block'
