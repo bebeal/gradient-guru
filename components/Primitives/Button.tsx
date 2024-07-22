@@ -9,6 +9,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   children?: any;
   className?: string;
   onClick?: (event: any) => void;
+  active?: boolean;
   disabled?: boolean;
   variant?: Variant;
   colors?: string[];
@@ -26,6 +27,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, externa
     children,
     className = '',
     onClick: onClickCallback = noop,
+    active=false,
     disabled = false,
     variant = 'none',
     color,

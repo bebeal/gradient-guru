@@ -86,6 +86,16 @@ const config: Config = {
         secondary: 'rgb(var(--border-secondary) / <alpha-value>)',
         tertiary: 'rgb(var(--border-tertiary) / <alpha-value>)',
       },
+      caretColor: {
+        primary: 'rgb(var(--text-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--text-secondary) / <alpha-value>)',
+        tertiary: 'rgb(var(--text-tertiary) / <alpha-value>)',
+      },
+      placeholderColor: {
+        primary: 'rgb(var(--text-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--text-secondary) / <alpha-value>)',
+        tertiary: 'rgb(var(--text-tertiary) / <alpha-value>)',
+      },
       fontFamily: {
         mono: ['Berkeley Mono', 'monospace'],
         argon: ['Argon', 'monospace'],

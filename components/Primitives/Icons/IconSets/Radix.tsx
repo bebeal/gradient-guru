@@ -43,6 +43,7 @@ import {
   TextIcon,
   TextNoneIcon,
   UnderlineIcon,
+  InputIcon
 } from '@radix-ui/react-icons';
 import { IconSetMap } from '../IconSet';
 
@@ -111,6 +112,7 @@ const Alignment = {
 export const RadixIconSet: IconSetMap = {
   ...Typography,
   ...Alignment,
+  Input: InputIcon,
 };
 export const RadixIconNames = Object.keys(RadixIconSet);
 export type RadixIcon = keyof typeof RadixIconSet;

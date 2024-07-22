@@ -1,7 +1,7 @@
 'use client';
 
+import { markdownString } from '@/app/demos/tiptap/markdown';
 import { MDXLayout } from '@/components';
-import { markdownString } from '../../tiptap/markdown';
 
 const MDXStringPage = ({ params }: any) => {
   const page = {

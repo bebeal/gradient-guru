@@ -13,14 +13,14 @@
   }
 
   -webkit-scrollbar {
-    height: 8px;
-    width: 4px;
+    height: .25rem;
+    width: .25rem;
     background: transparent;
   }
 
   -webkit-scrollbar-thumb {
-    background: hsl(0 0% 40%);
-    border-radius: 999px;
+    background: hsl(0 0% 45%, .5);
+    border-radius: 9999px;
   }
 
   -webkit-scrollbar-track {

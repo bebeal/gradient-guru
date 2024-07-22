@@ -12,5 +12,5 @@ export * from './Plotly';
 export * from './Primitives';
 export * from './Terminal';
 export * from './TldrawCanvas';
-export * from './TipTap';
+export * from './TipTapEditor';
 export * from './Tweet';

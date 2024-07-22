@@ -20,12 +20,12 @@ export interface DemoCardProps {
 const Card = forwardRef<HTMLDivElement, DemoCardProps>(({ ...props }, ref) => {
   const { title, description, content } = props;
   return (
-    <div ref={ref} className="flex flex-col py-4 px-6 gap-2 tracking-tight text-tertiary min-w-[14rem] min-h-[5rem] relative overflow-hidden transition duration-700 rounded-lg">
+    <div ref={ref} className="flex flex-col py-4 px-5 gap-2 tracking-tight text-tertiary w-full min-w-[12rem] min-h-[14rem] relative overflow-hidden transition duration-700 rounded-lg justify-between">
       <h3 className="max-w-xs font-bold text-base text-primary h-auto">{title}</h3>
-      <div className="text-base font-normal">
-        <span className="text-slate-500 flex text-xs h-full">{description}</span>
+      <div className="text-base font-normal max-h-16">
+        <span className="text-slate-500 text-xs line-clamp-3 min-h-[3lh]">{description}</span>
       </div>
-      <div className="rounded-xl border border-white/[0.2] group-hover/pin:border-white/[0.3] max-w-lg max-h-[165px] w-auto h-full flex justify-center items-center transition duration-700">
+      <div className="flex-1 rounded-xl border border-white/[0.2] group-hover/pin:border-white/[0.3] max-h-[125px] w-full h-full flex justify-center items-center transition duration-700">
         {content ? content : <div className="flex flex-1 w-full rounded-lg bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500 min-w-36 min-h-32" />}
       </div>
     </div>
