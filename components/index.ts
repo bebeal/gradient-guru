@@ -7,7 +7,6 @@ export * from './GoogleDriveUtility';
 export * from './HiddenInput';
 export * from './Highlighter';
 export * from './Links';
-export * from './MDX';
 export * from './Plotly';
 export * from './Primitives';
 export * from './Terminal';

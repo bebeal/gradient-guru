@@ -1,9 +1,5 @@
-import createMDX from '@next/mdx';
 import NextBundleAnalyzer from '@next/bundle-analyzer';
 import withSVGR from './utils/SVGR.mjs';
-import mdxOptions from './utils/mdx-options.mjs';
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
-import remarkFrontmatter from 'remark-frontmatter'
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -161,20 +157,6 @@ const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
-const withMDX = createMDX({
-  extension: /\.(md|mdx)$/,
-  options: {
-    remarkPlugins: [
-      remarkFrontmatter,
-      remarkMdxFrontmatter,
-      ...mdxOptions.remarkPlugins,
-    ],
-    rehypePlugins: [
-      ...mdxOptions.rehypePlugins,
-    ]
-  }
-});
-
-const config = withBundleAnalyzer(withMDX(withSVGR(nextConfig)));
+const config = withBundleAnalyzer(withSVGR(nextConfig));
 
 export default config;
