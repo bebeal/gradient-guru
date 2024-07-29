@@ -3,6 +3,9 @@ import { Robots } from 'next/dist/lib/metadata/types/metadata-types';
 import { DocConfig } from '@/app/config';
 import Providers from '@/app/providers';
 
+// https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes
+export const runtime = 'nodejs';
+
 // A robots.txt file tells search engine crawlers which URLs the crawler can access on your site. This is used mainly to avoid overloading your site with requests.
 // See https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots https://developers.google.com/search/docs/crawling-indexing/robots/intro#:~:text=A%20robots.txt%20file%20tells,web%20page%20out%20of%20Google
 const robots: Robots | string | null | undefined = {

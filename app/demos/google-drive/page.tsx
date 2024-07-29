@@ -1,4 +1,3 @@
-'use client'
 import React from 'react';
 import { getGoogleDriveAPIKey } from '@/clients/Google/GoogleAuth';
 import { GoogleDriveUtility, Loading } from '@/components';

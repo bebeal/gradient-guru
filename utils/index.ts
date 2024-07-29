@@ -12,7 +12,6 @@ export * from './images';
 export * from './keymap';
 export * from './MapCache';
 export * from './math';
-export * from './mdx';
 export * from './mimeTypes';
 export * from './objects';
 export * from './parser';

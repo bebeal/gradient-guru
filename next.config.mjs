@@ -16,7 +16,7 @@ const nextConfig = {
   configOrigin: 'default',
   useFileSystemPublicRoutes: true,
   generateEtags: true,
-  pageExtensions: ['js', 'jsx', 'mjs', 'ts', 'tsx', 'md', 'mdx', 'mjs', 'cjs', 'mts', 'cts', 'csv'],
+  pageExtensions: ['js', 'jsx', 'mjs', 'ts', 'tsx', 'md', 'mjs', 'cjs', 'mts', 'cts', 'csv'],
   poweredByHeader: true,
   compress: true,
   optimizeFonts: true,

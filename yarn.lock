@@ -6337,13 +6337,13 @@ __metadata:
   linkType: hard
 
 "@tiptap/extension-collaboration@npm:^2.5.5":
-  version: 2.5.5
-  resolution: "@tiptap/extension-collaboration@npm:2.5.5"
+  version: 2.5.7
+  resolution: "@tiptap/extension-collaboration@npm:2.5.7"
   peerDependencies:
-    "@tiptap/core": ^2.5.5
-    "@tiptap/pm": ^2.5.5
+    "@tiptap/core": ^2.5.7
+    "@tiptap/pm": ^2.5.7
     y-prosemirror: ^1.2.6
-  checksum: 10c0/069f17276757112207bd8204002731d32d5b753dd26e8c605435b09fa5acba3615feaac282af38fadbc717bd8c83f71f47696b199b7c0771bd134278802782a4
+  checksum: 10c0/6e18ab4cc350dcaaebfcdfd21cab20d9ac12a04247d34edc622a09c1d17219457a3f28f406b02b6bb77fc7e46ef138a41ad55e7ca587ffa484d84580371e326f
   languageName: node
   linkType: hard
 
