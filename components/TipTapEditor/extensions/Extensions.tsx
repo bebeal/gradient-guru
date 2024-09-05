@@ -8,6 +8,7 @@ import { CharacterCount } from '@tiptap/extension-character-count'
 import { Underline } from '@tiptap/extension-underline'
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { Emoji, gitHubEmojis } from '@tiptap-pro/extension-emoji'
+import { Text } from '@tiptap/extension-text';
 import { TextAlign } from '@tiptap/extension-text-align'
 import { TextStyle } from '@tiptap/extension-text-style'
 import { FontFamily } from '@tiptap/extension-font-family'
@@ -71,6 +72,8 @@ interface ExtensionTemplateProps {
 }
 
 export const ExtensionTemplate = ({ provider, userId, userName = 'Maxi' }: ExtensionTemplateProps): Extensions => [
+  Text,
+  Paragraph,
   Document,
   Column,
   Columns,
