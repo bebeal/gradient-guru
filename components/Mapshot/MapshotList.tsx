@@ -45,9 +45,9 @@ export const MapshotList: React.FC = () => {
   return (
     <div className="flex flex-col gap-2 h-auto justify-center items-center p-4 overflow-auto">
       <div className="text-2xl font-bold text-center underline">{title}</div>
-      <div className={cn(`flex justify-center items-center gap-10 flex-wrap p-2 w-auto`)}>
+      <div className={cn(`flex justify-center items-center gap-10 flex-wrap p-2 w-full`)}>
         {!error && mapshots?.map((mapshot, index) => (
-          <DemoCard key={`mapshot-${index}`} content={<img src={mapshot.preview} alt={'mapshot preview'} className="w-full max-h-[115px] rounded-xl" />} title={mapshot.name} pinContent={'Click to open in new tab'} description={mapshot.description} href={`/mapshot/${mapshot.name}`} />
+          <DemoCard key={`mapshot-${index}`} content={<img src={mapshot.preview} alt={'mapshot preview'} className="object-contain w-full h-full rounded-xl max-h-[180px]" />} className={"min-w-[300px]"} title={mapshot.name} pinContent={'Click to open in new tab'} description={mapshot.description} href={`/mapshot/${mapshot.name}`} />
         ))}
       </div>
   </div>

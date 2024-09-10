@@ -25,7 +25,7 @@ const Card = forwardRef<HTMLDivElement, DemoCardProps>(({ ...props }, ref) => {
       <div className="text-base font-normal max-h-16">
         <span className="text-slate-500 text-xs line-clamp-3 min-h-[4lh]">{description}</span>
       </div>
-      <div className="flex-1 rounded-xl border border-white/[0.2] group-hover/pin:border-white/[0.3] max-h-[125px] w-full h-full flex justify-center items-center transition duration-700">
+      <div className="flex-1 rounded-xl border border-white/[0.2] group-hover/pin:border-white/[0.3] w-full h-full flex justify-center items-center transition duration-700 overflow-hidden">
         {content ? content : <div className="flex flex-1 w-full rounded-lg bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500 min-w-36 min-h-32" />}
       </div>
     </div>
