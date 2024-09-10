@@ -11,12 +11,12 @@ export const Erroring = (props: ErroringProps) => {
   const { children, error = { title: 'Error: ', message: 'Something went wrong' }, className } = props;
 
   return (
-    <div className={cn('w-auto h-auto flex flex-col items-center justify-center text-error gap-2 text-xl', className)}>
-      <div className="w-full h-auto flex text-sm gap-1">
+    <div className={cn('w-full h-auto flex flex-row items-center justify-center text-error gap-2 text-xl', className)}>
+      <div className="w-auto h-auto flex text-sm gap-1">
         <Icon set="Carbon" icon="StatusPartialFail" className={'flex items-center justify-center h-full w-auto'} />
         {typeof error === 'string' ? 'Error' : error?.title}
       </div>
-      {children ? children : <div className={cn(`text-xs`)}>{typeof error === 'string' ? error : error?.message}</div>}
+      {children ? children : <div className={cn(`flex text-xs`)}>{typeof error === 'string' ? error : error?.message}</div>}
     </div>
   );
 };

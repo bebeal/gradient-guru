@@ -10,7 +10,7 @@ frontend:
         # Tiptap Pro Registry (see: https://cloud.tiptap.dev/pro-extensions)
         - env | grep -e TIPTAP_PRO_TOKEN >> .env.production
         # AWS for S3
-        - env | grep -e _AWS_ACCESS_KEY_ID -e _AWS_SECRET_ACCESS_KEY -e _AWS_REGION -e _AWS_BUCKET >> .env.production
+        - env | grep -e _AWS_ACCESS_KEY_ID -e _AWS_SECRET_ACCESS_KEY -e _AWS_REGION -e _AWS_BUCKET -e MAP_BUCKET >> .env.production
         # next-auth (see https://authjs.dev/reference/nextjs#environment-variable-inferrence)
         - env | grep -e NEXTAUTH_URL -e NEXTAUTH_SECRET -e AUTH_REDIRECT_PROXY_URL -e AUTH_SECRET >> .env.production
         # operation fix the fucking auth AUTH_TRUST_HOST to true
