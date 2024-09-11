@@ -43,7 +43,7 @@ export const MapshotList: React.FC = () => {
   }
   console.log(mapshots);
   return (
-    <div className="flex flex-col gap-2 h-auto justify-center items-center p-4 overflow-auto">
+    <div className="relative flex flex-col gap-2 h-full w-full justify-center items-center p-4 overflow-auto">
       <div className="text-2xl font-bold text-center underline">{title}</div>
       <div className={cn(`flex justify-center items-center gap-10 flex-wrap p-2 w-full`)}>
         {!error && mapshots?.map((mapshot, index) => (
